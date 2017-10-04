@@ -1,0 +1,8 @@
+.idea/
+CMakeLists.txt
+cmake-build-debug/
+*.o
+*.zip
+valgrind.out
+tp
+make.sh
