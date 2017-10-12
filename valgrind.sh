@@ -3,7 +3,7 @@
 valgrindErrorCode=42
 valgrindExec=/usr/bin/valgrind
 valgrindOut=valgrind.out
-valgrindCommandLine="$valgrindExec --tool=memcheck --trace-children=yes --track-fds=yes --time-stamp=yes --num-callers=20 --error-exitcode=$valgrindErrorCode --leak-check=full --leak-resolution=med --log-file=$valgrindOut --show-reachable=yes --suppressions=suppressions.txt"
+valgrindCommandLine="$valgrindExec --tool=memcheck --trace-children=yes --track-fds=yes --time-stamp=yes --num-callers=20 --error-exitcode=$valgrindErrorCode --leak-check=full --leak-resolution=med --log-file=$valgrindOut --show-reachable=yes --suppressions=suppressions.txt --error-limit=no"
 
 $valgrindCommandLine "$@"
 executionResult=$?
