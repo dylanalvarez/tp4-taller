@@ -7,3 +7,5 @@ valgrind.out
 tp
 make.sh
 tp.dSYM
+client-server/client
+client-server/server
