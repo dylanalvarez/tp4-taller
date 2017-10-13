@@ -1,0 +1,13 @@
+# All dimensions and positions are expressed as [x, y]
+
+# In this example, a value from 1 to 10 represents an actual block,
+# and 0 and 11 represent a 'virtual block', needed for entry and exit position
+# disambiguation. [0, 0], [11, 11], [0, 11] and [11, 0] are invalid.
+# Negative values or values greater than 11 are invalid.
+
+size: [10, 10]
+firm_ground: [[1, 2], [5, 3]]
+doors:
+  entry: [[0, 1]]
+  exit: [[11, 10]]
+# path: to be defined
