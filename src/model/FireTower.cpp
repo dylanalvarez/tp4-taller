@@ -4,7 +4,7 @@
 
 #include "FireTower.h"
 
-FireTower::FireTower(Position p, unsigned int initial_damage,
+FireTower::FireTower(Vector p, unsigned int initial_damage,
                      unsigned int speed_reduction) : Tower() {}
 
 FireTower::~FireTower() = default;

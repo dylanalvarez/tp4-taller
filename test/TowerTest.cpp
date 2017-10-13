@@ -8,7 +8,7 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(TowerTest);
 
 void TowerTest::towersStartWithZeroExperience() {
-    Position pos(0,0);
+    Vector pos(0,0);
     tower = new FireTower(pos, 1, 0);
 
     CPPUNIT_ASSERT(tower->getExperience() == 0);

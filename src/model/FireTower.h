@@ -7,11 +7,11 @@
 
 
 #include "Tower.h"
-#include "Position.h"
+#include "Vector.h"
 
 class FireTower : public Tower {
 public:
-    FireTower(Position p, unsigned int initial_damage,
+    FireTower(Vector p, unsigned int initial_damage,
               unsigned int speed_reduction);
 
     ~FireTower() override;
