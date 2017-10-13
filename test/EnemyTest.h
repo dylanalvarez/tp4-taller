@@ -15,8 +15,11 @@ class EnemyTest : public CppUnit::TestCase {
         CPPUNIT_TEST(enemyStartsOnInitialPositionOfPathTest);
         CPPUNIT_TEST(movementInTwoDirectionsTest);
         CPPUNIT_TEST(diagonalMovementTest);
-        CPPUNIT_TEST(speedIncrementTheNumberOfCoordinatesThanEnemyMoves);
-        CPPUNIT_TEST(ifSpeedIsTwoAndOnlyOneCoordinateRemainsEnemyMovesOneCoordinate);
+        CPPUNIT_TEST(speedIncrementTheNumberOfCoordinatesThanEnemyMovesTest);
+        CPPUNIT_TEST(ifSpeedIsTwoAndOnlyOneCoordinateRemainsEnemyMovesOneCoordinateTest);
+        CPPUNIT_TEST(movementOverCompletePathTest);
+        CPPUNIT_TEST(movementWhenInitialPositionIsCloseToEndingPositonTest);
+        CPPUNIT_TEST(movementWhenInitialPositionIsEqualToEndingPositonTest);
     CPPUNIT_TEST_SUITE_END();
 
 protected:
@@ -24,8 +27,11 @@ protected:
     void enemyStartsOnInitialPositionOfPathTest();
     void movementInTwoDirectionsTest();
     void diagonalMovementTest();
-    void speedIncrementTheNumberOfCoordinatesThanEnemyMoves();
-    void ifSpeedIsTwoAndOnlyOneCoordinateRemainsEnemyMovesOneCoordinate();
+    void speedIncrementTheNumberOfCoordinatesThanEnemyMovesTest();
+    void ifSpeedIsTwoAndOnlyOneCoordinateRemainsEnemyMovesOneCoordinateTest();
+    void movementOverCompletePathTest();
+    void movementWhenInitialPositionIsCloseToEndingPositonTest();
+    void movementWhenInitialPositionIsEqualToEndingPositonTest();
 private:
     Enemy* enemy = nullptr;
 };

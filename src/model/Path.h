@@ -19,10 +19,10 @@ public:
     const Vector& getInitialPosition();
 
 private:
-    unsigned long current_index;
     std::vector<Vector>& positions;
-    Vector& current_position;
+    Vector current_position;
     Vector direction;
+    std::vector<Vector>::iterator iterator;
 };
 
 

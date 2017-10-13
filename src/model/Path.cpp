@@ -6,26 +6,22 @@
 
 Path::Path(std::vector<Vector>& positions) : positions(positions),
                                              current_position(positions.at(0)) {
-    current_index = 0;
-    direction = positions.at(current_index + 1) - positions.at(current_index);
+    iterator = positions.begin();
+    // calculo de primera direccion, entre el punto inicial y el siguiente
+    direction = *(iterator + 1) - *iterator;
     direction.normalizeAndRound();
-    current_index++;
+    iterator++;
 }
 
 const Vector &Path::getNextPosition() {
-    if (current_position != positions.back()){
-        if ((current_position + direction) > positions.back()){
-            // si se va mas alla de la ultima posicion, dejar en la ultima
-            current_position = positions.back();
-        } else {
-            current_position += direction;
-        }
+    if (iterator != positions.end()){
+        current_position += direction;
 
-        if (current_position == positions.at(current_index)){
+        if (current_position == *iterator){
             // calcula nueva direccion
-            direction = positions[current_index + 1] - positions[current_index];
+            direction = *(iterator + 1) - *iterator;
             direction.normalizeAndRound();
-            current_index++;
+            iterator++;
         }
     }
 
