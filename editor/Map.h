@@ -8,7 +8,9 @@ class Map {
 public:
     Map();
 
-    void exportToFile(std::string filename);
+    void setName(const std::string& name);
+
+    void exportToFile(const std::string &filename) const;
 
 private:
     enum Setting {
@@ -31,17 +33,17 @@ private:
         int quantity;
     };
 
-    std::string _toString(Setting setting);
+    std::string _toString(Setting setting) const;
 
-    std::string _toString(HordeType hordeType);
+    std::string _toString(HordeType hordeType) const;
 
     void _appendVectorOfCoordinate(const std::vector<Coordinate> &vector,
-                                   YAML::Emitter &emitter);
+                                   YAML::Emitter &emitter) const;
 
     void _appendVectorOfCoordinate(
             const std::vector<Coordinate> &vector,
             YAML::Emitter &emitter,
-            const std::function<int(int)> &transformation);
+            const std::function<int(int)> &transformation) const;
 
     std::string name;
     Setting setting;

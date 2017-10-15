@@ -4,7 +4,7 @@
 void Map::_appendVectorOfCoordinate(
         const std::vector<Map::Coordinate> &vector,
         YAML::Emitter &emitter,
-        const std::function<int(int)> &transformation) {
+        const std::function<int(int)> &transformation) const {
     emitter << YAML::BeginSeq;
     for (Coordinate coordinate : vector) {
         emitter << YAML::BeginSeq
@@ -15,11 +15,11 @@ void Map::_appendVectorOfCoordinate(
 }
 
 void Map::_appendVectorOfCoordinate(const std::vector<Map::Coordinate> &vector,
-                                    YAML::Emitter &emitter) {
+                                    YAML::Emitter &emitter) const {
     _appendVectorOfCoordinate(vector, emitter, [](int coord) { return coord; });
 }
 
-void Map::exportToFile(std::string filename) {
+void Map::exportToFile(const std::string &filename) const {
     YAML::Emitter emitter;
     emitter << YAML::BeginMap;
 
@@ -79,7 +79,7 @@ Map::Map() : name(""),
              size(10, 10),
              secondsBetweenHordes(10) {}
 
-std::string Map::_toString(Map::Setting setting) {
+std::string Map::_toString(Map::Setting setting) const {
     switch (setting) {
         case desert:
             return "desert";
@@ -92,7 +92,7 @@ std::string Map::_toString(Map::Setting setting) {
     }
 }
 
-std::string Map::_toString(Map::HordeType hordeType) {
+std::string Map::_toString(Map::HordeType hordeType) const {
     switch (hordeType) {
         case greenDemon:
             return "green_demon";
@@ -107,4 +107,8 @@ std::string Map::_toString(Map::HordeType hordeType) {
         case abmonible:
             return "abmonible";
     }
+}
+
+void Map::setName(const std::string & name) {
+    this->name = name;
 }
