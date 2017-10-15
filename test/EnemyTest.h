@@ -20,6 +20,7 @@ class EnemyTest : public CppUnit::TestCase {
         CPPUNIT_TEST(movementOverCompletePathTest);
         CPPUNIT_TEST(movementWhenInitialPositionIsCloseToEndingPositonTest);
         CPPUNIT_TEST(movementWhenInitialPositionIsEqualToEndingPositonTest);
+        CPPUNIT_TEST(whenPathConsistOnlyOfOnePointEnemyDoesNotMoveTest);
     CPPUNIT_TEST_SUITE_END();
 
 protected:
@@ -32,6 +33,7 @@ protected:
     void movementOverCompletePathTest();
     void movementWhenInitialPositionIsCloseToEndingPositonTest();
     void movementWhenInitialPositionIsEqualToEndingPositonTest();
+    void whenPathConsistOnlyOfOnePointEnemyDoesNotMoveTest();
 private:
     Enemy* enemy = nullptr;
 };

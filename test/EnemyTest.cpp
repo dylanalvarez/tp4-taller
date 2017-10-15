@@ -17,13 +17,13 @@ void EnemyTest::moveEnemyMovesItOneCoordinateInTheDirectionOfNextPositionTest() 
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
-    CPPUNIT_ASSERT(current_pos.getX() == 1  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 3  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 0);
 
     delete enemy;
 }
@@ -55,16 +55,16 @@ void EnemyTest::movementInTwoDirectionsTest() {
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
-    CPPUNIT_ASSERT(current_pos.getX() == 1  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2  && current_pos.getY() == 1);
+    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 1);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2  && current_pos.getY() == 2);
+    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 2);
 
     delete enemy;
 }
@@ -83,7 +83,7 @@ void EnemyTest::diagonalMovementTest() {
     CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 1);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2  && current_pos.getY() == 2);
+    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 2);
 
     delete enemy;
 }
@@ -102,7 +102,7 @@ void EnemyTest::speedIncrementTheNumberOfCoordinatesThanEnemyMovesTest() {
     CPPUNIT_ASSERT(current_pos.getX() == 0 && current_pos.getY() == 2);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 0  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 0 && current_pos.getY() == 4);
 
     delete enemy;
 }
@@ -121,10 +121,10 @@ void EnemyTest::ifSpeedIsTwoAndOnlyOneCoordinateRemainsEnemyMovesOneCoordinateTe
     CPPUNIT_ASSERT(current_pos.getX() == 0 && current_pos.getY() == 2);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 0  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 0 && current_pos.getY() == 4);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 0  && current_pos.getY() == 5);
+    CPPUNIT_ASSERT(current_pos.getX() == 0 && current_pos.getY() == 5);
 
     delete enemy;
 }
@@ -146,13 +146,15 @@ void EnemyTest::movementOverCompletePathTest() {
     CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 3);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 3  && current_pos.getY() == 3);
+    CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 3);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 4  && current_pos.getY() == 2);
+    CPPUNIT_ASSERT(current_pos.getX() == 4 && current_pos.getY() == 2);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 4  && current_pos.getY() == 1);
+    CPPUNIT_ASSERT(current_pos.getX() == 4 && current_pos.getY() == 1);
+
+    delete enemy;
 }
 
 void EnemyTest::movementWhenInitialPositionIsCloseToEndingPositonTest() {
@@ -176,16 +178,18 @@ void EnemyTest::movementWhenInitialPositionIsCloseToEndingPositonTest() {
     CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 1);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 3  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 4  && current_pos.getY() == 2);
+    CPPUNIT_ASSERT(current_pos.getX() == 4 && current_pos.getY() == 2);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 5  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 5 && current_pos.getY() == 4);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 3  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 4);
+
+    delete enemy;
 }
 
 void EnemyTest::movementWhenInitialPositionIsEqualToEndingPositonTest() {
@@ -210,17 +214,38 @@ void EnemyTest::movementWhenInitialPositionIsEqualToEndingPositonTest() {
     CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 1);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 3  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 4  && current_pos.getY() == 2);
+    CPPUNIT_ASSERT(current_pos.getX() == 4 && current_pos.getY() == 2);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 5  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 5 && current_pos.getY() == 4);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 4);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 1  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 4);
+
+    delete enemy;
+}
+
+void EnemyTest::whenPathConsistOnlyOfOnePointEnemyDoesNotMoveTest() {
+    Vector pos1(1, 4);
+
+    std::vector<Vector> positions = {pos1};
+    Path path(positions);
+
+    // hp = 10, speed = 2, cant flight
+    enemy = new Enemy(path, 10, 3, false);
+
+    enemy->move();
+    const Vector& current_pos = enemy->getCurrentPosition();
+    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 4);
+
+    enemy->move();
+    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 4);
+
+    delete enemy;
 }
