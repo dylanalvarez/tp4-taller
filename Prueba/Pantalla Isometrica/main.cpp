@@ -1,13 +1,21 @@
 //Se incluyen todos los tipos de la librería (no óptimo)
 #include <gtkmm.h>
 #include <iostream>
+#include <thread>
 #include "PantallaDeJuego.h"
 #include "VectorDeSprites.h"
 #include "Fichas.h"
 #include "OrdenadorDeFichas.h"
+#include "controladorDeSiclos.h"
+
 //esta clase es solo para dirigir el movimiento en este caso.
 
 #define largo 88
+
+void timer(ControladorDeSiclos* controlador){
+    controlador->iniciar();
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -27,6 +35,8 @@ int main(int argc, char *argv[])
   fichas.agregarTorre(FichaTorre(largo*5, largo*3, id, FichaTorreDeTierra, sprites));
   id++;
   fichas.agregarTorre(FichaTorre(largo*6, largo*3, id, FichaTorreDeTierra, sprites));
+  id++;
+  fichas.agregarTorre(FichaTorre(largo*7, largo*3, id, FichaTorreDeFuego, sprites));
   //creo pantalla
   PantallaDeJuego area (fichas);
 
@@ -46,12 +56,21 @@ int main(int argc, char *argv[])
 
 	auto refBuilder = Gtk::Builder::create();
 	refBuilder->add_from_file("Sprites/Pantallas/Pantalla principal.glade");
+  //ver esto.
 
 	refBuilder->get_widget("cajaJuego", Box);
   Box->pack_start(area);
 	refBuilder->get_widget("applicationwindow1", window);
   window->show_all();
+
+
+  ControladorDeSiclos controlador;
+  controlador.getPulso().connect(
+          sigc::mem_fun(area, &PantallaDeJuego::pulsasion));
+  std::thread pulso(timer, &controlador);
   app->run(*window);
 
+  controlador.terminar();
+  pulso.join();
   return 0;
 }

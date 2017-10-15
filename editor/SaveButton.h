@@ -4,7 +4,6 @@
 
 #include <gtkmm/button.h>
 #include <gtkmm/builder.h>
-#include <yaml-cpp/yaml.h>
 #include "Map.h"
 
 class SaveButton: public Gtk::Button {

@@ -6,11 +6,6 @@
 
 class Map {
 public:
-    Map();
-
-    void exportToFile(std::string filename);
-
-private:
     enum Setting {
         desert, volcano, ice, meadow
     };
@@ -18,6 +13,17 @@ private:
         greenDemon, goatMan, undead, spectre, bloodyHawk, abmonible
     };
 
+    Map();
+
+    void setName(const std::string &name);
+
+    void setSetting(Map::Setting setting);
+
+    Map::Setting getSetting();
+
+    void exportToFile(const std::string &filename) const;
+
+private:
     struct Coordinate {
         Coordinate(int x, int y) : x(x), y(y) {}
 
@@ -31,17 +37,17 @@ private:
         int quantity;
     };
 
-    std::string _toString(Setting setting);
+    std::string _toString(Setting setting) const;
 
-    std::string _toString(HordeType hordeType);
+    std::string _toString(HordeType hordeType) const;
 
     void _appendVectorOfCoordinate(const std::vector<Coordinate> &vector,
-                                   YAML::Emitter &emitter);
+                                   YAML::Emitter &emitter) const;
 
     void _appendVectorOfCoordinate(
             const std::vector<Coordinate> &vector,
             YAML::Emitter &emitter,
-            const std::function<int(int)> &transformation);
+            const std::function<int(int)> &transformation) const;
 
     std::string name;
     Setting setting;

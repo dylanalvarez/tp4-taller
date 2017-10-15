@@ -1,6 +1,8 @@
 #include "yaml-cpp/yaml.h"
 #include "SaveButton.h"
 #include "Map.h"
+#include "NameEntry.h"
+#include "AmbianceGrid.h"
 #include <gtkmm/application.h>
 #include <gtkmm/window.h>
 
@@ -15,6 +17,12 @@ int main(int argc, char **argv) {
 
     SaveButton *saveButton;
     builder->get_widget_derived("save", saveButton, map);
+
+    NameEntry *nameEntry;
+    builder->get_widget_derived("name", nameEntry, map);
+
+    AmbianceGrid *ambianceGrid;
+    builder->get_widget_derived("ambiance", ambianceGrid, map);
 
     auto returnCode = app->run(*mainWindow);
     delete mainWindow;
