@@ -10,7 +10,7 @@ void EnemyTest::moveEnemyMovesItOneCoordinateInTheDirectionOfNextPositionTest() 
     Vector pos1(0,0);
     Vector pos2(3,0);
     std::vector<Vector> positions = {pos1, pos2};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 1, cant flight
     enemy = new Enemy(path, 10, 1, false);
@@ -32,7 +32,7 @@ void EnemyTest::enemyStartsOnInitialPositionOfPathTest() {
     Vector pos1(1,1);
     Vector pos2(5,0);
     std::vector<Vector> positions = {pos1, pos2};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 1, cant flight
     enemy = new Enemy(path, 10, 1, false);
@@ -48,7 +48,7 @@ void EnemyTest::movementInTwoDirectionsTest() {
     Vector pos2(2, 0);
     Vector pos3(2, 2);
     std::vector<Vector> positions = {pos1, pos2, pos3};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 1, cant flight
     enemy = new Enemy(path, 10, 1, false);
@@ -73,7 +73,7 @@ void EnemyTest::diagonalMovementTest() {
     Vector pos1(0, 0);
     Vector pos2(2, 2);
     std::vector<Vector> positions = {pos1, pos2};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 1, cant flight
     enemy = new Enemy(path, 10, 1, false);
@@ -92,7 +92,7 @@ void EnemyTest::speedIncrementTheNumberOfCoordinatesThanEnemyMovesTest() {
     Vector pos1(0, 0);
     Vector pos2(0, 4);
     std::vector<Vector> positions = {pos1, pos2};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
     enemy = new Enemy(path, 10, 2, false);
@@ -111,7 +111,7 @@ void EnemyTest::ifSpeedIsTwoAndOnlyOneCoordinateRemainsEnemyMovesOneCoordinateTe
     Vector pos1(0, 0);
     Vector pos2(0, 5);
     std::vector<Vector> positions = {pos1, pos2};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
     enemy = new Enemy(path, 10, 2, false);
@@ -136,7 +136,7 @@ void EnemyTest::movementOverCompletePathTest() {
     Vector pos4(4, 3);
     Vector pos5(4, 1);
     std::vector<Vector> positions = {pos1, pos2, pos3, pos4, pos5};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
     enemy = new Enemy(path, 10, 2, false);
@@ -168,7 +168,7 @@ void EnemyTest::movementWhenInitialPositionIsCloseToEndingPositonTest() {
     Vector pos8(3, 4);
     std::vector<Vector> positions = {pos1, pos2, pos3, pos4,
                                      pos5, pos6, pos7, pos8};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
     enemy = new Enemy(path, 10, 3, false);
@@ -204,7 +204,7 @@ void EnemyTest::movementWhenInitialPositionIsEqualToEndingPositonTest() {
     Vector pos9(1, 4);
     std::vector<Vector> positions = {pos1, pos2, pos3, pos4,
                                      pos5, pos6, pos7, pos8, pos9};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
     enemy = new Enemy(path, 10, 3, false);
@@ -235,7 +235,7 @@ void EnemyTest::whenPathConsistOnlyOfOnePointEnemyDoesNotMoveTest() {
     Vector pos1(1, 4);
 
     std::vector<Vector> positions = {pos1};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
     enemy = new Enemy(path, 10, 3, false);
