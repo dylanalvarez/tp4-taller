@@ -28,7 +28,6 @@ protected:
     void getEnemyInRangeWhenNoOneIsRetunsAnEmpyListTest();
 
 private:
-    const std::string yaml_path = "map.yaml";
     Scenario* scenario;
 };
 

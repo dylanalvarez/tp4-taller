@@ -33,9 +33,5 @@ int Enemy::getID() const {
     return id;
 }
 
-bool Enemy::isValid() const {
-    return true;
-}
-
-Enemy::Enemy(Enemy&& other) : Enemy(other.id, other.path, other.hp,
+Enemy::Enemy(Enemy&& other) noexcept : Enemy(other.id, other.path, other.hp,
                                     other.speed, other.can_i_flight) {}

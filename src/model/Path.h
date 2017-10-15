@@ -20,8 +20,8 @@ public:
 
     Path(const Path&) = delete;
     Path& operator=(const Path&) = delete;
-    Path(Path&&);
-    Path& operator=(Path&&);
+    Path(Path&&) noexcept;
+    Path& operator=(Path&&) noexcept;
 
 private:
     std::vector<Vector> positions;

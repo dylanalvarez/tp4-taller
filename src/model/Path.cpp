@@ -32,14 +32,14 @@ const Vector &Path::getInitialPosition() {
     return positions[0];
 }
 
-Path::Path(Path&& other) {
+Path::Path(Path&& other) noexcept {
     this->positions = std::move(other.positions);
     this->current_position = std::move(other.current_position);
     this->direction = std::move(other.direction);
     this->iterator = std::move(other.iterator);
 }
 
-Path &Path::operator=(Path&& other) {
+Path &Path::operator=(Path&& other) noexcept {
     this->positions = std::move(other.positions);
     this->current_position = std::move(other.current_position);
     this->direction = std::move(other.direction);

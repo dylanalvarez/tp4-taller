@@ -23,12 +23,10 @@ public:
 
     int getID() const;
 
-    virtual bool isValid() const;
-
     Enemy(const Enemy&) = delete;
     Enemy& operator=(const Enemy&) = delete;
     Enemy& operator=(Enemy&&) = delete;
-    Enemy(Enemy&&);
+    Enemy(Enemy&&) noexcept;
 
 private:
     int id;
