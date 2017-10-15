@@ -6,13 +6,6 @@
 
 class Map {
 public:
-    Map();
-
-    void setName(const std::string& name);
-
-    void exportToFile(const std::string &filename) const;
-
-private:
     enum Setting {
         desert, volcano, ice, meadow
     };
@@ -20,6 +13,17 @@ private:
         greenDemon, goatMan, undead, spectre, bloodyHawk, abmonible
     };
 
+    Map();
+
+    void setName(const std::string &name);
+
+    void setSetting(Map::Setting setting);
+
+    Map::Setting getSetting();
+
+    void exportToFile(const std::string &filename) const;
+
+private:
     struct Coordinate {
         Coordinate(int x, int y) : x(x), y(y) {}
 

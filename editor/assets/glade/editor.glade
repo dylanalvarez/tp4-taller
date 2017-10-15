@@ -234,16 +234,19 @@
               </packing>
             </child>
             <child>
-              <object class="GtkGrid" id="grid4">
+              <object class="GtkGrid" id="ambiance">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="column_homogeneous">True</property>
                 <child>
-                  <object class="GtkButton" id="earth">
-                    <property name="label" translatable="yes">Tierra</property>
+                  <object class="GtkRadioButton" id="desert">
+                    <property name="label" translatable="yes">Desierto</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="xalign">0</property>
+                    <property name="active">True</property>
+                    <property name="draw_indicator">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -251,11 +254,14 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="fire">
-                    <property name="label" translatable="yes">Fuego</property>
+                  <object class="GtkRadioButton" id="volcano">
+                    <property name="label" translatable="yes">Volcan</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="xalign">0</property>
+                    <property name="active">True</property>
+                    <property name="draw_indicator">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -263,11 +269,14 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="water">
-                    <property name="label" translatable="yes">Agua</property>
+                  <object class="GtkRadioButton" id="ice">
+                    <property name="label" translatable="yes">Gelido</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="xalign">0</property>
+                    <property name="active">True</property>
+                    <property name="draw_indicator">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">2</property>
@@ -275,11 +284,14 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="wind">
-                    <property name="label" translatable="yes">Aire</property>
+                  <object class="GtkRadioButton" id="meadow">
+                    <property name="label" translatable="yes">Pradera</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="xalign">0</property>
+                    <property name="active">True</property>
+                    <property name="draw_indicator">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">3</property>

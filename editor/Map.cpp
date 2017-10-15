@@ -109,6 +109,14 @@ std::string Map::_toString(Map::HordeType hordeType) const {
     }
 }
 
-void Map::setName(const std::string & name) {
+void Map::setName(const std::string &name) {
     this->name = name;
+}
+
+void Map::setSetting(Setting setting) {
+    this->setting = setting;
+}
+
+Map::Setting Map::getSetting() {
+    return setting;
 }

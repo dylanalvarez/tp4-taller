@@ -91,7 +91,8 @@ endif
 
 # Linkea con threads de ser necesario. Permite el uso de pthread en C y C++. Permite el uso de built-in threads en C++.
 ifdef threads
-LDFLAGS += -pthread -lyaml-cpp
+LDFLAGS += -lyaml-cpp
+# LDFLAGS += -pthread
 endif
 
 ifdef static
