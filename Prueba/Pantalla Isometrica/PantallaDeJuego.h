@@ -20,7 +20,7 @@ protected:
   bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override; //la verdad de la milaneza
 public:
   PantallaDeJuego(OrdenadorDeFichas &fichas2);
-  void pulsaion();
+  void pulsasion();
   virtual ~PantallaDeJuego();
 };
 #endif
