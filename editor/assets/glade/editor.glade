@@ -2,7 +2,7 @@
 <!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkWindow" id="window1">
+  <object class="GtkWindow" id="main-window">
     <property name="can_focus">False</property>
     <child>
       <object class="GtkGrid" id="grid1">
@@ -22,7 +22,7 @@
                     <property name="can_focus">False</property>
                     <property name="margin_bottom">13</property>
                     <child>
-                      <object class="GtkToggleButton" id="togglebutton1">
+                      <object class="GtkToggleButton" id="start">
                         <property name="label" translatable="yes">Inicio</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -35,7 +35,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkToggleButton" id="togglebutton2">
+                      <object class="GtkToggleButton" id="end">
                         <property name="label" translatable="yes">Fin</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -47,7 +47,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkToggleButton" id="togglebutton3">
+                      <object class="GtkToggleButton" id="firm-ground">
                         <property name="label" translatable="yes">Terreno Firme</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -59,7 +59,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkToggleButton" id="togglebutton4">
+                      <object class="GtkToggleButton" id="path">
                         <property name="label" translatable="yes">Camino</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -93,7 +93,7 @@
                     <property name="can_focus">False</property>
                     <property name="margin_top">13</property>
                     <child>
-                      <object class="GtkSpinButton" id="spinbutton1">
+                      <object class="GtkSpinButton" id="time-between-hordes">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="progress_pulse_step">1</property>
@@ -111,7 +111,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <object class="GtkComboBox" id="combobox1">
+                          <object class="GtkComboBox" id="horde-kind">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                           </object>
@@ -121,7 +121,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="spinbutton2">
+                          <object class="GtkSpinButton" id="horde-quantity">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
@@ -131,11 +131,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="button6">
-                            <property name="label" translatable="yes">button</property>
+                          <object class="GtkButton" id="add-horde">
+                            <property name="label" translatable="yes">Agregar Horda</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <property name="image_position">right</property>
+                            <property name="always_show_image">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -198,7 +200,7 @@
             <property name="can_focus">False</property>
             <property name="column_homogeneous">True</property>
             <child>
-              <object class="GtkEntry" id="entry1">
+              <object class="GtkEntry" id="name">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="margin_right">10</property>
@@ -215,7 +217,7 @@
                 <property name="can_focus">False</property>
                 <property name="column_homogeneous">True</property>
                 <child>
-                  <object class="GtkButton" id="button1">
+                  <object class="GtkButton" id="earth">
                     <property name="label" translatable="yes">Tierra</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -227,7 +229,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button2">
+                  <object class="GtkButton" id="fire">
                     <property name="label" translatable="yes">Fuego</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -239,7 +241,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button3">
+                  <object class="GtkButton" id="water">
                     <property name="label" translatable="yes">Agua</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -251,7 +253,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button4">
+                  <object class="GtkButton" id="wind">
                     <property name="label" translatable="yes">Aire</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -269,7 +271,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button5">
+              <object class="GtkButton" id="save">
                 <property name="label" translatable="yes">Guardar</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
