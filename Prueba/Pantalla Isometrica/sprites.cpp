@@ -43,6 +43,7 @@ void FichaSprite::dibujarmeIsometrico(const Cairo::RefPtr<Cairo::Context>& cr,
   //y estos dos ni idea.. pero son necesarios.
 	cr->fill();
 	cr->restore();
+  cr->save();
 }
 
 void FichaSprite::pulsaion(){
