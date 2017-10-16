@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkAdjustment" id="adjustment1">
@@ -27,11 +27,13 @@
                     <property name="can_focus">False</property>
                     <property name="margin_bottom">13</property>
                     <child>
-                      <object class="GtkToggleButton" id="start">
-                        <property name="label" translatable="yes">Inicio</property>
+                      <object class="GtkRadioButton" id="start">
+                        <property name="label" translatable="yes">Entrada</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw_indicator">False</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -39,11 +41,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkToggleButton" id="end">
-                        <property name="label" translatable="yes">Fin</property>
+                      <object class="GtkRadioButton" id="end">
+                        <property name="label" translatable="yes">Salida</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw_indicator">False</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -51,11 +55,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkToggleButton" id="firm-ground">
+                      <object class="GtkRadioButton" id="firm-ground">
                         <property name="label" translatable="yes">Terreno Firme</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw_indicator">False</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -63,11 +69,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkToggleButton" id="path">
+                      <object class="GtkRadioButton" id="path">
                         <property name="label" translatable="yes">Camino</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw_indicator">False</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -353,6 +361,9 @@
           </packing>
         </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
 </interface>
