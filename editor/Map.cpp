@@ -117,6 +117,6 @@ void Map::setSetting(Setting setting) {
     this->setting = setting;
 }
 
-Map::Setting Map::getSetting() {
-    return setting;
+void Map::setSecondsBetweenHordes(int seconds) {
+    secondsBetweenHordes = seconds;
 }

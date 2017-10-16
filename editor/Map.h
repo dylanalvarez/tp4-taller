@@ -19,7 +19,7 @@ public:
 
     void setSetting(Map::Setting setting);
 
-    Map::Setting getSetting();
+    void setSecondsBetweenHordes(int seconds);
 
     void exportToFile(const std::string &filename) const;
 
