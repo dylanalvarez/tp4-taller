@@ -13,13 +13,13 @@
 class TowerTest : public CppUnit::TestCase{
 public:
     CPPUNIT_TEST_SUITE(TowerTest);
-        CPPUNIT_TEST(towersStartWithZeroExperience);
+
     CPPUNIT_TEST_SUITE_END();
 
 protected:
-    void towersStartWithZeroExperience();
+
 private:
-    Tower* tower = nullptr;
+
 
 };
 

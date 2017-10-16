@@ -4,8 +4,7 @@
 
 #include "FireTower.h"
 
-FireTower::FireTower(Vector p, unsigned int initial_damage,
-                     unsigned int speed_reduction) : Tower() {}
+FireTower::FireTower(int id, const Vector& p, YAML::Node properties) : Tower() {}
 
 FireTower::~FireTower() = default;
 
