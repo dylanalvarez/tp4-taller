@@ -42,7 +42,8 @@ PantallaDeJuego::PantallaDeJuego(OrdenadorDeFichas &fichas2): fichas(fichas2){
   desplasamientoX = 120;
   desplasamientoY = 120;
 }
-void PantallaDeJuego::pulsaion(){
+void PantallaDeJuego::pulsasion(){
+  fichas.pulsasion();
   queue_draw(); //Esto redibuja
 }
 PantallaDeJuego::~PantallaDeJuego(){

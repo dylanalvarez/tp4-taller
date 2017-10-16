@@ -10,20 +10,20 @@ void EnemyTest::moveEnemyMovesItOneCoordinateInTheDirectionOfNextPositionTest() 
     Vector pos1(0,0);
     Vector pos2(3,0);
     std::vector<Vector> positions = {pos1, pos2};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 1, cant flight
     enemy = new Enemy(path, 10, 1, false);
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
-    CPPUNIT_ASSERT(current_pos.getX() == 1  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 3  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 0);
 
     delete enemy;
 }
@@ -32,7 +32,7 @@ void EnemyTest::enemyStartsOnInitialPositionOfPathTest() {
     Vector pos1(1,1);
     Vector pos2(5,0);
     std::vector<Vector> positions = {pos1, pos2};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 1, cant flight
     enemy = new Enemy(path, 10, 1, false);
@@ -48,23 +48,23 @@ void EnemyTest::movementInTwoDirectionsTest() {
     Vector pos2(2, 0);
     Vector pos3(2, 2);
     std::vector<Vector> positions = {pos1, pos2, pos3};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 1, cant flight
     enemy = new Enemy(path, 10, 1, false);
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
-    CPPUNIT_ASSERT(current_pos.getX() == 1  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2  && current_pos.getY() == 1);
+    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 1);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2  && current_pos.getY() == 2);
+    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 2);
 
     delete enemy;
 }
@@ -73,7 +73,7 @@ void EnemyTest::diagonalMovementTest() {
     Vector pos1(0, 0);
     Vector pos2(2, 2);
     std::vector<Vector> positions = {pos1, pos2};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 1, cant flight
     enemy = new Enemy(path, 10, 1, false);
@@ -83,7 +83,7 @@ void EnemyTest::diagonalMovementTest() {
     CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 1);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2  && current_pos.getY() == 2);
+    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 2);
 
     delete enemy;
 }
@@ -92,7 +92,7 @@ void EnemyTest::speedIncrementTheNumberOfCoordinatesThanEnemyMovesTest() {
     Vector pos1(0, 0);
     Vector pos2(0, 4);
     std::vector<Vector> positions = {pos1, pos2};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
     enemy = new Enemy(path, 10, 2, false);
@@ -102,7 +102,7 @@ void EnemyTest::speedIncrementTheNumberOfCoordinatesThanEnemyMovesTest() {
     CPPUNIT_ASSERT(current_pos.getX() == 0 && current_pos.getY() == 2);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 0  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 0 && current_pos.getY() == 4);
 
     delete enemy;
 }
@@ -111,7 +111,7 @@ void EnemyTest::ifSpeedIsTwoAndOnlyOneCoordinateRemainsEnemyMovesOneCoordinateTe
     Vector pos1(0, 0);
     Vector pos2(0, 5);
     std::vector<Vector> positions = {pos1, pos2};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
     enemy = new Enemy(path, 10, 2, false);
@@ -121,10 +121,10 @@ void EnemyTest::ifSpeedIsTwoAndOnlyOneCoordinateRemainsEnemyMovesOneCoordinateTe
     CPPUNIT_ASSERT(current_pos.getX() == 0 && current_pos.getY() == 2);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 0  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 0 && current_pos.getY() == 4);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 0  && current_pos.getY() == 5);
+    CPPUNIT_ASSERT(current_pos.getX() == 0 && current_pos.getY() == 5);
 
     delete enemy;
 }
@@ -136,7 +136,7 @@ void EnemyTest::movementOverCompletePathTest() {
     Vector pos4(4, 3);
     Vector pos5(4, 1);
     std::vector<Vector> positions = {pos1, pos2, pos3, pos4, pos5};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
     enemy = new Enemy(path, 10, 2, false);
@@ -146,13 +146,15 @@ void EnemyTest::movementOverCompletePathTest() {
     CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 3);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 3  && current_pos.getY() == 3);
+    CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 3);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 4  && current_pos.getY() == 2);
+    CPPUNIT_ASSERT(current_pos.getX() == 4 && current_pos.getY() == 2);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 4  && current_pos.getY() == 1);
+    CPPUNIT_ASSERT(current_pos.getX() == 4 && current_pos.getY() == 1);
+
+    delete enemy;
 }
 
 void EnemyTest::movementWhenInitialPositionIsCloseToEndingPositonTest() {
@@ -166,7 +168,7 @@ void EnemyTest::movementWhenInitialPositionIsCloseToEndingPositonTest() {
     Vector pos8(3, 4);
     std::vector<Vector> positions = {pos1, pos2, pos3, pos4,
                                      pos5, pos6, pos7, pos8};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
     enemy = new Enemy(path, 10, 3, false);
@@ -176,16 +178,18 @@ void EnemyTest::movementWhenInitialPositionIsCloseToEndingPositonTest() {
     CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 1);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 3  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 4  && current_pos.getY() == 2);
+    CPPUNIT_ASSERT(current_pos.getX() == 4 && current_pos.getY() == 2);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 5  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 5 && current_pos.getY() == 4);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 3  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 4);
+
+    delete enemy;
 }
 
 void EnemyTest::movementWhenInitialPositionIsEqualToEndingPositonTest() {
@@ -200,7 +204,7 @@ void EnemyTest::movementWhenInitialPositionIsEqualToEndingPositonTest() {
     Vector pos9(1, 4);
     std::vector<Vector> positions = {pos1, pos2, pos3, pos4,
                                      pos5, pos6, pos7, pos8, pos9};
-    Path path(positions);
+    Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
     enemy = new Enemy(path, 10, 3, false);
@@ -210,17 +214,38 @@ void EnemyTest::movementWhenInitialPositionIsEqualToEndingPositonTest() {
     CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 1);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 3  && current_pos.getY() == 0);
+    CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 4  && current_pos.getY() == 2);
+    CPPUNIT_ASSERT(current_pos.getX() == 4 && current_pos.getY() == 2);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 5  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 5 && current_pos.getY() == 4);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 4);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 1  && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 4);
+
+    delete enemy;
+}
+
+void EnemyTest::whenPathConsistOnlyOfOnePointEnemyDoesNotMoveTest() {
+    Vector pos1(1, 4);
+
+    std::vector<Vector> positions = {pos1};
+    Path path(std::move(positions));
+
+    // hp = 10, speed = 2, cant flight
+    enemy = new Enemy(path, 10, 3, false);
+
+    enemy->move();
+    const Vector& current_pos = enemy->getCurrentPosition();
+    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 4);
+
+    enemy->move();
+    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 4);
+
+    delete enemy;
 }

@@ -63,3 +63,12 @@ bool Vector::operator>(const Vector& other) {
 
     return my_norm > other_norm;
 }
+
+void Vector::set_coordinates(float x, float y) {
+    this->x = x;
+    this->y = y;
+}
+
+float Vector::getNorm() {
+    return std::abs(std::complex<float>(x, y));
+}

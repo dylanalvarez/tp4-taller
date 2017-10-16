@@ -11,19 +11,23 @@
 class Path {
 public:
     // recibe una lista de posiciones que indican el centro de un tile
-    explicit Path(std::vector<Vector>&);
+    explicit Path(std::vector<Vector>);
 
     // devuelve la siguiente posicion en la direccion adecuada
     const Vector& getNextPosition();
 
     const Vector& getInitialPosition();
 
+    Path(const Path&) = delete;
+    Path& operator=(const Path&) = delete;
+    Path(Path&&) noexcept;
+    Path& operator=(Path&&) noexcept;
+
 private:
-    std::vector<Vector>& positions;
+    std::vector<Vector> positions;
     Vector current_position;
     Vector direction;
     std::vector<Vector>::iterator iterator;
 };
-
 
 #endif //TOWERDEFENSE_PATH_H

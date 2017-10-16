@@ -4,9 +4,9 @@
 
 #include "Path.h"
 
-Path::Path(std::vector<Vector>& positions) : positions(positions),
-                                             current_position(positions.at(0)) {
-    iterator = positions.begin();
+Path::Path(std::vector<Vector> positions) : positions(std::move(positions)) {
+    current_position = this->positions.at(0);
+    iterator = this->positions.begin();
     // calculo de primera direccion, entre el punto inicial y el siguiente
     direction = *(iterator + 1) - *iterator;
     direction.normalizeAndRound();
@@ -30,4 +30,20 @@ const Vector &Path::getNextPosition() {
 
 const Vector &Path::getInitialPosition() {
     return positions[0];
+}
+
+Path::Path(Path&& other) noexcept {
+    this->positions = std::move(other.positions);
+    this->current_position = std::move(other.current_position);
+    this->direction = std::move(other.direction);
+    this->iterator = std::move(other.iterator);
+}
+
+Path &Path::operator=(Path&& other) noexcept {
+    this->positions = std::move(other.positions);
+    this->current_position = std::move(other.current_position);
+    this->direction = std::move(other.direction);
+    this->iterator = std::move(other.iterator);
+
+    return *this;
 }
