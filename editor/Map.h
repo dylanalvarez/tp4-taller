@@ -22,7 +22,7 @@ public:
     struct Horde {
         Horde(HordeType type, int quantity) : type(type), quantity(quantity) {}
 
-        std::string to_string();
+        std::string toString();
 
         HordeType type;
         int quantity;
@@ -36,11 +36,17 @@ public:
 
     void setSecondsBetweenHordes(int seconds);
 
+    void setSize(int width, int height);
+
     void addHorde(Horde &horde);
 
     void clearHordes();
 
     void exportToFile(const std::string &filename) const;
+
+    static std::string toString(HordeType hordeType);
+
+    static HordeType fromString(const std::string &hordeType);
 
 private:
     struct Coordinate {

@@ -1,6 +1,13 @@
 #include <fstream>
 #include "Map.h"
 
+#define GREEN_DEMON_STR "Demonio(s) verde(s)"
+#define GOAT_MAN_STR "Hombre(s) cabra"
+#define UNDEAD_STR "No muerto(s)"
+#define SPECTRE_STR "Espectro(s)"
+#define BLOODY_HAWK_STR "Halcon(es) sangriento(s)"
+#define ABMONIBLE_STR "Abmonible(s)"
+
 void Map::_appendVectorOfCoordinate(
         const std::vector<Map::Coordinate> &vector,
         YAML::Emitter &emitter,
@@ -128,27 +135,39 @@ void Map::addHorde(Horde &horde) {
     hordes.emplace_back(horde);
 }
 
-std::string Map::Horde::to_string() {
-    std::string representation = std::to_string(this->quantity) + " ";
-    switch (this->type) {
+std::string Map::toString(Map::HordeType hordeType) {
+    switch (hordeType) {
         case greenDemon:
-            representation += "Demonio(s) verde(s)";
-            break;
+            return GREEN_DEMON_STR;
         case goatMan:
-            representation += "Hombre(s) cabra";
-            break;
+            return GOAT_MAN_STR;
         case undead:
-            representation += "No muerto(s)";
-            break;
+            return UNDEAD_STR;
         case spectre:
-            representation += "Espectro(s)";
-            break;
+            return SPECTRE_STR;
         case bloodyHawk:
-            representation += "Halcon(es) sangriento(s)";
-            break;
+            return BLOODY_HAWK_STR;
         case abmonible:
-            representation += "Abmonible(s)";
-            break;
+            return ABMONIBLE_STR;
     }
-    return representation;
+}
+
+Map::HordeType Map::fromString(const std::string &hordeType) {
+    std::map<std::string, Map::HordeType> associations{
+            {GREEN_DEMON_STR, greenDemon},
+            {GOAT_MAN_STR, goatMan},
+            {UNDEAD_STR, undead},
+            {SPECTRE_STR, spectre},
+            {BLOODY_HAWK_STR, bloodyHawk},
+            {ABMONIBLE_STR, abmonible},
+    };
+    return associations[hordeType];
+}
+
+void Map::setSize(int width, int height) {
+    size = Coordinate(width, height);
+}
+
+std::string Map::Horde::toString() {
+    return std::to_string(this->quantity) + " " + Map::toString(this->type);
 }

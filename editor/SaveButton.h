@@ -4,18 +4,22 @@
 
 #include <gtkmm/button.h>
 #include <gtkmm/builder.h>
+#include <gtkmm/application.h>
 #include "Map.h"
 
 class SaveButton: public Gtk::Button {
 public:
     SaveButton(BaseObjectType* obj,
                const Glib::RefPtr<Gtk::Builder>& builder,
-               Map& map);
+               Map& map,
+               Glib::RefPtr<Gtk::Application>& app);
 
 private:
     void onClick();
 
     Map& map;
+
+    Glib::RefPtr<Gtk::Application>& app;
 };
 
 
