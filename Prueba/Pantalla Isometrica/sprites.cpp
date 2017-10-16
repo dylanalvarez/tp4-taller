@@ -22,6 +22,7 @@ void FichaSprite::dibujarme(const Cairo::RefPtr<Cairo::Context>& cr){
 	cr->rectangle(x, y, x + image->get_width(), y + image->get_height()); //esto es importante.
 	cr->fill();
 	cr->restore();
+  cr->save();
 }
 
 void FichaSprite::dibujarmeIsometrico(const Cairo::RefPtr<Cairo::Context>& cr,
