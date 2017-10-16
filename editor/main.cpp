@@ -4,6 +4,7 @@
 #include "NameEntry.h"
 #include "AmbianceGrid.h"
 #include "HordeFrequencySpinButton.h"
+#include "AddHordeGrid.h"
 #include <gtkmm/application.h>
 #include <gtkmm/window.h>
 
@@ -28,6 +29,9 @@ int main(int argc, char **argv) {
     HordeFrequencySpinButton *hordeFrequencySpinButton;
     builder->get_widget_derived(
             "time-between-hordes", hordeFrequencySpinButton, map);
+
+    AddHordeGrid *addHordeGrid;
+    builder->get_widget_derived("add-horde-grid", addHordeGrid, map);
 
     auto returnCode = app->run(*mainWindow);
     delete mainWindow;

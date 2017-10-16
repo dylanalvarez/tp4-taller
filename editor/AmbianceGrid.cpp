@@ -37,7 +37,7 @@ AmbianceGrid::AmbianceGrid(BaseObjectType *obj,
 
     // Set default value
     desert->set_active(true);
-    map.setSetting(Map::desert);
+    map.setSetting(DEFAULT_SETTING);
 }
 
 void AmbianceGrid::onChange(std::string id) {

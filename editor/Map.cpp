@@ -74,10 +74,9 @@ void Map::exportToFile(const std::string &filename) const {
     destination << emitter.c_str();
 }
 
-Map::Map() : name(""),
-             setting(desert),
-             size(10, 10),
-             secondsBetweenHordes(10) {}
+Map::Map() : setting(DEFAULT_SETTING),
+             size(DEFAULT_SIZE_X, DEFAULT_SIZE_Y),
+             secondsBetweenHordes(DEFAULT_SECONDS_BETWEEN_HORDES) {}
 
 std::string Map::_toString(Map::Setting setting) const {
     switch (setting) {
@@ -119,4 +118,37 @@ void Map::setSetting(Setting setting) {
 
 void Map::setSecondsBetweenHordes(int seconds) {
     secondsBetweenHordes = seconds;
+}
+
+void Map::clearHordes() {
+    hordes.clear();
+}
+
+void Map::addHorde(Horde &horde) {
+    hordes.emplace_back(horde);
+}
+
+std::string Map::Horde::to_string() {
+    std::string representation = std::to_string(this->quantity) + " ";
+    switch (this->type) {
+        case greenDemon:
+            representation += "Demonio(s) verde(s)";
+            break;
+        case goatMan:
+            representation += "Hombre(s) cabra";
+            break;
+        case undead:
+            representation += "No muerto(s)";
+            break;
+        case spectre:
+            representation += "Espectro(s)";
+            break;
+        case bloodyHawk:
+            representation += "Halcon(es) sangriento(s)";
+            break;
+        case abmonible:
+            representation += "Abmonible(s)";
+            break;
+    }
+    return representation;
 }

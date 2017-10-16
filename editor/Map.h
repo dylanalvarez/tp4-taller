@@ -1,6 +1,12 @@
 #ifndef TP4_TALLER_MAP_H
 #define TP4_TALLER_MAP_H
 
+#define DEFAULT_HORDE_COUNT 1
+#define DEFAULT_HORDE_TYPE Map::greenDemon
+#define DEFAULT_SETTING Map::desert
+#define DEFAULT_SIZE_X 10
+#define DEFAULT_SIZE_Y 10
+#define DEFAULT_SECONDS_BETWEEN_HORDES 10
 
 #include <yaml-cpp/yaml.h>
 
@@ -13,6 +19,15 @@ public:
         greenDemon, goatMan, undead, spectre, bloodyHawk, abmonible
     };
 
+    struct Horde {
+        Horde(HordeType type, int quantity) : type(type), quantity(quantity) {}
+
+        std::string to_string();
+
+        HordeType type;
+        int quantity;
+    };
+
     Map();
 
     void setName(const std::string &name);
@@ -21,6 +36,10 @@ public:
 
     void setSecondsBetweenHordes(int seconds);
 
+    void addHorde(Horde &horde);
+
+    void clearHordes();
+
     void exportToFile(const std::string &filename) const;
 
 private:
@@ -28,13 +47,6 @@ private:
         Coordinate(int x, int y) : x(x), y(y) {}
 
         int x, y;
-    };
-
-    struct Horde {
-        Horde(HordeType type, int quantity) : type(type), quantity(quantity) {}
-
-        HordeType type;
-        int quantity;
     };
 
     std::string _toString(Setting setting) const;
