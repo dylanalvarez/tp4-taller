@@ -29,14 +29,16 @@ Vector& Vector::operator+=(const Vector& other) {
     return *this;
 }
 
-Vector Vector::operator-(const Vector& other) {
+Vector Vector::operator-(const Vector& other) const {
     return Vector(this->x - other.x, this->y - other.y);
 }
 
 void Vector::normalize() {
     double norm = std::abs(std::complex<float>(x, y));
-    this->x /= norm;
-    this->y /= norm;
+    if (norm != 0){
+        this->x /= (int)norm;
+        this->y /= (int)norm;
+    }
 }
 
 bool Vector::operator!=(const Vector& other) {
@@ -49,11 +51,13 @@ bool Vector::operator==(const Vector& other) {
 
 void Vector::normalizeAndRound() {
     double norm = std::abs(std::complex<float>(x, y));
-    this->x /= (int)norm;
-    this->y /= (int)norm;
+    if (norm != 0){
+        this->x /= (int)norm;
+        this->y /= (int)norm;
+    }
 }
 
-Vector Vector::operator+(const Vector& other) {
+Vector Vector::operator+(const Vector& other) const {
     return Vector(this->x + other.x, this->y + other.y);
 }
 

@@ -3,6 +3,7 @@
 //
 
 #include "ScenarioTest.h"
+#include "../src/model/Exceptions/EnemyError.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(ScenarioTest);
 
@@ -77,7 +78,7 @@ void ScenarioTest::getEnemyInRangeWhenNoOneIsRetunsAnEmpyListTest() {
 void ScenarioTest::addingGreenDemonAddsGreenDemonEnemyWithHisPropertiesTest() {
     scenario->addEnemy(1, "green_demon");
 
-    const std::vector<Enemy>& enemies = scenario->getAllEnemies();
+    std::vector<Enemy>& enemies = scenario->getAllEnemies();
 
     const Enemy& green_demon = enemies[0];
 
@@ -89,7 +90,7 @@ void ScenarioTest::addingGreenDemonAddsGreenDemonEnemyWithHisPropertiesTest() {
 void ScenarioTest::addingAbmonibleAddsAbmonibleEnemyWithHisPropertiesTest() {
     scenario->addEnemy(1, "abmonible");
 
-    const std::vector<Enemy>& enemies = scenario->getAllEnemies();
+    std::vector<Enemy>& enemies = scenario->getAllEnemies();
 
     const Enemy& abmonible = enemies[0];
 
@@ -101,7 +102,7 @@ void ScenarioTest::addingAbmonibleAddsAbmonibleEnemyWithHisPropertiesTest() {
 void ScenarioTest::addingBloodyHawkAddsBloodyHawkEnemyWithHisPropertiesTest() {
     scenario->addEnemy(1, "bloody_hawk");
 
-    const std::vector<Enemy>& enemies = scenario->getAllEnemies();
+    std::vector<Enemy>& enemies = scenario->getAllEnemies();
 
     const Enemy& bloody_hawk = enemies[0];
 
@@ -113,7 +114,7 @@ void ScenarioTest::addingBloodyHawkAddsBloodyHawkEnemyWithHisPropertiesTest() {
 void ScenarioTest::addingSpectrumAddsSpectrumEnemyWithHisPropertiesTest() {
     scenario->addEnemy(1, "spectrum");
 
-    const std::vector<Enemy>& enemies = scenario->getAllEnemies();
+    std::vector<Enemy>& enemies = scenario->getAllEnemies();
 
     const Enemy& spectrum = enemies[0];
 
@@ -125,7 +126,7 @@ void ScenarioTest::addingSpectrumAddsSpectrumEnemyWithHisPropertiesTest() {
 void ScenarioTest::addingGoatManAddsGoatManEnemyWithHisPropertiesTest() {
     scenario->addEnemy(1, "goat_man");
 
-    const std::vector<Enemy>& enemies = scenario->getAllEnemies();
+    std::vector<Enemy>& enemies = scenario->getAllEnemies();
 
     const Enemy& goat_man = enemies[0];
 
@@ -137,7 +138,7 @@ void ScenarioTest::addingGoatManAddsGoatManEnemyWithHisPropertiesTest() {
 void ScenarioTest::addingUndeadAddsUndeadEnemyWithHisPropertiesTest() {
     scenario->addEnemy(1, "undead");
 
-    const std::vector<Enemy>& enemies = scenario->getAllEnemies();
+    std::vector<Enemy>& enemies = scenario->getAllEnemies();
 
     const Enemy& undead = enemies[0];
 
@@ -146,6 +147,80 @@ void ScenarioTest::addingUndeadAddsUndeadEnemyWithHisPropertiesTest() {
     CPPUNIT_ASSERT(!undead.canIFlight());
 }
 
-void ScenarioTest::addingNonExistingEnemyTypeDoesNothingTest() {
-    scenario->addEnemy(1, "wolo");
+void ScenarioTest::addingNonExistingEnemyTypeThrowExceptionTest() {
+    CPPUNIT_ASSERT_THROW(scenario->addEnemy(1, "wolo"), EnemyError);
+}
+
+void ScenarioTest::addTwoEnemiesWithSameIdThrowExceptionTest() {
+    scenario->addEnemy(1, "undead");
+
+    CPPUNIT_ASSERT_THROW(scenario->addEnemy(1, "goat_man"), EnemyError);
+}
+
+void ScenarioTest::movingEnemiesOverPathTest() {
+    scenario->addEnemy(1, "green_demon");
+    scenario->addEnemy(2, "green_demon");
+    scenario->addEnemy(3, "green_demon");
+
+    std::vector<Enemy>& enemies = scenario->getAllEnemies();
+
+    // el path va de (0,0) a (0,5)
+    for (int i = 0; i < 6; i++){
+        for (Enemy& enemy : enemies){
+            enemy.move();
+        }
+    }
+
+    Vector final_pos(0,5);
+    for (Enemy& enemy: enemies){
+        CPPUNIT_ASSERT(final_pos == enemy.getCurrentPosition());
+    }
+}
+
+void ScenarioTest::movingEnemiesOverPathWithDistanceBetweenThemTest() {
+    std::vector<Enemy>& enemies = scenario->getAllEnemies();
+
+    scenario->addEnemy(1, "green_demon");
+    enemies[0].move();
+
+    scenario->addEnemy(2, "green_demon");
+    enemies[0].move();
+    enemies[1].move();
+
+    scenario->addEnemy(3, "green_demon");
+
+    // el path va de (0,0) a (0,5)
+    for (int i = 0; i < 6; i++){
+        for (Enemy& enemy : enemies){
+            enemy.move();
+        }
+    }
+
+    Vector final_pos(0,5);
+    for (Enemy& enemy: enemies){
+        CPPUNIT_ASSERT(final_pos == enemy.getCurrentPosition());
+    }
+}
+
+void ScenarioTest::movingEnemiesOverCurvedPathTest() {
+    Path path({Vector(0,0), Vector(0,5), Vector(3,5), Vector(3,2), Vector(-1,2)});
+
+    YAML::Node config = YAML::LoadFile("map.yaml");
+
+    Scenario scenario1(std::move(path), config);
+
+    std::vector<Enemy>& enemies = scenario1.getAllEnemies();
+
+    scenario1.addEnemy(1, "green_demon");
+    scenario1.addEnemy(2, "green_demon");
+
+    for (int i = 0; i < 15; i++){
+        enemies[0].move();
+        enemies[1].move();
+    }
+
+    Vector final_pos(-1,2);
+    for (Enemy& enemy: enemies){
+        CPPUNIT_ASSERT(final_pos == enemy.getCurrentPosition());
+    }
 }

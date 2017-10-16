@@ -3,6 +3,7 @@
 //
 
 #include "Scenario.h"
+#include "Exceptions/EnemyError.h"
 
 Scenario::Scenario(Path path, YAML::Node config) : path(std::move(path)) {
     // TODO obtener propiedades del nodo YAML
@@ -56,14 +57,21 @@ std::vector<Enemy*> Scenario::getEnemiesInRange(const Range &range,
 }
 
 void Scenario::addEnemy(int id, std::string enemy_type) {
+    for (Enemy& enemy : enemies){
+        if (enemy.getID() == id){
+            throw EnemyError("Error al añadir enemigo al escenario:"
+                                     " el id" + std::to_string(id) + "ya existe");
+        }
+    }
+
     try{
         EnemyProperties properties = enemies_properties.at(enemy_type);
         enemies.emplace_back(id, path, properties.hp, properties.speed,
                              properties.does_it_fly);
     } catch (std::exception& e) {
-        // do nothing
+       throw EnemyError("Error al agregar enemigo -> El tipo: " + enemy_type
+                        + " no es un tipo valido");
     }
-
 }
 
 Scenario::Scenario(Scenario&& other) noexcept : path(std::move(other.path)) {
@@ -77,6 +85,6 @@ Scenario& Scenario::operator=(Scenario&& other) noexcept {
     return *this;
 }
 
-const std::vector<Enemy> &Scenario::getAllEnemies() const {
+std::vector<Enemy> &Scenario::getAllEnemies() {
     return enemies;
 }

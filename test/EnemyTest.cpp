@@ -207,23 +207,29 @@ void EnemyTest::movementWhenInitialPositionIsEqualToEndingPositonTest() {
     Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
-    enemy = new Enemy(path, 10, 3, false);
+    enemy = new Enemy(path, 10, 2, false);
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
-    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 1);
+    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 2);
+
+    enemy->move();
+    CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 0);
 
     enemy->move();
     CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 0);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 4 && current_pos.getY() == 2);
+    CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 2);
+
+    enemy->move();
+    CPPUNIT_ASSERT(current_pos.getX() == 5 && current_pos.getY() == 2);
 
     enemy->move();
     CPPUNIT_ASSERT(current_pos.getX() == 5 && current_pos.getY() == 4);
 
     enemy->move();
-    CPPUNIT_ASSERT(current_pos.getX() == 2 && current_pos.getY() == 4);
+    CPPUNIT_ASSERT(current_pos.getX() == 3 && current_pos.getY() == 4);
 
     enemy->move();
     CPPUNIT_ASSERT(current_pos.getX() == 1 && current_pos.getY() == 4);

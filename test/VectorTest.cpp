@@ -82,3 +82,12 @@ void VectorTest::oneVectorIsLargerThanAnotherIfItsNormIs() {
 
     CPPUNIT_ASSERT(vec1 > vec2);
 }
+
+void VectorTest::normalizeAndRoundWhenBothCordinatesAreZeroDoesNothingTest() {
+    Vector vec1(0,0);
+
+    vec1.normalizeAndRound();
+
+    CPPUNIT_ASSERT_EQUAL(0, (int)vec1.getX());
+    CPPUNIT_ASSERT_EQUAL(0, (int)vec1.getY());
+}

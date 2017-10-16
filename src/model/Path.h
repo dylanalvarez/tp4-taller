@@ -14,7 +14,7 @@ public:
     explicit Path(std::vector<Vector>);
 
     // devuelve la siguiente posicion en la direccion adecuada
-    const Vector& getNextPosition();
+    const Vector& getNextPosition(const Vector& actual);
 
     const Vector& getInitialPosition();
 
@@ -25,9 +25,6 @@ public:
 
 private:
     std::vector<Vector> positions;
-    Vector current_position;
-    Vector direction;
-    std::vector<Vector>::iterator iterator;
 };
 
 #endif //TOWERDEFENSE_PATH_H
