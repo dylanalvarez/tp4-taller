@@ -21,7 +21,11 @@ class ScenarioTest : public CppUnit::TestCase {
         CPPUNIT_TEST(addingSpectrumAddsSpectrumEnemyWithHisPropertiesTest);
         CPPUNIT_TEST(addingGoatManAddsGoatManEnemyWithHisPropertiesTest);
         CPPUNIT_TEST(addingUndeadAddsUndeadEnemyWithHisPropertiesTest);
-        CPPUNIT_TEST(addingNonExistingEnemyTypeDoesNothingTest);
+        CPPUNIT_TEST(addingNonExistingEnemyTypeThrowExceptionTest);
+        CPPUNIT_TEST(addTwoEnemiesWithSameIdThrowExceptionTest);
+        CPPUNIT_TEST(movingEnemiesOverPathTest);
+        CPPUNIT_TEST(movingEnemiesOverPathWithDistanceBetweenThemTest);
+        CPPUNIT_TEST(movingEnemiesOverCurvedPathTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -39,8 +43,11 @@ protected:
     void addingSpectrumAddsSpectrumEnemyWithHisPropertiesTest();
     void addingGoatManAddsGoatManEnemyWithHisPropertiesTest();
     void addingUndeadAddsUndeadEnemyWithHisPropertiesTest();
-    void addingNonExistingEnemyTypeDoesNothingTest();
-    // TODO addingTwoEnemiesWithSameIdTest
+    void addingNonExistingEnemyTypeThrowExceptionTest();
+    void addTwoEnemiesWithSameIdThrowExceptionTest();
+    void movingEnemiesOverPathTest();
+    void movingEnemiesOverPathWithDistanceBetweenThemTest();
+    void movingEnemiesOverCurvedPathTest();
 private:
     Scenario* scenario;
 };

@@ -15,8 +15,8 @@ public:
     Enemy(int id, Path &path, unsigned int health_points, unsigned int speed,
           bool does_it_flight);
 
-    // mueve el enemigo las coordenadas indicadas por speed
-    // en la direccion correspondiente
+    // mueve el enemigo la cantidad de coordenadas indicadas por speed
+    // en la direccion correspondiente (segun el path)
     void move();
 
     // getters
@@ -24,7 +24,7 @@ public:
     int getID() const;
     unsigned int getHealthPoints() const;
     unsigned int getSpeed() const;
-    unsigned int canIFlight() const;
+    bool canIFlight() const;
 
     Enemy(const Enemy&) = delete;
     Enemy& operator=(const Enemy&) = delete;
@@ -32,9 +32,12 @@ public:
     Enemy(Enemy&&) noexcept;
 
 private:
-    int id;
     Path& path;
     Vector current_pos;
+    Vector current_destiny;
+    Vector direction;
+
+    int id;
     unsigned int hp;
     unsigned int speed;
     bool can_i_fly;

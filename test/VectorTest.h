@@ -21,6 +21,7 @@ class VectorTest : public CppUnit::TestCase {
         CPPUNIT_TEST(normalizeAndRoundTest);
         CPPUNIT_TEST(vectorPlusVectorReturnTheSumTest);
         CPPUNIT_TEST(oneVectorIsLargerThanAnotherIfItsNormIs);
+        CPPUNIT_TEST(normalizeAndRoundWhenBothCordinatesAreZeroDoesNothingTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -37,6 +38,7 @@ protected:
     void differentVectorsTest();
     void vectorPlusVectorReturnTheSumTest();
     void oneVectorIsLargerThanAnotherIfItsNormIs();
+    void normalizeAndRoundWhenBothCordinatesAreZeroDoesNothingTest();
 
 private:
     Vector vector;

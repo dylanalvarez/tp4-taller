@@ -9,8 +9,11 @@ Enemy::Enemy(Path &path, unsigned int health_points, unsigned int speed,
         path(path),
         hp(health_points),
         speed(speed),
-        can_i_fly(does_it_fly) {
-    current_pos = path.getInitialPosition();
+        can_i_fly(does_it_fly),
+        current_pos(path.getInitialPosition()),
+        current_destiny(path.getNextPosition(current_pos)) {
+    direction = (current_destiny - current_pos);
+    direction.normalizeAndRound();
 }
 
 Enemy::Enemy(int id, Path &path, unsigned int health_points, unsigned int speed,
@@ -18,10 +21,16 @@ Enemy::Enemy(int id, Path &path, unsigned int health_points, unsigned int speed,
     this->id = id;
 }
 
-
 void Enemy::move() {
     for (int i = 0; i < speed; i++){
-        current_pos = path.getNextPosition();
+        current_pos += direction;
+
+        if (current_pos == current_destiny){
+            // calcula nueva direccion
+            current_destiny = path.getNextPosition(current_destiny);
+            direction = (current_destiny - current_pos);
+            direction.normalizeAndRound();
+        }
     }
 }
 
@@ -40,7 +49,7 @@ unsigned int Enemy::getSpeed() const {
     return speed;
 }
 
-unsigned int Enemy::canIFlight() const {
+bool Enemy::canIFlight() const {
     return can_i_fly;
 }
 

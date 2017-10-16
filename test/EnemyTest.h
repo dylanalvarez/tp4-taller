@@ -34,6 +34,7 @@ protected:
     void movementWhenInitialPositionIsCloseToEndingPositonTest();
     void movementWhenInitialPositionIsEqualToEndingPositonTest();
     void whenPathConsistOnlyOfOnePointEnemyDoesNotMoveTest();
+
 private:
     Enemy* enemy = nullptr;
 };

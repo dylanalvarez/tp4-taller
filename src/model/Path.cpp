@@ -4,28 +4,15 @@
 
 #include "Path.h"
 
-Path::Path(std::vector<Vector> positions) : positions(std::move(positions)) {
-    current_position = this->positions.at(0);
-    iterator = this->positions.begin();
-    // calculo de primera direccion, entre el punto inicial y el siguiente
-    direction = *(iterator + 1) - *iterator;
-    direction.normalizeAndRound();
-    iterator++;
-}
+Path::Path(std::vector<Vector> positions) : positions(std::move(positions)) {}
 
-const Vector &Path::getNextPosition() {
-    if (iterator != positions.end()){
-        current_position += direction;
-
-        if (current_position == *iterator){
-            // calcula nueva direccion
-            direction = *(iterator + 1) - *iterator;
-            direction.normalizeAndRound();
-            iterator++;
+const Vector &Path::getNextPosition(const Vector& actual) {
+    for (int i = 0; i < positions.size() - 1; i++){
+        if (positions[i] == actual){
+            return positions[i + 1];
         }
     }
-
-    return current_position;
+    return positions.back();
 }
 
 const Vector &Path::getInitialPosition() {
@@ -34,16 +21,9 @@ const Vector &Path::getInitialPosition() {
 
 Path::Path(Path&& other) noexcept {
     this->positions = std::move(other.positions);
-    this->current_position = std::move(other.current_position);
-    this->direction = std::move(other.direction);
-    this->iterator = std::move(other.iterator);
 }
 
 Path &Path::operator=(Path&& other) noexcept {
     this->positions = std::move(other.positions);
-    this->current_position = std::move(other.current_position);
-    this->direction = std::move(other.direction);
-    this->iterator = std::move(other.iterator);
-
     return *this;
 }

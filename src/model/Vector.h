@@ -12,20 +12,21 @@
 class Vector {
 
 public:
-    explicit Vector(float x = 0, float y = 0);
+    Vector(float x = 0, float y = 0);
 
     float getX() const;
     float getY() const;
 
     void set_coordinates(float x, float y);
 
+    // sobrecarga de operadores
     Vector& operator+=(float);
     Vector& operator+=(const Vector&);
-    Vector operator-(const Vector&);
+    Vector operator-(const Vector&) const;
     bool operator!=(const Vector&);
     bool operator==(const Vector&);
     bool operator>(const Vector&);
-    Vector operator+(const Vector&);
+    Vector operator+(const Vector&) const;
 
     // divide cada coordenada por la norma del vector
     void normalize();
@@ -35,6 +36,7 @@ public:
 
     // retorna la norma del vector
     float getNorm();
+
 private:
     float x;
     float y;
@@ -52,7 +54,5 @@ namespace YAML {
         }
     };
 }
-
-
 
 #endif //TOWERDEFENSE_POSITION_H
