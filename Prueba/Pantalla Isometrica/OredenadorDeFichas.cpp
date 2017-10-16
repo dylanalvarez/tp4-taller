@@ -31,7 +31,6 @@ void OrdenadorDeFichas::imprimirTerreno(const Cairo::RefPtr<Cairo::Context>& cr,
   for (std::vector<Ficha>::iterator it = terreno.begin();
     it != terreno.end(); ++it){
     (it)->dibujarme(cr,desplasamientoX,desplasamientoY);
-    cr->save();
   }
 }
 
@@ -45,6 +44,5 @@ void OrdenadorDeFichas::imprimirTorres(const Cairo::RefPtr<Cairo::Context>& cr,
     it != torres.end(); ++it){
     //(it)->pulsaion();
     (it)->dibujarme(cr,desplasamientoX,desplasamientoY);
-    cr->save();
   }
 }
