@@ -8,20 +8,28 @@
 #include <yaml-cpp/yaml.h>
 #include "Enemy.h"
 #include "Range.h"
+#include "Tower.h"
 
 class Scenario {
 public:
-    Scenario(Path path, YAML::Node config);
+    Scenario(Path&& path, std::vector<Vector>&& firm_ground_locations);
+    ~Scenario();
 
-    // añade un enemigo con la identificacion determinada por id
-    // Pre: no existe otro enemigo con el mismo id, y enemy_type
-    // es un tipo valido
-    void addEnemy(int id, std::string enemy_type);
+    void addEnemy(Enemy&& enemy);
+
+    // añade una torre en la posicion que ella contiene
+    // Pre: la posicion debe ser terreno firme
+    void addTower(Tower* tower);
 
     // retorna los n primeros enemigos dentro del rango
-    std::vector<Enemy*> getEnemiesInRange(const Range &range, int n);
+    // cuando es -1 retorna todos los que esten en rango
+    std::vector<Enemy*> getEnemiesInRange(const Range &range, int n = -1);
 
     std::vector<Enemy>& getAllEnemies();
+
+    std::vector<Tower*>& getTowers();
+
+    Path& getPath();
 
     Scenario(const Scenario&) = delete;
     Scenario& operator=(const Scenario&) = delete;
@@ -30,22 +38,9 @@ public:
 
 private:
     std::vector<Enemy> enemies;
+    std::vector<Tower*> towers;
+    std::vector<Vector> firm_ground_locations;
     Path path;
-
-    // estructura utilizada para guardar las propiedades de un enemigo
-    struct EnemyProperties {
-        unsigned int hp;
-        unsigned int speed;
-        bool does_it_fly;
-
-        EnemyProperties(unsigned int hp, unsigned int speed, bool does_it_fly) {
-            this->hp = hp;
-            this->speed = speed;
-            this->does_it_fly = does_it_fly;
-        }
-    };
-
-    std::map<std::string, EnemyProperties> enemies_properties;
 };
 
 

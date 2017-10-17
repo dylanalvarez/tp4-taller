@@ -19,6 +19,9 @@ public:
     // en la direccion correspondiente (segun el path)
     void move();
 
+    // reduce la vida en la cantidad indicada por dmg_points;
+    void reduceLife(unsigned int dmg_points);
+
     // getters
     const Vector& getCurrentPosition() const;
     int getID() const;

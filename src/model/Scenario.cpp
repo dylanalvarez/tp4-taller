@@ -3,43 +3,18 @@
 //
 
 #include "Scenario.h"
-#include "Exceptions/EnemyError.h"
+#include "Exceptions/TowerError.h"
 
-Scenario::Scenario(Path path, YAML::Node config) : path(std::move(path)) {
-    // TODO obtener propiedades del nodo YAML
-    typedef std::pair<std::string, EnemyProperties> pair;
-
-    // green_demon
-    EnemyProperties properties(300, 1, false);
-    pair green_demon("green_demon", properties);
-    // abmonible
-    properties.hp = 200;
-    pair abmonible("abmonible", properties);
-    // goat_man
-    properties.hp = 100;
-    properties.speed = 2;
-    pair goat_man("goat_man", properties);
-    // undead
-    properties.hp = 20;
-    properties.speed = 10;
-    pair undead("undead", properties);
-    // bloody_hawk
-    properties.hp = 100;
-    properties.speed = 4;
-    properties.does_it_fly = true;
-    pair bloody_hawk("bloody_hawk", properties);
-    // spectrum
-    properties.speed = 6;
-    pair spectrum("spectrum", properties);
-
-    enemies_properties.insert(abmonible);
-    enemies_properties.insert(green_demon);
-    enemies_properties.insert(bloody_hawk);
-    enemies_properties.insert(spectrum);
-    enemies_properties.insert(goat_man);
-    enemies_properties.insert(undead);
+Scenario::Scenario(Path&& path, std::vector<Vector>&& firm_ground_locations) :
+        path(std::move(path)) {
+    this->firm_ground_locations = std::move(firm_ground_locations);
 }
 
+Scenario::~Scenario() {
+    for (auto &tower : towers) {
+        delete tower;
+    }
+}
 
 std::vector<Enemy*> Scenario::getEnemiesInRange(const Range &range,
                                                 int count) {
@@ -47,31 +22,18 @@ std::vector<Enemy*> Scenario::getEnemiesInRange(const Range &range,
     for (Enemy& enemy : enemies){
         if (range.isInRange(enemy.getCurrentPosition())){
             closest_enemies.push_back(&enemy);
-            if (closest_enemies.size() == count){
+            if (count != -1 && closest_enemies.size() == count){
+                // si es -1 -> devolver todos los que esten en rango
                 break;
             }
         }
     }
 
-    return closest_enemies;
+    return std::move(closest_enemies);
 }
 
-void Scenario::addEnemy(int id, std::string enemy_type) {
-    for (Enemy& enemy : enemies){
-        if (enemy.getID() == id){
-            throw EnemyError("Error al añadir enemigo al escenario:"
-                                     " el id" + std::to_string(id) + "ya existe");
-        }
-    }
-
-    try{
-        EnemyProperties properties = enemies_properties.at(enemy_type);
-        enemies.emplace_back(id, path, properties.hp, properties.speed,
-                             properties.does_it_fly);
-    } catch (std::exception& e) {
-       throw EnemyError("Error al agregar enemigo -> El tipo: " + enemy_type
-                        + " no es un tipo valido");
-    }
+void Scenario::addEnemy(Enemy&& enemy) {
+    enemies.push_back(std::move(enemy));
 }
 
 Scenario::Scenario(Scenario&& other) noexcept : path(std::move(other.path)) {
@@ -87,4 +49,30 @@ Scenario& Scenario::operator=(Scenario&& other) noexcept {
 
 std::vector<Enemy> &Scenario::getAllEnemies() {
     return enemies;
+}
+
+std::vector<Tower*>& Scenario::getTowers() {
+    return towers;
+}
+
+Path &Scenario::getPath() {
+    return path;
+}
+
+void Scenario::addTower(Tower* tower) {
+    bool can_be_added = false;
+    for (Vector& firm_ground : firm_ground_locations){
+        if (tower->getPosition() == firm_ground) {
+            can_be_added = true;
+            break;
+        }
+    }
+
+    if (can_be_added){
+        towers.push_back(tower);
+    } else {
+        throw TowerError("Error al agregar torre en la posicion: " +
+                                 tower->getPosition().to_string() +
+                                 ". La posicion ya fue ocupada o no es terreno firme");
+    }
 }

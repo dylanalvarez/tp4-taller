@@ -12,7 +12,7 @@
 class Vector {
 
 public:
-    Vector(float x = 0, float y = 0);
+    explicit Vector(float x = 0, float y = 0);
 
     float getX() const;
     float getY() const;
@@ -23,9 +23,9 @@ public:
     Vector& operator+=(float);
     Vector& operator+=(const Vector&);
     Vector operator-(const Vector&) const;
-    bool operator!=(const Vector&);
-    bool operator==(const Vector&);
-    bool operator>(const Vector&);
+    bool operator!=(const Vector&) const;
+    bool operator==(const Vector&) const;
+    bool operator>(const Vector&) const;
     Vector operator+(const Vector&) const;
 
     // divide cada coordenada por la norma del vector
@@ -36,6 +36,8 @@ public:
 
     // retorna la norma del vector
     float getNorm();
+
+    std::string to_string() const;
 
 private:
     float x;

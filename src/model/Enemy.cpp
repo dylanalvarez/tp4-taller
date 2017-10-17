@@ -56,3 +56,7 @@ bool Enemy::canIFlight() const {
 unsigned int Enemy::getHealthPoints() const {
     return hp;
 }
+
+void Enemy::reduceLife(unsigned int dmg_points) {
+    this->hp -= dmg_points;
+}

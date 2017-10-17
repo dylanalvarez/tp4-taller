@@ -41,11 +41,11 @@ void Vector::normalize() {
     }
 }
 
-bool Vector::operator!=(const Vector& other) {
+bool Vector::operator!=(const Vector& other) const {
     return (this->x != other.x || this->y != other.y);
 }
 
-bool Vector::operator==(const Vector& other) {
+bool Vector::operator==(const Vector& other) const {
     return (this->x == other.x && this->y == other.y);
 }
 
@@ -61,7 +61,7 @@ Vector Vector::operator+(const Vector& other) const {
     return Vector(this->x + other.x, this->y + other.y);
 }
 
-bool Vector::operator>(const Vector& other) {
+bool Vector::operator>(const Vector& other) const {
     double my_norm = std::abs(std::complex<float>(x, y));
     double other_norm = std::abs(std::complex<float>(other.x, other.y));
 
@@ -75,4 +75,8 @@ void Vector::set_coordinates(float x, float y) {
 
 float Vector::getNorm() {
     return std::abs(std::complex<float>(x, y));
+}
+
+std::string Vector::to_string() const {
+    return "(" + std::to_string(x) + "," + std::to_string(y) + ")";
 }

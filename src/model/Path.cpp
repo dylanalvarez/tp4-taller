@@ -4,7 +4,7 @@
 
 #include "Path.h"
 
-Path::Path(std::vector<Vector> positions) : positions(std::move(positions)) {}
+Path::Path(std::vector<Vector>&& positions) : positions(std::move(positions)) {}
 
 const Vector &Path::getNextPosition(const Vector& actual) {
     for (int i = 0; i < positions.size() - 1; i++){

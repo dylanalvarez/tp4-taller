@@ -6,17 +6,36 @@
 #define TOWERDEFENSE_TOWER_H
 
 
+#include "Vector.h"
+#include "Range.h"
+#include "Enemy.h"
+
+class Scenario;
+
 class Tower {
 public:
-    Tower();
+    Tower(int id, Vector position, const YAML::Node& properties,
+          Scenario& scenario);
     virtual ~Tower();
 
     virtual void attack() = 0;
 
     unsigned int getExperience() const;
 
+    const Vector& getPosition() const;
+
 protected:
+    int id;
     unsigned int experience;
+    Vector position;
+    const YAML::Node& properties;
+    Scenario& scenario;
+
+    Range range;
+    unsigned int dmg;
+    unsigned int attack_cooldown;
+    time_t last_attack_time;
+    Enemy* current_target;
 };
 
 

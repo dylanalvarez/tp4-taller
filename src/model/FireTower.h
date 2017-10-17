@@ -11,12 +11,15 @@
 
 class FireTower : public Tower {
 public:
-    FireTower(Vector p, unsigned int initial_damage,
-              unsigned int speed_reduction);
+    FireTower(int id, Vector p, const YAML::Node& properties,
+              Scenario& scneario);
 
     ~FireTower() override;
 
     void attack() override;
+
+private:
+    unsigned int dmg_to_nearby_enemies;
 };
 
 
