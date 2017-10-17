@@ -3,7 +3,7 @@ que va en el yml del server al client enviado periodicamente:
 state: 'ongoing' / 'won' / 'lost'
 
 enemy:
-	id: 1
+	tower_id: 1
 	vida: 2
 	posicion:
 		x: 1
@@ -11,7 +11,7 @@ enemy:
 	kind: 'yeti'
 	
 tower:
-	id: 2
+	tower_id: 2
 	element: 'earth'
 	lv: 2
 	xp: 100

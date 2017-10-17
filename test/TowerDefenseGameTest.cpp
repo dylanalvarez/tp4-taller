@@ -4,6 +4,8 @@
 
 #include "TowerDefenseGameTest.h"
 #include "../src/model/Exceptions/EnemyError.h"
+#include "../src/model/Exceptions/TowerError.h"
+#include "../src/model/Exceptions/MatchError.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TowerDefenseGameTest);
 
@@ -126,3 +128,33 @@ void TowerDefenseGameTest::movingEnemiesOverPathWithDistanceBetweenThemTest() {
     }
 }
 
+void TowerDefenseGameTest::ifNotAddedPlayerTriesToAddTowerThrowExceptionTest() {
+    Player player("alguien");
+
+    CPPUNIT_ASSERT_THROW(game.addTower(player, "fire", Vector(0,0)), TowerError);
+}
+
+void TowerDefenseGameTest::whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest() {
+    // segun el archivo map.yaml, el path es { (0,0), (0,5), (3,5), (3,2), (-1,2) }
+    // y hay terreno firme en (5,5)
+
+    game.addEnemy("green_demon");
+
+}
+
+void TowerDefenseGameTest::addedPlayerCanAddTowerTest() {
+    const Player& added_player = game.addPlayer("alguien");
+
+    game.addTower(added_player, "fire", Vector(0,0));
+
+    CPPUNIT_ASSERT_NO_THROW(game.addTower(added_player, "fire", Vector(0,0)));
+}
+
+void TowerDefenseGameTest::cantAddMoreThanFourPlayersTest() {
+    game.addPlayer("jugador1");
+    game.addPlayer("jugador2");
+    game.addPlayer("jugador3");
+    game.addPlayer("jugador4");
+
+    CPPUNIT_ASSERT_THROW(game.addPlayer("player5"), MatchError);
+}

@@ -17,6 +17,8 @@ public:
 
     void addEnemy(Enemy&& enemy);
 
+    // añade una torre en la posicion que ella contiene
+    // Pre: la posicion debe ser terreno firme
     void addTower(Tower* tower);
 
     // retorna los n primeros enemigos dentro del rango

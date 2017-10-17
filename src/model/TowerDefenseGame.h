@@ -9,6 +9,7 @@
 #include <map>
 #include "Path.h"
 #include "Scenario.h"
+#include "Player.h"
 
 class TowerDefenseGame {
 public:
@@ -20,17 +21,26 @@ public:
     // Pre: el tipo debe ser valido
     void addEnemy(const std::string& enemy_type);
 
+    // añade la torre de tipo type en la posicion position
+    void addTower(const Player& player, const std::string& type,
+     const Vector& position);
+
+    // añade un jugador a la partida
+    // Pre: existen menos de 4 jugadores en la partida
+    const Player& addPlayer(const std::string& name);
+
     // mueve todos los enemigos
     void moveEnemies();
 
     const std::vector<Enemy>& getAllEnemies() const;
 
 private:
-    int id;
+    int tower_id;
     Scenario* scenario;
+    std::vector<Player> players;
 
     void loadEnemyProperties(YAML::Node&);
-
+    bool doesPlayerExist(const Player& player);
 private:
     // estructura utilizada para guardar las propiedades de un enemigo
     struct EnemyProperties {

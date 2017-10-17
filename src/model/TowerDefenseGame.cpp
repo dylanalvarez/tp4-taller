@@ -4,6 +4,8 @@
 
 #include "TowerDefenseGame.h"
 #include "Exceptions/EnemyError.h"
+#include "Exceptions/TowerError.h"
+#include "Exceptions/MatchError.h"
 
 TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
                                    const std::string &scenario_file) {
@@ -13,11 +15,11 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
     // cargar propiedades de las torres
     // cargar propiedades del escenario
 
-    id = 1;
+    tower_id = 1;
     Path path({Vector(0,0), Vector(0,5), Vector(3,5),
                Vector(3,2), Vector(-1, 2)});
 
-    std::vector<Vector> firm_ground_locations = {Vector(0,5)};
+    std::vector<Vector> firm_ground_locations = {Vector(1,5)};
 
     scenario = new Scenario(std::move(path), std::move(firm_ground_locations));
 }
@@ -29,7 +31,7 @@ TowerDefenseGame::~TowerDefenseGame(){
 void TowerDefenseGame::addEnemy(const std::string &enemy_type) {
     try{
         EnemyProperties properties = enemies_properties.at(enemy_type);
-        Enemy enemy(id++, scenario->getPath(), properties.hp, properties.speed,
+        Enemy enemy(tower_id++, scenario->getPath(), properties.hp, properties.speed,
                              properties.does_it_fly);
         scenario->addEnemy(std::move(enemy));
     } catch (std::exception& e) {
@@ -80,4 +82,29 @@ void TowerDefenseGame::moveEnemies() {
     for (Enemy& enemy : scenario->getAllEnemies()){
         enemy.move();
     }
+}
+
+bool TowerDefenseGame::doesPlayerExist(const Player &player) {
+    for (Player& p : players) {
+        if (&p == &player){
+            return true;
+        }
+    }
+    return false;
+}
+
+void TowerDefenseGame::addTower(const Player &player, const std::string &type,
+                                const Vector &position) {
+    if (!doesPlayerExist(player)) {
+        throw TowerError("Error al añadir la torre de tipo " + type +
+                         ", el jugador " + player.getName() +
+                         "no pertence a la partida");
+    }
+}
+
+const Player& TowerDefenseGame::addPlayer(const std::string &name) {
+    if (players.size() == 4) { throw MatchError("Error al añadir jugador: " +
+                                                       name + ": partida llena");}
+    players.emplace_back(name);
+    return players.back();
 }
