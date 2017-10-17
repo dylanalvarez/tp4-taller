@@ -134,20 +134,12 @@ void TowerDefenseGameTest::ifNotAddedPlayerTriesToAddTowerThrowExceptionTest() {
     CPPUNIT_ASSERT_THROW(game.addTower(player, "fire", Vector(0,0)), TowerError);
 }
 
-void TowerDefenseGameTest::whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest() {
-    // segun el archivo map.yaml, el path es { (0,0), (0,5), (3,5), (3,2), (-1,2) }
-    // y hay terreno firme en (5,5)
-
-    game.addEnemy("green_demon");
-
-}
-
 void TowerDefenseGameTest::addedPlayerCanAddTowerTest() {
     const Player& added_player = game.addPlayer("alguien");
 
-    game.addTower(added_player, "fire", Vector(0,0));
+    game.addTower(added_player, "fire", Vector(5,5));
 
-    CPPUNIT_ASSERT_NO_THROW(game.addTower(added_player, "fire", Vector(0,0)));
+    CPPUNIT_ASSERT_NO_THROW(game.addTower(added_player, "fire", Vector(5,5)));
 }
 
 void TowerDefenseGameTest::cantAddMoreThanFourPlayersTest() {
@@ -157,4 +149,152 @@ void TowerDefenseGameTest::cantAddMoreThanFourPlayersTest() {
     game.addPlayer("jugador4");
 
     CPPUNIT_ASSERT_THROW(game.addPlayer("player5"), MatchError);
+}
+
+void TowerDefenseGameTest::whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest() {
+    // segun el archivo map.yaml, el path es { (0,0), (0,5), (3,5), (3,2), (-1,2) }
+    // y hay terreno firme en (5,5)
+
+    const Player& added_player = game.addPlayer("alguien");
+    game.addTower(added_player, "fire", Vector(5,5));
+
+    game.addEnemy("green_demon");
+    const Enemy& enemy = game.getAllEnemies()[0];
+    unsigned int initial_life = enemy.getHealthPoints();
+
+    // el rango de la torre de fuego es 3
+    // cuando el enemigo se mueve 7 veces, esta en (2,5) y
+    // dentro del rango de la torre
+    for (int i = 0; i < 7; i++){
+        game.moveEnemies();
+    }
+
+    game.performeAttacks();
+
+    CPPUNIT_ASSERT(initial_life > enemy.getHealthPoints());
+}
+
+void TowerDefenseGameTest::fireTowerAttacksAllnearbyEnemiesWithLessDamageTest() {
+    // segun el archivo map.yaml, el path es { (0,0), (0,5), (3,5), (3,2), (-1,2) }
+    // y hay terreno firme en (5,5)
+
+    const Player& added_player = game.addPlayer("alguien");
+    game.addTower(added_player, "fire", Vector(5,5));
+
+    game.addEnemy("green_demon");
+    game.addEnemy("green_demon");
+    game.addEnemy("green_demon");
+    const std::vector<Enemy>& enemies = game.getAllEnemies();
+
+    unsigned int initial_life_enemy1 = enemies[0].getHealthPoints();
+    unsigned int initial_life_enemy2 = enemies[1].getHealthPoints();
+    unsigned int initial_life_enemy3 = enemies[2].getHealthPoints();
+
+    // el rango de la torre de fuego es 3
+    // cuando el enemigo se mueve 7 veces, esta en (2,5) y
+    // dentro del rango de la torre
+    for (int i = 0; i < 7; i++){
+        game.moveEnemies();
+    }
+
+    game.performeAttacks();
+
+    CPPUNIT_ASSERT(initial_life_enemy1 > enemies[0].getHealthPoints());
+    CPPUNIT_ASSERT(initial_life_enemy2 > enemies[1].getHealthPoints());
+    CPPUNIT_ASSERT(initial_life_enemy3 > enemies[2].getHealthPoints());
+
+    CPPUNIT_ASSERT(enemies[0].getHealthPoints() < enemies[1].getHealthPoints());
+    CPPUNIT_ASSERT(enemies[0].getHealthPoints() < enemies[2].getHealthPoints());
+}
+
+void TowerDefenseGameTest::fireTowerDoesNotAttacksEnemiesThatAreNotInRangeTest() {
+    const Player& added_player = game.addPlayer("alguien");
+    game.addTower(added_player, "fire", Vector(5,5));
+
+    game.addEnemy("green_demon");
+    game.addEnemy("green_demon");
+    game.addEnemy("green_demon");
+    const std::vector<Enemy>& enemies = game.getAllEnemies();
+
+    unsigned int initial_life_enemy1 = enemies[0].getHealthPoints();
+    unsigned int initial_life_enemy2 = enemies[1].getHealthPoints();
+    unsigned int initial_life_enemy3 = enemies[2].getHealthPoints();
+
+    game.performeAttacks();
+
+    CPPUNIT_ASSERT(initial_life_enemy1 = enemies[0].getHealthPoints());
+    CPPUNIT_ASSERT(initial_life_enemy2 = enemies[1].getHealthPoints());
+    CPPUNIT_ASSERT(initial_life_enemy3 = enemies[2].getHealthPoints());
+}
+
+void TowerDefenseGameTest::fireTowerAttacksOneTimeEveryThreeSecondsTest() {
+    const Player& added_player = game.addPlayer("alguien");
+    game.addTower(added_player, "fire", Vector(5,5));
+
+    game.addEnemy("green_demon");
+    const std::vector<Enemy>& enemies = game.getAllEnemies();
+
+    unsigned int initial_life_enemy1 = enemies[0].getHealthPoints();
+
+    // el rango de la torre de fuego es 3
+    // cuando el enemigo se mueve 7 veces, esta en (2,5) y
+    // dentro del rango de la torre
+    for (int i = 0; i < 7; i++){
+        game.moveEnemies();
+    }
+
+    game.performeAttacks();
+
+    CPPUNIT_ASSERT(initial_life_enemy1 > enemies[0].getHealthPoints());
+
+    initial_life_enemy1 = enemies[0].getHealthPoints();
+
+    game.performeAttacks();
+
+    CPPUNIT_ASSERT(initial_life_enemy1 == enemies[0].getHealthPoints());
+
+    sleep(3);
+
+    game.performeAttacks();
+
+    CPPUNIT_ASSERT(initial_life_enemy1 > enemies[0].getHealthPoints());
+}
+
+void TowerDefenseGameTest::fireTowerDoesNotChangeObjetiveIfItsAliveTest() {
+    const Player& added_player = game.addPlayer("alguien");
+    game.addTower(added_player, "fire", Vector(5,5));
+
+    game.addEnemy("green_demon");
+    game.moveEnemies();
+    game.moveEnemies();
+    game.addEnemy("goat_man");
+
+    const Enemy& enemy = game.getAllEnemies()[0];
+    const Enemy& enemy2 = game.getAllEnemies()[1];
+
+    unsigned int initial_life1 = enemy.getHealthPoints();
+    unsigned int initial_life2 = enemy2.getHealthPoints();
+
+    // el rango de la torre de fuego es 3
+    // cuando el enemigo se mueve 7 veces, esta en (2,5) y
+    // dentro del rango de la torre
+    for (int i = 0; i < 5; i++){
+        game.moveEnemies();
+    }
+
+    game.performeAttacks();
+
+    CPPUNIT_ASSERT(initial_life2 > enemy2.getHealthPoints());
+    CPPUNIT_ASSERT(initial_life1 == enemy.getHealthPoints());
+
+    initial_life2 = enemy.getHealthPoints();
+
+    game.moveEnemies();
+
+    sleep(3);
+
+    game.performeAttacks();
+
+    CPPUNIT_ASSERT(initial_life2 > enemy2.getHealthPoints());
+    CPPUNIT_ASSERT(initial_life1 == enemy.getHealthPoints());
 }

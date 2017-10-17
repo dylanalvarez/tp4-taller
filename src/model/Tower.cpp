@@ -4,7 +4,10 @@
 
 #include "Tower.h"
 
-Tower::Tower() : experience(0) {}
+Tower::Tower(int id, Vector position, const YAML::Node& properties,
+             Scenario& scenario) : experience(0), id(id),
+                                   properties(properties),
+                                   scenario(scenario) {}
 
 Tower::~Tower() = default;
 

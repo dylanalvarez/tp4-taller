@@ -24,6 +24,10 @@ class TowerDefenseGameTest : public CppUnit::TestCase {
         CPPUNIT_TEST(addedPlayerCanAddTowerTest);
         CPPUNIT_TEST(whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest);
         CPPUNIT_TEST(cantAddMoreThanFourPlayersTest);
+        CPPUNIT_TEST(fireTowerAttacksAllnearbyEnemiesWithLessDamageTest);
+        CPPUNIT_TEST(fireTowerDoesNotAttacksEnemiesThatAreNotInRangeTest);
+        CPPUNIT_TEST(fireTowerAttacksOneTimeEveryThreeSecondsTest);
+        CPPUNIT_TEST(fireTowerDoesNotChangeObjetiveIfItsAliveTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -43,6 +47,10 @@ protected:
     void addedPlayerCanAddTowerTest();
     void cantAddMoreThanFourPlayersTest();
     void whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest();
+    void fireTowerAttacksAllnearbyEnemiesWithLessDamageTest();
+    void fireTowerDoesNotAttacksEnemiesThatAreNotInRangeTest();
+    void fireTowerAttacksOneTimeEveryThreeSecondsTest();
+    void fireTowerDoesNotChangeObjetiveIfItsAliveTest();
 
 private:
     TowerDefenseGame game;

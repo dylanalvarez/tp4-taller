@@ -22,7 +22,8 @@ public:
     void addTower(Tower* tower);
 
     // retorna los n primeros enemigos dentro del rango
-    std::vector<Enemy*> getEnemiesInRange(const Range &range, int n);
+    // cuando es -1 retorna todos los que esten en rango
+    std::vector<Enemy*> getEnemiesInRange(const Range &range, int n = -1);
 
     std::vector<Enemy>& getAllEnemies();
 

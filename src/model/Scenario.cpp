@@ -22,13 +22,14 @@ std::vector<Enemy*> Scenario::getEnemiesInRange(const Range &range,
     for (Enemy& enemy : enemies){
         if (range.isInRange(enemy.getCurrentPosition())){
             closest_enemies.push_back(&enemy);
-            if (closest_enemies.size() == count){
+            if (count != -1 && closest_enemies.size() == count){
+                // si es -1 -> devolver todos los que esten en rango
                 break;
             }
         }
     }
 
-    return closest_enemies;
+    return std::move(closest_enemies);
 }
 
 void Scenario::addEnemy(Enemy&& enemy) {

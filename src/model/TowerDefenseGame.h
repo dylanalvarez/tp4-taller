@@ -10,6 +10,7 @@
 #include "Path.h"
 #include "Scenario.h"
 #include "Player.h"
+#include "Factory/TowerFactory.h"
 
 class TowerDefenseGame {
 public:
@@ -29,18 +30,25 @@ public:
     // Pre: existen menos de 4 jugadores en la partida
     const Player& addPlayer(const std::string& name);
 
+    const std::vector<Enemy>& getAllEnemies() const;
+
+    /*** Metodos que actualizan el estado del juego ***/
+
     // mueve todos los enemigos
     void moveEnemies();
-
-    const std::vector<Enemy>& getAllEnemies() const;
+    void performeAttacks();
 
 private:
     int tower_id;
     Scenario* scenario;
     std::vector<Player> players;
 
+    YAML::Node tower_properties;
+
     void loadEnemyProperties(YAML::Node&);
+    void loadTowerProperties(YAML::Node&);
     bool doesPlayerExist(const Player& player);
+
 private:
     // estructura utilizada para guardar las propiedades de un enemigo
     struct EnemyProperties {
@@ -56,6 +64,7 @@ private:
     };
 
     std::map<std::string, EnemyProperties> enemies_properties;
+    std::map<std::string, TowerFactory*> towers_factory;
 };
 
 

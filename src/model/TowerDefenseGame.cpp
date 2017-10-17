@@ -6,12 +6,14 @@
 #include "Exceptions/EnemyError.h"
 #include "Exceptions/TowerError.h"
 #include "Exceptions/MatchError.h"
+#include "Factory/FireTowerFactory.h"
 
 TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
                                    const std::string &scenario_file) {
     YAML::Node config = YAML::LoadFile(config_file);
-    loadEnemyProperties(config);
 
+    loadEnemyProperties(config);
+    loadTowerProperties(config);
     // cargar propiedades de las torres
     // cargar propiedades del escenario
 
@@ -19,13 +21,17 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
     Path path({Vector(0,0), Vector(0,5), Vector(3,5),
                Vector(3,2), Vector(-1, 2)});
 
-    std::vector<Vector> firm_ground_locations = {Vector(1,5)};
+    std::vector<Vector> firm_ground_locations = {Vector(5,5)};
 
     scenario = new Scenario(std::move(path), std::move(firm_ground_locations));
 }
 
 TowerDefenseGame::~TowerDefenseGame(){
     delete scenario;
+
+    for (auto& tower_factory : towers_factory) {
+        delete tower_factory.second;
+    }
 }
 
 void TowerDefenseGame::addEnemy(const std::string &enemy_type) {
@@ -100,6 +106,9 @@ void TowerDefenseGame::addTower(const Player &player, const std::string &type,
                          ", el jugador " + player.getName() +
                          "no pertence a la partida");
     }
+
+    scenario->addTower(towers_factory.at(type)->create(tower_id, position,
+                                                       tower_properties, *scenario));
 }
 
 const Player& TowerDefenseGame::addPlayer(const std::string &name) {
@@ -107,4 +116,15 @@ const Player& TowerDefenseGame::addPlayer(const std::string &name) {
                                                        name + ": partida llena");}
     players.emplace_back(name);
     return players.back();
+}
+
+void TowerDefenseGame::performeAttacks() {
+    for (auto& tower: scenario->getTowers()){
+        tower->attack();
+    }
+}
+
+void TowerDefenseGame::loadTowerProperties(YAML::Node& properties) {
+    tower_properties = properties;
+    towers_factory.emplace("fire", new FireTowerFactory());
 }

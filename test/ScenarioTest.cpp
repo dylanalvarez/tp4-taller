@@ -89,11 +89,13 @@ void ScenarioTest::towersCanOnlyBePlacedOnFirmGroundTest() {
     Scenario new_scenario(std::move(Path({Vector(0,0), Vector(0,5)})),
                           {Vector(1,5)});
 
-    new_scenario.addTower(new FireTower(1, Vector(1,5), config));
-    Tower* tower = new FireTower(1, Vector(2,5), config);
+    new_scenario.addTower(new FireTower(1, Vector(1,5), config, new_scenario));
+    Tower* tower = new FireTower(1, Vector(2,5), config, new_scenario);
 
     CPPUNIT_ASSERT_THROW(new_scenario.addTower(tower),TowerError);
     CPPUNIT_ASSERT_EQUAL(1, (int)new_scenario.getTowers().size());
+
+    delete tower;
 }
 
 void ScenarioTest::cantAddTwoTowersOnTheSamePlaceTest() {
@@ -103,9 +105,11 @@ void ScenarioTest::cantAddTwoTowersOnTheSamePlaceTest() {
     Scenario new_scenario(std::move(Path({Vector(0,0), Vector(0,5)})),
                           {Vector(1,5)});
 
-    new_scenario.addTower(new FireTower(1, Vector(1,5), config));
+    new_scenario.addTower(new FireTower(1, Vector(1,5), config, new_scenario));
 
-    Tower* tower = new FireTower(1, Vector(2,5), config);
+    Tower* tower = new FireTower(1, Vector(2,5), config, new_scenario);
 
     CPPUNIT_ASSERT_THROW(new_scenario.addTower(tower),TowerError);
+
+    delete tower;
 }

@@ -10,7 +10,7 @@
 
 class Range {
 public:
-    Range(Vector center, float radius);
+    explicit Range(Vector center = Vector(0,0), float radius = 0);
 
     // retorna true si el vector esta dentro de la circunferencia
     // especificada por center y radius
