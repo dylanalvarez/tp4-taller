@@ -12,12 +12,12 @@
 
 class Scenario {
 public:
-    explicit Scenario(Path path);
+    Scenario(Path&& path, std::vector<Vector>&& firm_ground_locations);
     ~Scenario();
 
-    void addEnemy(Enemy enemy);
+    void addEnemy(Enemy&& enemy);
 
-    void addTower(Tower* tower, const Vector& position);
+    void addTower(Tower* tower);
 
     // retorna los n primeros enemigos dentro del rango
     std::vector<Enemy*> getEnemiesInRange(const Range &range, int n);
@@ -36,7 +36,7 @@ public:
 private:
     std::vector<Enemy> enemies;
     std::vector<Tower*> towers;
-    std::vector<Vector> firm_ground;
+    std::vector<Vector> firm_ground_locations;
     Path path;
 };
 

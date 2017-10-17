@@ -3,8 +3,12 @@
 //
 
 #include "Scenario.h"
+#include "Exceptions/TowerError.h"
 
-Scenario::Scenario(Path path) : path(std::move(path)) {}
+Scenario::Scenario(Path&& path, std::vector<Vector>&& firm_ground_locations) :
+        path(std::move(path)) {
+    this->firm_ground_locations = std::move(firm_ground_locations);
+}
 
 Scenario::~Scenario() {
     for (auto &tower : towers) {
@@ -27,7 +31,7 @@ std::vector<Enemy*> Scenario::getEnemiesInRange(const Range &range,
     return closest_enemies;
 }
 
-void Scenario::addEnemy(Enemy enemy) {
+void Scenario::addEnemy(Enemy&& enemy) {
     enemies.push_back(std::move(enemy));
 }
 
@@ -54,6 +58,20 @@ Path &Scenario::getPath() {
     return path;
 }
 
-void Scenario::addTower(Tower* tower, const Vector &position) {
+void Scenario::addTower(Tower* tower) {
+    bool can_be_added = false;
+    for (Vector& firm_ground : firm_ground_locations){
+        if (tower->getPosition() == firm_ground) {
+            can_be_added = true;
+            break;
+        }
+    }
 
+    if (can_be_added){
+        towers.push_back(tower);
+    } else {
+        throw TowerError("Error al agregar torre en la posicion: " +
+                                 tower->getPosition().to_string() +
+                                 ". La posicion ya fue ocupada o no es terreno firme");
+    }
 }

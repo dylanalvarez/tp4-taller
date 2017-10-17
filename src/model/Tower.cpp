@@ -11,3 +11,7 @@ Tower::~Tower() = default;
 unsigned int Tower::getExperience() const {
     return experience;
 }
+
+const Vector &Tower::getPosition() const {
+    return position;
+}

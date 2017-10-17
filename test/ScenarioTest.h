@@ -15,17 +15,21 @@ class ScenarioTest : public CppUnit::TestCase {
         CPPUNIT_TEST(getEnemyInRangeReturnsTheEnemyClosestToTheLimitTest);
         CPPUNIT_TEST(whenTwoEnemiesAreAtTheSameDistanceOfRangeReturnsTheFirtsAddedTest);
         CPPUNIT_TEST(getEnemyInRangeWhenNoOneIsRetunsAnEmpyListTest);
+        CPPUNIT_TEST(towersCanOnlyBePlacedOnFirmGroundTest);
+        CPPUNIT_TEST(cantAddTwoTowersOnTheSamePlaceTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
     ScenarioTest();
-    ~ScenarioTest();
+    ~ScenarioTest() override;
 
 protected:
     void getEnemyInRangeTest();
     void getEnemyInRangeReturnsTheEnemyClosestToTheLimitTest();
     void whenTwoEnemiesAreAtTheSameDistanceOfRangeReturnsTheFirtsAddedTest();
     void getEnemyInRangeWhenNoOneIsRetunsAnEmpyListTest();
+    void towersCanOnlyBePlacedOnFirmGroundTest();
+    void cantAddTwoTowersOnTheSamePlaceTest();
 
 private:
     Scenario* scenario;

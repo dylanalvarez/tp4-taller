@@ -11,7 +11,7 @@
 class Path {
 public:
     // recibe una lista de posiciones que indican el centro de un tile
-    explicit Path(std::vector<Vector>);
+    explicit Path(std::vector<Vector>&&);
 
     // devuelve la siguiente posicion en la direccion adecuada
     const Vector& getNextPosition(const Vector& actual);

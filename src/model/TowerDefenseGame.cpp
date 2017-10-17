@@ -17,7 +17,9 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
     Path path({Vector(0,0), Vector(0,5), Vector(3,5),
                Vector(3,2), Vector(-1, 2)});
 
-    scenario = new Scenario(std::move(path));
+    std::vector<Vector> firm_ground_locations = {Vector(0,5)};
+
+    scenario = new Scenario(std::move(path), std::move(firm_ground_locations));
 }
 
 TowerDefenseGame::~TowerDefenseGame(){

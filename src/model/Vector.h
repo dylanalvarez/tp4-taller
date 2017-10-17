@@ -37,6 +37,8 @@ public:
     // retorna la norma del vector
     float getNorm();
 
+    std::string to_string() const;
+
 private:
     float x;
     float y;

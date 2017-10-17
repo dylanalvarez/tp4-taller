@@ -6,6 +6,8 @@
 #define TOWERDEFENSE_TOWER_H
 
 
+#include "Vector.h"
+
 class Tower {
 public:
     Tower();
@@ -15,8 +17,11 @@ public:
 
     unsigned int getExperience() const;
 
+    const Vector& getPosition() const;
+
 protected:
     unsigned int experience;
+    Vector position;
 };
 
 

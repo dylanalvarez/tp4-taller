@@ -20,7 +20,7 @@ class TowerDefenseGameTest : public CppUnit::TestCase {
         CPPUNIT_TEST(addingNonExistingEnemyTypeThrowExceptionTest);
         CPPUNIT_TEST(movingEnemiesOverPathTest);
         CPPUNIT_TEST(movingEnemiesOverPathWithDistanceBetweenThemTest);
-        //CPPUNIT_TEST(towersCanOnlyBePlacedOnFirmGround);
+        //CPPUNIT_TEST(towersCanOnlyBePlacedOnFirmGroundTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -36,7 +36,6 @@ protected:
     void addingNonExistingEnemyTypeThrowExceptionTest();
     void movingEnemiesOverPathTest();
     void movingEnemiesOverPathWithDistanceBetweenThemTest();
-    void towersCanOnlyBePlacedOnFirmGround();
 
 private:
     TowerDefenseGame game;

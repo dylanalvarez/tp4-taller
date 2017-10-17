@@ -4,7 +4,10 @@
 
 #include "FireTower.h"
 
-FireTower::FireTower(int id, const Vector& p, YAML::Node properties) : Tower() {}
+FireTower::FireTower(int id, const Vector p, const YAML::Node& properties) :
+        Tower() {
+    this->position = p;
+}
 
 FireTower::~FireTower() = default;
 

@@ -76,3 +76,7 @@ void Vector::set_coordinates(float x, float y) {
 float Vector::getNorm() {
     return std::abs(std::complex<float>(x, y));
 }
+
+std::string Vector::to_string() const {
+    return "(" + std::to_string(x) + "," + std::to_string(y) + ")";
+}
