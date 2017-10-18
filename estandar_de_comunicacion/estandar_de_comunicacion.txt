@@ -1,0 +1,21 @@
+protocolo de comunicación
+| opcode          | largo          | YAML |
+| 1 unsigned char | 1 unsigned int |      | big endian, int de 64 bit
+
+server -> client: opcode 0 (INIT): matchs (id y nombre) y mapas (id y nombre)
+
+client -> server: opcode 0 (CHOOSE_TEAM): nickname y id del equipo elegido
+client -> server: opcode 1 (CHOOSE_MAP): nickname y id del mapa elegido
+
+client -> server: opcode 2 (CHOSEN_ELEMENT): elemento elegido
+
+server -> client: opcode 2 (MAP_YAML): datos iniciales (mapa)
+server -> client: opcode 3 (GAME_STATE): estado del juego (cualquiera sean los datos que se dan periodicamente) (a definir) (deshilachar en eventos)
+
+server -> client: opcode 4 (RECEIVED_MESSAGE): nuevo mensaje de chat
+client -> server: opcode 3 (SEND_MESSAGE): nuevo mensaje de chat
+
+client -> server: opcode 4 (PING_TILE): pinggear casilla (marcarla publicamente con color)
+client -> server: opcode 5 (SPELL): aplicar hechizo
+client -> server: opcode 6 (UPGRADE): aplicar upgrade
+client -> server: opcode 7 (BUILD_TOWER): colocar torre

@@ -1,0 +1,17 @@
+name: ""
+setting: desert
+size:
+  - 7
+  - 6
+firm_ground:
+  []
+doors:
+  entry:
+    []
+  exit:
+    []
+path:
+  []
+enemies:
+  []
+time_between_hordes: 10
