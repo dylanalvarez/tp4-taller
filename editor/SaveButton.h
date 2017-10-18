@@ -10,16 +10,16 @@
 class SaveButton: public Gtk::Button {
 public:
     SaveButton(BaseObjectType* obj,
-               const Glib::RefPtr<Gtk::Builder>& builder,
-               Map& map,
-               Glib::RefPtr<Gtk::Application>& app);
+               const Glib::RefPtr<Gtk::Builder>& builder);
+
+    void init(Map& map, Glib::RefPtr<Gtk::Application>& app);
 
 private:
     void onClick();
 
-    Map& map;
+    Map* map = nullptr;
 
-    Glib::RefPtr<Gtk::Application>& app;
+    Glib::RefPtr<Gtk::Application>* app = nullptr;
 };
 
 

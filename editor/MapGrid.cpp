@@ -4,7 +4,7 @@
 #include "MapButton.h"
 
 MapGrid::MapGrid(Map &map,
-                 Glib::RefPtr<Gtk::Builder> &builder,
+                 Builder &builder,
                  int width,
                  int height) : builder(builder), squareType(start) {
     for (int x = 0; x <= width + 1; x++) {
@@ -17,15 +17,15 @@ MapGrid::MapGrid(Map &map,
 
     // Group radio buttons together
     Gtk::RadioButton *start;
-    builder->get_widget("start", start);
+    this->builder.get_widget("start", start);
     Gtk::RadioButton *end;
-    builder->get_widget("end", end);
+    this->builder.get_widget("end", end);
     end->join_group(*start);
     Gtk::RadioButton *firmGround;
-    builder->get_widget("firm-ground", firmGround);
+    this->builder.get_widget("firm-ground", firmGround);
     firmGround->join_group(*start);
     Gtk::RadioButton *path;
-    builder->get_widget("path", path);
+    this->builder.get_widget("path", path);
     path->join_group(*start);
 
     start->signal_clicked().connect(

@@ -96,6 +96,7 @@ std::string Map::_toString(Map::Setting setting) const {
         case meadow:
             return "meadow";
     }
+    throw;
 }
 
 std::string Map::_toString(Map::HordeType hordeType) const {
@@ -113,6 +114,7 @@ std::string Map::_toString(Map::HordeType hordeType) const {
         case abmonible:
             return "abmonible";
     }
+    throw;
 }
 
 void Map::setName(const std::string &name) {
@@ -150,6 +152,7 @@ std::string Map::toString(Map::HordeType hordeType) {
         case abmonible:
             return ABMONIBLE_STR;
     }
+    throw;
 }
 
 Map::HordeType Map::fromString(const std::string &hordeType) {

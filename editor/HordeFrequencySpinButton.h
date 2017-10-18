@@ -9,13 +9,14 @@
 class HordeFrequencySpinButton : public Gtk::SpinButton {
 public:
     HordeFrequencySpinButton(BaseObjectType *obj,
-                             const Glib::RefPtr<Gtk::Builder> &builder,
-                             Map &map);
+                             const Glib::RefPtr<Gtk::Builder> &builder);
+
+    void init(Map& map);
 
 private:
     void onChange();
 
-    Map &map;
+    Map *map = nullptr;
 };
 
 

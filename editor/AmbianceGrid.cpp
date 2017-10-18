@@ -2,10 +2,8 @@
 #include "AmbianceGrid.h"
 
 AmbianceGrid::AmbianceGrid(BaseObjectType *obj,
-                           Glib::RefPtr<Gtk::Builder> &builder,
-                           Map &map) :
+                           Glib::RefPtr<Gtk::Builder> &builder) :
         Gtk::Grid(obj),
-        map(map),
         builder(builder),
         buttonIDs{{"desert",  Map::desert},
                   {"volcano", Map::volcano},
@@ -15,7 +13,7 @@ AmbianceGrid::AmbianceGrid(BaseObjectType *obj,
     for (auto pair : buttonIDs) {
         std::string id = pair.first;
         Gtk::RadioButton *button;
-        builder->get_widget(id, button);
+        this->builder.get_widget(id, button);
         button->signal_clicked().connect(
                 sigc::bind<std::string>(
                         sigc::mem_fun(this, &AmbianceGrid::onChange), id));
@@ -24,22 +22,26 @@ AmbianceGrid::AmbianceGrid(BaseObjectType *obj,
 
     // Group radio buttons together
     Gtk::RadioButton *desert;
-    builder->get_widget("desert", desert);
+    this->builder.get_widget("desert", desert);
     Gtk::RadioButton *volcano;
-    builder->get_widget("volcano", volcano);
+    this->builder.get_widget("volcano", volcano);
     volcano->join_group(*desert);
     Gtk::RadioButton *ice;
-    builder->get_widget("ice", ice);
+    this->builder.get_widget("ice", ice);
     ice->join_group(*desert);
     Gtk::RadioButton *meadow;
-    builder->get_widget("meadow", meadow);
+    this->builder.get_widget("meadow", meadow);
     meadow->join_group(*desert);
 
     // Set default value
     desert->set_active(true);
-    map.setSetting(DEFAULT_SETTING);
+    if (map) { map->setSetting(DEFAULT_SETTING); }
 }
 
 void AmbianceGrid::onChange(std::string id) {
-    map.setSetting(buttonIDs[id]);
+    if (map) { map->setSetting(buttonIDs[id]); }
+}
+
+void AmbianceGrid::init(Map &map) {
+    this->map = &map;
 }

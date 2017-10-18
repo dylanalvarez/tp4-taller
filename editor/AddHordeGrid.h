@@ -7,12 +7,14 @@
 #include <gtkmm/button.h>
 #include <gtkmm/comboboxtext.h>
 #include "Map.h"
+#include "Builder.h"
 
 class AddHordeGrid : public Gtk::Grid {
 public:
     AddHordeGrid(BaseObjectType *obj,
-                 Glib::RefPtr<Gtk::Builder> &builder,
-                 Map &map);
+                 Glib::RefPtr<Gtk::Builder> &builder);
+
+    void init(Map& map);
 
 private:
     void onChangeHordeQuantity();
@@ -23,8 +25,8 @@ private:
 
     void onHordeKindChange();
 
-    Map &map;
-    Glib::RefPtr<Gtk::Builder> builder;
+    Map* map = nullptr;
+    Builder builder;
     Map::Horde horde;
     Gtk::SpinButton *hordeQuantityButton;
     Gtk::Button *addHordeButton;

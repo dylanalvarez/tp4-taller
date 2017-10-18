@@ -2,12 +2,13 @@
 
 HordeFrequencySpinButton::HordeFrequencySpinButton(
         BaseObjectType *obj,
-        const Glib::RefPtr<Gtk::Builder> &builder,
-        Map &map) : Gtk::SpinButton(obj), map(map) {
+        const Glib::RefPtr<Gtk::Builder> &builder) : Gtk::SpinButton(obj) {
     this->signal_value_changed().connect(
             sigc::mem_fun(this, &HordeFrequencySpinButton::onChange));
 }
 
 void HordeFrequencySpinButton::onChange() {
-    map.setSecondsBetweenHordes(this->get_value_as_int());
+    map->setSecondsBetweenHordes(this->get_value_as_int());
 }
+
+void HordeFrequencySpinButton::init(Map &map) { this->map = &map; }

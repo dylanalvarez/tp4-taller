@@ -5,11 +5,12 @@
 #include <gtkmm/grid.h>
 #include <gtkmm/builder.h>
 #include "Map.h"
+#include "Builder.h"
 
 class MapGrid : public Gtk::Grid {
 public:
     MapGrid(Map &map,
-            Glib::RefPtr<Gtk::Builder> &builder,
+            Builder &builder,
             int width,
             int height);
 
@@ -22,7 +23,7 @@ public:
 private:
     void setSquareType(MapGrid::SquareType squareType);
 
-    Glib::RefPtr<Gtk::Builder> builder;
+    Builder& builder;
     SquareType squareType;
 };
 
