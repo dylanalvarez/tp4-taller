@@ -2,20 +2,20 @@
 <!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.12"/>
-  <object class="GtkApplicationWindow" tower_id="applicationwindow1">
+  <object class="GtkApplicationWindow" id="applicationwindow1">
     <property name="can_focus">False</property>
     <property name="default_width">500</property>
     <property name="default_height">500</property>
     <property name="show_menubar">False</property>
     <child>
-      <object class="GtkGrid" tower_id="grid1">
+      <object class="GtkGrid" id="grid1">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="hexpand">False</property>
         <property name="vexpand">False</property>
         <property name="baseline_row">1</property>
         <child>
-          <object class="GtkBox" tower_id="cajaJuego">
+          <object class="GtkBox" id="cajaJuego">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_bottom">5</property>
@@ -33,7 +33,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkScrollbar" tower_id="scrollbarY">
+          <object class="GtkScrollbar" id="scrollbarY">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
@@ -47,7 +47,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkScrollbar" tower_id="scrollbarX">
+          <object class="GtkScrollbar" id="scrollbarX">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
           </object>

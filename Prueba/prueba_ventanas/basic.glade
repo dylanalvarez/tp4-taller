@@ -2,18 +2,18 @@
 <!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.12"/>
-  <object class="GtkWindow" tower_id="window1">
+  <object class="GtkWindow" id="window1">
     <property name="can_focus">False</property>
     <property name="window_position">center</property>
     <property name="type_hint">menu</property>
     <property name="urgency_hint">True</property>
     <child>
-      <object class="GtkBox" tower_id="Game">
+      <object class="GtkBox" id="Game">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkBox" tower_id="main_menu">
+          <object class="GtkBox" id="main_menu">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="valign">baseline</property>
@@ -23,7 +23,7 @@
             <property name="spacing">17</property>
             <property name="baseline_position">bottom</property>
             <child>
-              <object class="GtkImage" tower_id="title">
+              <object class="GtkImage" id="title">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_bottom">38</property>
@@ -37,7 +37,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" tower_id="b_newGame">
+              <object class="GtkButton" id="b_newGame">
                 <property name="label" translatable="yes">New Game</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -51,7 +51,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" tower_id="b_join">
+              <object class="GtkButton" id="b_join">
                 <property name="label" translatable="yes">Join Game</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -64,7 +64,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" tower_id="b_options">
+              <object class="GtkButton" id="b_options">
                 <property name="label" translatable="yes">Options</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -77,7 +77,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" tower_id="b_help">
+              <object class="GtkButton" id="b_help">
                 <property name="label" translatable="yes">Help</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -91,7 +91,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" tower_id="lbl_version">
+              <object class="GtkLabel" id="lbl_version">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Version: 1.0</property>
@@ -111,18 +111,18 @@
           </packing>
         </child>
         <child>
-          <object class="GtkBox" tower_id="selection_menu">
+          <object class="GtkBox" id="selection_menu">
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <property name="spacing">94</property>
             <child>
-              <object class="GtkBox" tower_id="elements">
+              <object class="GtkBox" id="elements">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">10</property>
                 <child>
-                  <object class="GtkLabel" tower_id="label1">
+                  <object class="GtkLabel" id="label1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Select the elements you want to play</property>
@@ -134,7 +134,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" tower_id="chkb_fire">
+                  <object class="GtkCheckButton" id="chkb_fire">
                     <property name="label" translatable="yes">Fire</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -149,7 +149,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" tower_id="chkb_water">
+                  <object class="GtkCheckButton" id="chkb_water">
                     <property name="label" translatable="yes">Water</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -164,7 +164,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" tower_id="chkb_earth">
+                  <object class="GtkCheckButton" id="chkb_earth">
                     <property name="label" translatable="yes">Earth</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -179,7 +179,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" tower_id="chkb_air">
+                  <object class="GtkCheckButton" id="chkb_air">
                     <property name="label" translatable="yes">Air</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -201,7 +201,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" tower_id="lbl_description">
+              <object class="GtkLabel" id="lbl_description">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Description</property>
@@ -213,13 +213,13 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" tower_id="back_and_continue_buttons">
+              <object class="GtkBox" id="back_and_continue_buttons">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">end</property>
                 <property name="spacing">21</property>
                 <child>
-                  <object class="GtkButton" tower_id="b_back">
+                  <object class="GtkButton" id="b_back">
                     <property name="label" translatable="yes">Back</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -232,7 +232,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" tower_id="b_continue">
+                  <object class="GtkButton" id="b_continue">
                     <property name="label" translatable="yes">Continue</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
