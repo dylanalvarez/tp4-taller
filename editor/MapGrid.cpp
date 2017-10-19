@@ -6,12 +6,15 @@
 MapGrid::MapGrid(Map &map,
                  Builder &builder,
                  int width,
-                 int height) : builder(builder), squareType(start) {
+                 int height) :
+        builder(builder), squareType(start), width(width), height(height) {
     for (int x = 0; x <= width + 1; x++) {
+        grid.emplace_back();
         for (int y = 0; y <= height + 1; y++) {
             auto square = Gtk::manage(new MapButton("", x, y, *this, map));
             attach(*square, x, y, 1, 1);
             square->show();
+            grid[x].push_back((Gtk::Button*) square);
         }
     }
 
@@ -47,12 +50,28 @@ MapGrid::MapGrid(Map &map,
 
     // Set default value
     start->set_active(true);
+    this->updateDisabledButtons();
 }
 
 void MapGrid::setSquareType(MapGrid::SquareType squareType) {
     this->squareType = squareType;
+    this->updateDisabledButtons();
 }
 
 MapGrid::SquareType MapGrid::getSquareType() const {
     return squareType;
+}
+
+void MapGrid::updateDisabledButtons() const {
+    for (int x = 0; x <= width + 1; x++) {
+        for (int y = 0; y <= height + 1; y++) {
+            Gtk::Button *button = grid[x][y];
+            bool isCorner = (x == 0 && y == 0) ||
+                            (x == 0 && y == height + 1) ||
+                            (x == width + 1 && y == 0) ||
+                            (x == width + 1 && y == height + 1);
+            bool isMarked = !button->get_label().empty();
+            button->set_sensitive(!(isCorner || isMarked));
+        }
+    }
 }

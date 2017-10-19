@@ -29,5 +29,5 @@ void MapButton::setSquareType(const MapGrid &parent) {
             map.addPathStep(x, y);
             break;
     }
-    set_sensitive(false);
+    parent.updateDisabledButtons();
 }

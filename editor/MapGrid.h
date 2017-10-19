@@ -4,6 +4,7 @@
 
 #include <gtkmm/grid.h>
 #include <gtkmm/builder.h>
+#include <gtkmm/button.h>
 #include "Map.h"
 #include "Builder.h"
 
@@ -20,11 +21,15 @@ public:
 
     MapGrid::SquareType getSquareType() const;
 
+    void updateDisabledButtons() const;
+
 private:
     void setSquareType(MapGrid::SquareType squareType);
 
+    std::vector<std::vector<Gtk::Button*>> grid;
     Builder& builder;
     SquareType squareType;
+    int width, height;
 };
 
 

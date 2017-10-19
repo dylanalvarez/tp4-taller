@@ -3,6 +3,7 @@
 
 
 #include <gtkmm/button.h>
+#include "Map.h"
 #include "MapGrid.h"
 
 class MapButton : public Gtk::Button {
