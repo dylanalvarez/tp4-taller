@@ -71,7 +71,24 @@ void MapGrid::updateDisabledButtons() const {
                             (x == width + 1 && y == 0) ||
                             (x == width + 1 && y == height + 1);
             bool isMarked = !button->get_label().empty();
-            button->set_sensitive(!(isCorner || isMarked));
+            bool makesSenseForCurrentSquareType = true;
+            switch (getSquareType()) {
+                case start:
+                    makesSenseForCurrentSquareType = isValidStartPosition(x, y);
+                    break;
+                case end:
+                    break;
+                case firmGround:
+                    break;
+                case path:
+                    break;
+            }
+            button->set_sensitive(!(isCorner || isMarked)
+                                  && makesSenseForCurrentSquareType);
         }
     }
+}
+
+bool MapGrid::isValidStartPosition(int x, int y) const {
+    return x == 0 || x == width + 1 || y == 0 || y == height + 1;
 }

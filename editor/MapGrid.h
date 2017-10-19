@@ -26,6 +26,8 @@ public:
 private:
     void setSquareType(MapGrid::SquareType squareType);
 
+    bool isValidStartPosition(int x, int y) const;
+
     std::vector<std::vector<Gtk::Button*>> grid;
     Builder& builder;
     SquareType squareType;
