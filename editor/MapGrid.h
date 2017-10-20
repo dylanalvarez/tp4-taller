@@ -23,15 +23,18 @@ public:
 
     void updateDisabledButtons() const;
 
+    void notifyClicked(int x, int y, SquareType squareType);
+
 private:
     void setSquareType(MapGrid::SquareType squareType);
-
-    bool isValidStartPosition(int x, int y) const;
 
     std::vector<std::vector<Gtk::Button*>> grid;
     Builder& builder;
     SquareType squareType;
-    int width, height;
+    int width;
+    int height;
+    int lastX;
+    int lastY;
 };
 
 

@@ -9,10 +9,10 @@
 class MapButton : public Gtk::Button {
 public:
     MapButton(const Glib::ustring &label,
-              int x, int y, const MapGrid &parent, Map &map);
+              int x, int y, MapGrid &parent, Map &map);
 
 private:
-    void setSquareType(const MapGrid &parent);
+    void setSquareType(MapGrid &parent);
 
     int x, y;
     Map &map;

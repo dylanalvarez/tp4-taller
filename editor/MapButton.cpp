@@ -2,16 +2,17 @@
 
 MapButton::MapButton(
         const Glib::ustring &label,
-        int x, int y, const MapGrid &parent, Map &map) :
+        int x, int y, MapGrid &parent, Map &map) :
         Gtk::Button(label), x(x), y(y), map(map) {
     this->signal_clicked().connect(
-            sigc::bind<const MapGrid &>(
+            sigc::bind<MapGrid &>(
                     sigc::mem_fun(this, &MapButton::setSquareType),
                     parent));
 }
 
-void MapButton::setSquareType(const MapGrid &parent) {
-    switch (parent.getSquareType()) {
+void MapButton::setSquareType(MapGrid &parent) {
+    MapGrid::SquareType squareType = parent.getSquareType();
+    switch (squareType) {
         case MapGrid::start:
             set_label("E");
             map.addEntryDoor(x, y);
@@ -29,5 +30,5 @@ void MapButton::setSquareType(const MapGrid &parent) {
             map.addPathStep(x, y);
             break;
     }
-    parent.updateDisabledButtons();
+    parent.notifyClicked(x, y, squareType);
 }

@@ -7,7 +7,8 @@ MapGrid::MapGrid(Map &map,
                  Builder &builder,
                  int width,
                  int height) :
-        builder(builder), squareType(start), width(width), height(height) {
+        builder(builder), squareType(start), width(width), height(height),
+        lastX(0), lastY(0) {
     for (int x = 0; x <= width + 1; x++) {
         grid.emplace_back();
         for (int y = 0; y <= height + 1; y++) {
@@ -72,15 +73,24 @@ void MapGrid::updateDisabledButtons() const {
                             (x == width + 1 && y == height + 1);
             bool isMarked = !button->get_label().empty();
             bool makesSenseForCurrentSquareType = true;
+            bool isOnTheEdge = x == 0 ||
+                               x == width + 1 ||
+                               y == 0 ||
+                               y == height + 1;
             switch (getSquareType()) {
                 case start:
-                    makesSenseForCurrentSquareType = isValidStartPosition(x, y);
+                    makesSenseForCurrentSquareType = isOnTheEdge;
                     break;
                 case end:
+                    makesSenseForCurrentSquareType = isOnTheEdge;
                     break;
                 case firmGround:
-                    break;
+                break;
                 case path:
+                    bool sharesXOrYWithLastPath = (x == lastX) || 
+                                                  (y == lastY);
+                    makesSenseForCurrentSquareType = !isOnTheEdge &&
+                                                     sharesXOrYWithLastPath;
                     break;
             }
             button->set_sensitive(!(isCorner || isMarked)
@@ -89,6 +99,9 @@ void MapGrid::updateDisabledButtons() const {
     }
 }
 
-bool MapGrid::isValidStartPosition(int x, int y) const {
-    return x == 0 || x == width + 1 || y == 0 || y == height + 1;
+void MapGrid::notifyClicked(int x, int y, SquareType squareType) {
+    if (squareType == end || squareType == firmGround) { return; }
+    this->lastX = x;
+    this->lastY = y;
+    this->updateDisabledButtons();
 }
