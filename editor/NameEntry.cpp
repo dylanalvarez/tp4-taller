@@ -7,7 +7,7 @@ NameEntry::NameEntry(BaseObjectType *obj,
             sigc::mem_fun(this, &NameEntry::onKeyRelease));
 }
 
-void NameEntry::init(Map& map) { this->map = &map; }
+void NameEntry::init(Map &map) { this->map = &map; }
 
 bool NameEntry::onKeyRelease(GdkEventKey *event) {
     bool stopPropagation = true;

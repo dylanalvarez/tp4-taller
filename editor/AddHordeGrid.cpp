@@ -39,7 +39,7 @@ AddHordeGrid::AddHordeGrid(BaseObjectType *obj,
     hordeQuantityButton->set_value(DEFAULT_HORDE_COUNT);
 }
 
-void AddHordeGrid::init(Map& map) { this->map = &map; }
+void AddHordeGrid::init(Map &map) { this->map = &map; }
 
 void AddHordeGrid::onChangeHordeQuantity() {
     horde.quantity = hordeQuantityButton->get_value_as_int();

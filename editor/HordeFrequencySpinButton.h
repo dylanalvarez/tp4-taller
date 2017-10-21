@@ -11,7 +11,7 @@ public:
     HordeFrequencySpinButton(BaseObjectType *obj,
                              const Glib::RefPtr<Gtk::Builder> &builder);
 
-    void init(Map& map);
+    void init(Map &map);
 
 private:
     void onChange();

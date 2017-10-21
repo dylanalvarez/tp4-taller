@@ -6,7 +6,7 @@ SaveButton::SaveButton(BaseObjectType *obj,
     this->signal_clicked().connect(sigc::mem_fun(this, &SaveButton::onClick));
 }
 
-void SaveButton::init(Map& map, Glib::RefPtr<Gtk::Application>& app) {
+void SaveButton::init(Map &map, Glib::RefPtr<Gtk::Application> &app) {
     this->map = &map;
     this->app = &app;
 }

@@ -15,7 +15,7 @@ MapGrid::MapGrid(Map &map,
             auto square = Gtk::manage(new MapButton("", x, y, *this, map));
             attach(*square, x, y, 1, 1);
             square->show();
-            grid[x].push_back((Gtk::Button*) square);
+            grid[x].push_back((Gtk::Button *) square);
         }
     }
 
@@ -85,9 +85,9 @@ void MapGrid::updateDisabledButtons() const {
                     makesSenseForCurrentSquareType = isOnTheEdge;
                     break;
                 case firmGround:
-                break;
+                    break;
                 case path:
-                    bool sharesXOrYWithLastPath = (x == lastX) || 
+                    bool sharesXOrYWithLastPath = (x == lastX) ||
                                                   (y == lastY);
                     makesSenseForCurrentSquareType = !isOnTheEdge &&
                                                      sharesXOrYWithLastPath;

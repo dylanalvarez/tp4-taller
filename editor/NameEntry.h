@@ -11,12 +11,12 @@ public:
     NameEntry(BaseObjectType *obj,
               const Glib::RefPtr<Gtk::Builder> &builder);
 
-    void init(Map& map);
+    void init(Map &map);
 
 private:
     bool onKeyRelease(GdkEventKey *event);
 
-    Map* map = nullptr;
+    Map *map = nullptr;
 };
 
 

@@ -158,11 +158,11 @@ std::string Map::toString(Map::HordeType hordeType) {
 Map::HordeType Map::fromString(const std::string &hordeType) {
     std::map<std::string, Map::HordeType> associations{
             {GREEN_DEMON_STR, greenDemon},
-            {GOAT_MAN_STR, goatMan},
-            {UNDEAD_STR, undead},
-            {SPECTRE_STR, spectre},
+            {GOAT_MAN_STR,    goatMan},
+            {UNDEAD_STR,      undead},
+            {SPECTRE_STR,     spectre},
             {BLOODY_HAWK_STR, bloodyHawk},
-            {ABMONIBLE_STR, abmonible},
+            {ABMONIBLE_STR,   abmonible},
     };
     return associations[hordeType];
 }

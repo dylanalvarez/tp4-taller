@@ -14,7 +14,7 @@ public:
     ChooseSizeGrid(BaseObjectType *obj,
                    Glib::RefPtr<Gtk::Builder> &builder);
 
-    void init(Map& map);
+    void init(Map &map);
 
 private:
     void chooseSize();

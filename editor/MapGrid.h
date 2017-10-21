@@ -28,8 +28,8 @@ public:
 private:
     void setSquareType(MapGrid::SquareType squareType);
 
-    std::vector<std::vector<Gtk::Button*>> grid;
-    Builder& builder;
+    std::vector<std::vector<Gtk::Button *>> grid;
+    Builder &builder;
     SquareType squareType;
     int width;
     int height;

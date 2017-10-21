@@ -5,8 +5,6 @@
 #include "HordeFrequencySpinButton.h"
 #include "AddHordeGrid.h"
 #include "ChooseSizeGrid.h"
-#include "Builder.h"
-#include <gtkmm/application.h>
 #include <gtkmm/window.h>
 
 int main(int argc, char **argv) {
