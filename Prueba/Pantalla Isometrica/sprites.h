@@ -7,18 +7,18 @@
 
 
 //FichaSprite Sobre todo me aleja a mi de la logica de imprimir imagenes.
-class FichaSprite{
+class Sprite{
 protected:
   Glib::RefPtr<Gdk::Pixbuf> &image; //cosa a mejorar
   int x;
   int y;
 public:
-  FichaSprite(int x2, int y2, Glib::RefPtr<Gdk::Pixbuf>& image2);
-  virtual void dibujarme(const Cairo::RefPtr<Cairo::Context>& cr);
-  virtual void dibujarmeIsometrico(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
+  Sprite(int x2, int y2, Glib::RefPtr<Gdk::Pixbuf>& image2);
+  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr);
+  virtual void dibujarIsometrico(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
   virtual void pulsaion();
   void cambiarPosicion(int x2, int y2);
-  virtual ~FichaSprite();
+  virtual ~Sprite();
 };
 /*
 class FichaGift: public FichaSprite{

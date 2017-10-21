@@ -9,20 +9,27 @@
 class Ficha{
 private:
 protected:
- std::vector<FichaSprite> sprites;
+ std::vector<Sprite> sprites;
  //esto es enificiente para el piso. Pero eficiente para todo lo demas
  int spriteActual;
  int x;
  int y;
  int id;
  int tipo;
+ int medioLargoX;
+ int medioAltoY;
 public:
-  Ficha(int x2, int y2, int id2);
-  virtual void dibujarme(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
+  Ficha(int x2, int y2, int id2, int tipo2);
+  Ficha(const Ficha &p);
+  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
   virtual void pulsaion(); //Para los gif
   void cambiarPosicion(int x2, int y2);
   virtual ~Ficha();
   int getId();
+  int getTipo() const;
+  bool colisionaConmigo(int x2, int y2);
+  //echa para revisar nada mas. Quitar despues.
+  void imprimierCordenadas();
 };
 //FichaTerreno, FichaTorre, FichaEnemigo
 
@@ -35,6 +42,7 @@ private:
 protected:
 public:
   FichaTerreno(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
+  FichaTerreno(const FichaTerreno &p);
   void cambiarTipo(int tipo);
 };
 
@@ -49,7 +57,8 @@ protected:
  int spriteActualSubAnimacion;
 public:
   FichaTorre(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
-  virtual void dibujarme(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
+  FichaTorre(const FichaTorre &p);
+  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
   virtual void pulsaion(); //Para los gif
 };
 

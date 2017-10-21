@@ -7,6 +7,8 @@
 #include "Fichas.h"
 #include "OrdenadorDeFichas.h"
 #include "controladorDeSiclos.h"
+#include "menuTorres.h"
+
 
 //esta clase es solo para dirigir el movimiento en este caso.
 
@@ -37,8 +39,6 @@ int main(int argc, char *argv[])
   fichas.agregarTorre(FichaTorre(largo*6, largo*3, id, FichaTorreDeTierra, sprites));
   id++;
   fichas.agregarTorre(FichaTorre(largo*7, largo*3, id, FichaTorreDeFuego, sprites));
-  //creo pantalla
-  PantallaDeJuego area (fichas);
 
   //creo boton
   /*Gtk::Button pulso("Pulsasion");
@@ -54,19 +54,25 @@ int main(int argc, char *argv[])
 	Gtk::Window* window;
   Gtk::Box* Box;
 
-	auto refBuilder = Gtk::Builder::create();
+	Glib::RefPtr<Gtk::Builder> refBuilder = Gtk::Builder::create();
 	refBuilder->add_from_file("Sprites/Pantallas/Pantalla principal.glade");
-  //ver esto.
+  //creo pantalla
+  PantallaDeJuego area (fichas, refBuilder);
 
 	refBuilder->get_widget("cajaJuego", Box);
   Box->pack_start(area);
 	refBuilder->get_widget("applicationwindow1", window);
   window->show_all();
 
+//mejorar nombres
+  const int TiempoEnMilesegundos = 500;
+  sigc::slot<bool> my_slot = sigc::mem_fun(area, &PantallaDeJuego::pulsasion);
+  sigc::connection conn = Glib::signal_timeout().connect(my_slot,TiempoEnMilesegundos);
 
-  ControladorDeSiclos controlador;
-  controlador.getPulso().connect(
-          sigc::mem_fun(area, &PantallaDeJuego::pulsasion));
+
+  ControladorDeSiclos controlador; //igual servira a futuro para otra cosa.
+  /*controlador.getPulso().connect(
+          sigc::mem_fun(area, &PantallaDeJuego::pulsasion));*/
   std::thread pulso(timer, &controlador);
   app->run(*window);
 
