@@ -66,42 +66,37 @@ MapGrid::SquareType MapGrid::getSquareType() const {
 void MapGrid::updateDisabledButtons() const {
     for (int x = 0; x <= width + 1; x++) {
         for (int y = 0; y <= height + 1; y++) {
-            Gtk::Button *button = grid[x][y];
-            bool isCorner = (x == 0 && y == 0) ||
-                            (x == 0 && y == height + 1) ||
-                            (x == width + 1 && y == 0) ||
-                            (x == width + 1 && y == height + 1);
-            bool isMarked = !button->get_label().empty();
-            bool makesSenseForCurrentSquareType = true;
-            bool isOnTheEdge = x == 0 ||
-                               x == width + 1 ||
-                               y == 0 ||
-                               y == height + 1;
-            switch (getSquareType()) {
-                case start:
-                    makesSenseForCurrentSquareType = isOnTheEdge;
-                    break;
-                case end:
-                    makesSenseForCurrentSquareType = isOnTheEdge;
-                    break;
-                case firmGround:
-                    break;
-                case path:
-                    bool sharesXOrYWithLastPath = (x == lastX) ||
-                                                  (y == lastY);
-                    makesSenseForCurrentSquareType = !isOnTheEdge &&
-                                                     sharesXOrYWithLastPath;
-                    break;
-            }
-            button->set_sensitive(!(isCorner || isMarked)
-                                  && makesSenseForCurrentSquareType);
+            updateDisabledButton(x, y);
         }
     }
 }
 
+void MapGrid::updateDisabledButton(int x, int y) const {
+    Gtk::Button *button = grid[x][y];
+    bool isMarked = !button->get_label().empty();
+    button->set_sensitive(!(isMarked || shouldBeDisabled(x, y)));
+}
+
+bool MapGrid::shouldBeDisabled(int x, int y) const {
+    bool isCorner = (x == 0 && y == 0) ||
+                    (x == 0 && y == height + 1) ||
+                    (x == width + 1 && y == 0) ||
+                    (x == width + 1 && y == height + 1);
+
+    bool isOnTheEdge = x == 0 || x == width + 1 || y == 0 || y == height + 1;
+    bool sharesXOrYWithLastPath = (x == lastX) || (y == lastY);
+    bool makesSenseForCurrentSquareType =
+            ((squareType == start || squareType == end) && isOnTheEdge) ||
+            ((squareType == path) && sharesXOrYWithLastPath && !isOnTheEdge) ||
+            squareType == firmGround;
+
+    return isCorner || !makesSenseForCurrentSquareType;
+}
+
 void MapGrid::notifyClicked(int x, int y, SquareType squareType) {
-    if (squareType == end || squareType == firmGround) { return; }
-    this->lastX = x;
-    this->lastY = y;
+    if (squareType == start || squareType == path) {
+        this->lastX = x;
+        this->lastY = y;
+    }
     this->updateDisabledButtons();
 }

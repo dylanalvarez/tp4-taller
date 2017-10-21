@@ -28,6 +28,10 @@ public:
 private:
     void setSquareType(MapGrid::SquareType squareType);
 
+    void updateDisabledButton(int x, int y) const;
+
+    bool shouldBeDisabled(int x, int y) const;
+
     std::vector<std::vector<Gtk::Button *>> grid;
     Builder &builder;
     SquareType squareType;
