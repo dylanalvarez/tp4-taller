@@ -13,11 +13,11 @@ FichaSprite::FichaSprite(int x2, int y2): x(x2), y(y2){
   //esto va a ser el "final"
     image = Gdk::Pixbuf::create_from_file("Sprites/PisoFirme.png");
 }*/
-FichaSprite::FichaSprite(int x2, int y2, Glib::RefPtr<Gdk::Pixbuf>& image2)
+Sprite::Sprite(int x2, int y2, Glib::RefPtr<Gdk::Pixbuf>& image2)
             : image (image2), x(x2), y(y2){
 }
 
-void FichaSprite::dibujarme(const Cairo::RefPtr<Cairo::Context>& cr){
+void Sprite::dibujar(const Cairo::RefPtr<Cairo::Context>& cr){
   Gdk::Cairo::set_source_pixbuf(cr, image, x,y);
 	cr->rectangle(x, y, x + image->get_width(), y + image->get_height()); //esto es importante.
 	cr->fill();
@@ -25,7 +25,7 @@ void FichaSprite::dibujarme(const Cairo::RefPtr<Cairo::Context>& cr){
   cr->save();
 }
 
-void FichaSprite::dibujarmeIsometrico(const Cairo::RefPtr<Cairo::Context>& cr,
+void Sprite::dibujarIsometrico(const Cairo::RefPtr<Cairo::Context>& cr,
                                       int desplasamientoX, int desplasamientoY){
   int x2, y2;
   //lo pongo isometrico
@@ -46,16 +46,16 @@ void FichaSprite::dibujarmeIsometrico(const Cairo::RefPtr<Cairo::Context>& cr,
   cr->save();
 }
 
-void FichaSprite::pulsaion(){
+void Sprite::pulsaion(){
   //por ahora nada.. pero aca puede estar el cambio de sprite para el gif
 }
 
-void FichaSprite::cambiarPosicion(int x2, int y2){
+void Sprite::cambiarPosicion(int x2, int y2){
   x = x2;
   y = y2;
 }
 
-FichaSprite::~FichaSprite(){
+Sprite::~Sprite(){
 }
 /*
 FichaGift::FichaGift(int x2, int y2): FichaSprite(x2, y2){
