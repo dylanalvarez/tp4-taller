@@ -26,9 +26,7 @@ void MapButton::setSquareType(MapGrid &parent) {
             map.addFirmGround(x, y);
             break;
         case MapGrid::path:
-            set_label("C");
-            map.addPathStep(x, y);
             break;
     }
-    parent.notifyClicked(x, y, squareType);
+    parent.notifyGridClicked(x, y, squareType);
 }

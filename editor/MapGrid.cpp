@@ -1,5 +1,6 @@
 #include <gtkmm/button.h>
 #include <gtkmm/radiobutton.h>
+#include <cmath>
 #include "MapGrid.h"
 #include "MapButton.h"
 
@@ -8,7 +9,8 @@ MapGrid::MapGrid(Map &map,
                  int width,
                  int height) :
         builder(builder), squareType(start), width(width), height(height),
-        lastX(0), lastY(0) {
+        lastPathX(-1), lastPathY(-1), startX(-1), startY(-1),
+        unfinishedPath(false), map(map) {
     for (int x = 0; x <= width + 1; x++) {
         grid.emplace_back();
         for (int y = 0; y <= height + 1; y++) {
@@ -20,37 +22,33 @@ MapGrid::MapGrid(Map &map,
     }
 
     // Group radio buttons together
-    Gtk::RadioButton *start;
-    this->builder.get_widget("start", start);
-    Gtk::RadioButton *end;
-    this->builder.get_widget("end", end);
-    end->join_group(*start);
-    Gtk::RadioButton *firmGround;
-    this->builder.get_widget("firm-ground", firmGround);
-    firmGround->join_group(*start);
-    Gtk::RadioButton *path;
-    this->builder.get_widget("path", path);
-    path->join_group(*start);
+    this->builder.get_widget("start", startButton);
+    this->builder.get_widget("end", endButton);
+    endButton->join_group(*startButton);
+    this->builder.get_widget("firm-ground", firmGroundButton);
+    firmGroundButton->join_group(*startButton);
+    this->builder.get_widget("path", pathButton);
+    pathButton->join_group(*startButton);
 
-    start->signal_clicked().connect(
+    startButton->signal_clicked().connect(
             sigc::bind<MapGrid::SquareType>(
                     sigc::mem_fun(this, &MapGrid::setSquareType),
                     MapGrid::start));
-    end->signal_clicked().connect(
+    endButton->signal_clicked().connect(
             sigc::bind<MapGrid::SquareType>(
                     sigc::mem_fun(this, &MapGrid::setSquareType),
                     MapGrid::end));
-    firmGround->signal_clicked().connect(
+    firmGroundButton->signal_clicked().connect(
             sigc::bind<MapGrid::SquareType>(
                     sigc::mem_fun(this, &MapGrid::setSquareType),
                     MapGrid::firmGround));
-    path->signal_clicked().connect(
+    pathButton->signal_clicked().connect(
             sigc::bind<MapGrid::SquareType>(
                     sigc::mem_fun(this, &MapGrid::setSquareType),
                     MapGrid::path));
 
     // Set default value
-    start->set_active(true);
+    startButton->set_active(true);
     this->updateDisabledButtons();
 }
 
@@ -84,19 +82,95 @@ bool MapGrid::shouldBeDisabled(int x, int y) const {
                     (x == width + 1 && y == height + 1);
 
     bool isOnTheEdge = x == 0 || x == width + 1 || y == 0 || y == height + 1;
-    bool sharesXOrYWithLastPath = (x == lastX) || (y == lastY);
+    bool lastPathStepWasOnItsSide =
+            (std::abs(x - lastPathX) == 1 && std::abs(y - lastPathY) == 0) ||
+            (std::abs(x - lastPathX) == 0 && std::abs(y - lastPathY) == 1);
     bool makesSenseForCurrentSquareType =
-            ((squareType == start || squareType == end) && isOnTheEdge) ||
-            ((squareType == path) && sharesXOrYWithLastPath && !isOnTheEdge) ||
-            squareType == firmGround;
+            (squareType == start &&
+             isOnTheEdge &&
+             !unfinishedPath) ||
+            (squareType == end &&
+             isOnTheEdge &&
+             unfinishedPath &&
+             lastPathStepWasOnItsSide) ||
+            (squareType == path &&
+             !isOnTheEdge &&
+             isOnStraightLineFromLastOne(x, y)) ||
+            (squareType == firmGround &&
+             !isOnTheEdge &&
+             !isNeighbourOfStart(x, y));
 
     return isCorner || !makesSenseForCurrentSquareType;
 }
 
-void MapGrid::notifyClicked(int x, int y, SquareType squareType) {
-    if (squareType == start || squareType == path) {
-        this->lastX = x;
-        this->lastY = y;
+void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
+    if (squareType == end) {
+        unfinishedPath = false;
+        lastPathX = -1;
+        lastPathY = -1;
+    }
+    if (squareType == start) {
+        startX = x;
+        startY = y;
+        pathButton->clicked();
+        unfinishedPath = true;
+    }
+    if (squareType == path) {
+        int lastX = lastPathX == -1 ? startX : lastPathX;
+        int lastY = lastPathY == -1 ? startY : lastPathY;
+        bool sharesPathOnX = x == lastX;
+        bool sharesPathOnY = y == lastY;
+        if (sharesPathOnX) {
+            bool yIsGreater = y > lastY;
+            int start = yIsGreater ? lastY + 1 : y;
+            int end = yIsGreater ? y : lastY - 1;
+            for (int currentY = start; currentY <= end; ++currentY) {
+                grid[x][currentY]->set_label("C");
+                map.addPathStep(x, currentY);
+            }
+        } else if (sharesPathOnY) {
+            bool xIsGreater = x > lastX;
+            int start = xIsGreater ? lastX + 1 : x;
+            int end = xIsGreater ? x : lastX - 1;
+            for (int currentX = start; currentX <= end; ++currentX) {
+                grid[currentX][y]->set_label("C");
+                map.addPathStep(currentX, y);
+            }
+        }
+        this->lastPathX = x;
+        this->lastPathY = y;
     }
     this->updateDisabledButtons();
+}
+
+bool MapGrid::isNeighbourOfStart(int x, int y) const {
+    return grid[x - 1][y]->get_label() == "E" ||
+           grid[x][y - 1]->get_label() == "E" ||
+           grid[x + 1][y]->get_label() == "E" ||
+           grid[x][y + 1]->get_label() == "E";
+}
+
+bool MapGrid::isOnStraightLineFromLastOne(int x, int y) const {
+    int lastX = lastPathX == -1 ? startX : lastPathX;
+    int lastY = lastPathY == -1 ? startY : lastPathY;
+    bool sharesPathOnX = x == lastX;
+    bool sharesPathOnY = y == lastY;
+    if (sharesPathOnX) {
+        bool yIsGreater = y > lastY;
+        int start = yIsGreater ? lastY + 1 : y + 1;
+        int end = yIsGreater ? y - 1 : lastY - 1;
+        for (int currentY = start; currentY <= end; ++currentY) {
+            if (!grid[x][currentY]->get_label().empty()) { return false; }
+        }
+        return true;
+    } else if (sharesPathOnY) {
+        bool xIsGreater = x > lastX;
+        int start = xIsGreater ? lastX + 1 : x + 1;
+        int end = xIsGreater ? x - 1 : lastX - 1;
+        for (int currentX = start; currentX <= end; ++currentX) {
+            if (!grid[currentX][y]->get_label().empty()) { return false; }
+        }
+        return true;
+    }
+    return false;
 }

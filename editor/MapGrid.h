@@ -5,6 +5,7 @@
 #include <gtkmm/grid.h>
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
+#include <gtkmm/radiobutton.h>
 #include "Map.h"
 #include "Builder.h"
 
@@ -23,7 +24,7 @@ public:
 
     void updateDisabledButtons() const;
 
-    void notifyClicked(int x, int y, SquareType squareType);
+    void notifyGridClicked(int x, int y, SquareType squareType);
 
 private:
     void setSquareType(MapGrid::SquareType squareType);
@@ -32,13 +33,25 @@ private:
 
     bool shouldBeDisabled(int x, int y) const;
 
+    bool isNeighbourOfStart(int x, int y) const;
+
+    bool isOnStraightLineFromLastOne(int x, int y) const;
+
     std::vector<std::vector<Gtk::Button *>> grid;
     Builder &builder;
     SquareType squareType;
     int width;
     int height;
-    int lastX;
-    int lastY;
+    int lastPathX;
+    int lastPathY;
+    int startX;
+    int startY;
+    bool unfinishedPath;
+    Map& map;
+    Gtk::RadioButton *startButton;
+    Gtk::RadioButton *endButton;
+    Gtk::RadioButton *firmGroundButton;
+    Gtk::RadioButton *pathButton;
 };
 
 
