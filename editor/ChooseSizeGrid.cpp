@@ -26,9 +26,14 @@ void ChooseSizeGrid::chooseSize() {
     Gtk::Viewport *mapViewport;
     builder.get_widget("map", mapViewport);
 
-    auto mapGrid = Gtk::manage(new MapGrid(*map, builder, width, height));
+    auto mapGrid = Gtk::manage(new MapGrid(*map, builder, width, height,
+                                           saveButton));
     mapViewport->add(*mapGrid);
     mapGrid->show();
 }
 
-void ChooseSizeGrid::init(Map &map) { this->map = &map; }
+void
+ChooseSizeGrid::init(Map &map, SaveButton *saveButton) {
+    this->map = &map;
+    this->saveButton = saveButton;
+}

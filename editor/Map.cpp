@@ -121,6 +121,10 @@ void Map::setName(const std::string &name) {
     this->name = name;
 }
 
+std::string Map::getName() {
+    return this->name;
+}
+
 void Map::setSetting(Setting setting) {
     this->setting = setting;
 }

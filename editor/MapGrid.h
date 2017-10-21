@@ -8,13 +8,15 @@
 #include <gtkmm/radiobutton.h>
 #include "Map.h"
 #include "Builder.h"
+#include "SaveButton.h"
 
 class MapGrid : public Gtk::Grid {
 public:
     MapGrid(Map &map,
             Builder &builder,
             int width,
-            int height);
+            int height,
+            SaveButton *saveButton);
 
     enum SquareType {
         start, end, firmGround, path
@@ -47,11 +49,12 @@ private:
     int startX;
     int startY;
     bool unfinishedPath;
-    Map& map;
+    Map &map;
     Gtk::RadioButton *startButton;
     Gtk::RadioButton *endButton;
     Gtk::RadioButton *firmGroundButton;
     Gtk::RadioButton *pathButton;
+    SaveButton *saveButton;
 };
 
 

@@ -8,13 +8,14 @@
 #include <gtkmm/button.h>
 #include "Map.h"
 #include "Builder.h"
+#include "SaveButton.h"
 
 class ChooseSizeGrid : public Gtk::Grid {
 public:
     ChooseSizeGrid(BaseObjectType *obj,
                    Glib::RefPtr<Gtk::Builder> &builder);
 
-    void init(Map &map);
+    void init(Map &map, SaveButton *saveButton);
 
 private:
     void chooseSize();
@@ -24,6 +25,7 @@ private:
     Gtk::SpinButton *setWidth;
     Gtk::SpinButton *setHeight;
     Gtk::Button *okButton;
+    SaveButton *saveButton;
 };
 
 

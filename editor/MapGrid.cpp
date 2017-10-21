@@ -7,10 +7,11 @@
 MapGrid::MapGrid(Map &map,
                  Builder &builder,
                  int width,
-                 int height) :
+                 int height,
+                 SaveButton *saveButton) :
         builder(builder), squareType(start), width(width), height(height),
         lastPathX(-1), lastPathY(-1), startX(-1), startY(-1),
-        unfinishedPath(false), map(map) {
+        unfinishedPath(false), map(map), saveButton(saveButton) {
     for (int x = 0; x <= width + 1; x++) {
         grid.emplace_back();
         for (int y = 0; y <= height + 1; y++) {
@@ -62,6 +63,9 @@ MapGrid::SquareType MapGrid::getSquareType() const {
 }
 
 void MapGrid::updateDisabledButtons() const {
+    saveButton->set_sensitive(startX != -1 &&
+                              !unfinishedPath &&
+                              !map.getName().empty());
     for (int x = 0; x <= width + 1; x++) {
         for (int y = 0; y <= height + 1; y++) {
             updateDisabledButton(x, y);

@@ -19,13 +19,14 @@ int main(int argc, char **argv) {
     builder.get_widget("main-window", mainWindow);
 
     SaveButton *saveButton;
-    builder.get_widget_derived("save", saveButton, map, app);
-
-    ChooseSizeGrid *chooseSizeGrid;
-    builder.get_widget_derived("choose-size-grid", chooseSizeGrid, map);
+    builder.get_widget_derived("save", saveButton, map);
 
     NameEntry *nameEntry;
     builder.get_widget_derived("name", nameEntry, map);
+
+    ChooseSizeGrid *chooseSizeGrid;
+    builder.get_widget_derived("choose-size-grid", chooseSizeGrid, map,
+                               saveButton);
 
     AmbianceGrid *ambianceGrid;
     builder.get_widget_derived("ambiance", ambianceGrid, map);

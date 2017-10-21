@@ -32,6 +32,8 @@ public:
 
     void setName(const std::string &name);
 
+    std::string getName();
+
     void setSetting(Map::Setting setting);
 
     void setSecondsBetweenHordes(int seconds);

@@ -4,14 +4,11 @@ SaveButton::SaveButton(BaseObjectType *obj,
                        const Glib::RefPtr<Gtk::Builder> &builder) :
         Gtk::Button(obj) {
     this->signal_clicked().connect(sigc::mem_fun(this, &SaveButton::onClick));
+    this->set_sensitive(false);
 }
 
-void SaveButton::init(Map &map, Glib::RefPtr<Gtk::Application> &app) {
-    this->map = &map;
-    this->app = &app;
-}
+void SaveButton::init(Map &map) { this->map = &map; }
 
 void SaveButton::onClick() {
     map->exportToFile("output.yaml");
-    (*app)->quit();
 }
