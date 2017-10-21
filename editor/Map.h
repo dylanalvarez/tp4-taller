@@ -83,7 +83,7 @@ private:
     std::vector<Coordinate> firmGround;
     std::vector<Coordinate> entryDoors;
     std::vector<Coordinate> exitDoors;
-    std::vector<Coordinate> path;
+    std::vector<std::vector<Coordinate>> paths;
     std::vector<Horde> hordes;
     int secondsBetweenHordes;
 };

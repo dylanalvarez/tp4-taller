@@ -12,80 +12,94 @@ size:
   - 10
 firm_ground:
   -
-    - 1
-    - 2
-  -
-    - 5
+    - 7
     - 3
+  -
+    - 3
+    - 6
+# Each path has an entry door and an exit door.
+# The first entry door matches the first path, which
+# matches the first exit... and so on.
 doors:
   entry:
     -
+      - 2
       - 0
-      - 1
+    -
+      - 9
+      - 0
   exit:
     -
+      - 2
       - 11
-      - 10
+    -
+      - 9
+      - 11
 # Path is expressed in pixels, they must be in the range [0, 80 * 10], being 80 the height/width of a block,
 # and 10 the height/width of the map, in blocks.
-path:
+paths:
   -
-    - 44
-    - 44
+    -
+      - 132
+      - 44
+    -
+      - 132
+      - 132
+    -
+      - 132
+      - 220
+    -
+      - 132
+      - 308
+    -
+      - 132
+      - 396
+    -
+      - 132
+      - 484
+    -
+      - 132
+      - 572
+    -
+      - 132
+      - 660
+    -
+      - 132
+      - 748
+    -
+      - 132
+      - 836
   -
-    - 132
-    - 44
-  -
-    - 220
-    - 44
-  -
-    - 308
-    - 44
-  -
-    - 396
-    - 44
-  -
-    - 484
-    - 44
-  -
-    - 572
-    - 44
-  -
-    - 660
-    - 44
-  -
-    - 748
-    - 44
-  -
-    - 836
-    - 44
-  -
-    - 836
-    - 132
-  -
-    - 836
-    - 220
-  -
-    - 836
-    - 308
-  -
-    - 836
-    - 396
-  -
-    - 836
-    - 484
-  -
-    - 836
-    - 572
-  -
-    - 836
-    - 660
-  -
-    - 836
-    - 748
-  -
-    - 836
-    - 836
+    -
+      - 748
+      - 44
+    -
+      - 748
+      - 132
+    -
+      - 748
+      - 220
+    -
+      - 748
+      - 308
+    -
+      - 748
+      - 396
+    -
+      - 748
+      - 484
+    -
+      - 748
+      - 572
+    -
+      - 748
+      - 660
+    -
+      - 748
+      - 748
+    -
+      - 748
+      - 836
 # Possible horde types: green_demon, goat_man, undead, spectre, bloody_hawk, abmonible
 enemies:
   - type: green_demon

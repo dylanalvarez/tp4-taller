@@ -54,10 +54,14 @@ void Map::exportToFile(const std::string &filename) const {
     _appendVectorOfCoordinate(exitDoors, emitter);
     emitter << YAML::EndMap;
 
-    emitter << YAML::Key << "path";
+    emitter << YAML::Key << "paths";
     emitter << YAML::Value;
-    _appendVectorOfCoordinate(path, emitter,
-                              [](int coord) { return 88 * coord - 44; });
+    emitter << YAML::BeginSeq;
+    for (const auto &path: paths) {
+        _appendVectorOfCoordinate(path, emitter,
+                                  [](int coord) { return 88 * coord - 44; });
+    }
+    emitter << YAML::EndSeq;
 
     emitter << YAML::Key << "enemies";
     emitter << YAML::Value;
@@ -180,6 +184,7 @@ void Map::addFirmGround(int x, int y) {
 }
 
 void Map::addEntryDoor(int x, int y) {
+    paths.emplace_back();
     entryDoors.emplace_back(x, y);
 }
 
@@ -188,7 +193,7 @@ void Map::addExitDoor(int x, int y) {
 }
 
 void Map::addPathStep(int x, int y) {
-    path.emplace_back(x, y);
+    paths.back().emplace_back(x, y);
 }
 
 std::string Map::Horde::toString() {
