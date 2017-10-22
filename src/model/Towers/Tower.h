@@ -6,9 +6,9 @@
 #define TOWERDEFENSE_TOWER_H
 
 
-#include "Vector.h"
-#include "Range.h"
-#include "Enemy.h"
+#include "../Vector.h"
+#include "../Range.h"
+#include "../Enemy.h"
 
 class Scenario;
 
@@ -23,6 +23,11 @@ public:
     unsigned int getExperience() const;
 
     const Vector& getPosition() const;
+
+    Tower(const Tower&) = delete;
+    Tower& operator=(const Tower&) = delete;
+    Tower& operator=(Tower&&) = delete;
+    Tower(Tower&&) noexcept ;
 
 protected:
     int id;

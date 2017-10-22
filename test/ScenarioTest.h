@@ -30,7 +30,7 @@ protected:
     void getEnemyInRangeWhenNoOneIsRetunsAnEmpyListTest();
     void towersCanOnlyBePlacedOnFirmGroundTest();
     void cantAddTwoTowersOnTheSamePlaceTest();
-
+    // TODO testear que un tile no puede ser camino y terreno firme al mismo tiempo
 private:
     Scenario* scenario;
 };

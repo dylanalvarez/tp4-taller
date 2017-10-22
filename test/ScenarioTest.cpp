@@ -3,7 +3,7 @@
 //
 
 #include "ScenarioTest.h"
-#include "../src/model/FireTower.h"
+#include "../src/model/Towers/FireTower.h"
 #include "../src/model/Exceptions/TowerError.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(ScenarioTest);
@@ -20,7 +20,7 @@ ScenarioTest::~ScenarioTest() {
 void ScenarioTest::getEnemyInRangeTest() {
     int enemy_id = 1;
     Enemy enemy(enemy_id, scenario->getPath(), 100, 1, false);
-    scenario->addEnemy(std::move(enemy));
+    scenario->addEnemy(enemy);
 
     // se obtiene 1 enemigo en el rango especificado
     std::vector<Enemy*> enemies = scenario->getEnemiesInRange(Range(Vector(0, 0), 2), 1);
@@ -35,11 +35,11 @@ void ScenarioTest::getEnemyInRangeReturnsTheEnemyClosestToTheLimitTest() {
     Enemy enemy1(id_1, scenario->getPath(), 100, 1, false);
     Enemy enemy2(id_2, scenario->getPath(), 100, 1, false);
 
-    scenario->addEnemy(std::move(enemy2));
+    scenario->addEnemy(enemy2);
     // se mueve el primer enemigo
     scenario->getEnemiesInRange(Range(Vector(0, 0), 2), 1)[0]->move();
 
-    scenario->addEnemy(std::move(enemy1));
+    scenario->addEnemy(enemy1);
 
     // se obtiene 1 enemigo en el rango especificado
     std::vector<Enemy*> enemies = scenario->getEnemiesInRange(Range(Vector(0, 0), 2), 1);
@@ -54,8 +54,8 @@ void ScenarioTest::whenTwoEnemiesAreAtTheSameDistanceOfRangeReturnsTheFirtsAdded
     Enemy enemy1(id_1, scenario->getPath(), 100, 1, false);
     Enemy enemy2(id_2, scenario->getPath(), 100, 1, false);
 
-    scenario->addEnemy(std::move(enemy2));
-    scenario->addEnemy(std::move(enemy1));
+    scenario->addEnemy(enemy2);
+    scenario->addEnemy(enemy1);
 
     // se mueve el primer enemigo
     scenario->getEnemiesInRange(Range(Vector(0, 0), 2), 1)[0]->move();
@@ -73,8 +73,8 @@ void ScenarioTest::getEnemyInRangeWhenNoOneIsRetunsAnEmpyListTest() {
     Enemy enemy1(id_1, scenario->getPath(), 100, 1, false);
     Enemy enemy2(id_2, scenario->getPath(), 100, 1, false);
 
-    scenario->addEnemy(std::move(enemy2));
-    scenario->addEnemy(std::move(enemy1));
+    scenario->addEnemy(enemy2);
+    scenario->addEnemy(enemy1);
 
     // se obtiene 1 enemigo en el rango especificado
     std::vector<Enemy*> enemies = scenario->getEnemiesInRange(Range(Vector(0, 5), 2), 1);

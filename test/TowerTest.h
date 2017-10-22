@@ -8,7 +8,7 @@
 
 #include <cppunit/TestCase.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include "../src/model/Tower.h"
+#include "../src/model/Towers/Tower.h"
 
 class TowerTest : public CppUnit::TestCase{
 public:

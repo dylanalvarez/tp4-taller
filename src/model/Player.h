@@ -13,8 +13,13 @@ public:
 
     const std::string& getName() const;
 
+    Player(const Player&) = delete;
+    Player& operator=(const Player&) = delete;
+    Player(Player&&);
+    Player& operator=(Player&&);
+
 private:
-    const std::string name;
+    std::string name;
 };
 
 

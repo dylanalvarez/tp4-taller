@@ -28,6 +28,23 @@ class TowerDefenseGameTest : public CppUnit::TestCase {
         CPPUNIT_TEST(fireTowerDoesNotAttacksEnemiesThatAreNotInRangeTest);
         CPPUNIT_TEST(fireTowerAttacksOneTimeEveryThreeSecondsTest);
         CPPUNIT_TEST(fireTowerDoesNotChangeObjetiveIfItsAliveTest);
+        CPPUNIT_TEST(attackWhenIsInRangeAndStopAttackingWhenIsOutTest);
+        CPPUNIT_TEST(whenEnemyIsInRangeOfWaterTowerItAttacksHimTest);
+        CPPUNIT_TEST(waterTowerAttacksOneTimeEveryThreeSecondsTest);
+        CPPUNIT_TEST(waterTowerDoesNotChangeObjetiveIfItsAliveTest);
+        CPPUNIT_TEST(movingEnemiesAndAddingOthersTest);
+        CPPUNIT_TEST(waterTowerReduceEnemySpeedTest);
+        CPPUNIT_TEST(waterTowerReduceEnemySpeedDuringTwoSecondsTest);
+        CPPUNIT_TEST(whenEnemyIsInRangeOfEarthTowerItAttacksHimTest);
+        CPPUNIT_TEST(earthTowerAttacksOneTimeEveryFiveSecondsTest);
+        CPPUNIT_TEST(earthTowerDoesNotChangeObjetiveIfItsAliveTest);
+        CPPUNIT_TEST(whenEnemyIsInRangeOfAirTowerItAttacksHimTest);
+        CPPUNIT_TEST(airTowerAttacksOneTimeEveryFiveSecondsTest);
+        CPPUNIT_TEST(airTowerDoesNotChangeObjetiveIfItsAliveTest);
+        CPPUNIT_TEST(airTowerMovesBackEnemyWhenHitHimTest);
+        CPPUNIT_TEST(airTowerHitsFlyingEnemiesHarderTest);
+        CPPUNIT_TEST(whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest);
+        CPPUNIT_TEST(earthTowerCantAttackFlyingUnitsTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -51,6 +68,23 @@ protected:
     void fireTowerDoesNotAttacksEnemiesThatAreNotInRangeTest();
     void fireTowerAttacksOneTimeEveryThreeSecondsTest();
     void fireTowerDoesNotChangeObjetiveIfItsAliveTest();
+    void attackWhenIsInRangeAndStopAttackingWhenIsOutTest();
+    void whenEnemyIsInRangeOfWaterTowerItAttacksHimTest();
+    void waterTowerAttacksOneTimeEveryThreeSecondsTest();
+    void waterTowerDoesNotChangeObjetiveIfItsAliveTest();
+    void movingEnemiesAndAddingOthersTest();
+    void waterTowerReduceEnemySpeedTest();
+    void waterTowerReduceEnemySpeedDuringTwoSecondsTest();
+    void whenEnemyIsInRangeOfEarthTowerItAttacksHimTest();
+    void earthTowerAttacksOneTimeEveryFiveSecondsTest();
+    void earthTowerDoesNotChangeObjetiveIfItsAliveTest();
+    void whenEnemyIsInRangeOfAirTowerItAttacksHimTest();
+    void airTowerAttacksOneTimeEveryFiveSecondsTest();
+    void airTowerDoesNotChangeObjetiveIfItsAliveTest();
+    void airTowerMovesBackEnemyWhenHitHimTest();
+    void airTowerHitsFlyingEnemiesHarderTest();
+    void whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest();
+    void earthTowerCantAttackFlyingUnitsTest();
 
 private:
     TowerDefenseGame game;

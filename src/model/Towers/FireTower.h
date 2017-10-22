@@ -7,7 +7,7 @@
 
 
 #include "Tower.h"
-#include "Vector.h"
+#include "../Vector.h"
 
 class FireTower : public Tower {
 public:
@@ -17,6 +17,11 @@ public:
     ~FireTower() override;
 
     void attack() override;
+
+    FireTower(const FireTower&) = delete;
+    FireTower& operator=(const FireTower&) = delete;
+    FireTower& operator=(FireTower&&) = delete;
+    FireTower(FireTower&&) noexcept ;
 
 private:
     unsigned int dmg_to_nearby_enemies;

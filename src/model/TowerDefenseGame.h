@@ -38,8 +38,14 @@ public:
     void moveEnemies();
     void performeAttacks();
 
+    TowerDefenseGame(const TowerDefenseGame&) = delete;
+    TowerDefenseGame& operator=(const TowerDefenseGame&) = delete;
+    TowerDefenseGame(TowerDefenseGame&&) = delete;
+    TowerDefenseGame& operator=(TowerDefenseGame&&) = delete;
+
 private:
     int tower_id;
+    int enemy_id;
     Scenario* scenario;
     std::vector<Player> players;
 

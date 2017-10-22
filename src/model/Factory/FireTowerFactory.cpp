@@ -3,7 +3,7 @@
 //
 
 #include "FireTowerFactory.h"
-#include "../FireTower.h"
+#include "../Towers/FireTower.h"
 
 Tower *FireTowerFactory::create(int id, Vector position,
                                 const YAML::Node &properties, Scenario& scenario) {
