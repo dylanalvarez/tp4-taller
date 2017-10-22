@@ -288,6 +288,10 @@ Map::Setting Map::getSetting() {
     return this->setting;
 }
 
+int Map::getSecondsBetweenHordes() {
+    return secondsBetweenHordes;
+}
+
 std::string Map::Horde::toString() {
     return std::to_string(this->quantity) + " " + Map::toString(this->type);
 }

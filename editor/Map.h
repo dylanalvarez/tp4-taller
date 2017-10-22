@@ -44,6 +44,8 @@ public:
 
     int getWidth();
 
+    int getSecondsBetweenHordes();
+
     Setting getSetting();
 
     void addHorde(Horde &horde);

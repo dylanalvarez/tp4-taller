@@ -14,10 +14,12 @@ LoadFileGrid::LoadFileGrid(
 }
 
 void LoadFileGrid::init(Map &map, SaveButton *saveButton,
-                        AmbianceGrid *ambianceGrid) {
+                        AmbianceGrid *ambianceGrid,
+                        HordeFrequencySpinButton *hordeFrequencySpinButton) {
     this->map = &map;
     this->saveButton = saveButton;
     this->ambianceGrid = ambianceGrid;
+    this->hordeFrequencySpinButton = hordeFrequencySpinButton;
 }
 
 void LoadFileGrid::loadFile() {
@@ -45,6 +47,7 @@ void LoadFileGrid::loadFile() {
     nameEntry->set_text(fileNameEntry->get_text());
 
     ambianceGrid->setFromMap();
+    hordeFrequencySpinButton->setFromMap();
 
     mapGrid->show();
 

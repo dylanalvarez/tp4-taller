@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
 
     LoadFileGrid *loadFileGrid;
     builder.get_widget_derived("load-file-grid", loadFileGrid, map, saveButton,
-                               ambianceGrid);
+                               ambianceGrid, hordeFrequencySpinButton);
 
     auto returnCode = app->run(*mainWindow);
     delete mainWindow;
