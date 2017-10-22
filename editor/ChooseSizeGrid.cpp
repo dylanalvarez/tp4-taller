@@ -1,6 +1,7 @@
 #include <gtkmm/viewport.h>
 #include "ChooseSizeGrid.h"
 #include "MapGrid.h"
+#include "NameEntry.h"
 
 ChooseSizeGrid::ChooseSizeGrid(BaseObjectType *obj,
                                Glib::RefPtr<Gtk::Builder> &builder) :
@@ -26,9 +27,13 @@ void ChooseSizeGrid::chooseSize() {
     Gtk::Viewport *mapViewport;
     builder.get_widget("map", mapViewport);
 
-    auto mapGrid = Gtk::manage(new MapGrid(*map, builder, width, height,
-                                           saveButton));
+    MapGrid *mapGrid = Gtk::manage(
+            new MapGrid(*map, builder, width, height, saveButton));
     mapViewport->add(*mapGrid);
+
+    NameEntry *nameEntry;
+    builder.get_widget_derived("name", nameEntry, *map, mapGrid);
+
     mapGrid->show();
 }
 

@@ -1,6 +1,5 @@
 #include "yaml-cpp/yaml.h"
 #include "SaveButton.h"
-#include "NameEntry.h"
 #include "AmbianceGrid.h"
 #include "HordeFrequencySpinButton.h"
 #include "AddHordeGrid.h"
@@ -20,9 +19,6 @@ int main(int argc, char **argv) {
 
     SaveButton *saveButton;
     builder.get_widget_derived("save", saveButton, map);
-
-    NameEntry *nameEntry;
-    builder.get_widget_derived("name", nameEntry, map);
 
     ChooseSizeGrid *chooseSizeGrid;
     builder.get_widget_derived("choose-size-grid", chooseSizeGrid, map,
