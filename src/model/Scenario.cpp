@@ -6,9 +6,8 @@
 #include "Exceptions/TowerError.h"
 
 Scenario::Scenario(Path&& path, std::vector<Vector>&& firm_ground_locations) :
-        path(std::move(path)) {
-    this->firm_ground_locations = std::move(firm_ground_locations);
-}
+        path(std::move(path)),
+        firm_ground_locations(std::move(firm_ground_locations)) {}
 
 Scenario::~Scenario() {
     for (auto &tower : towers) {
@@ -29,20 +28,23 @@ std::vector<Enemy*> Scenario::getEnemiesInRange(const Range &range,
         }
     }
 
-    return std::move(closest_enemies);
+    return closest_enemies;
 }
 
-void Scenario::addEnemy(Enemy&& enemy) {
-    enemies.push_back(std::move(enemy));
+void Scenario::addEnemy(Enemy& enemy) {
+    enemies.push_back(enemy);
 }
 
 Scenario::Scenario(Scenario&& other) noexcept : path(std::move(other.path)) {
     this->enemies = std::move(other.enemies);
+    this->towers = std::move(other.towers);
+    this->firm_ground_locations = std::move(other.firm_ground_locations);
 }
 
 Scenario& Scenario::operator=(Scenario&& other) noexcept {
-    this->path = std::move(other.path);
     this->enemies = std::move(other.enemies);
+    this->towers = std::move(other.towers);
+    this->firm_ground_locations = std::move(other.firm_ground_locations);
 
     return *this;
 }

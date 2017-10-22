@@ -8,14 +8,14 @@
 #include <yaml-cpp/yaml.h>
 #include "Enemy.h"
 #include "Range.h"
-#include "Tower.h"
+#include "Towers/Tower.h"
 
 class Scenario {
 public:
     Scenario(Path&& path, std::vector<Vector>&& firm_ground_locations);
     ~Scenario();
 
-    void addEnemy(Enemy&& enemy);
+    void addEnemy(Enemy& enemy);
 
     // añade una torre en la posicion que ella contiene
     // Pre: la posicion debe ser terreno firme

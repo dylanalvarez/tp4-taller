@@ -5,7 +5,10 @@
 #include <complex>
 #include "Vector.h"
 
-Vector::Vector(float x, float y) : x(x), y(y){}
+Vector::Vector(float x, float y) {
+    this->x = x * pixels_per_unit;
+    this->y = y * pixels_per_unit;
+}
 
 float Vector::getX() const {
     return x;
@@ -79,4 +82,17 @@ float Vector::getNorm() {
 
 std::string Vector::to_string() const {
     return "(" + std::to_string(x) + "," + std::to_string(y) + ")";
+}
+
+Vector &Vector::operator*=(float num) {
+    this->x *= num;
+    this->y *= num;
+    return *this;
+}
+
+Vector &Vector::operator-=(const Vector& other) {
+    this->x -= other.x;
+    this->y -= other.y;
+
+    return *this;
 }

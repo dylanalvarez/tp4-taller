@@ -7,6 +7,9 @@
 #include "Exceptions/TowerError.h"
 #include "Exceptions/MatchError.h"
 #include "Factory/FireTowerFactory.h"
+#include "Factory/WaterTowerFactory.h"
+#include "Factory/EarthTowerFactory.h"
+#include "Factory/AirTowerFactory.h"
 
 TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
                                    const std::string &scenario_file) {
@@ -18,10 +21,11 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
     // cargar propiedades del escenario
 
     tower_id = 1;
+    enemy_id = 1;
     Path path({Vector(0,0), Vector(0,5), Vector(3,5),
                Vector(3,2), Vector(-1, 2)});
 
-    std::vector<Vector> firm_ground_locations = {Vector(5,5)};
+    std::vector<Vector> firm_ground_locations = {Vector(5,5), Vector(2,4)};
 
     scenario = new Scenario(std::move(path), std::move(firm_ground_locations));
 }
@@ -37,9 +41,9 @@ TowerDefenseGame::~TowerDefenseGame(){
 void TowerDefenseGame::addEnemy(const std::string &enemy_type) {
     try{
         EnemyProperties properties = enemies_properties.at(enemy_type);
-        Enemy enemy(tower_id++, scenario->getPath(), properties.hp, properties.speed,
+        Enemy enemy(enemy_id++, scenario->getPath(), properties.hp, properties.speed,
                              properties.does_it_fly);
-        scenario->addEnemy(std::move(enemy));
+        scenario->addEnemy(enemy);
     } catch (std::exception& e) {
         throw EnemyError("Error al agregar enemigo -> El tipo: " + enemy_type
                          + " no es un tipo valido");
@@ -106,9 +110,12 @@ void TowerDefenseGame::addTower(const Player &player, const std::string &type,
                          ", el jugador " + player.getName() +
                          "no pertence a la partida");
     }
-
-    scenario->addTower(towers_factory.at(type)->create(tower_id, position,
-                                                       tower_properties, *scenario));
+    try {
+        scenario->addTower(towers_factory.at(type)->create(tower_id, position,
+                                                           tower_properties, *scenario));
+    } catch (std::exception& e) {
+        throw TowerError("Error: el tipo de torre " + type + " no es un tipo valido");
+    }
 }
 
 const Player& TowerDefenseGame::addPlayer(const std::string &name) {
@@ -127,4 +134,7 @@ void TowerDefenseGame::performeAttacks() {
 void TowerDefenseGame::loadTowerProperties(YAML::Node& properties) {
     tower_properties = properties;
     towers_factory.emplace("fire", new FireTowerFactory());
+    towers_factory.emplace("water", new WaterTowerFactory());
+    towers_factory.emplace("earth", new EarthTowerFactory());
+    towers_factory.emplace("air", new AirTowerFactory());
 }

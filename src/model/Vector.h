@@ -5,12 +5,12 @@
 #ifndef TOWERDEFENSE_POSITION_H
 #define TOWERDEFENSE_POSITION_H
 
+#define pixels_per_unit 1.0
 
 #include <complex>
 #include <yaml-cpp/yaml.h>
 
 class Vector {
-
 public:
     explicit Vector(float x = 0, float y = 0);
 
@@ -22,11 +22,13 @@ public:
     // sobrecarga de operadores
     Vector& operator+=(float);
     Vector& operator+=(const Vector&);
+    Vector& operator-=(const Vector&);
     Vector operator-(const Vector&) const;
     bool operator!=(const Vector&) const;
     bool operator==(const Vector&) const;
     bool operator>(const Vector&) const;
     Vector operator+(const Vector&) const;
+    Vector& operator *=(float);
 
     // divide cada coordenada por la norma del vector
     void normalize();

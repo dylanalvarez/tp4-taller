@@ -6,7 +6,7 @@
 #define TOWERDEFENSE_TOWERFACTORY_H
 
 
-#include "../Tower.h"
+#include "../Towers/Tower.h"
 #include "../Scenario.h"
 
 class TowerFactory {
