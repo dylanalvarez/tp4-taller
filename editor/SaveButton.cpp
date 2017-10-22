@@ -10,5 +10,5 @@ SaveButton::SaveButton(BaseObjectType *obj,
 void SaveButton::init(Map &map) { this->map = &map; }
 
 void SaveButton::onClick() {
-    map->exportToFile("output.yaml");
+    map->exportToFile(map->getName() + ".yaml");
 }

@@ -19,7 +19,10 @@ void ChooseSizeGrid::chooseSize() {
     int height = setHeight->get_value_as_int();
     map->setSize(width, height);
 
-    this->hide();
+    Gtk::Grid *initialGrid;
+    builder.get_widget("initial-grid", initialGrid);
+    initialGrid->hide();
+
     Gtk::Grid *mainGrid;
     builder.get_widget("main-grid", mainGrid);
     mainGrid->show();

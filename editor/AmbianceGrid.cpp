@@ -1,4 +1,3 @@
-#include <gtkmm/radiobutton.h>
 #include "AmbianceGrid.h"
 
 AmbianceGrid::AmbianceGrid(BaseObjectType *obj,
@@ -21,15 +20,11 @@ AmbianceGrid::AmbianceGrid(BaseObjectType *obj,
     }
 
     // Group radio buttons together
-    Gtk::RadioButton *desert;
     this->builder.get_widget("desert", desert);
-    Gtk::RadioButton *volcano;
     this->builder.get_widget("volcano", volcano);
     volcano->join_group(*desert);
-    Gtk::RadioButton *ice;
     this->builder.get_widget("ice", ice);
     ice->join_group(*desert);
-    Gtk::RadioButton *meadow;
     this->builder.get_widget("meadow", meadow);
     meadow->join_group(*desert);
 
@@ -44,4 +39,21 @@ void AmbianceGrid::onChange(std::string id) {
 
 void AmbianceGrid::init(Map &map) {
     this->map = &map;
+}
+
+void AmbianceGrid::setFromMap() {
+    switch (map->getSetting()) {
+        case Map::desert:
+            desert->set_active(true);
+            break;
+        case Map::volcano:
+            volcano->set_active(true);
+            break;
+        case Map::ice:
+            ice->set_active(true);
+            break;
+        case Map::meadow:
+            meadow->set_active(true);
+            break;
+    }
 }

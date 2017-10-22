@@ -56,5 +56,5 @@ void AddHordeGrid::onClearHordes() {
 }
 
 void AddHordeGrid::onHordeKindChange() {
-    horde.type = Map::fromString(hordeKindComboBox->get_active_text());
+    horde.type = Map::hordeTypeFromString(hordeKindComboBox->get_active_text());
 }

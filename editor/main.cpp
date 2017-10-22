@@ -1,9 +1,9 @@
-#include "yaml-cpp/yaml.h"
 #include "SaveButton.h"
 #include "AmbianceGrid.h"
 #include "HordeFrequencySpinButton.h"
 #include "AddHordeGrid.h"
 #include "ChooseSizeGrid.h"
+#include "LoadFileGrid.h"
 #include <gtkmm/window.h>
 
 int main(int argc, char **argv) {
@@ -33,6 +33,10 @@ int main(int argc, char **argv) {
 
     AddHordeGrid *addHordeGrid;
     builder.get_widget_derived("add-horde-grid", addHordeGrid, map);
+
+    LoadFileGrid *loadFileGrid;
+    builder.get_widget_derived("load-file-grid", loadFileGrid, map, saveButton,
+                               ambianceGrid);
 
     auto returnCode = app->run(*mainWindow);
     delete mainWindow;

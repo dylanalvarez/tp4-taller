@@ -40,6 +40,12 @@ public:
 
     void setSize(int width, int height);
 
+    int getHeight();
+
+    int getWidth();
+
+    Setting getSetting();
+
     void addHorde(Horde &horde);
 
     void addFirmGround(int x, int y);
@@ -54,9 +60,11 @@ public:
 
     void exportToFile(const std::string &filename) const;
 
+    void loadFromFile(std::ifstream& source);
+
     static std::string toString(HordeType hordeType);
 
-    static HordeType fromString(const std::string &hordeType);
+    static HordeType hordeTypeFromString(const std::string &hordeType);
 
 private:
     struct Coordinate {
@@ -64,6 +72,10 @@ private:
 
         int x, y;
     };
+
+    static Setting settingFromString(const std::string &setting);
+
+    static HordeType _hordeTypeFromString(const std::string &hordeType);
 
     std::string _toString(Setting setting) const;
 
