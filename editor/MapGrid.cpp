@@ -17,6 +17,7 @@ MapGrid::MapGrid(Map &map,
         for (int y = 0; y <= height + 1; y++) {
             auto square = Gtk::manage(new MapButton("", x, y, *this, map));
             attach(*square, x, y, 1, 1);
+            square->set_size_request(30, 30);
             square->show();
             grid[x].push_back((Gtk::Button *) square);
         }
