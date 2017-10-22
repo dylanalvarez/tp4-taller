@@ -46,6 +46,8 @@ public:
 
     int getSecondsBetweenHordes();
 
+    const std::vector<Horde>& getHordes();
+
     Setting getSetting();
 
     void addHorde(Horde &horde);

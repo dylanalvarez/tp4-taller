@@ -292,6 +292,10 @@ int Map::getSecondsBetweenHordes() {
     return secondsBetweenHordes;
 }
 
+const std::vector<Map::Horde> &Map::getHordes() {
+    return hordes;
+}
+
 std::string Map::Horde::toString() {
     return std::to_string(this->quantity) + " " + Map::toString(this->type);
 }

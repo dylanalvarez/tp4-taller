@@ -47,6 +47,10 @@ void AddHordeGrid::onChangeHordeQuantity() {
 
 void AddHordeGrid::onAddHorde() {
     map->addHorde(horde);
+    _addHordeToList(horde);
+}
+
+void AddHordeGrid::_addHordeToList(Map::Horde horde) {
     hordeList->set_text(hordeList->get_text() + "\n" + horde.toString());
 }
 
@@ -57,4 +61,10 @@ void AddHordeGrid::onClearHordes() {
 
 void AddHordeGrid::onHordeKindChange() {
     horde.type = Map::hordeTypeFromString(hordeKindComboBox->get_active_text());
+}
+
+void AddHordeGrid::setFromMap() {
+    for (const Map::Horde& horde : map->getHordes()) {
+        _addHordeToList(horde);
+    }
 }
