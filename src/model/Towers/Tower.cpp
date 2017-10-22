@@ -35,3 +35,26 @@ Tower::Tower(Tower&& other) noexcept : properties(other.properties),
     this->current_target = other.current_target;
     other.current_target = nullptr;
 }
+
+bool Tower::isCurrentTargetOutOfRange(const std::vector<Enemy*>& enemies) const {
+    for (Enemy* enemy : enemies){
+        if (enemy == current_target){
+            return false;
+        }
+    }
+    return true;
+}
+
+void Tower::changeTarget(const std::vector<Enemy*>& enemies) {
+    if (current_target) {
+        if (current_target->getHealthPoints() == 0
+            || isCurrentTargetOutOfRange(enemies)) {
+            // si hay target pero esta muerto
+            // o si se fue de rango
+            current_target = enemies[0];
+        }
+    } else {
+        // si no hay target
+        current_target = enemies[0];
+    }
+}

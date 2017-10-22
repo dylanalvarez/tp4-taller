@@ -22,6 +22,8 @@ public:
     EarthTower& operator=(EarthTower&&) = delete;
     EarthTower(EarthTower&&) noexcept ;
 
+private:
+    Enemy* getNotFlyingEnemy(const std::vector<Enemy*>&);
 };
 
 

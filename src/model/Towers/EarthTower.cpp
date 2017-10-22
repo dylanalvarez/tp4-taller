@@ -25,35 +25,16 @@ void EarthTower::attack() {
     std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
     if (enemies.empty()) { return; }
 
-    // si el current_objective no esta en la lista, entonces no esta en rango
-    bool is_out_of_range = true;
-    for (Enemy* enemy : enemies){
-        if (enemy == current_target){
-            is_out_of_range = false;
-        }
-    }
-
     if (current_target) {
-        if (current_target->getHealthPoints() == 0 || is_out_of_range){
+        if (current_target->getHealthPoints() == 0
+            || isCurrentTargetOutOfRange(enemies)){
             // si hay target pero esta muerto
-            for (Enemy* enemy : enemies){
-                if (!enemy->canIFlight()){
-                    // busca el que no vuela
-                    current_target = enemy;
-                    break;
-                }
-            }
-
+            // o esta fuera de rango
+            current_target = getNotFlyingEnemy(enemies);
         }
     } else {
         // si no hay target
-        for (Enemy* enemy : enemies){
-            if (!enemy->canIFlight()){
-                // busca el que no vuela
-                current_target = enemy;
-                break;
-            }
-        }
+        current_target = getNotFlyingEnemy(enemies);
     }
 
     if (!current_target) { return; } // si no encontro ninguno que no vuele salir
@@ -65,3 +46,10 @@ void EarthTower::attack() {
 
 EarthTower::EarthTower(EarthTower&& other) noexcept :
         Tower(std::move(other)) {}
+
+Enemy *EarthTower::getNotFlyingEnemy(const std::vector<Enemy *>& enemies) {
+    for (Enemy* enemy : enemies){
+        if (!enemy->canIFlight()) { return enemy; }
+    }
+    return nullptr;
+}

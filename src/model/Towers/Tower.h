@@ -41,6 +41,9 @@ protected:
     unsigned int attack_cooldown;
     time_t last_attack_time;
     Enemy* current_target;
+
+    bool isCurrentTargetOutOfRange(const std::vector<Enemy*>&) const;
+    void changeTarget(const std::vector<Enemy*>&);
 };
 
 
