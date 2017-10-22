@@ -41,13 +41,15 @@ void LoadFileGrid::loadFile() {
     builder.get_widget("map", mapViewport);
 
     MapGrid *mapGrid = Gtk::manage(
-            new MapGrid(*map, builder, map->getWidth(), map->getWidth(), saveButton));
+            new MapGrid(*map, builder, map->getWidth(), map->getWidth(),
+                        saveButton));
     mapViewport->add(*mapGrid);
 
     NameEntry *nameEntry;
     builder.get_widget_derived("name", nameEntry, *map, mapGrid);
     nameEntry->set_text(fileNameEntry->get_text());
 
+    mapGrid->setFromMap();
     ambianceGrid->setFromMap();
     hordeFrequencySpinButton->setFromMap();
     addHordeGrid->setFromMap();

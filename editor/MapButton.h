@@ -1,6 +1,10 @@
 #ifndef TP4_TALLER_MAPBUTTON_H
 #define TP4_TALLER_MAPBUTTON_H
 
+#define FIRM_GROUND_STR "T"
+#define ENTRY_DOOR_STR "E"
+#define EXIT_DOOR_STR "S"
+#define PATH_STR "C"
 
 #include <gtkmm/button.h>
 #include "Map.h"

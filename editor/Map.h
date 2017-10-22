@@ -28,6 +28,12 @@ public:
         int quantity;
     };
 
+    struct Coordinate {
+        Coordinate(int x, int y) : x(x), y(y) {}
+
+        int x, y;
+    };
+
     Map();
 
     void setName(const std::string &name);
@@ -47,6 +53,14 @@ public:
     int getSecondsBetweenHordes();
 
     const std::vector<Horde>& getHordes();
+
+    const std::vector<Coordinate>& getFirmGround();
+
+    const std::vector<Coordinate>& getEntryDoors();
+
+    const std::vector<Coordinate>& getExitDoors();
+
+    const std::vector<std::vector<Coordinate>>& getPaths();
 
     Setting getSetting();
 
@@ -71,12 +85,6 @@ public:
     static HordeType hordeTypeFromString(const std::string &hordeType);
 
 private:
-    struct Coordinate {
-        Coordinate(int x, int y) : x(x), y(y) {}
-
-        int x, y;
-    };
-
     static Setting settingFromString(const std::string &setting);
 
     static HordeType _hordeTypeFromString(const std::string &hordeType);

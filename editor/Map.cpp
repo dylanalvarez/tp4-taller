@@ -296,6 +296,22 @@ const std::vector<Map::Horde> &Map::getHordes() {
     return hordes;
 }
 
+const std::vector<Map::Coordinate> &Map::getFirmGround() {
+    return firmGround;
+}
+
+const std::vector<Map::Coordinate> &Map::getEntryDoors() {
+    return entryDoors;
+}
+
+const std::vector<Map::Coordinate> &Map::getExitDoors() {
+    return exitDoors;
+}
+
+const std::vector<std::vector<Map::Coordinate>> &Map::getPaths() {
+    return paths;
+}
+
 std::string Map::Horde::toString() {
     return std::to_string(this->quantity) + " " + Map::toString(this->type);
 }
