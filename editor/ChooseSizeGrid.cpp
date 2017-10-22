@@ -37,8 +37,7 @@ void ChooseSizeGrid::chooseSize() {
     mapGrid->show();
 }
 
-void
-ChooseSizeGrid::init(Map &map, SaveButton *saveButton) {
+void ChooseSizeGrid::init(Map &map, SaveButton *saveButton) {
     this->map = &map;
     this->saveButton = saveButton;
 }
