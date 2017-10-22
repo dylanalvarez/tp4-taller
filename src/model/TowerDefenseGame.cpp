@@ -110,10 +110,12 @@ void TowerDefenseGame::addTower(const Player &player, const std::string &type,
                          ", el jugador " + player.getName() +
                          "no pertence a la partida");
     }
-
-    //TODO testear que pasa cuando el tipo de torre no existe
-    scenario->addTower(towers_factory.at(type)->create(tower_id, position,
-                                                       tower_properties, *scenario));
+    try {
+        scenario->addTower(towers_factory.at(type)->create(tower_id, position,
+                                                           tower_properties, *scenario));
+    } catch (std::exception& e) {
+        throw TowerError("Error: el tipo de torre " + type + " no es un tipo valido");
+    }
 }
 
 const Player& TowerDefenseGame::addPlayer(const std::string &name) {

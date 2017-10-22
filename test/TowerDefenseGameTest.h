@@ -45,6 +45,7 @@ class TowerDefenseGameTest : public CppUnit::TestCase {
         CPPUNIT_TEST(airTowerHitsFlyingEnemiesHarderTest);
         CPPUNIT_TEST(whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest);
         CPPUNIT_TEST(earthTowerCantAttackFlyingUnitsTest);
+        CPPUNIT_TEST(addingNotExistingTowerTypeThrowsExceptionTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -85,6 +86,7 @@ protected:
     void airTowerHitsFlyingEnemiesHarderTest();
     void whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest();
     void earthTowerCantAttackFlyingUnitsTest();
+    void addingNotExistingTowerTypeThrowsExceptionTest();
 
 private:
     TowerDefenseGame game;

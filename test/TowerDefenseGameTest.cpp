@@ -765,3 +765,9 @@ void TowerDefenseGameTest::earthTowerCantAttackFlyingUnitsTest() {
 
     CPPUNIT_ASSERT_EQUAL(game.getAllEnemies()[0].getHealthPoints(), initial_life);
 }
+
+void TowerDefenseGameTest::addingNotExistingTowerTypeThrowsExceptionTest() {
+    const Player& added_player = game.addPlayer("alguien");
+
+    CPPUNIT_ASSERT_THROW(game.addTower(added_player, "metal", Vector(2,4)), TowerError);
+}
