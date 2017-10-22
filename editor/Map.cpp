@@ -128,7 +128,8 @@ void Map::loadFromFile(std::ifstream &source) {
         this->paths.emplace_back();
         for (std::vector<int> &pathStepAsVector : pathAsVector) {
             this->paths.back().emplace_back(
-                    pathStepAsVector[0], pathStepAsVector[1]);
+                    (pathStepAsVector[0] + 44) / 88,
+                    (pathStepAsVector[1] + 44) / 88);
         }
     }
     this->hordes.clear();
