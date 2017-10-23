@@ -50,6 +50,11 @@ public:
     void throwSpell(const Player& player, const std::string &type,
                     const Vector& position);
 
+    // lanza el hechizo sobre el enemigo con id enemy_id
+    // Pre: debe existir un enemigo con id enemy_id
+    void throwSpell(const Player& player, const std::string& type,
+                    int enemy_id);
+
     /*** Metodos que actualizan el estado del juego ***/
 
     // mueve todos los enemigos

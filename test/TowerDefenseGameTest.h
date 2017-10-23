@@ -63,6 +63,11 @@ class TowerDefenseGameTest : public CppUnit::TestCase {
         CPPUNIT_TEST(throwSpellFissureDestroysAllEnemysInPositionTest);
         CPPUNIT_TEST(EnemyPassingThrowFissureDieTest);
         CPPUNIT_TEST(fissureDoesNotAffectFlyingEnemiesTest);
+        CPPUNIT_TEST(meteoriteDealsDamageToEnemyHittedTest);
+        CPPUNIT_TEST(throwMeteoriteToNotExistingIdThrowsExceptionTest);
+        CPPUNIT_TEST(meteoriteHasACooldownTest);
+        CPPUNIT_TEST(fireWallDealDamageToEnemiesInTheAreaTest);
+        CPPUNIT_TEST(fireWallOnlyLastFiveSecondsTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -94,6 +99,11 @@ protected:
     void fissureOnlyLastOneSecondTest();
     void EnemyPassingThrowFissureDieTest();
     void fissureDoesNotAffectFlyingEnemiesTest();
+    void meteoriteDealsDamageToEnemyHittedTest();
+    void throwMeteoriteToNotExistingIdThrowsExceptionTest();
+    void meteoriteHasACooldownTest();
+    void fireWallDealDamageToEnemiesInTheAreaTest();
+    void fireWallOnlyLastFiveSecondsTest();
 
     /*** Fire Tower ***/
     void whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest();

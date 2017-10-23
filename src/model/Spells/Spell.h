@@ -12,6 +12,7 @@
 class Spell {
 public:
     virtual void applyEffect(const Vector& position) = 0;
+    virtual void applyEffect(Enemy& enemy) = 0;
 
     virtual bool canBeThrownBy(const std::string& element) = 0;
 

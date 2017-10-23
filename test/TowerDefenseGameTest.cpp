@@ -1013,3 +1013,71 @@ void TowerDefenseGameTest::fissureDoesNotAffectFlyingEnemiesTest() {
 
     CPPUNIT_ASSERT_EQUAL(1, (int)game.getAllEnemies().size());
 }
+
+void TowerDefenseGameTest::meteoriteDealsDamageToEnemyHittedTest() {
+    const Player &added_player = game.addPlayer("alguien", "fire");
+
+    // comienza en (0,0)
+    game.addEnemy("spectrum");
+    int enemy_id = game.getAllEnemies()[0].getID();
+    int initial_hp = game.getAllEnemies()[0].getHealthPoints();
+
+    game.throwSpell(added_player, "meteorite", enemy_id);
+
+    CPPUNIT_ASSERT(initial_hp > game.getAllEnemies()[0].getHealthPoints());
+}
+
+void TowerDefenseGameTest::throwMeteoriteToNotExistingIdThrowsExceptionTest() {
+    const Player &added_player = game.addPlayer("alguien", "fire");
+
+    CPPUNIT_ASSERT_THROW(game.throwSpell(added_player, "meteorite", 105), MatchError);
+}
+
+void TowerDefenseGameTest::meteoriteHasACooldownTest() {
+    const Player &added_player = game.addPlayer("alguien", "fire");
+
+    // comienza en (0,0)
+    game.addEnemy("spectrum");
+    int enemy_id = game.getAllEnemies()[0].getID();
+
+    game.throwSpell(added_player, "meteorite", enemy_id);
+
+    int hp = game.getAllEnemies()[0].getHealthPoints();
+
+    game.throwSpell(added_player, "meteorite", enemy_id);
+
+    CPPUNIT_ASSERT(hp == game.getAllEnemies()[0].getHealthPoints());
+}
+
+void TowerDefenseGameTest::fireWallDealDamageToEnemiesInTheAreaTest() {
+    const Player &added_player = game.addPlayer("alguien", "fire");
+
+    // comienzan en (0,0)
+    game.addEnemy("spectrum");
+    game.addEnemy("spectrum");
+
+    int first_enemy_hp = game.getAllEnemies()[0].getHealthPoints();
+    int second_enemy_hp = game.getAllEnemies()[1].getHealthPoints();
+
+    game.throwSpell(added_player, "fire_wall", Vector(0,0));
+
+    game.updateGame();
+
+    CPPUNIT_ASSERT(first_enemy_hp > game.getAllEnemies()[0].getHealthPoints());
+    CPPUNIT_ASSERT(second_enemy_hp > game.getAllEnemies()[1].getHealthPoints());
+}
+
+void TowerDefenseGameTest::fireWallOnlyLastFiveSecondsTest() {
+    const Player &added_player = game.addPlayer("alguien", "fire");
+
+    game.throwSpell(added_player, "fire_wall", Vector(0,0));
+
+    sleep(5);
+
+    game.addEnemy("spectrum");
+    int second_enemy_hp = game.getAllEnemies()[0].getHealthPoints();
+
+    game.updateGame();
+
+    CPPUNIT_ASSERT(second_enemy_hp == game.getAllEnemies()[0].getHealthPoints());
+}

@@ -17,6 +17,8 @@ public:
     // Pre: debe ser una posicion valida (no debe ser camino ni terreno firme)
     void applyEffect(const Vector& position) override;
 
+    void applyEffect(Enemy& enemy) override;
+
     bool canBeThrownBy(const std::string& element) override;
 
     void attack() override;

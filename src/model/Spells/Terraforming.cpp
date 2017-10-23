@@ -23,3 +23,5 @@ bool Terraforming::canBeThrownBy(const std::string &element) {
 }
 
 void Terraforming::attack() {}
+
+void Terraforming::applyEffect(Enemy &enemy) {}

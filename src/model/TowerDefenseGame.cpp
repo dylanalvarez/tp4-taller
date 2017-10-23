@@ -12,6 +12,8 @@
 #include "Factory/AirTowerFactory.h"
 #include "Spells/Terraforming.h"
 #include "Spells/Fissure.h"
+#include "Spells/Meteorite.h"
+#include "Spells/FireWall.h"
 
 TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
                                    const std::string &scenario_file) {
@@ -32,6 +34,8 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
 
     spells.emplace("terraforming", new Terraforming(*scenario, 20));
     spells.emplace("fissure", new Fissure(*scenario, 40, 1));
+    spells.emplace("meteorite", new Meteorite(*scenario, 20, 2, 30, 10));
+    spells.emplace("fire_wall", new FireWall(*scenario, 10, 10, 5));
 }
 
 TowerDefenseGame::~TowerDefenseGame(){
@@ -184,4 +188,33 @@ void TowerDefenseGame::throwSpell(const Player& player,
     }
 
     spell->applyEffect(position);
+}
+
+void TowerDefenseGame::throwSpell(const Player &player, const std::string &type,
+                                  int enemy_id) {
+    Spell* spell = spells.at(type);
+    bool can_be_thrown = false;
+    for (auto& element : player.getElements()) {
+        if (spell->canBeThrownBy(element)) { can_be_thrown = true; break; }
+    }
+
+    if (!can_be_thrown) {
+        throw MatchError("Error al lanzar hechizo: " +
+                         type +
+                         " el jugador " +
+                         player.getName() +
+                         " no posee el elemento adecuado");
+    }
+
+    for (Enemy& enemy : scenario->getAllEnemies()) {
+        if (enemy.getID() == enemy_id) {
+            spell->applyEffect(enemy);
+            return;
+        }
+    }
+    throw MatchError("Error al lanzar hechizo: " +
+                     type +
+                     " el enemigo con id " +
+                     std::to_string(enemy_id) +
+                     " no existe");
 }

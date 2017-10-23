@@ -41,3 +41,5 @@ void Fissure::attack() {
         }
     }
 }
+
+void Fissure::applyEffect(Enemy &enemy) {}
