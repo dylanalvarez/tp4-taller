@@ -6,6 +6,7 @@
 #include "../src/model/Exceptions/EnemyError.h"
 #include "../src/model/Exceptions/TowerError.h"
 #include "../src/model/Exceptions/MatchError.h"
+#include "../src/model/Towers/FireTower.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TowerDefenseGameTest);
 
@@ -889,5 +890,23 @@ void TowerDefenseGameTest::levelingImpactRangeOfFiretowerIncreasesItByOnesTest()
 
     game.levelupTower(tower, "reach");
 
-    CPPUNIT_ASSERT_EQUAL(2, tower.getReachOfImpact());
+    // se agregan dos enemigos con una distancia de 2 entre ellos
+    // la torre deberia pegarle al de distancia dos ya que su alcance de impacto
+    // paso a ser 2
+
+    game.addEnemy("abmonible");
+    game.moveEnemies();
+    game.moveEnemies();
+    game.addEnemy("abmonible");
+    for (int i = 0; i < 7; i++){
+        game.moveEnemies();
+    }
+
+    int initial_hp = game.getAllEnemies()[6].getHealthPoints();
+
+    game.performeAttacks();
+
+    float dmg_dealed = initial_hp - game.getAllEnemies()[6].getHealthPoints();
+
+    CPPUNIT_ASSERT_EQUAL(3, (int)dmg_dealed);
 }

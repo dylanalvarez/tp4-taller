@@ -18,10 +18,22 @@ public:
 
     void attack() override;
 
+    void levelupRange() override;
+    void levelupDamage() override;
+    void levelupReachOfImpact() override;
+    void levelupSlowdown() override;
+
+    int getReachOfImpact() const;
+
     FireTower(const FireTower&) = delete;
     FireTower& operator=(const FireTower&) = delete;
     FireTower& operator=(FireTower&&) = delete;
     FireTower(FireTower&&) noexcept ;
+
+private:
+    int reach_level;
+    unsigned int reach_of_impact;
+    unsigned int dmg_to_nearby_units;
 };
 
 

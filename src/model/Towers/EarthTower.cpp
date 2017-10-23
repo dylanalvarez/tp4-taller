@@ -4,30 +4,24 @@
 
 #include "EarthTower.h"
 #include "../Scenario.h"
+#include "../Exceptions/TowerError.h"
 #include "../Upgrades/DamageLevelup.h"
-
-static double getNecessaryExpToLevelupRange(int level) {
-    return (500 * (pow(2,level)));
-}
-
-static double getNecessaryExpToLevelupDamage(int level) {
-    return (100 * pow(1.5, level));
-}
 
 EarthTower::EarthTower(int id, Vector p, const YAML::Node &properties,
                        Scenario &scneario) :
         Tower(id, p, properties, scneario) {
-    level = new TowerLevel(1, 20, 0, 0, 0, Range(position, 2), 0, 0);
-    this->last_attack_time = 0;
-    this->attack_cooldown = 5;
-    this->current_target = nullptr;
+    range_level = 1;
+    dmg_level = 1;
+    last_attack_time = 0;
+    attack_cooldown = 5;
+    current_target = nullptr;
+    experience = 0;
 
-    // levelea +1 rango
-    levelup_types.emplace("range", new RangeLevelup(1,
-                                                    &getNecessaryExpToLevelupRange));
-    // levelea +10 ataque, 0 contra voladores, 0 contra cercanos
-    levelup_types.emplace("damage", new DamageLevelup(10, 0, 0,
-                                                      &getNecessaryExpToLevelupDamage));
+    dmg = 20;
+    range = Range(position, 2);
+
+    levelup_types.emplace("range", new RangeLevelup(*this));
+    levelup_types.emplace("damage", new DamageLevelup(*this));
 }
 
 EarthTower::~EarthTower() = default;
@@ -37,7 +31,7 @@ void EarthTower::attack() {
     //if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
     //{ return; }
 
-    std::vector<Enemy*> enemies = scenario.getEnemiesInRange(level->getRange());
+    std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
     if (enemies.empty()) { return; }
 
     if (current_target) {
@@ -54,7 +48,7 @@ void EarthTower::attack() {
 
     if (!current_target) { return; } // si no encontro ninguno que no vuele salir
 
-    hitCurrentTarget(level->getDamage());
+    hitCurrentTarget(dmg);
 
     last_attack_time = time(nullptr);
 }
@@ -71,3 +65,35 @@ Enemy *EarthTower::getNotFlyingEnemy(const std::vector<Enemy *>& enemies) {
     }
     return nullptr;
 }
+
+void EarthTower::levelupDamage() {
+    double neccessary_exp = 100 * (pow(1.5,dmg_level));
+    if (experience < neccessary_exp) {
+        throw TowerError("Error: no se puede subir de nivel con los puntos" +
+                         std::to_string(experience) +
+                         ", se necesitan" +
+                         std::to_string(neccessary_exp));
+    }
+
+    dmg += 10;
+    dmg_level++;
+    experience -= neccessary_exp;
+}
+
+void EarthTower::levelupRange() {
+    double neccessary_exp = 500 * (pow(2,range_level));
+    if (experience < neccessary_exp) {
+        throw TowerError("Error: no se puede subir de nivel con los puntos" +
+                         std::to_string(experience) +
+                         ", se necesitan" +
+                         std::to_string(neccessary_exp));
+    }
+
+    range = Range(position, range.getRadius() + 1);
+    experience -= neccessary_exp;
+    range_level++;
+}
+
+void EarthTower::levelupReachOfImpact() {}
+
+void EarthTower::levelupSlowdown() {}

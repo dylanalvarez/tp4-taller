@@ -11,9 +11,7 @@ Tower::Tower(int id, Vector position, const YAML::Node& properties,
                                    position(position) {}
 
 Tower::~Tower() {
-    delete level;
-
-    for (auto& levelup_type : levelup_types){
+    for (auto levelup_type : levelup_types){
         delete levelup_type.second;
     }
 }
@@ -24,22 +22,6 @@ double Tower::getExperience() const {
 
 const Vector &Tower::getPosition() const {
     return position;
-}
-
-Tower::Tower(Tower&& other) noexcept : properties(other.properties),
-                              scenario(other.scenario) {
-    this->id = other.id;
-    other.id = 0;
-
-    this->position = other.position;
-    this->experience = other.experience;
-    this->attack_cooldown = other.attack_cooldown;
-    this->last_attack_time = other.last_attack_time;
-    this->current_target = other.current_target;
-    this->level = other.level;
-
-    other.level = nullptr;
-    other.current_target = nullptr;
 }
 
 bool Tower::isCurrentTargetOutOfRange(const std::vector<Enemy*>& enemies) const {
@@ -68,18 +50,15 @@ void Tower::changeTarget(const std::vector<Enemy*>& enemies) {
 }
 
 const Range &Tower::getRange() const {
-    return level->getRange();
+    return range;
 }
 
 void Tower::levelup(const std::string &type) {
-    TowerLevel* new_level = levelup_types.at(type)->levelup(*level, experience);
-    experience -= levelup_types.at(type)->getExperienceNeededforLevel(level->getLevel());
-    delete level;
-    level = new_level;
+   levelup_types.at(type)->levelup();
 }
 
 unsigned int Tower::getDamage() const {
-    return level->getDamage();
+    return dmg;
 }
 
 void Tower::hitCurrentTarget(unsigned int dmg) {
@@ -92,6 +71,18 @@ void Tower::hitCurrentTarget(unsigned int dmg) {
     }
 }
 
-int Tower::getReachOfImpact() const {
-    return level->getReachOfImpact();
+Tower::Tower(Tower&& other) : properties(properties), scenario(scenario) {
+    this->id = other.id;
+    this->experience = other.experience;
+    this->position = other.position;
+    this->dmg = other.dmg;
+    this->range = other.range;
+    this->attack_cooldown = other.attack_cooldown;
+    this->last_attack_time = other.last_attack_time;
+    this->current_target = other.current_target;
+    other.current_target = nullptr;
+    this->damage_dealed_to_current_target = other.damage_dealed_to_current_target;
+    this->range_level = other.range_level;
+    this->dmg_level = other.dmg_level;
+    this->levelup_types = std::move(other.levelup_types);
 }

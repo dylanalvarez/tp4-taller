@@ -5,19 +5,16 @@
 #ifndef TOWERDEFENSE_LEVELUPTYPE_H
 #define TOWERDEFENSE_LEVELUPTYPE_H
 
-
-#include "../TowerLevel.h"
+class Tower;
 
 class LevelupType {
 public:
-    explicit LevelupType(double (*)(int));
+    explicit LevelupType(Tower& tower);
 
-    virtual TowerLevel* levelup(const TowerLevel& level, double actual_exp) = 0;
-
-    virtual double getExperienceNeededforLevel(int) = 0;
+    virtual void levelup() = 0;
 
 protected:
-    double(*getNecessaryExp)(int);
+    Tower& tower;
 };
 
 

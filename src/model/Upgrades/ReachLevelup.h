@@ -10,16 +10,9 @@
 
 class ReachLevelup : public LevelupType {
 public:
-    // recibe un valor de incremento y un puntero a funcion que recibe
-    // un entero y retorna un float (calcula la exp necesaria)
-    ReachLevelup(int increment, double (*)(int));
+    explicit ReachLevelup(Tower& tower);
 
-    TowerLevel* levelup(const TowerLevel& level, double actual_exp) override;
-
-    double getExperienceNeededforLevel(int level) override;
-
-private:
-    int increment;
+    void levelup() override;
 };
 
 #endif //TOWERDEFENSE_REACHLEVELUP_H

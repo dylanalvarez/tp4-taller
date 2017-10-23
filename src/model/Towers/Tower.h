@@ -21,6 +21,10 @@ public:
     virtual ~Tower();
 
     virtual void attack() = 0;
+    virtual void levelupRange() = 0;
+    virtual void levelupDamage() = 0;
+    virtual void levelupReachOfImpact() = 0;
+    virtual void levelupSlowdown() = 0;
 
     // realiza un levelup en el tipo especificado
     // rango, daño, alcance, o relentizado
@@ -34,12 +38,10 @@ public:
 
     unsigned int getDamage() const;
 
-    int getReachOfImpact() const;
-
     Tower(const Tower&) = delete;
     Tower& operator=(const Tower&) = delete;
     Tower& operator=(Tower&&) = delete;
-    Tower(Tower&&) noexcept ;
+    Tower(Tower&&);
 
 protected:
     int id;
@@ -49,11 +51,16 @@ protected:
     const YAML::Node& properties;
     Scenario& scenario;
 
+    unsigned int dmg;
+    Range range;
+
     unsigned int attack_cooldown;
     time_t last_attack_time;
     Enemy* current_target;
     unsigned int damage_dealed_to_current_target;
-    TowerLevel* level;
+
+    int range_level;
+    int dmg_level;
 
     std::map<std::string, LevelupType*> levelup_types;
 

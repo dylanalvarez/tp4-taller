@@ -10,13 +10,9 @@
 
 class SlowdownLevelup: public LevelupType {
 public:
-    // recibe un valor de incremento y un puntero a funcion que recibe
-    // un entero y retorna un float (calcula la exp necesaria)
-    SlowdownLevelup(double (*)(int));
+    explicit SlowdownLevelup(Tower& tower);
 
-    TowerLevel* levelup(const TowerLevel& level, double actual_exp) override;
-
-    double getExperienceNeededforLevel(int level) override;
+    void levelup() override;
 };
 
 

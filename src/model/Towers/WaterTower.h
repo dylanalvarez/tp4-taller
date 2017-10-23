@@ -17,10 +17,20 @@ public:
 
     void attack() override;
 
+    void levelupRange() override;
+    void levelupDamage() override;
+    void levelupReachOfImpact() override;
+    void levelupSlowdown() override;
+
     WaterTower(const WaterTower&) = delete;
     WaterTower& operator=(const WaterTower&) = delete;
     WaterTower& operator=(WaterTower&&) = delete;
     WaterTower(WaterTower&&) noexcept ;
+
+private:
+    int slowdown_level;
+    unsigned int speed_reduction;
+    unsigned int speed_reduction_duration;
 };
 
 

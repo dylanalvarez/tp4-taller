@@ -17,10 +17,18 @@ public:
 
     void attack() override;
 
+    void levelupRange() override;
+    void levelupDamage() override;
+    void levelupReachOfImpact() override;
+    void levelupSlowdown() override;
+
     AirTower(const AirTower&) = delete;
     AirTower& operator=(const AirTower&) = delete;
     AirTower& operator=(AirTower&&) = delete;
     AirTower(AirTower&&) noexcept ;
+
+private:
+    unsigned int dmg_to_flying_units;
 };
 
 

@@ -17,6 +17,11 @@ public:
 
     void attack() override;
 
+    void levelupRange() override;
+    void levelupDamage() override;
+    void levelupReachOfImpact() override;
+    void levelupSlowdown() override;
+
     EarthTower(const EarthTower&) = delete;
     EarthTower& operator=(const EarthTower&) = delete;
     EarthTower& operator=(EarthTower&&) = delete;

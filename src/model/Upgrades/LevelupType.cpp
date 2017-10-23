@@ -4,6 +4,4 @@
 
 #include "LevelupType.h"
 
-LevelupType::LevelupType(double (*getNecessaryExp)(int)) {
-    this->getNecessaryExp = getNecessaryExp;
-}
+LevelupType::LevelupType(Tower& tower) : tower(tower) {}
