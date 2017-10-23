@@ -25,6 +25,9 @@ Enemy::Enemy(int id, Path &path, int health_points, float speed,
 }
 
 void Enemy::move() {
+    if (difftime(time(nullptr), last_speed_reduction_time) >=
+        speed_reduction_time) { speed = original_speed; }
+
     for (int i = 0; i < speed; i++){
         current_pos += direction;
 

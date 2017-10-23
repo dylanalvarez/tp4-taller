@@ -27,3 +27,16 @@ Path &Path::operator=(Path&& other) noexcept {
     this->positions = std::move(other.positions);
     return *this;
 }
+
+bool Path::containsPosition(const Vector &position) {
+    for (int i = 0; i < positions.size() - 1; i++) {
+        Vector direction = positions[i + 1] - positions[i];
+        direction.normalizeAndRound();
+        Vector initial = positions[i];
+        while (initial != positions[i + 1]) {
+            if (initial == position) { return true; }
+            initial += direction;
+        }
+    }
+    return false;
+}

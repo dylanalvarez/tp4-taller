@@ -3,6 +3,7 @@
 //
 
 #include "Tower.h"
+#include "../Exceptions/TowerError.h"
 
 Tower::Tower(int id, Vector position, const YAML::Node& properties,
              Scenario& scenario) : experience(0), id(id),
@@ -54,7 +55,11 @@ const Range &Tower::getRange() const {
 }
 
 void Tower::levelup(const std::string &type) {
-   levelup_types.at(type)->levelup();
+   try {
+       levelup_types.at(type)->levelup();
+   } catch (std::exception& e) {
+        throw TowerError("Error: el tipo de upgrade " + type + " no existe");
+   }
 }
 
 unsigned int Tower::getDamage() const {

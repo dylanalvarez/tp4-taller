@@ -48,17 +48,28 @@ class TowerDefenseGameTest : public CppUnit::TestCase {
         CPPUNIT_TEST(addingNotExistingTowerTypeThrowsExceptionTest);
         CPPUNIT_TEST(hittingAnEnemyIncreaseFireTowerExperienceByDealedDamagePointsTest);
         CPPUNIT_TEST(killingEnemyIncreaseTowerExpByDmgDealedPlusFiftyPercentOfEnemyHealthTest);
-        CPPUNIT_TEST(cantLevelupTowerWithInsuficientExpPointsTest);
-        CPPUNIT_TEST(whenTowerLevelupHisExperienceIsReducedTest);
+        CPPUNIT_TEST(cantLevelupWaterTowerWithInsuficientExpPointsTest);
+        CPPUNIT_TEST(whenEarthTowerLevelupHisExperienceIsReducedTest);
         CPPUNIT_TEST(ifCantLevelUpHisExperienceItsNotReducedTest);
         CPPUNIT_TEST(levelingTwoTimesDamageOfEarthTowerIncreaseItByTwentyTest);
         CPPUNIT_TEST(levelingImpactRangeOfFiretowerIncreasesItByOnesTest);
+        CPPUNIT_TEST(levelingNotExistingAttributeThrowExceptionTest);
+        CPPUNIT_TEST(deadEnemiesAreDestroyedTest);
+        CPPUNIT_TEST(throwSpellTerraformingCreatesFirmGroundTest);
+        CPPUNIT_TEST(cantThrowTerraformingOverPathTest);
+        CPPUNIT_TEST(cantThrowTerraformingOverTowerPositionTest);
+        CPPUNIT_TEST(onlyEarthPlayerCanThrowTerraformingTest);
+        CPPUNIT_TEST(fissureOnlyLastOneSecondTest);
+        CPPUNIT_TEST(throwSpellFissureDestroysAllEnemysInPositionTest);
+        CPPUNIT_TEST(EnemyPassingThrowFissureDieTest);
+        CPPUNIT_TEST(fissureDoesNotAffectFlyingEnemiesTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
     TowerDefenseGameTest();
 
 protected:
+    /*** Enemies ***/
     void addingGreenDemonAddsGreenDemonEnemyWithHisPropertiesTest();
     void addingAbmonibleAddsAbmonibleEnemyWithHisPropertiesTest();
     void addingBloodyHawkAddsBloodyHawkEnemyWithHisPropertiesTest();
@@ -68,39 +79,61 @@ protected:
     void addingNonExistingEnemyTypeThrowExceptionTest();
     void movingEnemiesOverPathTest();
     void movingEnemiesOverPathWithDistanceBetweenThemTest();
+    void movingEnemiesAndAddingOthersTest();
+    void deadEnemiesAreDestroyedTest();
+
+    /*** Players ***/
     void ifNotAddedPlayerTriesToAddTowerThrowExceptionTest();
     void addedPlayerCanAddTowerTest();
     void cantAddMoreThanFourPlayersTest();
+    void throwSpellTerraformingCreatesFirmGroundTest();
+    void cantThrowTerraformingOverPathTest();
+    void cantThrowTerraformingOverTowerPositionTest();
+    void onlyEarthPlayerCanThrowTerraformingTest();
+    void throwSpellFissureDestroysAllEnemysInPositionTest();
+    void fissureOnlyLastOneSecondTest();
+    void EnemyPassingThrowFissureDieTest();
+    void fissureDoesNotAffectFlyingEnemiesTest();
+
+    /*** Fire Tower ***/
     void whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest();
     void fireTowerAttacksAllnearbyEnemiesWithLessDamageTest();
     void fireTowerDoesNotAttacksEnemiesThatAreNotInRangeTest();
     void fireTowerAttacksOneTimeEveryThreeSecondsTest();
     void fireTowerDoesNotChangeObjetiveIfItsAliveTest();
     void attackWhenIsInRangeAndStopAttackingWhenIsOutTest();
+    void whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest();
+    void hittingAnEnemyIncreaseFireTowerExperienceByDealedDamagePointsTest();
+    void levelingImpactRangeOfFiretowerIncreasesItByOnesTest();
+
+    /*** Water Tower ***/
     void whenEnemyIsInRangeOfWaterTowerItAttacksHimTest();
     void waterTowerAttacksOneTimeEveryThreeSecondsTest();
     void waterTowerDoesNotChangeObjetiveIfItsAliveTest();
-    void movingEnemiesAndAddingOthersTest();
     void waterTowerReduceEnemySpeedTest();
     void waterTowerReduceEnemySpeedDuringTwoSecondsTest();
+    void cantLevelupWaterTowerWithInsuficientExpPointsTest();
+
+    /*** Earth Tower ***/
     void whenEnemyIsInRangeOfEarthTowerItAttacksHimTest();
     void earthTowerAttacksOneTimeEveryFiveSecondsTest();
     void earthTowerDoesNotChangeObjetiveIfItsAliveTest();
+    void earthTowerCantAttackFlyingUnitsTest();
+    void levelingTwoTimesDamageOfEarthTowerIncreaseItByTwentyTest();
+    void whenEarthTowerLevelupHisExperienceIsReducedTest();
+
+    /*** Air Tower ***/
     void whenEnemyIsInRangeOfAirTowerItAttacksHimTest();
     void airTowerAttacksOneTimeEveryFiveSecondsTest();
     void airTowerDoesNotChangeObjetiveIfItsAliveTest();
     void airTowerMovesBackEnemyWhenHitHimTest();
     void airTowerHitsFlyingEnemiesHarderTest();
-    void whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest();
-    void earthTowerCantAttackFlyingUnitsTest();
+
+    /*** Comunes ***/
     void addingNotExistingTowerTypeThrowsExceptionTest();
-    void cantLevelupTowerWithInsuficientExpPointsTest();
-    void hittingAnEnemyIncreaseFireTowerExperienceByDealedDamagePointsTest();
     void killingEnemyIncreaseTowerExpByDmgDealedPlusFiftyPercentOfEnemyHealthTest();
-    void whenTowerLevelupHisExperienceIsReducedTest();
     void ifCantLevelUpHisExperienceItsNotReducedTest();
-    void levelingTwoTimesDamageOfEarthTowerIncreaseItByTwentyTest();
-    void levelingImpactRangeOfFiretowerIncreasesItByOnesTest();
+    void levelingNotExistingAttributeThrowExceptionTest();
 
 private:
     TowerDefenseGame game;

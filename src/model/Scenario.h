@@ -21,10 +21,17 @@ public:
     // Pre: la posicion debe ser terreno firme
     void addTower(Tower* tower);
 
+    // añade terreno firme en la posicion indicada
+    // Pre: la posicion debe ser valida (no ser camino, puerta, etc.)
+    void addFirmGround(const Vector& position);
+
     // levelea la torre con el id pasado
     // Pre: la torre debe tener la exp necesaria y
     // la torre debe existir
     void levelupTower(const Tower&, const std::string& type);
+
+    // remueve los enemigos muertos
+    void cleanEnemies();
 
     // retorna los n primeros enemigos dentro del rango
     // cuando es -1 retorna todos los que esten en rango

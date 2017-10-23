@@ -118,13 +118,13 @@ void TowerDefenseGameTest::movingEnemiesOverPathWithDistanceBetweenThemTest() {
 }
 
 void TowerDefenseGameTest::ifNotAddedPlayerTriesToAddTowerThrowExceptionTest() {
-    Player player("alguien");
+    Player player("alguien", "fire");
 
     CPPUNIT_ASSERT_THROW(game.addTower(player, "fire", Vector(0,0)), TowerError);
 }
 
 void TowerDefenseGameTest::addedPlayerCanAddTowerTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "fire");
 
     game.addTower(added_player, "fire", Vector(5,5));
 
@@ -132,19 +132,19 @@ void TowerDefenseGameTest::addedPlayerCanAddTowerTest() {
 }
 
 void TowerDefenseGameTest::cantAddMoreThanFourPlayersTest() {
-    game.addPlayer("jugador1");
-    game.addPlayer("jugador2");
-    game.addPlayer("jugador3");
-    game.addPlayer("jugador4");
+    game.addPlayer("jugador1", "fire");
+    game.addPlayer("jugador2", "fire");
+    game.addPlayer("jugador3", "fire");
+    game.addPlayer("jugador4", "fire");
 
-    CPPUNIT_ASSERT_THROW(game.addPlayer("player5"), MatchError);
+    CPPUNIT_ASSERT_THROW(game.addPlayer("player5", "fire"), MatchError);
 }
 
 void TowerDefenseGameTest::whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest() {
     // segun el archivo map.yaml, el path es { (0,0), (0,5), (3,5), (3,2), (-1,2) }
     // y hay terreno firme en (5,5)
 
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "fire");
     game.addTower(added_player, "fire", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -167,7 +167,7 @@ void TowerDefenseGameTest::fireTowerAttacksAllnearbyEnemiesWithLessDamageTest() 
     // segun el archivo map.yaml, el path es { (0,0), (0,5), (3,5), (3,2), (-1,2) }
     // y hay terreno firme en (5,5)
 
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "fire");
     game.addTower(added_player, "fire", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -197,7 +197,7 @@ void TowerDefenseGameTest::fireTowerAttacksAllnearbyEnemiesWithLessDamageTest() 
 }
 
 void TowerDefenseGameTest::fireTowerDoesNotAttacksEnemiesThatAreNotInRangeTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "fire");
     game.addTower(added_player, "fire", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -217,7 +217,7 @@ void TowerDefenseGameTest::fireTowerDoesNotAttacksEnemiesThatAreNotInRangeTest()
 }
 
 void TowerDefenseGameTest::fireTowerAttacksOneTimeEveryThreeSecondsTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "fire");
     game.addTower(added_player, "fire", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -250,7 +250,7 @@ void TowerDefenseGameTest::fireTowerAttacksOneTimeEveryThreeSecondsTest() {
 }
 
 void TowerDefenseGameTest::fireTowerDoesNotChangeObjetiveIfItsAliveTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "fire");
     game.addTower(added_player, "fire", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -285,7 +285,7 @@ void TowerDefenseGameTest::fireTowerDoesNotChangeObjetiveIfItsAliveTest() {
 }
 
 void TowerDefenseGameTest::attackWhenIsInRangeAndStopAttackingWhenIsOutTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "fire");
     game.addTower(added_player, "fire", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -317,7 +317,7 @@ void TowerDefenseGameTest::attackWhenIsInRangeAndStopAttackingWhenIsOutTest() {
 }
 
 void TowerDefenseGameTest::whenEnemyIsInRangeOfWaterTowerItAttacksHimTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "water");
     game.addTower(added_player, "water", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -338,7 +338,7 @@ void TowerDefenseGameTest::whenEnemyIsInRangeOfWaterTowerItAttacksHimTest() {
 }
 
 void TowerDefenseGameTest::waterTowerAttacksOneTimeEveryThreeSecondsTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "water");
     game.addTower(added_player, "water", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -371,7 +371,7 @@ void TowerDefenseGameTest::waterTowerAttacksOneTimeEveryThreeSecondsTest() {
 }
 
 void TowerDefenseGameTest::waterTowerDoesNotChangeObjetiveIfItsAliveTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "water");
     game.addTower(added_player, "water", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -415,7 +415,7 @@ void TowerDefenseGameTest::movingEnemiesAndAddingOthersTest() {
 }
 
 void TowerDefenseGameTest::waterTowerReduceEnemySpeedTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "water");
     game.addTower(added_player, "water", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -435,7 +435,7 @@ void TowerDefenseGameTest::waterTowerReduceEnemySpeedTest() {
 }
 
 void TowerDefenseGameTest::waterTowerReduceEnemySpeedDuringTwoSecondsTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "water");
     game.addTower(added_player, "water", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -457,7 +457,7 @@ void TowerDefenseGameTest::waterTowerReduceEnemySpeedDuringTwoSecondsTest() {
 }
 
 void TowerDefenseGameTest::whenEnemyIsInRangeOfEarthTowerItAttacksHimTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "earth");
     game.addTower(added_player, "earth", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -478,7 +478,7 @@ void TowerDefenseGameTest::whenEnemyIsInRangeOfEarthTowerItAttacksHimTest() {
 }
 
 void TowerDefenseGameTest::earthTowerAttacksOneTimeEveryFiveSecondsTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "earth");
     game.addTower(added_player, "earth", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -511,7 +511,7 @@ void TowerDefenseGameTest::earthTowerAttacksOneTimeEveryFiveSecondsTest() {
 }
 
 void TowerDefenseGameTest::earthTowerDoesNotChangeObjetiveIfItsAliveTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "earth");
     game.addTower(added_player, "earth", Vector(2,4));
 
     game.addEnemy("green_demon");
@@ -546,7 +546,7 @@ void TowerDefenseGameTest::earthTowerDoesNotChangeObjetiveIfItsAliveTest() {
 }
 
 void TowerDefenseGameTest::whenEnemyIsInRangeOfAirTowerItAttacksHimTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "air");
     game.addTower(added_player, "air", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -567,7 +567,7 @@ void TowerDefenseGameTest::whenEnemyIsInRangeOfAirTowerItAttacksHimTest() {
 }
 
 void TowerDefenseGameTest::airTowerAttacksOneTimeEveryFiveSecondsTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "air");
     game.addTower(added_player, "air", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -600,7 +600,7 @@ void TowerDefenseGameTest::airTowerAttacksOneTimeEveryFiveSecondsTest() {
 }
 
 void TowerDefenseGameTest::airTowerDoesNotChangeObjetiveIfItsAliveTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "air");
     game.addTower(added_player, "air", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -633,7 +633,7 @@ void TowerDefenseGameTest::airTowerDoesNotChangeObjetiveIfItsAliveTest() {
 }
 
 void TowerDefenseGameTest::airTowerMovesBackEnemyWhenHitHimTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "air");
     game.addTower(added_player, "air", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -656,7 +656,7 @@ void TowerDefenseGameTest::airTowerMovesBackEnemyWhenHitHimTest() {
 }
 
 void TowerDefenseGameTest::airTowerHitsFlyingEnemiesHarderTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "air");
     game.addTower(added_player, "air", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -701,7 +701,7 @@ void TowerDefenseGameTest::airTowerHitsFlyingEnemiesHarderTest() {
 }
 
 void TowerDefenseGameTest::whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "fire");
     game.addTower(added_player, "fire", Vector(5,5));
 
     game.addEnemy("green_demon");
@@ -729,7 +729,7 @@ void TowerDefenseGameTest::whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest() 
 }
 
 void TowerDefenseGameTest::earthTowerCantAttackFlyingUnitsTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "earth");
     game.addTower(added_player, "earth", Vector(2,4));
 
     game.addEnemy("spectrum");
@@ -745,13 +745,13 @@ void TowerDefenseGameTest::earthTowerCantAttackFlyingUnitsTest() {
 }
 
 void TowerDefenseGameTest::addingNotExistingTowerTypeThrowsExceptionTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "earth");
 
     CPPUNIT_ASSERT_THROW(game.addTower(added_player, "metal", Vector(2,4)), TowerError);
 }
 
 void TowerDefenseGameTest::hittingAnEnemyIncreaseFireTowerExperienceByDealedDamagePointsTest() {
-    const Player& added_player = game.addPlayer("alguien");
+    const Player& added_player = game.addPlayer("alguien", "fire");
     const Tower& tower = game.addTower(added_player, "fire", Vector(5,5));
 
     game.addEnemy("undead");
@@ -766,7 +766,7 @@ void TowerDefenseGameTest::hittingAnEnemyIncreaseFireTowerExperienceByDealedDama
 
 void
 TowerDefenseGameTest::killingEnemyIncreaseTowerExpByDmgDealedPlusFiftyPercentOfEnemyHealthTest() {
-    const Player &added_player = game.addPlayer("alguien");
+    const Player &added_player = game.addPlayer("alguien", "fire");
     const Tower &tower = game.addTower(added_player, "fire", Vector(5, 5));
 
     game.addEnemy("undead");
@@ -783,8 +783,8 @@ TowerDefenseGameTest::killingEnemyIncreaseTowerExpByDmgDealedPlusFiftyPercentOfE
     CPPUNIT_ASSERT_EQUAL(30, (int)tower.getExperience());
 }
 
-void TowerDefenseGameTest::cantLevelupTowerWithInsuficientExpPointsTest() {
-    const Player &added_player = game.addPlayer("alguien");
+void TowerDefenseGameTest::cantLevelupWaterTowerWithInsuficientExpPointsTest() {
+    const Player &added_player = game.addPlayer("alguien", "water");
     const Tower &tower = game.addTower(added_player, "water", Vector(5, 5));
 
     game.addEnemy("undead");
@@ -801,8 +801,8 @@ void TowerDefenseGameTest::cantLevelupTowerWithInsuficientExpPointsTest() {
     CPPUNIT_ASSERT_THROW(game.levelupTower(tower, "range"), TowerError);
 }
 
-void TowerDefenseGameTest::whenTowerLevelupHisExperienceIsReducedTest() {
-    const Player &added_player = game.addPlayer("alguien");
+void TowerDefenseGameTest::whenEarthTowerLevelupHisExperienceIsReducedTest() {
+    const Player &added_player = game.addPlayer("alguien", "earth");
     const Tower &tower = game.addTower(added_player, "earth", Vector(2, 4));
 
     // si mata a 6 suma 180 puntos de exp
@@ -826,7 +826,7 @@ void TowerDefenseGameTest::whenTowerLevelupHisExperienceIsReducedTest() {
 }
 
 void TowerDefenseGameTest::ifCantLevelUpHisExperienceItsNotReducedTest() {
-    const Player &added_player = game.addPlayer("alguien");
+    const Player &added_player = game.addPlayer("alguien", "earth");
     const Tower &tower = game.addTower(added_player, "earth", Vector(2, 4));
 
     // si mata a 1 suma 30 puntos de exp
@@ -841,7 +841,7 @@ void TowerDefenseGameTest::ifCantLevelUpHisExperienceItsNotReducedTest() {
 }
 
 void TowerDefenseGameTest::levelingTwoTimesDamageOfEarthTowerIncreaseItByTwentyTest() {
-    const Player &added_player = game.addPlayer("alguien");
+    const Player &added_player = game.addPlayer("alguien", "earth");
     const Tower &tower = game.addTower(added_player, "earth", Vector(2, 4));
 
     // si mata a 13 suma 390 puntos de exp
@@ -866,7 +866,7 @@ void TowerDefenseGameTest::levelingTwoTimesDamageOfEarthTowerIncreaseItByTwentyT
 }
 
 void TowerDefenseGameTest::levelingImpactRangeOfFiretowerIncreasesItByOnesTest() {
-    const Player &added_player = game.addPlayer("alguien");
+    const Player &added_player = game.addPlayer("alguien", "fire");
     const Tower &tower = game.addTower(added_player, "fire", Vector(5, 5));
 
     game.addEnemy("abmonible");
@@ -909,4 +909,107 @@ void TowerDefenseGameTest::levelingImpactRangeOfFiretowerIncreasesItByOnesTest()
     float dmg_dealed = initial_hp - game.getAllEnemies()[6].getHealthPoints();
 
     CPPUNIT_ASSERT_EQUAL(3, (int)dmg_dealed);
+}
+
+void TowerDefenseGameTest::levelingNotExistingAttributeThrowExceptionTest() {
+    const Player &added_player = game.addPlayer("alguien", "air");
+    const Tower &tower = game.addTower(added_player, "air", Vector(5, 5));
+
+    CPPUNIT_ASSERT_THROW(game.levelupTower(tower, "wolo"), TowerError);
+}
+
+void TowerDefenseGameTest::deadEnemiesAreDestroyedTest() {
+    const Player &added_player = game.addPlayer("alguien", "earth");
+    const Tower &tower = game.addTower(added_player, "earth", Vector(2, 4));
+
+    game.addEnemy("undead");
+    game.moveEnemies();
+
+    game.performeAttacks();
+    // ya murio
+
+    game.updateGame();
+
+    CPPUNIT_ASSERT_EQUAL(0, (int)game.getAllEnemies().size());
+}
+
+void TowerDefenseGameTest::throwSpellTerraformingCreatesFirmGroundTest() {
+    const Player &added_player = game.addPlayer("alguien", "earth");
+
+    game.throwSpell(added_player, "terraforming", Vector(10,10));
+
+    CPPUNIT_ASSERT_NO_THROW(game.addTower(added_player, "earth", Vector(10,10)));
+}
+
+void TowerDefenseGameTest::cantThrowTerraformingOverPathTest() {
+    const Player &added_player = game.addPlayer("alguien", "earth");
+
+    CPPUNIT_ASSERT_THROW(game.throwSpell(added_player, "terraforming", Vector(0,0)),
+                            MatchError);
+}
+
+void TowerDefenseGameTest::cantThrowTerraformingOverTowerPositionTest() {
+    const Player &added_player = game.addPlayer("alguien", "earth");
+    game.addTower(added_player, "earth", Vector(5,5));
+
+    CPPUNIT_ASSERT_THROW(game.throwSpell(added_player, "terraforming", Vector(5,5)),
+                         MatchError);
+}
+
+void TowerDefenseGameTest::onlyEarthPlayerCanThrowTerraformingTest() {
+    const Player &added_player = game.addPlayer("alguien", "fire");
+
+    CPPUNIT_ASSERT_THROW(game.throwSpell(added_player, "terraforming", Vector(10,10)),
+                         MatchError);
+}
+
+void TowerDefenseGameTest::throwSpellFissureDestroysAllEnemysInPositionTest() {
+    const Player &added_player = game.addPlayer("alguien", "earth");
+
+    // comienza en (0,0)
+    game.addEnemy("undead");
+
+    game.throwSpell(added_player, "fissure", Vector(0,0));
+
+    game.updateGame();
+
+    CPPUNIT_ASSERT_EQUAL(0, (int)game.getAllEnemies().size());
+}
+
+void TowerDefenseGameTest::fissureOnlyLastOneSecondTest() {
+    const Player &added_player = game.addPlayer("alguien", "earth");
+
+    game.throwSpell(added_player, "fissure", Vector(0,0));
+
+    sleep(1);
+
+    game.addEnemy("undead");
+    game.updateGame();
+
+    CPPUNIT_ASSERT_EQUAL(1, (int)game.getAllEnemies().size());
+}
+
+void TowerDefenseGameTest::EnemyPassingThrowFissureDieTest() {
+    const Player &added_player = game.addPlayer("alguien", "earth");
+
+    game.throwSpell(added_player, "fissure", Vector(0,1));
+
+    game.addEnemy("green_demon");
+    game.moveEnemies();
+    game.updateGame();
+
+    CPPUNIT_ASSERT_EQUAL(0, (int)game.getAllEnemies().size());
+}
+
+void TowerDefenseGameTest::fissureDoesNotAffectFlyingEnemiesTest() {
+    const Player &added_player = game.addPlayer("alguien", "earth");
+
+    // comienza en (0,0)
+    game.addEnemy("spectrum");
+
+    game.throwSpell(added_player, "fissure", Vector(0,0));
+
+    game.updateGame();
+
+    CPPUNIT_ASSERT_EQUAL(1, (int)game.getAllEnemies().size());
 }

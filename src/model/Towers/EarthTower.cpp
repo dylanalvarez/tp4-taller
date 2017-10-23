@@ -12,6 +12,7 @@ EarthTower::EarthTower(int id, Vector p, const YAML::Node &properties,
         Tower(id, p, properties, scneario) {
     range_level = 1;
     dmg_level = 1;
+
     last_attack_time = 0;
     attack_cooldown = 5;
     current_target = nullptr;
@@ -31,7 +32,7 @@ void EarthTower::attack() {
     //if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
     //{ return; }
 
-    std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
+    std::vector<Enemy*> enemies = std::move(scenario.getEnemiesInRange(range));
     if (enemies.empty()) { return; }
 
     if (current_target) {

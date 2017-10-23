@@ -4,6 +4,7 @@
 
 #include "Scenario.h"
 #include "Exceptions/TowerError.h"
+#include "Exceptions/MatchError.h"
 
 Scenario::Scenario(Path&& path, std::vector<Vector>&& firm_ground_locations) :
         path(std::move(path)),
@@ -19,9 +20,9 @@ std::vector<Enemy*> Scenario::getEnemiesInRange(const Range &range,
                                                 int count) {
     std::vector<Enemy*> closest_enemies;
     for (Enemy& enemy : enemies){
-        if (range.isInRange(enemy.getCurrentPosition())){
+        if (range.isInRange(enemy.getCurrentPosition())) {
             closest_enemies.push_back(&enemy);
-            if (count != -1 && closest_enemies.size() == count){
+            if (count != -1 && closest_enemies.size() == count) {
                 // si es -1 -> devolver todos los que esten en rango
                 break;
             }
@@ -85,4 +86,34 @@ void Scenario::levelupTower(const Tower& tower_to_lvl, const std::string& type) 
             tower->levelup(type);
         }
     }
+}
+
+void Scenario::cleanEnemies() {
+    std::vector<Enemy> not_dead_enemies;
+
+    for (Enemy& enemy: enemies){
+        if (!enemy.isDead()){
+            not_dead_enemies.push_back(enemy);
+        }
+    }
+
+    std::swap(enemies, not_dead_enemies);
+}
+
+void Scenario::addFirmGround(const Vector &position) {
+    if (path.containsPosition(position)) {
+        throw MatchError("Error al agregar terreno firme: la posicion" +
+                         position.to_string() +
+                         " esta ocupada por camino");
+    }
+
+    for (auto& vector : firm_ground_locations){
+        if (vector == position) {
+            throw MatchError("Error al agregar terreno firme: la posicion" +
+                             position.to_string() +
+                             " esta ocupada por torre");
+        }
+    }
+
+    firm_ground_locations.push_back(position);
 }

@@ -40,7 +40,7 @@ void FireTower::attack() {
     //if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
     //{ return; }
 
-    std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
+    std::vector<Enemy*> enemies = std::move(scenario.getEnemiesInRange(range));
     if (enemies.empty()) { return; }
 
     changeTarget(enemies);
@@ -101,10 +101,6 @@ void FireTower::levelupReachOfImpact() {
     reach_of_impact++;
     experience -= neccessary_exp;
     reach_level++;
-}
-
-int FireTower::getReachOfImpact() const {
-    return reach_of_impact;
 }
 
 void FireTower::levelupSlowdown() {}

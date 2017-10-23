@@ -6,12 +6,14 @@
 #define TOWERDEFENSE_PLAYER_H
 
 #include <string>
+#include <vector>
 
 class Player {
 public:
-    explicit Player(const std::string& name);
+    Player(const std::string& name, const std::string& element);
 
     const std::string& getName() const;
+    const std::vector<std::string>& getElements() const;
 
     Player(const Player&) = delete;
     Player& operator=(const Player&) = delete;
@@ -19,6 +21,7 @@ public:
     Player& operator=(Player&&) noexcept ;
 
 private:
+    std::vector<std::string> elements;
     std::string name;
 };
 

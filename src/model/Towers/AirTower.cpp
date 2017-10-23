@@ -12,12 +12,14 @@ AirTower::AirTower(int id, Vector p, const YAML::Node &properties,
         Tower(id, p, properties, scneario) {
     range_level = 1;
     dmg_level = 1;
-    this->dmg = 2;
-    this->dmg_to_flying_units = 10;
-    this->last_attack_time = 0;
-    this->attack_cooldown = 5;
-    this->current_target = nullptr;
-    this->range = Range(position, 5);
+
+    dmg = 2;
+    dmg_to_flying_units = 10;
+
+    last_attack_time = 0;
+    attack_cooldown = 5;
+    current_target = nullptr;
+    range = Range(position, 5);
     experience = 0;
 
     levelup_types.emplace("range", new RangeLevelup(*this));
@@ -31,7 +33,7 @@ void AirTower::attack() {
     //if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
     //{ return; }
 
-    std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
+    std::vector<Enemy*> enemies = std::move(scenario.getEnemiesInRange(range));
     if (enemies.empty()) { return; }
 
     changeTarget(enemies);
@@ -74,8 +76,8 @@ void AirTower::levelupDamage() {
                          std::to_string(neccessary_exp));
     }
 
-    this->dmg += 2;
-    this->dmg_to_flying_units += 10;
+    dmg += 2;
+    dmg_to_flying_units += 10;
     experience -= neccessary_exp;
     dmg_level++;
 }

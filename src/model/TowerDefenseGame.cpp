@@ -10,6 +10,8 @@
 #include "Factory/WaterTowerFactory.h"
 #include "Factory/EarthTowerFactory.h"
 #include "Factory/AirTowerFactory.h"
+#include "Spells/Terraforming.h"
+#include "Spells/Fissure.h"
 
 TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
                                    const std::string &scenario_file) {
@@ -17,7 +19,6 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
 
     loadEnemyProperties(config);
     loadTowerProperties(config);
-    // cargar propiedades de las torres
     // cargar propiedades del escenario
 
     tower_id = 1;
@@ -28,6 +29,9 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
     std::vector<Vector> firm_ground_locations = {Vector(5,5), Vector(2,4)};
 
     scenario = new Scenario(std::move(path), std::move(firm_ground_locations));
+
+    spells.emplace("terraforming", new Terraforming(*scenario, 20));
+    spells.emplace("fissure", new Fissure(*scenario, 40, 1));
 }
 
 TowerDefenseGame::~TowerDefenseGame(){
@@ -35,6 +39,10 @@ TowerDefenseGame::~TowerDefenseGame(){
 
     for (auto& tower_factory : towers_factory) {
         delete tower_factory.second;
+    }
+
+    for (auto& spell : spells) {
+        delete spell.second;
     }
 }
 
@@ -103,8 +111,8 @@ bool TowerDefenseGame::doesPlayerExist(const Player &player) {
     return false;
 }
 
-const Tower& TowerDefenseGame::addTower(const Player &player, const std::string &type,
-                                const Vector &position) {
+const Tower& TowerDefenseGame::addTower(const Player &player,
+                                        const std::string &type, const Vector &position) {
     if (!doesPlayerExist(player)) {
         throw TowerError("Error al añadir la torre de tipo " + type +
                          ", el jugador " + player.getName() +
@@ -117,18 +125,24 @@ const Tower& TowerDefenseGame::addTower(const Player &player, const std::string 
         scenario->addTower(tower);
         return *tower;
     } catch (std::exception& e) {
-        throw TowerError("Error: el tipo de torre " + type + " no es un tipo valido");
+        throw TowerError("Error: el tipo de torre " +
+                                 type + " no es un tipo valido");
     }
 }
 
-const Player& TowerDefenseGame::addPlayer(const std::string &name) {
+const Player& TowerDefenseGame::addPlayer(const std::string &name,
+                                          const std::string& element) {
     if (players.size() == 4) { throw MatchError("Error al añadir jugador: " +
                                                        name + ": partida llena");}
-    players.emplace_back(name);
+    players.emplace_back(name, element);
     return players.back();
 }
 
 void TowerDefenseGame::performeAttacks() {
+    for (auto& spell : spells) {
+        spell.second->attack();
+    }
+
     for (auto& tower: scenario->getTowers()){
         tower->attack();
     }
@@ -142,6 +156,32 @@ void TowerDefenseGame::loadTowerProperties(YAML::Node& properties) {
     towers_factory.emplace("air", new AirTowerFactory());
 }
 
-void TowerDefenseGame::levelupTower(const Tower& tower, const std::string& type) {
+void TowerDefenseGame::levelupTower(const Tower& tower,
+                                    const std::string& type) {
     scenario->levelupTower(tower, type);
+}
+
+void TowerDefenseGame::updateGame() {
+    performeAttacks();
+    scenario->cleanEnemies();
+}
+
+void TowerDefenseGame::throwSpell(const Player& player,
+                                  const std::string &type,
+                                  const Vector& position) {
+    Spell* spell = spells.at(type);
+    bool can_be_thrown = false;
+    for (auto& element : player.getElements()) {
+        if (spell->canBeThrownBy(element)) { can_be_thrown = true; break; }
+    }
+
+    if (!can_be_thrown) {
+        throw MatchError("Error al lanzar hechizo: " +
+                         type +
+                         " el jugador " +
+                         player.getName() +
+                         " no posee el elemento adecuado");
+    }
+
+    spell->applyEffect(position);
 }

@@ -18,6 +18,8 @@ public:
 
     const Vector& getInitialPosition();
 
+    bool containsPosition(const Vector& position);
+
     Path(const Path&) = delete;
     Path& operator=(const Path&) = delete;
     Path(Path&&) noexcept;

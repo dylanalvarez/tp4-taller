@@ -36,7 +36,7 @@ void WaterTower::attack() {
     // si todavia no paso el cooldown desde el ultimo ataque, salir
     //if (difftime(time(nullptr), last_attack_time) < attack_cooldown) { return; }
 
-    std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
+    std::vector<Enemy*> enemies = std::move(scenario.getEnemiesInRange(range));
     if (enemies.empty()) { return; }
 
     changeTarget(enemies);

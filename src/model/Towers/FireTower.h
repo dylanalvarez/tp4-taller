@@ -23,8 +23,6 @@ public:
     void levelupReachOfImpact() override;
     void levelupSlowdown() override;
 
-    int getReachOfImpact() const;
-
     FireTower(const FireTower&) = delete;
     FireTower& operator=(const FireTower&) = delete;
     FireTower& operator=(FireTower&&) = delete;
