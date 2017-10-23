@@ -4,6 +4,7 @@
 
 #include <gtkmm/grid.h>
 #include <gtkmm/builder.h>
+#include <gtkmm/radiobutton.h>
 #include "Map.h"
 #include "Builder.h"
 
@@ -14,12 +15,18 @@ public:
 
     void init(Map &map);
 
+    void setFromMap();
+
 private:
     void onChange(std::string id);
 
     Map *map = nullptr;
     Builder builder;
     std::map<std::string, Map::Setting> buttonIDs;
+    Gtk::RadioButton *desert;
+    Gtk::RadioButton *volcano;
+    Gtk::RadioButton *ice;
+    Gtk::RadioButton *meadow;
 };
 
 

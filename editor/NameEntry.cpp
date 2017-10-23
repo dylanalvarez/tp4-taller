@@ -7,10 +7,14 @@ NameEntry::NameEntry(BaseObjectType *obj,
             sigc::mem_fun(this, &NameEntry::onKeyRelease));
 }
 
-void NameEntry::init(Map &map) { this->map = &map; }
+void NameEntry::init(Map &map, MapGrid *mapGrid) {
+    this->map = &map;
+    this->mapGrid = mapGrid;
+}
 
 bool NameEntry::onKeyRelease(GdkEventKey *event) {
     bool stopPropagation = true;
     map->setName(this->get_text());
+    mapGrid->updateDisabledButtons();
     return stopPropagation;
 }

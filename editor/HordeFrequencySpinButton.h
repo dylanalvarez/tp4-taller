@@ -13,6 +13,8 @@ public:
 
     void init(Map &map);
 
+    void setFromMap();
+
 private:
     void onChange();
 

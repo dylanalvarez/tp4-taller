@@ -14,15 +14,15 @@ void MapButton::setSquareType(MapGrid &parent) {
     MapGrid::SquareType squareType = parent.getSquareType();
     switch (squareType) {
         case MapGrid::start:
-            set_label("E");
+            set_label(ENTRY_DOOR_STR);
             map.addEntryDoor(x, y);
             break;
         case MapGrid::end:
-            set_label("S");
+            set_label(EXIT_DOOR_STR);
             map.addExitDoor(x, y);
             break;
         case MapGrid::firmGround:
-            set_label("T");
+            set_label(FIRM_GROUND_STR);
             map.addFirmGround(x, y);
             break;
         case MapGrid::path:

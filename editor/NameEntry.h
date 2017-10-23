@@ -5,18 +5,20 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/builder.h>
 #include "Map.h"
+#include "MapGrid.h"
 
 class NameEntry : public Gtk::Entry {
 public:
     NameEntry(BaseObjectType *obj,
               const Glib::RefPtr<Gtk::Builder> &builder);
 
-    void init(Map &map);
+    void init(Map &map, MapGrid *mapGrid);
 
 private:
     bool onKeyRelease(GdkEventKey *event);
 
     Map *map = nullptr;
+    MapGrid* mapGrid = nullptr;
 };
 
 

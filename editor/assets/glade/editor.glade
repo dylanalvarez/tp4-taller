@@ -37,7 +37,7 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkGrid" id="choose-size-grid">
+          <object class="GtkGrid" id="initial-grid">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
@@ -53,7 +53,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkGrid" id="grid11">
+              <object class="GtkGrid" id="choose-size-grid">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="column_homogeneous">True</property>
@@ -129,6 +129,18 @@
                     <property name="top_attach">0</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkButton" id="choose-size">
+                    <property name="label" translatable="yes">Siguiente</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">2</property>
+                    <property name="top_attach">0</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -136,11 +148,33 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="choose-size">
-                <property name="label" translatable="yes">Siguiente</property>
+              <object class="GtkGrid" id="load-file-grid">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkButton" id="load">
+                    <property name="label" translatable="yes">Cargar</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="file-name">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="placeholder_text" translatable="yes">Nombre de archivo (sin extensión .yaml)</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">0</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -419,16 +453,17 @@
               <object class="GtkGrid" id="grid3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="column_homogeneous">True</property>
                 <child>
-                  <object class="GtkEntry" id="name">
+                  <object class="GtkButton" id="save">
+                    <property name="label" translatable="yes">Guardar</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_right">10</property>
-                    <property name="placeholder_text" translatable="yes">Nombre</property>
+                    <property name="receives_default">True</property>
+                    <property name="margin_left">10</property>
+                    <property name="always_show_image">True</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
+                    <property name="left_attach">2</property>
                     <property name="top_attach">0</property>
                   </packing>
                 </child>
@@ -443,7 +478,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="xalign">0</property>
+                        <property name="xalign">0.5</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">False</property>
                       </object>
@@ -458,7 +493,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="xalign">0</property>
+                        <property name="xalign">0.5</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">False</property>
                       </object>
@@ -473,7 +508,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="xalign">0</property>
+                        <property name="xalign">0.5</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">False</property>
                       </object>
@@ -488,7 +523,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="xalign">0</property>
+                        <property name="xalign">0.5</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">False</property>
                       </object>
@@ -499,21 +534,19 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="left_attach">1</property>
+                    <property name="left_attach">0</property>
                     <property name="top_attach">0</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="save">
-                    <property name="label" translatable="yes">Guardar</property>
+                  <object class="GtkEntry" id="name">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="margin_left">10</property>
-                    <property name="always_show_image">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="placeholder_text" translatable="yes">Nombre de archivo (sin extensión .yaml)</property>
                   </object>
                   <packing>
-                    <property name="left_attach">2</property>
+                    <property name="left_attach">1</property>
                     <property name="top_attach">0</property>
                   </packing>
                 </child>

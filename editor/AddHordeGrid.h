@@ -16,6 +16,8 @@ public:
 
     void init(Map &map);
 
+    void setFromMap();
+
 private:
     void onChangeHordeQuantity();
 
@@ -24,6 +26,8 @@ private:
     void onClearHordes();
 
     void onHordeKindChange();
+
+    void _addHordeToList(Map::Horde horde);
 
     Map *map = nullptr;
     Builder builder;

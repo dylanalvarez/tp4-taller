@@ -12,3 +12,7 @@ void HordeFrequencySpinButton::onChange() {
 }
 
 void HordeFrequencySpinButton::init(Map &map) { this->map = &map; }
+
+void HordeFrequencySpinButton::setFromMap() {
+    this->set_value(map->getSecondsBetweenHordes());
+}

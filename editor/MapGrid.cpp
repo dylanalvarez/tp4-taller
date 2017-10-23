@@ -17,6 +17,7 @@ MapGrid::MapGrid(Map &map,
         for (int y = 0; y <= height + 1; y++) {
             auto square = Gtk::manage(new MapButton("", x, y, *this, map));
             attach(*square, x, y, 1, 1);
+            square->set_size_request(30, 30);
             square->show();
             grid[x].push_back((Gtk::Button *) square);
         }
@@ -51,6 +52,24 @@ MapGrid::MapGrid(Map &map,
     // Set default value
     startButton->set_active(true);
     this->updateDisabledButtons();
+}
+
+void MapGrid::setFromMap() {
+    for (const Map::Coordinate& firmGround : map.getFirmGround()){
+        grid[firmGround.x][firmGround.y]->set_label(FIRM_GROUND_STR);
+    }
+    for (const Map::Coordinate& entryDoor : map.getEntryDoors()){
+        grid[entryDoor.x][entryDoor.y]->set_label(ENTRY_DOOR_STR);
+    }
+    for (const Map::Coordinate& exitDoor : map.getExitDoors()){
+        grid[exitDoor.x][exitDoor.y]->set_label(EXIT_DOOR_STR);
+    }
+    for (const std::vector<Map::Coordinate>& path : map.getPaths()){
+        for (const Map::Coordinate& pathStep : path) {
+            grid[pathStep.x][pathStep.y]->set_label(PATH_STR);
+        }
+    }
+    updateDisabledButtons();
 }
 
 void MapGrid::setSquareType(MapGrid::SquareType squareType) {
@@ -129,7 +148,7 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
             int start = yIsGreater ? lastY + 1 : y;
             int end = yIsGreater ? y : lastY - 1;
             for (int currentY = start; currentY <= end; ++currentY) {
-                grid[x][currentY]->set_label("C");
+                grid[x][currentY]->set_label(PATH_STR);
                 map.addPathStep(x, currentY);
             }
         } else if (sharesPathOnY) {
@@ -137,7 +156,7 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
             int start = xIsGreater ? lastX + 1 : x;
             int end = xIsGreater ? x : lastX - 1;
             for (int currentX = start; currentX <= end; ++currentX) {
-                grid[currentX][y]->set_label("C");
+                grid[currentX][y]->set_label(PATH_STR);
                 map.addPathStep(currentX, y);
             }
         }
@@ -148,10 +167,10 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
 }
 
 bool MapGrid::isNeighbourOfStart(int x, int y) const {
-    return grid[x - 1][y]->get_label() == "E" ||
-           grid[x][y - 1]->get_label() == "E" ||
-           grid[x + 1][y]->get_label() == "E" ||
-           grid[x][y + 1]->get_label() == "E";
+    return grid[x - 1][y]->get_label() == ENTRY_DOOR_STR ||
+           grid[x][y - 1]->get_label() == ENTRY_DOOR_STR ||
+           grid[x + 1][y]->get_label() == ENTRY_DOOR_STR ||
+           grid[x][y + 1]->get_label() == ENTRY_DOOR_STR;
 }
 
 bool MapGrid::isOnStraightLineFromLastOne(int x, int y) const {

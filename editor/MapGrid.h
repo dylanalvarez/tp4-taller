@@ -28,6 +28,8 @@ public:
 
     void notifyGridClicked(int x, int y, SquareType squareType);
 
+    void setFromMap();
+
 private:
     void setSquareType(MapGrid::SquareType squareType);
 
