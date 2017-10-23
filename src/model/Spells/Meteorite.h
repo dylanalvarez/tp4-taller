@@ -15,16 +15,16 @@ public:
                        unsigned int reach, unsigned int dmg,
                        unsigned int dmg_to_nearby_enemies);
 
-    // abre una grieta en la posicion que mata a todos los enemigos
-    // que caen en ella
-    // Pre: la posicion debe ser un camino
     void applyEffect(const Vector& position) override;
 
+    // lanza un meteorito al enemigo dañandolo a el y a todos los cercanos
     void applyEffect(Enemy& enemy) override;
 
     bool canBeThrownBy(const std::string& element) override;
 
     void attack() override;
+
+    bool isActive() const override;
 
 private:
     unsigned int cooldown;

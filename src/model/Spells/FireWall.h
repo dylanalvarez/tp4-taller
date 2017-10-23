@@ -16,11 +16,14 @@ public:
 
     // crea un muro de fuego que daña a todos los enemigos en la posicion
     void applyEffect(const Vector& position) override;
+
     void applyEffect(Enemy& enemy) override;
 
     bool canBeThrownBy(const std::string& element) override;
 
     void attack() override;
+
+    bool isActive() const override;
 
 private:
     Vector position;

@@ -10,9 +10,7 @@ Terraforming::Terraforming(Scenario &scenario, unsigned int cooldown) :
 }
 
 void Terraforming::applyEffect(const Vector &position) {
-    if (difftime(time(nullptr), last_activation_time) < cooldown) {
-        return;
-    }
+    if (difftime(time(nullptr), last_activation_time) < cooldown) { return; }
 
     scenario.addFirmGround(position);
     last_activation_time = time(nullptr);
@@ -25,3 +23,7 @@ bool Terraforming::canBeThrownBy(const std::string &element) {
 void Terraforming::attack() {}
 
 void Terraforming::applyEffect(Enemy &enemy) {}
+
+bool Terraforming::isActive() const {
+    return is_active;
+}

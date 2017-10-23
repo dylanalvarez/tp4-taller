@@ -11,12 +11,11 @@ Meteorite::Meteorite(Scenario& scenario, unsigned int cooldown,
                         dmg(dmg), dmg_to_nearby_enemies(dmg_to_nearby_enemies),
                         reach(reach) {
     is_active = false;
+    last_activation_time = 0;
 }
 
 void Meteorite::applyEffect(Enemy &enemy) {
-    if (difftime(time(nullptr), last_activation_time) < cooldown) {
-        return;
-    }
+    if (difftime(time(nullptr), last_activation_time) < cooldown) { return; }
 
     enemy.reduceLife(dmg);
 
@@ -38,3 +37,7 @@ bool Meteorite::canBeThrownBy(const std::string &element) {
 void Meteorite::attack() {}
 
 void Meteorite::applyEffect(const Vector &position) {}
+
+bool Meteorite::isActive() const {
+    return is_active;
+}

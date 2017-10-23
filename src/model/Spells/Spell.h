@@ -18,6 +18,8 @@ public:
 
     virtual void attack() = 0;
 
+    virtual bool isActive() const = 0;
+
 protected:
     bool is_active = false;
 };

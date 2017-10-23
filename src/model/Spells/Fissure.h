@@ -18,11 +18,14 @@ public:
     // que caen en ella
     // Pre: la posicion debe ser un camino
     void applyEffect(const Vector& position) override;
+
     void applyEffect(Enemy& enemy) override;
 
     bool canBeThrownBy(const std::string& element) override;
 
     void attack() override;
+
+    bool isActive() const override;
 
 private:
     Vector position;

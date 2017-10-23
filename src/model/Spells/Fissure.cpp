@@ -13,6 +13,8 @@ Fissure::Fissure(Scenario &scenario, unsigned int cooldown,
 }
 
 void Fissure::applyEffect(const Vector &position) {
+    if (difftime(time(nullptr), last_activation_time) < cooldown) { return; }
+
     this->position = position;
     is_active = true;
     last_activation_time = time(nullptr);
@@ -43,3 +45,7 @@ void Fissure::attack() {
 }
 
 void Fissure::applyEffect(Enemy &enemy) {}
+
+bool Fissure::isActive() const {
+    return is_active;
+}

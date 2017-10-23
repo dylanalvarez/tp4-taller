@@ -68,10 +68,16 @@ class TowerDefenseGameTest : public CppUnit::TestCase {
         CPPUNIT_TEST(meteoriteHasACooldownTest);
         CPPUNIT_TEST(fireWallDealDamageToEnemiesInTheAreaTest);
         CPPUNIT_TEST(fireWallOnlyLastFiveSecondsTest);
+        CPPUNIT_TEST(freezingStopsTheEnemyHittedTest);
+        CPPUNIT_TEST(freezingOnlyLastFiveSecondsTets);
+        CPPUNIT_TEST(freezingHasACooldownTest);
+        CPPUNIT_TEST(blizzardDealsDamageAndSlowDownEnemiesOnAreaTest);
+        CPPUNIT_TEST(blizzardHasACooldownTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
-    TowerDefenseGameTest();
+    void setUp() override;
+    void tearDown() override;
 
 protected:
     /*** Enemies ***/
@@ -104,6 +110,11 @@ protected:
     void meteoriteHasACooldownTest();
     void fireWallDealDamageToEnemiesInTheAreaTest();
     void fireWallOnlyLastFiveSecondsTest();
+    void freezingStopsTheEnemyHittedTest();
+    void freezingOnlyLastFiveSecondsTets();
+    void freezingHasACooldownTest();
+    void blizzardDealsDamageAndSlowDownEnemiesOnAreaTest();
+    void blizzardHasACooldownTest();
 
     /*** Fire Tower ***/
     void whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest();
@@ -146,7 +157,7 @@ protected:
     void levelingNotExistingAttributeThrowExceptionTest();
 
 private:
-    TowerDefenseGame game;
+    TowerDefenseGame* game;
 };
 
 

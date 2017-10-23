@@ -2,16 +2,23 @@
 // Created by facundo on 23/10/17.
 //
 
-#include "FireWall.h"
+#include "Blizzard.h"
 
-FireWall::FireWall(Scenario& scenario, unsigned int cooldown,
-                   unsigned int dmg, unsigned int duration) :
-        scenario(scenario), cooldown(cooldown), duration(duration), dmg(dmg) {
+Blizzard::Blizzard(Scenario& scenario, unsigned int cooldown,
+                   unsigned int duration, unsigned int dmg,
+                   unsigned int speed_reduction,
+                   unsigned int speed_reduction_duration) :
+        scenario(scenario),
+        cooldown(cooldown),
+        dmg(dmg),
+        duration(duration),
+        speed_reduction(speed_reduction),
+        speed_reduction_duration(speed_reduction_duration) {
     is_active = false;
     last_activation_time = 0;
 }
 
-void FireWall::applyEffect(const Vector &position) {
+void Blizzard::applyEffect(const Vector &position) {
     if (difftime(time(nullptr), last_activation_time) < cooldown) { return; }
 
     is_active = true;
@@ -19,13 +26,13 @@ void FireWall::applyEffect(const Vector &position) {
     last_activation_time = time(nullptr);
 }
 
-void FireWall::applyEffect(Enemy &enemy) {}
+void Blizzard::applyEffect(Enemy &enemy) {}
 
-bool FireWall::canBeThrownBy(const std::string &element) {
-    return element == "fire";
+bool Blizzard::canBeThrownBy(const std::string &element) {
+    return element == "water";
 }
 
-void FireWall::attack() {
+void Blizzard::attack() {
     if (difftime(time(nullptr), last_activation_time) >= duration) {
         is_active = false;
     }
@@ -39,9 +46,10 @@ void FireWall::attack() {
 
     for (Enemy* enemy : scenario.getEnemiesInRange(Range(position, 0))) {
         enemy->reduceLife(dmg);
+        enemy->reduceSpeed(speed_reduction, speed_reduction_duration);
     }
 }
 
-bool FireWall::isActive() const {
+bool Blizzard::isActive() const {
     return is_active;
 }

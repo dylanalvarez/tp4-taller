@@ -14,6 +14,8 @@
 #include "Spells/Fissure.h"
 #include "Spells/Meteorite.h"
 #include "Spells/FireWall.h"
+#include "Spells/Freezing.h"
+#include "Spells/Blizzard.h"
 
 TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
                                    const std::string &scenario_file) {
@@ -36,6 +38,8 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
     spells.emplace("fissure", new Fissure(*scenario, 40, 1));
     spells.emplace("meteorite", new Meteorite(*scenario, 20, 2, 30, 10));
     spells.emplace("fire_wall", new FireWall(*scenario, 10, 10, 5));
+    spells.emplace("freezing", new Freezing(*scenario, 15, 5));
+    spells.emplace("blizzard", new Blizzard(*scenario, 20, 5, 5, 25, 2));
 }
 
 TowerDefenseGame::~TowerDefenseGame(){
@@ -144,7 +148,9 @@ const Player& TowerDefenseGame::addPlayer(const std::string &name,
 
 void TowerDefenseGame::performeAttacks() {
     for (auto& spell : spells) {
-        spell.second->attack();
+        if (spell.second->isActive()) {
+            spell.second->attack();
+        }
     }
 
     for (auto& tower: scenario->getTowers()){
