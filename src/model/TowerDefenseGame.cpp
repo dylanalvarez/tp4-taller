@@ -103,16 +103,19 @@ bool TowerDefenseGame::doesPlayerExist(const Player &player) {
     return false;
 }
 
-void TowerDefenseGame::addTower(const Player &player, const std::string &type,
+const Tower& TowerDefenseGame::addTower(const Player &player, const std::string &type,
                                 const Vector &position) {
     if (!doesPlayerExist(player)) {
         throw TowerError("Error al añadir la torre de tipo " + type +
                          ", el jugador " + player.getName() +
                          "no pertence a la partida");
     }
+    Tower* tower;
     try {
-        scenario->addTower(towers_factory.at(type)->create(tower_id, position,
-                                                           tower_properties, *scenario));
+        tower = towers_factory.at(type)->create(tower_id++, position,
+                                                       tower_properties, *scenario);
+        scenario->addTower(tower);
+        return *tower;
     } catch (std::exception& e) {
         throw TowerError("Error: el tipo de torre " + type + " no es un tipo valido");
     }
@@ -137,4 +140,8 @@ void TowerDefenseGame::loadTowerProperties(YAML::Node& properties) {
     towers_factory.emplace("water", new WaterTowerFactory());
     towers_factory.emplace("earth", new EarthTowerFactory());
     towers_factory.emplace("air", new AirTowerFactory());
+}
+
+void TowerDefenseGame::levelupTower(const Tower& tower, const std::string& type) {
+    scenario->levelupTower(tower, type);
 }

@@ -10,9 +10,15 @@ Tower::Tower(int id, Vector position, const YAML::Node& properties,
                                    scenario(scenario),
                                    position(position) {}
 
-Tower::~Tower() = default;
+Tower::~Tower() {
+    delete level;
 
-unsigned int Tower::getExperience() const {
+    for (auto& levelup_type : levelup_types){
+        delete levelup_type.second;
+    }
+}
+
+double Tower::getExperience() const {
     return experience;
 }
 
@@ -27,12 +33,12 @@ Tower::Tower(Tower&& other) noexcept : properties(other.properties),
 
     this->position = other.position;
     this->experience = other.experience;
-    this->range = other.range;
-    this->dmg = other.dmg;
     this->attack_cooldown = other.attack_cooldown;
     this->last_attack_time = other.last_attack_time;
-
     this->current_target = other.current_target;
+    this->level = other.level;
+
+    other.level = nullptr;
     other.current_target = nullptr;
 }
 
@@ -52,9 +58,40 @@ void Tower::changeTarget(const std::vector<Enemy*>& enemies) {
             // si hay target pero esta muerto
             // o si se fue de rango
             current_target = enemies[0];
+            damage_dealed_to_current_target = 0;
         }
     } else {
         // si no hay target
         current_target = enemies[0];
+        damage_dealed_to_current_target = 0;
     }
+}
+
+const Range &Tower::getRange() const {
+    return level->getRange();
+}
+
+void Tower::levelup(const std::string &type) {
+    TowerLevel* new_level = levelup_types.at(type)->levelup(*level, experience);
+    experience -= levelup_types.at(type)->getExperienceNeededforLevel(level->getLevel());
+    delete level;
+    level = new_level;
+}
+
+unsigned int Tower::getDamage() const {
+    return level->getDamage();
+}
+
+void Tower::hitCurrentTarget(unsigned int dmg) {
+    unsigned int dmg_dealed = current_target->reduceLife(dmg);
+    damage_dealed_to_current_target += dmg_dealed;
+    experience += dmg_dealed;
+
+    if (current_target->isDead()) {
+        experience += 0.5 * damage_dealed_to_current_target;
+    }
+}
+
+int Tower::getReachOfImpact() const {
+    return level->getReachOfImpact();
 }

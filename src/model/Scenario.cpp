@@ -78,3 +78,11 @@ void Scenario::addTower(Tower* tower) {
                                  ". La posicion ya fue ocupada o no es terreno firme");
     }
 }
+
+void Scenario::levelupTower(const Tower& tower_to_lvl, const std::string& type) {
+    for (Tower* tower : towers){
+        if (tower == &tower_to_lvl) {
+            tower->levelup(type);
+        }
+    }
+}

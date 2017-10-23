@@ -21,10 +21,6 @@ public:
     WaterTower& operator=(const WaterTower&) = delete;
     WaterTower& operator=(WaterTower&&) = delete;
     WaterTower(WaterTower&&) noexcept ;
-
-private:
-    unsigned int speed_reduction;
-    unsigned int speed_reduction_time;
 };
 
 

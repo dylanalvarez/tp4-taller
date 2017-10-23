@@ -4,7 +4,7 @@
 
 #include "Enemy.h"
 
-Enemy::Enemy(Path &path, unsigned int health_points, float speed,
+Enemy::Enemy(Path &path, int health_points, float speed,
              bool does_it_fly) :
         path(path),
         hp(health_points),
@@ -16,9 +16,10 @@ Enemy::Enemy(Path &path, unsigned int health_points, float speed,
     direction = (current_destiny - current_pos);
     direction.normalizeAndRound();
     last_speed_reduction_time = 0;
+    speed_reduction_time = 0;
 }
 
-Enemy::Enemy(int id, Path &path, unsigned int health_points, float speed,
+Enemy::Enemy(int id, Path &path, int health_points, float speed,
              bool does_it_fly) : Enemy(path, health_points, speed, does_it_fly) {
     this->id = id;
 }
@@ -56,12 +57,18 @@ bool Enemy::canIFlight() const {
     return can_i_fly;
 }
 
-unsigned int Enemy::getHealthPoints() const {
+int Enemy::getHealthPoints() const {
     return hp;
 }
 
-void Enemy::reduceLife(unsigned int dmg_points) {
+unsigned int Enemy::reduceLife(unsigned int dmg_points) {
     this->hp -= dmg_points;
+    if (this->hp < 0){
+        unsigned int dmg_dealed = dmg_points + hp;
+        this->hp = 0;
+        return dmg_dealed;
+    }
+    return dmg_points;
 }
 
 void Enemy::reduceSpeed(unsigned int percentage, unsigned int reduction_time) {
@@ -71,6 +78,10 @@ void Enemy::reduceSpeed(unsigned int percentage, unsigned int reduction_time) {
     last_speed_reduction_time = time(nullptr);
 }
 
-void Enemy::move_back() {
+void Enemy::moveBack() {
     current_pos -= direction;
+}
+
+bool Enemy::isDead() const {
+    return hp == 0;
 }

@@ -23,8 +23,14 @@ public:
     void addEnemy(const std::string& enemy_type);
 
     // añade la torre de tipo type en la posicion position
-    void addTower(const Player& player, const std::string& type,
+    // retorna el id
+    const Tower& addTower(const Player& player, const std::string& type,
      const Vector& position);
+
+    // levelea la torre con el id pasado
+    // Pre: la torre debe tener la exp necesaria y
+    // la torre debe existir
+    void levelupTower(const Tower&, const std::string& type);
 
     // añade un jugador a la partida
     // Pre: existen menos de 4 jugadores en la partida
@@ -58,11 +64,11 @@ private:
 private:
     // estructura utilizada para guardar las propiedades de un enemigo
     struct EnemyProperties {
-        unsigned int hp;
-        unsigned int speed;
+        int hp;
+        float speed;
         bool does_it_fly;
 
-        EnemyProperties(unsigned int hp, unsigned int speed, bool does_it_fly) {
+        EnemyProperties(int hp, float speed, bool does_it_fly) {
             this->hp = hp;
             this->speed = speed;
             this->does_it_fly = does_it_fly;

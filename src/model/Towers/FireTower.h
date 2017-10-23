@@ -22,9 +22,6 @@ public:
     FireTower& operator=(const FireTower&) = delete;
     FireTower& operator=(FireTower&&) = delete;
     FireTower(FireTower&&) noexcept ;
-
-private:
-    unsigned int dmg_to_nearby_enemies;
 };
 
 

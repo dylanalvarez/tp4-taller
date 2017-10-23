@@ -9,10 +9,10 @@
 
 class Enemy {
 public:
-    Enemy(Path &path, unsigned int health_points, float speed,
+    Enemy(Path &path, int health_points, float speed,
           bool does_it_fly);
 
-    Enemy(int id, Path &path, unsigned int health_points, float speed,
+    Enemy(int id, Path &path, int health_points, float speed,
           bool does_it_flight);
 
     // mueve el enemigo la cantidad de coordenadas indicadas por speed
@@ -20,19 +20,22 @@ public:
     void move();
 
     // mueve el enemigo en la direccion opuesta a la que venia
-    void move_back();
+    void moveBack();
 
     // reduce la vida en la cantidad indicada por dmg_points;
-    void reduceLife(unsigned int dmg_points);
+    // retorna los puntos de daño realizados
+    unsigned int reduceLife(unsigned int dmg_points);
 
     // reduce la velocidad de movimiento en el porcentaje recibido
     // durante el tiempo especificado por time
     void reduceSpeed(unsigned int percentage, unsigned int time);
 
+    bool isDead() const;
+
     // getters
     const Vector& getCurrentPosition() const;
     int getID() const;
-    unsigned int getHealthPoints() const;
+    int getHealthPoints() const;
     float getSpeed() const;
     bool canIFlight() const;
 
@@ -43,7 +46,7 @@ private:
     Vector direction;
 
     int id;
-    unsigned int hp;
+    int hp;
     float speed;
     float original_speed;
     bool can_i_fly;

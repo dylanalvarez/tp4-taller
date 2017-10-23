@@ -15,11 +15,9 @@ TowerDefenseGameTest::TowerDefenseGameTest() : game("map.yaml", "map.yaml") {}
 void TowerDefenseGameTest::addingGreenDemonAddsGreenDemonEnemyWithHisPropertiesTest() {
     game.addEnemy("green_demon");
 
-    const std::vector<Enemy>& enemies = game.getAllEnemies();
+    const Enemy& green_demon = game.getAllEnemies()[0];
 
-    const Enemy& green_demon = enemies[0];
-
-    CPPUNIT_ASSERT_EQUAL(300, (int)green_demon.getHealthPoints());
+    CPPUNIT_ASSERT_EQUAL(300, green_demon.getHealthPoints());
     CPPUNIT_ASSERT_EQUAL(1, (int)green_demon.getSpeed());
     CPPUNIT_ASSERT(!green_demon.canIFlight());
 }
@@ -27,11 +25,9 @@ void TowerDefenseGameTest::addingGreenDemonAddsGreenDemonEnemyWithHisPropertiesT
 void TowerDefenseGameTest::addingAbmonibleAddsAbmonibleEnemyWithHisPropertiesTest() {
     game.addEnemy("abmonible");
 
-    const std::vector<Enemy>& enemies = game.getAllEnemies();
+    const Enemy& abmonible = game.getAllEnemies()[0];
 
-    const Enemy& abmonible = enemies[0];
-
-    CPPUNIT_ASSERT_EQUAL(200, (int)abmonible.getHealthPoints());
+    CPPUNIT_ASSERT_EQUAL(200, abmonible.getHealthPoints());
     CPPUNIT_ASSERT_EQUAL(1, (int)abmonible.getSpeed());
     CPPUNIT_ASSERT(!abmonible.canIFlight());
 }
@@ -39,11 +35,9 @@ void TowerDefenseGameTest::addingAbmonibleAddsAbmonibleEnemyWithHisPropertiesTes
 void TowerDefenseGameTest::addingBloodyHawkAddsBloodyHawkEnemyWithHisPropertiesTest() {
     game.addEnemy("bloody_hawk");
 
-    const std::vector<Enemy>& enemies = game.getAllEnemies();
+    const Enemy& bloody_hawk = game.getAllEnemies()[0];
 
-    const Enemy& bloody_hawk = enemies[0];
-
-    CPPUNIT_ASSERT_EQUAL(100, (int)bloody_hawk.getHealthPoints());
+    CPPUNIT_ASSERT_EQUAL(100, bloody_hawk.getHealthPoints());
     CPPUNIT_ASSERT_EQUAL(4, (int)bloody_hawk.getSpeed());
     CPPUNIT_ASSERT(bloody_hawk.canIFlight());
 }
@@ -51,11 +45,9 @@ void TowerDefenseGameTest::addingBloodyHawkAddsBloodyHawkEnemyWithHisPropertiesT
 void TowerDefenseGameTest::addingSpectrumAddsSpectrumEnemyWithHisPropertiesTest() {
     game.addEnemy("spectrum");
 
-    const std::vector<Enemy>& enemies = game.getAllEnemies();
+    const Enemy& spectrum = game.getAllEnemies()[0];
 
-    const Enemy& spectrum = enemies[0];
-
-    CPPUNIT_ASSERT_EQUAL(100, (int)spectrum.getHealthPoints());
+    CPPUNIT_ASSERT_EQUAL(100, spectrum.getHealthPoints());
     CPPUNIT_ASSERT_EQUAL(6, (int)spectrum.getSpeed());
     CPPUNIT_ASSERT(spectrum.canIFlight());
 }
@@ -63,11 +55,9 @@ void TowerDefenseGameTest::addingSpectrumAddsSpectrumEnemyWithHisPropertiesTest(
 void TowerDefenseGameTest::addingGoatManAddsGoatManEnemyWithHisPropertiesTest() {
     game.addEnemy("goat_man");
 
-    const std::vector<Enemy>& enemies = game.getAllEnemies();
+    const Enemy& goat_man = game.getAllEnemies()[0];
 
-    const Enemy& goat_man = enemies[0];
-
-    CPPUNIT_ASSERT_EQUAL(100, (int)goat_man.getHealthPoints());
+    CPPUNIT_ASSERT_EQUAL(100, goat_man.getHealthPoints());
     CPPUNIT_ASSERT_EQUAL(2, (int)goat_man.getSpeed());
     CPPUNIT_ASSERT(!goat_man.canIFlight());
 }
@@ -75,11 +65,9 @@ void TowerDefenseGameTest::addingGoatManAddsGoatManEnemyWithHisPropertiesTest() 
 void TowerDefenseGameTest::addingUndeadAddsUndeadEnemyWithHisPropertiesTest() {
     game.addEnemy("undead");
 
-    const std::vector<Enemy>& enemies = game.getAllEnemies();
+    const Enemy& undead = game.getAllEnemies()[0];
 
-    const Enemy& undead = enemies[0];
-
-    CPPUNIT_ASSERT_EQUAL(20, (int)undead.getHealthPoints());
+    CPPUNIT_ASSERT_EQUAL(20, undead.getHealthPoints());
     CPPUNIT_ASSERT_EQUAL(10, (int)undead.getSpeed());
     CPPUNIT_ASSERT(!undead.canIFlight());
 }
@@ -160,7 +148,7 @@ void TowerDefenseGameTest::whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest() {
 
     game.addEnemy("green_demon");
     const Enemy& enemy = game.getAllEnemies()[0];
-    unsigned int initial_life = enemy.getHealthPoints();
+    int initial_life = enemy.getHealthPoints();
 
     // el rango de la torre de fuego es 3
     // cuando el enemigo se mueve 7 veces, esta en (2,5) y
@@ -186,9 +174,9 @@ void TowerDefenseGameTest::fireTowerAttacksAllnearbyEnemiesWithLessDamageTest() 
     game.addEnemy("green_demon");
     const std::vector<Enemy>& enemies = game.getAllEnemies();
 
-    unsigned int initial_life_enemy1 = enemies[0].getHealthPoints();
-    unsigned int initial_life_enemy2 = enemies[1].getHealthPoints();
-    unsigned int initial_life_enemy3 = enemies[2].getHealthPoints();
+    int initial_life_enemy1 = enemies[0].getHealthPoints();
+    int initial_life_enemy2 = enemies[1].getHealthPoints();
+    int initial_life_enemy3 = enemies[2].getHealthPoints();
 
     // el rango de la torre de fuego es 3
     // cuando el enemigo se mueve 7 veces, esta en (2,5) y
@@ -216,15 +204,15 @@ void TowerDefenseGameTest::fireTowerDoesNotAttacksEnemiesThatAreNotInRangeTest()
     game.addEnemy("green_demon");
     const std::vector<Enemy>& enemies = game.getAllEnemies();
 
-    unsigned int initial_life_enemy1 = enemies[0].getHealthPoints();
-    unsigned int initial_life_enemy2 = enemies[1].getHealthPoints();
-    unsigned int initial_life_enemy3 = enemies[2].getHealthPoints();
+    int initial_life_enemy1 = enemies[0].getHealthPoints();
+    int initial_life_enemy2 = enemies[1].getHealthPoints();
+    int initial_life_enemy3 = enemies[2].getHealthPoints();
 
     game.performeAttacks();
 
-    CPPUNIT_ASSERT(initial_life_enemy1 = enemies[0].getHealthPoints());
-    CPPUNIT_ASSERT(initial_life_enemy2 = enemies[1].getHealthPoints());
-    CPPUNIT_ASSERT(initial_life_enemy3 = enemies[2].getHealthPoints());
+    CPPUNIT_ASSERT(initial_life_enemy1 == enemies[0].getHealthPoints());
+    CPPUNIT_ASSERT(initial_life_enemy2 == enemies[1].getHealthPoints());
+    CPPUNIT_ASSERT(initial_life_enemy3 == enemies[2].getHealthPoints());
 }
 
 void TowerDefenseGameTest::fireTowerAttacksOneTimeEveryThreeSecondsTest() {
@@ -234,7 +222,7 @@ void TowerDefenseGameTest::fireTowerAttacksOneTimeEveryThreeSecondsTest() {
     game.addEnemy("green_demon");
     const std::vector<Enemy>& enemies = game.getAllEnemies();
 
-    unsigned int initial_life_enemy1 = enemies[0].getHealthPoints();
+    int initial_life_enemy1 = enemies[0].getHealthPoints();
 
     // el rango de la torre de fuego es 3
     // cuando el enemigo se mueve 7 veces, esta en (2,5) y
@@ -272,8 +260,8 @@ void TowerDefenseGameTest::fireTowerDoesNotChangeObjetiveIfItsAliveTest() {
     const Enemy& green_demon = game.getAllEnemies()[0];
     const Enemy& goat_man = game.getAllEnemies()[1];
 
-    unsigned int initial_life1 = green_demon.getHealthPoints();
-    unsigned int initial_life2 = goat_man.getHealthPoints();
+    int initial_life1 = green_demon.getHealthPoints();
+    int initial_life2 = goat_man.getHealthPoints();
 
     // el rango de la torre de fuego es 3
     for (int i = 0; i < 4; i++){
@@ -289,8 +277,6 @@ void TowerDefenseGameTest::fireTowerDoesNotChangeObjetiveIfItsAliveTest() {
 
     game.moveEnemies();
 
-    sleep(3);
-
     game.performeAttacks();
 
     CPPUNIT_ASSERT(initial_life2 > goat_man.getHealthPoints());
@@ -304,7 +290,7 @@ void TowerDefenseGameTest::attackWhenIsInRangeAndStopAttackingWhenIsOutTest() {
     game.addEnemy("green_demon");
 
     const Enemy& enemy = game.getAllEnemies()[0];
-    unsigned int initial_life = enemy.getHealthPoints();
+    int initial_life = enemy.getHealthPoints();
 
     // el rango de la torre de fuego es 3
     // cuando el enemigo se mueve 7 veces, esta en (2,5) y
@@ -314,7 +300,6 @@ void TowerDefenseGameTest::attackWhenIsInRangeAndStopAttackingWhenIsOutTest() {
     }
 
     game.performeAttacks();
-    sleep(3); // cooldown de la torre de fuego
 
     CPPUNIT_ASSERT(initial_life > enemy.getHealthPoints());
     initial_life = enemy.getHealthPoints();
@@ -337,7 +322,7 @@ void TowerDefenseGameTest::whenEnemyIsInRangeOfWaterTowerItAttacksHimTest() {
     game.addEnemy("green_demon");
 
     const Enemy& enemy = game.getAllEnemies()[0];
-    unsigned int initial_life = enemy.getHealthPoints();
+    int initial_life = enemy.getHealthPoints();
 
     // el rango de la torre de fuego es 3
     // cuando el enemigo se mueve 7 veces, esta en (2,5) y
@@ -358,7 +343,7 @@ void TowerDefenseGameTest::waterTowerAttacksOneTimeEveryThreeSecondsTest() {
     game.addEnemy("green_demon");
     const std::vector<Enemy>& enemies = game.getAllEnemies();
 
-    unsigned int initial_life_enemy1 = enemies[0].getHealthPoints();
+    int initial_life_enemy1 = enemies[0].getHealthPoints();
 
     // el rango de la torre de agua es 3
     // cuando el enemigo se mueve 7 veces, esta en (2,5) y
@@ -396,8 +381,8 @@ void TowerDefenseGameTest::waterTowerDoesNotChangeObjetiveIfItsAliveTest() {
     const Enemy& enemy = game.getAllEnemies()[0];
     const Enemy& enemy2 = game.getAllEnemies()[1];
 
-    unsigned int initial_life1 = enemy.getHealthPoints();
-    unsigned int initial_life2 = enemy2.getHealthPoints();
+    int initial_life1 = enemy.getHealthPoints();
+    int initial_life2 = enemy2.getHealthPoints();
 
     for (int i = 0; i < 4; i++) {
         game.moveEnemies();
@@ -411,8 +396,6 @@ void TowerDefenseGameTest::waterTowerDoesNotChangeObjetiveIfItsAliveTest() {
     initial_life2 = enemy2.getHealthPoints();
 
     game.moveEnemies();
-
-    sleep(3); // cooldown de la torre
 
     game.performeAttacks();
 
@@ -467,7 +450,7 @@ void TowerDefenseGameTest::waterTowerReduceEnemySpeedDuringTwoSecondsTest() {
 
     game.performeAttacks();
 
-    sleep(2); // speed reduction's cooldown
+    sleep(2);
 
     CPPUNIT_ASSERT(initial_enemy_speed == game.getAllEnemies()[0].getSpeed());
 }
@@ -479,7 +462,7 @@ void TowerDefenseGameTest::whenEnemyIsInRangeOfEarthTowerItAttacksHimTest() {
     game.addEnemy("green_demon");
 
     const Enemy& enemy = game.getAllEnemies()[0];
-    unsigned int initial_life = enemy.getHealthPoints();
+    int initial_life = enemy.getHealthPoints();
 
     // el rango de la torre de tierra es 2
     // cuando el enemigo se mueve 8 veces, esta en (3,5) y
@@ -500,7 +483,7 @@ void TowerDefenseGameTest::earthTowerAttacksOneTimeEveryFiveSecondsTest() {
     game.addEnemy("green_demon");
     const std::vector<Enemy>& enemies = game.getAllEnemies();
 
-    unsigned int initial_life_enemy1 = enemies[0].getHealthPoints();
+    int initial_life_enemy1 = enemies[0].getHealthPoints();
 
     // el rango de la torre de tierra es 2
     // cuando el enemigo se mueve 8 veces, esta en (2,5) y
@@ -539,8 +522,8 @@ void TowerDefenseGameTest::earthTowerDoesNotChangeObjetiveIfItsAliveTest() {
     const Enemy& enemy = game.getAllEnemies()[0];
     const Enemy& enemy2 = game.getAllEnemies()[1];
 
-    unsigned int initial_life1 = enemy.getHealthPoints();
-    unsigned int initial_life2 = enemy2.getHealthPoints();
+    int initial_life1 = enemy.getHealthPoints();
+    int initial_life2 = enemy2.getHealthPoints();
 
     for (int i = 0; i < 2; i++) {
         game.moveEnemies();
@@ -555,8 +538,6 @@ void TowerDefenseGameTest::earthTowerDoesNotChangeObjetiveIfItsAliveTest() {
 
     game.moveEnemies();
 
-    sleep(5); // cooldown de la torre
-
     game.performeAttacks();
 
     CPPUNIT_ASSERT(initial_life2 > enemy2.getHealthPoints());
@@ -570,7 +551,7 @@ void TowerDefenseGameTest::whenEnemyIsInRangeOfAirTowerItAttacksHimTest() {
     game.addEnemy("green_demon");
 
     const Enemy& enemy = game.getAllEnemies()[0];
-    unsigned int initial_life = enemy.getHealthPoints();
+    int initial_life = enemy.getHealthPoints();
 
     // el rango de la torre de aire es 5
     // cuando el enemigo se mueve 7 veces, esta en (2,5) y
@@ -591,7 +572,7 @@ void TowerDefenseGameTest::airTowerAttacksOneTimeEveryFiveSecondsTest() {
     game.addEnemy("green_demon");
     const std::vector<Enemy>& enemies = game.getAllEnemies();
 
-    unsigned int initial_life_enemy1 = enemies[0].getHealthPoints();
+    int initial_life_enemy1 = enemies[0].getHealthPoints();
 
     // el rango de la torre de aire es 5
     // cuando el enemigo se mueve 7 veces, esta en (2,5) y
@@ -628,8 +609,8 @@ void TowerDefenseGameTest::airTowerDoesNotChangeObjetiveIfItsAliveTest() {
     const Enemy& enemy = game.getAllEnemies()[0];
     const Enemy& enemy2 = game.getAllEnemies()[1];
 
-    unsigned int initial_life1 = enemy.getHealthPoints();
-    unsigned int initial_life2 = enemy2.getHealthPoints();
+    int initial_life1 = enemy.getHealthPoints();
+    int initial_life2 = enemy2.getHealthPoints();
 
     for (int i = 0; i < 3; i++) {
         game.moveEnemies();
@@ -643,8 +624,6 @@ void TowerDefenseGameTest::airTowerDoesNotChangeObjetiveIfItsAliveTest() {
     initial_life2 = enemy2.getHealthPoints();
 
     game.moveEnemies();
-
-    sleep(5); // cooldown de la torre
 
     game.performeAttacks();
 
@@ -690,12 +669,11 @@ void TowerDefenseGameTest::airTowerHitsFlyingEnemiesHarderTest() {
         game.moveEnemies();
     }
 
-    unsigned int initial_green_demon_health = green_demon.getHealthPoints();
+    int initial_green_demon_health = green_demon.getHealthPoints();
 
     game.performeAttacks();
-    sleep(5); // air tower cooldown
 
-    unsigned int dmg_dealed_to_green_demon = initial_green_demon_health
+    int dmg_dealed_to_green_demon = initial_green_demon_health
                                              - green_demon.getHealthPoints();
 
     // se sale de rango el green demon
@@ -711,11 +689,11 @@ void TowerDefenseGameTest::airTowerHitsFlyingEnemiesHarderTest() {
 
     const Enemy& spectrum = game.getAllEnemies()[1];
 
-    unsigned int initial_spectrum_health = spectrum.getHealthPoints();
+    int initial_spectrum_health = spectrum.getHealthPoints();
 
     game.performeAttacks();
 
-    unsigned int dmg_dealed_to_spectrum = initial_spectrum_health
+    int dmg_dealed_to_spectrum = initial_spectrum_health
                                           - spectrum.getHealthPoints();
 
     CPPUNIT_ASSERT(dmg_dealed_to_spectrum > dmg_dealed_to_green_demon);
@@ -733,7 +711,6 @@ void TowerDefenseGameTest::whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest() 
     }
 
     game.performeAttacks();
-    sleep(3); // fire tower cooldown
 
     game.addEnemy("green_demon");
 
@@ -743,7 +720,7 @@ void TowerDefenseGameTest::whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest() 
     }
 
     const Enemy& green_demon = game.getAllEnemies()[0];
-    unsigned int current_health = green_demon.getHealthPoints();
+    int current_health = green_demon.getHealthPoints();
 
     game.performeAttacks();
 
@@ -759,7 +736,7 @@ void TowerDefenseGameTest::earthTowerCantAttackFlyingUnitsTest() {
     // el enemigo se situa en rango de la torre
     game.moveEnemies();
 
-    unsigned int initial_life = game.getAllEnemies()[0].getHealthPoints();
+    int initial_life = game.getAllEnemies()[0].getHealthPoints();
 
     game.performeAttacks();
 
@@ -770,4 +747,147 @@ void TowerDefenseGameTest::addingNotExistingTowerTypeThrowsExceptionTest() {
     const Player& added_player = game.addPlayer("alguien");
 
     CPPUNIT_ASSERT_THROW(game.addTower(added_player, "metal", Vector(2,4)), TowerError);
+}
+
+void TowerDefenseGameTest::hittingAnEnemyIncreaseFireTowerExperienceByDealedDamagePointsTest() {
+    const Player& added_player = game.addPlayer("alguien");
+    const Tower& tower = game.addTower(added_player, "fire", Vector(5,5));
+
+    game.addEnemy("undead");
+
+    // se situa en rango de la torre
+    game.moveEnemies();
+
+    game.performeAttacks();
+
+    CPPUNIT_ASSERT(tower.getDamage() == tower.getExperience());
+}
+
+void
+TowerDefenseGameTest::killingEnemyIncreaseTowerExpByDmgDealedPlusFiftyPercentOfEnemyHealthTest() {
+    const Player &added_player = game.addPlayer("alguien");
+    const Tower &tower = game.addTower(added_player, "fire", Vector(5, 5));
+
+    game.addEnemy("undead");
+
+    // se situa en rango de la torre
+    game.moveEnemies();
+
+    for (int i = 0; i < 4; i++) {
+        // con 4 ataques lo mata
+        game.performeAttacks();
+    }
+
+    // si la torre lo mata, gana 20 exp + 50% de 20 = 30 exp
+    CPPUNIT_ASSERT_EQUAL(30, (int)tower.getExperience());
+}
+
+void TowerDefenseGameTest::cantLevelupTowerWithInsuficientExpPointsTest() {
+    const Player &added_player = game.addPlayer("alguien");
+    const Tower &tower = game.addTower(added_player, "water", Vector(5, 5));
+
+    game.addEnemy("undead");
+
+    // se situa en rango de la torre
+    game.moveEnemies();
+
+    for (int i = 0; i < 5; i++) {
+        // con 4 ataques lo mata
+        game.performeAttacks();
+    }
+
+    // cuando lo mata gana 30 de exp y para levelear el rango necesita 200
+    CPPUNIT_ASSERT_THROW(game.levelupTower(tower, "range"), TowerError);
+}
+
+void TowerDefenseGameTest::whenTowerLevelupHisExperienceIsReducedTest() {
+    const Player &added_player = game.addPlayer("alguien");
+    const Tower &tower = game.addTower(added_player, "earth", Vector(2, 4));
+
+    // si mata a 6 suma 180 puntos de exp
+    game.addEnemy("undead");
+    game.addEnemy("undead");
+    game.addEnemy("undead");
+    game.addEnemy("undead");
+    game.addEnemy("undead");
+    game.addEnemy("undead");
+
+    // se situa en rango de la torre
+    game.moveEnemies();
+    for (int j = 0; j < 6 ; j++){
+        // con 1 ataque lo mata
+        game.performeAttacks();
+    }
+
+    game.levelupTower(tower, "damage");
+
+    CPPUNIT_ASSERT_EQUAL(30, (int)tower.getExperience());
+}
+
+void TowerDefenseGameTest::ifCantLevelUpHisExperienceItsNotReducedTest() {
+    const Player &added_player = game.addPlayer("alguien");
+    const Tower &tower = game.addTower(added_player, "earth", Vector(2, 4));
+
+    // si mata a 1 suma 30 puntos de exp
+    game.addEnemy("undead");
+
+    // se situa en rango de la torre
+    game.moveEnemies();
+    game.performeAttacks();
+
+    CPPUNIT_ASSERT_THROW(game.levelupTower(tower, "damage"), TowerError);
+    CPPUNIT_ASSERT_EQUAL(30, (int)tower.getExperience());
+}
+
+void TowerDefenseGameTest::levelingTwoTimesDamageOfEarthTowerIncreaseItByTwentyTest() {
+    const Player &added_player = game.addPlayer("alguien");
+    const Tower &tower = game.addTower(added_player, "earth", Vector(2, 4));
+
+    // si mata a 13 suma 390 puntos de exp
+
+    for (int i = 0; i < 13; i++) {
+        game.addEnemy("undead");
+    }
+
+    // se situa en rango de la torre
+    game.moveEnemies();
+    for (int j = 0; j < 13 ; j++){
+        // con 1 ataque lo mata
+        game.performeAttacks();
+    }
+
+    game.levelupTower(tower, "damage");
+    game.levelupTower(tower, "damage");
+
+    // su daño base es 20. Con dos leveleos es 40
+    CPPUNIT_ASSERT_EQUAL(40, (int)tower.getDamage());
+    CPPUNIT_ASSERT_EQUAL(15, (int)tower.getExperience());
+}
+
+void TowerDefenseGameTest::levelingImpactRangeOfFiretowerIncreasesItByOnesTest() {
+    const Player &added_player = game.addPlayer("alguien");
+    const Tower &tower = game.addTower(added_player, "fire", Vector(5, 5));
+
+    game.addEnemy("abmonible");
+    game.addEnemy("abmonible");
+    game.addEnemy("abmonible");
+    game.addEnemy("abmonible");
+    game.addEnemy("abmonible");
+
+    // se situa en rango de la torre
+
+    for (int i = 0; i < 7; i++){
+        game.moveEnemies();
+    }
+
+    // con 34 ataques mueren
+    for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < 34; i++){
+            game.performeAttacks();
+        }
+    }
+
+    game.levelupTower(tower, "reach");
+
+    CPPUNIT_ASSERT_EQUAL(2, tower.getReachOfImpact());
 }

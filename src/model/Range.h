@@ -16,6 +16,9 @@ public:
     // especificada por center y radius
     bool isInRange(Vector vector) const;
 
+    float getRadius() const;
+    Vector getCenter() const;
+
 private:
     Vector center;
     float radius;

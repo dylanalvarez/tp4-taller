@@ -21,6 +21,11 @@ public:
     // Pre: la posicion debe ser terreno firme
     void addTower(Tower* tower);
 
+    // levelea la torre con el id pasado
+    // Pre: la torre debe tener la exp necesaria y
+    // la torre debe existir
+    void levelupTower(const Tower&, const std::string& type);
+
     // retorna los n primeros enemigos dentro del rango
     // cuando es -1 retorna todos los que esten en rango
     std::vector<Enemy*> getEnemiesInRange(const Range &range, int n = -1);

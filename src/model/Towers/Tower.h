@@ -9,6 +9,8 @@
 #include "../Vector.h"
 #include "../Range.h"
 #include "../Enemy.h"
+#include "../Upgrades/RangeLevelup.h"
+#include <string>
 
 class Scenario;
 
@@ -20,9 +22,19 @@ public:
 
     virtual void attack() = 0;
 
-    unsigned int getExperience() const;
+    // realiza un levelup en el tipo especificado
+    // rango, daño, alcance, o relentizado
+    void levelup(const std::string& type);
+
+    double getExperience() const;
 
     const Vector& getPosition() const;
+
+    const Range& getRange() const;
+
+    unsigned int getDamage() const;
+
+    int getReachOfImpact() const;
 
     Tower(const Tower&) = delete;
     Tower& operator=(const Tower&) = delete;
@@ -31,19 +43,23 @@ public:
 
 protected:
     int id;
-    unsigned int experience;
+    double experience;
     Vector position;
+
     const YAML::Node& properties;
     Scenario& scenario;
 
-    Range range;
-    unsigned int dmg;
     unsigned int attack_cooldown;
     time_t last_attack_time;
     Enemy* current_target;
+    unsigned int damage_dealed_to_current_target;
+    TowerLevel* level;
+
+    std::map<std::string, LevelupType*> levelup_types;
 
     bool isCurrentTargetOutOfRange(const std::vector<Enemy*>&) const;
     void changeTarget(const std::vector<Enemy*>&);
+    void hitCurrentTarget(unsigned int dmg);
 };
 
 
