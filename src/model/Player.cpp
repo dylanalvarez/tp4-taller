@@ -10,11 +10,11 @@ const std::string &Player::getName() const {
     return name;
 }
 
-Player::Player(Player&& other) {
+Player::Player(Player&& other) noexcept {
     this->name = std::move(other.name);
 }
 
-Player &Player::operator=(Player&& other) {
+Player &Player::operator=(Player&& other) noexcept {
     this->name = std::move(other.name);
     return *this;
 }

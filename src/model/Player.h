@@ -15,8 +15,8 @@ public:
 
     Player(const Player&) = delete;
     Player& operator=(const Player&) = delete;
-    Player(Player&&);
-    Player& operator=(Player&&);
+    Player(Player&&) noexcept ;
+    Player& operator=(Player&&) noexcept ;
 
 private:
     std::string name;

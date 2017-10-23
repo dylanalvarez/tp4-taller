@@ -41,7 +41,7 @@ public:
     Tower(const Tower&) = delete;
     Tower& operator=(const Tower&) = delete;
     Tower& operator=(Tower&&) = delete;
-    Tower(Tower&&);
+    Tower(Tower&&) noexcept ;
 
 protected:
     int id;

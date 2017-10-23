@@ -71,7 +71,7 @@ void Tower::hitCurrentTarget(unsigned int dmg) {
     }
 }
 
-Tower::Tower(Tower&& other) : properties(properties), scenario(scenario) {
+Tower::Tower(Tower&& other) noexcept : properties(properties), scenario(scenario) {
     this->id = other.id;
     this->experience = other.experience;
     this->position = other.position;
