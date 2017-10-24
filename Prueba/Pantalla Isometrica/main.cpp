@@ -39,7 +39,12 @@ int main(int argc, char *argv[])
   fichas.agregarTorre(FichaTorre(largo*6, largo*3, id, FichaTorreDeTierra, sprites));
   id++;
   fichas.agregarTorre(FichaTorre(largo*7, largo*3, id, FichaTorreDeFuego, sprites));
+  id++;
+  fichas.agregarTorre(FichaTorre(largo*7, largo*7, id, FichaTorreDeAire, sprites));
+  id++;
+  fichas.agregarTorre(FichaTorre(largo*1, largo*8, id, FichaTorreDeAgua, sprites));
 
+  fichas.agregarPortal(FichaPortal(largo*0, largo*0, 0, FichaPortalAzul, sprites));  
   //creo boton
   /*Gtk::Button pulso("Pulsasion");
   pulso.signal_clicked().connect( sigc::mem_fun(
@@ -65,18 +70,21 @@ int main(int argc, char *argv[])
   window->show_all();
 
 //mejorar nombres
-  const int TiempoEnMilesegundos = 500;
-  sigc::slot<bool> my_slot = sigc::mem_fun(area, &PantallaDeJuego::pulsasion);
+  int TiempoEnMilesegundos = 200;
+  sigc::slot<bool> my_slot = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDeAnimacion);
   sigc::connection conn = Glib::signal_timeout().connect(my_slot,TiempoEnMilesegundos);
+  TiempoEnMilesegundos = 50;
+  sigc::slot<bool> my_slot2 = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDesplasamientos);
+  sigc::connection conn2 = Glib::signal_timeout().connect(my_slot2,TiempoEnMilesegundos);
 
+
+  app->run(*window);
+/*
 
   ControladorDeSiclos controlador; //igual servira a futuro para otra cosa.
-  /*controlador.getPulso().connect(
-          sigc::mem_fun(area, &PantallaDeJuego::pulsasion));*/
   std::thread pulso(timer, &controlador);
-  app->run(*window);
-
+    app->run(*window);
   controlador.terminar();
-  pulso.join();
+  pulso.join();*/
   return 0;
 }

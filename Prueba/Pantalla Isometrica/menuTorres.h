@@ -19,7 +19,11 @@ private:
   Gtk::Button* upgradeEspecial;
 protected:
 public:
+	void avisarUpgradeDanio();
+	void avisarUpgradeRango();
+	void avisarUpgradeEspecial();
   MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2);
   void cargarTorre (const FichaTorre &torre2);
+  void decelecionarTorre ();	
 };
 #endif

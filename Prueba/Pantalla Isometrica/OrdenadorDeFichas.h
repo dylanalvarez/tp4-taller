@@ -3,6 +3,8 @@
 
 #include <gtkmm.h>
 #include <iostream>
+#include <vector>
+#include <map>
 #include "sprites.h"
 #include "Fichas.h"
 
@@ -13,18 +15,24 @@ private:
  std::map<int,FichaTorre> torres;
  std::map<int,Ficha> enemigos;
  std::map<int,Ficha> poderes;
+ std::vector<FichaPortal> portales;
 protected:
 public:
- void pulsasion();
+ void ejecutarSicloDeAnimacion();
+ 
  void agregarTerreno(FichaTerreno nuevaFicha);
  void imprimirTerreno(const Cairo::RefPtr<Cairo::Context>& cr,
                       int desplasamientoX, int desplasamientoY);
-  //esto deberia pedir una funcion y aplicarla a toda la lista. Pero la verdad no da el tiempo
+ int ObetenerTerrenoEnEstaPosicion(int x, int y);
+
  void agregarTorre(FichaTorre nuevaFicha);
  void imprimirTorres(const Cairo::RefPtr<Cairo::Context>& cr,
                        int desplasamientoX, int desplasamientoY);
- int ObetenerTerrenoEnEstaPosicion(int x, int y);
  int ObetenerTorreEnEstaPosicion(int x, int y);
  FichaTorre& getTorre(int id);
+
+ void agregarPortal(FichaPortal nuevaFicha);
+ void imprimirPortal(const Cairo::RefPtr<Cairo::Context>& cr,
+                       int desplasamientoX, int desplasamientoY);
 };
 #endif

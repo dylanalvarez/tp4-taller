@@ -1,12 +1,15 @@
 #include "OrdenadorDeFichas.h"
 #define error 0
 
-void OrdenadorDeFichas::pulsasion(){
+void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
   for (auto it = terreno.begin(); it != terreno.end(); ++it){
-    it->second.pulsaion();
+    it->second.ejecutarSicloDeAnimacion();
   }
   for (auto it = torres.begin(); it != torres.end(); ++it){
-    it->second.pulsaion();
+    it->second.ejecutarSicloDeAnimacion();
+  }
+  for (auto it = portales.begin(); it != portales.end(); ++it){
+    it->ejecutarSicloDeAnimacion();
   }
 }
 
@@ -23,7 +26,6 @@ void OrdenadorDeFichas::imprimirTerreno(const Cairo::RefPtr<Cairo::Context>& cr,
 int OrdenadorDeFichas::ObetenerTerrenoEnEstaPosicion(int x, int y){
   for (auto it = terreno.begin(); it != terreno.end(); ++it){
     if (it->second.colisionaConmigo(x,y)) {
-      //it->second.imprimierCordenadas();
       return it->first;
     }
   }
@@ -42,7 +44,6 @@ void OrdenadorDeFichas::imprimirTorres(const Cairo::RefPtr<Cairo::Context>& cr,
 int OrdenadorDeFichas::ObetenerTorreEnEstaPosicion(int x, int y){
   for (auto it = torres.begin(); it != torres.end(); ++it){
     if (it->second.colisionaConmigo(x,y)) {
-      it->second.imprimierCordenadas();
       return it->first;
     }
   }
@@ -51,4 +52,15 @@ int OrdenadorDeFichas::ObetenerTorreEnEstaPosicion(int x, int y){
 
 FichaTorre& OrdenadorDeFichas::getTorre(int id){
   return torres.at(id);
+}
+
+//Portal
+void OrdenadorDeFichas::agregarPortal(FichaPortal nuevaFicha){
+  portales.push_back(nuevaFicha);
+}
+void OrdenadorDeFichas::imprimirPortal(const Cairo::RefPtr<Cairo::Context>& cr,
+                      int desplasamientoX, int desplasamientoY){
+  for (auto it = portales.begin(); it != portales.end(); ++it){
+    it->dibujar(cr,desplasamientoX,desplasamientoY);
+  }
 }
