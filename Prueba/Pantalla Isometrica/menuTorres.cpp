@@ -17,7 +17,7 @@ MenuTorres::MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2): ventana(ventana2)
       sigc::mem_fun(this, &MenuTorres::avisarUpgradeEspecial));
   }
 
-void MenuTorres::cargarTorre (const FichaTorre &torre2){
+void MenuTorres::selecionarTorre (const FichaTorre &torre2){
   titulo->show();
   rango->show();
   upgradeRango->show();

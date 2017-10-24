@@ -95,7 +95,7 @@ bool PantallaDeJuego::on_button_press_event(GdkEventButton* event){
   //fichas.ObetenerTerrenoEnEstaPosicion(x2,y2);
   int id = fichas.ObetenerTorreEnEstaPosicion(x2,y2);
   if (id != NoColicion)
-    menuTorres.cargarTorre(fichas.getTorre(id));
+    menuTorres.selecionarTorre(fichas.getTorre(id));
   else
     menuTorres.decelecionarTorre ();
   return Gtk::DrawingArea::on_button_press_event(event);
@@ -111,8 +111,9 @@ bool PantallaDeJuego::on_draw(const Cairo::RefPtr<Cairo::Context>& cr){
 //  cr->save();
 
   fichas.imprimirTerreno(cr,desplasamientoX,desplasamientoY);
-  fichas.imprimirTorres(cr,desplasamientoX,desplasamientoY);
   fichas.imprimirPortal(cr,desplasamientoX,desplasamientoY);
+  fichas.imprimirEnemigo(cr,desplasamientoX,desplasamientoY);    
+  fichas.imprimirTorres(cr,desplasamientoX,desplasamientoY);
   return true; //esto es parte del formato de timer..
 }
 
@@ -125,7 +126,7 @@ PantallaDeJuego::PantallaDeJuego(OrdenadorDeFichas &fichas2,
   add_events(Gdk::POINTER_MOTION_MASK); //activa las otras relaciones
   desplasamientoX = 120;
   desplasamientoY = 120;
-  menuTorres.decelecionarTorre();	
+  menuTorres.decelecionarTorre();
 }
 PantallaDeJuego::~PantallaDeJuego(){
 }

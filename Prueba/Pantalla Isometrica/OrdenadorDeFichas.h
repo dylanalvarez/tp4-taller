@@ -13,13 +13,13 @@ class OrdenadorDeFichas{
 private:
  std::map<int,FichaTerreno> terreno;
  std::map<int,FichaTorre> torres;
- std::map<int,Ficha> enemigos;
+ std::map<int,FichaEnemigo> enemigos;
  std::map<int,Ficha> poderes;
  std::vector<FichaPortal> portales;
 protected:
 public:
  void ejecutarSicloDeAnimacion();
- 
+
  void agregarTerreno(FichaTerreno nuevaFicha);
  void imprimirTerreno(const Cairo::RefPtr<Cairo::Context>& cr,
                       int desplasamientoX, int desplasamientoY);
@@ -30,6 +30,11 @@ public:
                        int desplasamientoX, int desplasamientoY);
  int ObetenerTorreEnEstaPosicion(int x, int y);
  FichaTorre& getTorre(int id);
+
+ void agregarEnemigo(FichaEnemigo nuevaFicha);
+ void imprimirEnemigo(const Cairo::RefPtr<Cairo::Context>& cr,
+                       int desplasamientoX, int desplasamientoY);
+ int ObetenerEnemigoEnEstaPosicion(int x, int y);
 
  void agregarPortal(FichaPortal nuevaFicha);
  void imprimirPortal(const Cairo::RefPtr<Cairo::Context>& cr,

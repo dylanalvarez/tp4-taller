@@ -23,7 +23,7 @@ public:
 	void avisarUpgradeRango();
 	void avisarUpgradeEspecial();
   MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2);
-  void cargarTorre (const FichaTorre &torre2);
-  void decelecionarTorre ();	
+  void selecionarTorre(const FichaTorre &torre2);
+  void decelecionarTorre();
 };
 #endif

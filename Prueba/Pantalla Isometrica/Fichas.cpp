@@ -150,6 +150,39 @@ int FichaTorre::getEspecial() const{
   return especial;
 }
 
+//FichasEnemigos
+FichaEnemigo::FichaEnemigo(int x2, int y2, int id2, int tipo,
+                        VectorDeSprites &vectorDeSprites): Ficha(x2, y2, id2, tipo){
+  inicioAnimiacionActual = 0;
+  int i;
+  switch (tipo) {
+    case Abmonible:
+      for (i = 0; i < SpriteAbominableTotal; i++) {
+          sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteAbominableInicial + i)));
+      }
+      break;
+    default:
+    //falta que aca salte un error.
+      break;
+  }
+}
+//aunque esto puede que no tenga razon de ser.
+FichaEnemigo::FichaEnemigo(const FichaEnemigo &p): Ficha(p){
+  inicioAnimiacionActual = p.inicioAnimiacionActual;
+}
+void FichaEnemigo::dibujar(const Cairo::RefPtr<Cairo::Context>& cr,
+   int desplasamientoX, int desplasamientoY){
+    sprites[inicioAnimiacionActual + spriteActual].cambiarPosicion(x,y);
+    sprites[inicioAnimiacionActual + spriteActual].dibujarIsometrico(cr,desplasamientoX,desplasamientoY);
+  }
+void FichaEnemigo::ejecutarSicloDeAnimacion(){
+  spriteActual++;
+  if (spriteActual == 11) {
+     spriteActual = 0;
+  }
+}
+
+
 //FichasEfectos
 #define DSP 160 //desplasamientoSpritePortal
 #define DSEPY 115 //desplasamientoSpriteEfectoPortal
@@ -160,10 +193,10 @@ FichaPortal::FichaPortal(int x2, int y2, int id2, int tipo,
   switch (tipo) {
     case FichaPortalAzul:
       y = y - 44;
-      sprites.push_back(Sprite(x-DSP, y-DSP, vectorDeSprites.obtener(PortalAzul)));
-      sprites.push_back(Sprite(x-DSEPX, y-DSEPY, vectorDeSprites.obtener(PortalAzul1)));
-      sprites.push_back(Sprite(x-DSEPX, y-DSEPY, vectorDeSprites.obtener(PortalAzul2)));
-      sprites.push_back(Sprite(x-DSEPX, y-DSEPY, vectorDeSprites.obtener(PortalAzul3)));
+      sprites.push_back(Sprite(x-DSP, y-DSP, vectorDeSprites.obtener(SpritePortalAzul)));
+      sprites.push_back(Sprite(x-DSEPX, y-DSEPY, vectorDeSprites.obtener(SpritePortalAzul1)));
+      sprites.push_back(Sprite(x-DSEPX, y-DSEPY, vectorDeSprites.obtener(SpritePortalAzul2)));
+      sprites.push_back(Sprite(x-DSEPX, y-DSEPY, vectorDeSprites.obtener(SpritePortalAzul3)));
       break;
     default:
     //falta que aca salte un error.

@@ -24,10 +24,14 @@
 #define SpriteAire1 16
 #define SpriteAire2 17
 #define SpriteAire3 18
-#define PortalAzul 19
-#define PortalAzul1 20
-#define PortalAzul2 21
-#define PortalAzul3 22
+#define SpritePortalAzul 19
+#define SpritePortalAzul1 20
+#define SpritePortalAzul2 21
+#define SpritePortalAzul3 22
+
+#define SpriteAbominableInicial 23
+#define SpriteAbominableTotal 11
+ //van a ser 44... cargarlos de a uno ya no tiene sentido.
 
 class VectorDeSprites{
 protected:

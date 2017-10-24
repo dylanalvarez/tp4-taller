@@ -68,6 +68,19 @@ public:
   int getEspecial() const;
 };
 
+#define Abmonible 0
+
+class FichaEnemigo: public Ficha{
+private:
+protected:
+ int inicioAnimiacionActual;
+public:
+  FichaEnemigo(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
+  FichaEnemigo(const FichaEnemigo &p);
+  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
+  virtual void ejecutarSicloDeAnimacion(); //Para los gif
+};
+
 #define FichaPortalAzul 0
 #define FichaPortalRojo 1
 //las fichas de efecto son varias con comportameinetos distintos.

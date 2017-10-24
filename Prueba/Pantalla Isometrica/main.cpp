@@ -43,8 +43,10 @@ int main(int argc, char *argv[])
   fichas.agregarTorre(FichaTorre(largo*7, largo*7, id, FichaTorreDeAire, sprites));
   id++;
   fichas.agregarTorre(FichaTorre(largo*1, largo*8, id, FichaTorreDeAgua, sprites));
+  id++;
+  fichas.agregarEnemigo(FichaEnemigo(largo*2, largo*2, id, Abmonible, sprites));
 
-  fichas.agregarPortal(FichaPortal(largo*0, largo*0, 0, FichaPortalAzul, sprites));  
+  fichas.agregarPortal(FichaPortal(largo*0, largo*0, 0, FichaPortalAzul, sprites));
   //creo boton
   /*Gtk::Button pulso("Pulsasion");
   pulso.signal_clicked().connect( sigc::mem_fun(
