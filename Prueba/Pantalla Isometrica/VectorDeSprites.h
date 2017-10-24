@@ -16,13 +16,26 @@
 #define SpriteFuego1 8
 #define SpriteFuego2 9
 #define SpriteFuego3 10
-
+#define SpriteTorreDeAgua 11
+#define SpriteAgua1 12
+#define SpriteAgua2 13
+#define SpriteAgua3 14
+#define SpriteTorreDeAire 15
+#define SpriteAire1 16
+#define SpriteAire2 17
+#define SpriteAire3 18
+#define PortalAzul 19
+#define PortalAzul1 20
+#define PortalAzul2 21
+#define PortalAzul3 22
 
 class VectorDeSprites{
 protected:
   std::vector<Glib::RefPtr<Gdk::Pixbuf>> sprites;
+  void cargarSprite(const char* direccion);
 public:
   VectorDeSprites();
   Glib::RefPtr<Gdk::Pixbuf>& obtener (int n);
+
 };
 #endif

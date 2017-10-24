@@ -22,10 +22,10 @@ public:
   Ficha(int x2, int y2, int id2, int tipo2);
   Ficha(const Ficha &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
-  virtual void pulsaion(); //Para los gif
+  virtual void ejecutarSicloDeAnimacion(); //Para los gif
   void cambiarPosicion(int x2, int y2);
   virtual ~Ficha();
-  int getId();
+  int getId() const;
   int getTipo() const;
   bool colisionaConmigo(int x2, int y2);
   //echa para revisar nada mas. Quitar despues.
@@ -54,12 +54,32 @@ public:
 class FichaTorre: public Ficha{
 private:
 protected:
+ int danio;
+ int rango;
+ int especial;
  int spriteActualSubAnimacion;
 public:
   FichaTorre(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
   FichaTorre(const FichaTorre &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
-  virtual void pulsaion(); //Para los gif
+  virtual void ejecutarSicloDeAnimacion(); //Para los gif
+  int getDanio() const;
+  int getRango() const;
+  int getEspecial() const;
+};
+
+#define FichaPortalAzul 0
+#define FichaPortalRojo 1
+//las fichas de efecto son varias con comportameinetos distintos.
+class FichaPortal: public Ficha{
+private:
+protected:
+ int spriteActualSubAnimacion;
+public:
+  FichaPortal(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
+  FichaPortal(const FichaPortal &p);
+  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
+  virtual void ejecutarSicloDeAnimacion(); //Para los gif
 };
 
 #endif
