@@ -10,7 +10,7 @@
 
 class WaterTower : public Tower {
 public:
-    WaterTower(int id, Vector position, const YAML::Node& properties,
+    WaterTower(int id, Vector position, YAML::Node& properties,
           Scenario& scenario);
 
     ~WaterTower() override;

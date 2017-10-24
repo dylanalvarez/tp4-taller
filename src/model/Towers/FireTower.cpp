@@ -9,7 +9,7 @@
 #include "../Upgrades/DamageLevelup.h"
 #include "../Upgrades/ReachLevelup.h"
 
-FireTower::FireTower(int id, const Vector position, const YAML::Node& properties,
+FireTower::FireTower(int id, const Vector position, YAML::Node& properties,
                      Scenario& scenario) :
         Tower(id, position, properties, scenario) {
 

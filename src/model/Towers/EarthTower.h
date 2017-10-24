@@ -10,7 +10,7 @@
 
 class EarthTower : public Tower {
 public:
-    EarthTower(int id, Vector p, const YAML::Node& properties,
+    EarthTower(int id, Vector p, YAML::Node& properties,
               Scenario& scneario);
 
     ~EarthTower() override;

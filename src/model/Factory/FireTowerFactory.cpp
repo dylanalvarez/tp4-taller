@@ -6,6 +6,6 @@
 #include "../Towers/FireTower.h"
 
 Tower *FireTowerFactory::create(int id, Vector position,
-                                const YAML::Node &properties, Scenario& scenario) {
+                                YAML::Node &properties, Scenario& scenario) {
     return new FireTower(id, position, properties, scenario);
 }

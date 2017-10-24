@@ -6,6 +6,8 @@
 #include "Exceptions/TowerError.h"
 #include "Exceptions/MatchError.h"
 
+// TODO chequeo de size del mapa
+
 Scenario::Scenario(Path&& path, std::vector<Vector>&& firm_ground_locations) :
         path(std::move(path)),
         firm_ground_locations(std::move(firm_ground_locations)) {}
@@ -73,6 +75,9 @@ void Scenario::addTower(Tower* tower) {
 
     if (can_be_added){
         towers.push_back(tower);
+        // como ya se ocupa, se saca de las tierras firmes disponibles
+        std::remove(firm_ground_locations.begin(), firm_ground_locations.end(),
+                    tower->getPosition());
     } else {
         throw TowerError("Error al agregar torre en la posicion: " +
                                  tower->getPosition().to_string() +
@@ -101,14 +106,25 @@ void Scenario::cleanEnemies() {
 }
 
 void Scenario::addFirmGround(const Vector &position) {
+    // no se puede agregar en un camino
     if (path.containsPosition(position)) {
         throw MatchError("Error al agregar terreno firme: la posicion" +
                          position.to_string() +
                          " esta ocupada por camino");
     }
 
+    // no se puede agregar en tierra firme
     for (auto& vector : firm_ground_locations){
         if (vector == position) {
+            throw MatchError("Error al agregar terreno firme: la posicion" +
+                             position.to_string() +
+                             " esta ocupada por torre");
+        }
+    }
+
+    // no se puede agregar en posicion ocupada por torre
+    for (auto& tower : towers){
+        if (tower->getPosition() == position) {
             throw MatchError("Error al agregar terreno firme: la posicion" +
                              position.to_string() +
                              " esta ocupada por torre");

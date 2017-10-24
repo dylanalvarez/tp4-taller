@@ -1,0 +1,42 @@
+towers: 
+  fire_tower:
+    damage: 3
+    damage_to_nearby: 3
+    range: 3  
+    attack_rate: 3 # 1 lanzamiento cada 3 segundos
+    reach: 1 # alcance de impacto
+    range_upgrade: 1
+    damage_upgrade: 6
+    damage_to_nearby_upgrade: 3
+    reach_upgrade: 1
+
+  earth_tower:
+    damage: 20
+    range: 2
+    attack_rate: 5
+    damage_upgrade: 10
+    range_upgrade: 1
+
+  water_tower:
+    damage: 4
+    range: 3
+    slowdown: 25
+    slowdown_duration: 2
+    attack_rate: 3
+    damage_upgrade: 4
+    range_upgrade: 1
+    slowdown_upgrade: 25
+    slowdown_duration_upgrade: 1
+
+  air_tower:
+    damage: 2
+    damage_to_flying: 10
+    range: 5
+    attack_rate: 5
+    range_upgrade: 1
+    damage_upgrade: 2
+    damage_to_flying_upgrade: 10
+    range_base: 100
+    range_exponent : 2
+    dmg_base: 100
+    dmg_exponent: 1.5 

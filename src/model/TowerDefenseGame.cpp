@@ -22,19 +22,15 @@
 TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
                                    const std::string &scenario_file) {
     YAML::Node config = YAML::LoadFile(config_file);
+    YAML::Node map = YAML::LoadFile(scenario_file);
+    YAML::Node towers_file = config["towers"];
 
     loadEnemyProperties(config);
-    loadTowerProperties(config);
-    // cargar propiedades del escenario
+    loadTowerProperties(towers_file);
+    loadScenarioProperties(map);
 
     tower_id = 1;
     enemy_id = 1;
-    Path path({Vector(0,0), Vector(0,5), Vector(3,5),
-               Vector(3,2), Vector(-1, 2)});
-
-    std::vector<Vector> firm_ground_locations = {Vector(5,5), Vector(2,4)};
-
-    scenario = new Scenario(std::move(path), std::move(firm_ground_locations));
 
     spells.emplace("terraforming", new Terraforming(*scenario, 20));
     spells.emplace("fissure", new Fissure(*scenario, 40, 1));
@@ -58,16 +54,27 @@ TowerDefenseGame::~TowerDefenseGame(){
     }
 }
 
-void TowerDefenseGame::addEnemy(const std::string &enemy_type) {
-    try{
-        EnemyProperties properties = enemies_properties.at(enemy_type);
-        Enemy enemy(enemy_id++, scenario->getPath(), properties.hp, properties.speed,
-                             properties.does_it_fly);
-        scenario->addEnemy(enemy);
-    } catch (std::exception& e) {
-        throw EnemyError("Error al agregar enemigo -> El tipo: " + enemy_type
-                         + " no es un tipo valido");
+//region Loading_Configuration
+void TowerDefenseGame::loadScenarioProperties(YAML::Node& map) {
+    name = map["name"].as<std::string>();
+    setting = map["setting"].as<std::string>();
+
+    std::vector<Vector> firm_ground_locations;
+    YAML::Node firm_g = map["firm_ground"];
+    for (YAML::const_iterator it = firm_g.begin(); it != firm_g.end(); ++it ) {
+        firm_ground_locations.push_back(it->as<Vector>());
     }
+
+    std::vector<Vector> road;
+    YAML::Node paths = map["paths"];
+    for (YAML::const_iterator path = paths.begin(); path != paths.end(); ++path ) {
+        for (YAML::const_iterator it = path->begin(); it != path->end(); ++it) {
+            road.push_back(it->as<Vector>());
+        }
+    }
+
+    Path path(std::move(road));
+    scenario = new Scenario(std::move(path), std::move(firm_ground_locations));
 }
 
 void TowerDefenseGame::loadEnemyProperties(YAML::Node& config) {
@@ -102,6 +109,27 @@ void TowerDefenseGame::loadEnemyProperties(YAML::Node& config) {
     enemies_properties.insert(spectrum);
     enemies_properties.insert(goat_man);
     enemies_properties.insert(undead);
+}
+
+void TowerDefenseGame::loadTowerProperties(YAML::Node& properties) {
+    tower_properties = properties;
+    towers_factory.emplace("fire", new FireTowerFactory());
+    towers_factory.emplace("water", new WaterTowerFactory());
+    towers_factory.emplace("earth", new EarthTowerFactory());
+    towers_factory.emplace("air", new AirTowerFactory());
+}
+//endregion
+
+void TowerDefenseGame::addEnemy(const std::string &enemy_type) {
+    try{
+        EnemyProperties properties = enemies_properties.at(enemy_type);
+        Enemy enemy(enemy_id++, scenario->getPath(), properties.hp, properties.speed,
+                             properties.does_it_fly);
+        scenario->addEnemy(enemy);
+    } catch (std::exception& e) {
+        throw EnemyError("Error al agregar enemigo -> El tipo: " + enemy_type
+                         + " no es un tipo valido");
+    }
 }
 
 const std::vector<Enemy> &TowerDefenseGame::getAllEnemies() const {
@@ -162,14 +190,6 @@ void TowerDefenseGame::performeAttacks() {
     }
 }
 
-void TowerDefenseGame::loadTowerProperties(YAML::Node& properties) {
-    tower_properties = properties;
-    towers_factory.emplace("fire", new FireTowerFactory());
-    towers_factory.emplace("water", new WaterTowerFactory());
-    towers_factory.emplace("earth", new EarthTowerFactory());
-    towers_factory.emplace("air", new AirTowerFactory());
-}
-
 void TowerDefenseGame::levelupTower(const Tower& tower,
                                     const std::string& type) {
     scenario->levelupTower(tower, type);
@@ -227,4 +247,12 @@ void TowerDefenseGame::throwSpell(const Player &player, const std::string &type,
                      " el enemigo con id " +
                      std::to_string(enemy_id) +
                      " no existe");
+}
+
+const std::string &TowerDefenseGame::getGameName() {
+    return name;
+}
+
+const std::string &TowerDefenseGame::getGameSetting() {
+    return setting;
 }

@@ -11,7 +11,7 @@
 
 class TowerFactory {
 public:
-    virtual Tower* create(int id, Vector p, const YAML::Node& properties,
+    virtual Tower* create(int id, Vector p, YAML::Node& properties,
                           Scenario& scenario) = 0;
 };
 

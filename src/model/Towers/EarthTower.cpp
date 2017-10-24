@@ -7,7 +7,7 @@
 #include "../Exceptions/TowerError.h"
 #include "../Upgrades/DamageLevelup.h"
 
-EarthTower::EarthTower(int id, Vector p, const YAML::Node &properties,
+EarthTower::EarthTower(int id, Vector p, YAML::Node &properties,
                        Scenario &scneario) :
         Tower(id, p, properties, scneario) {
     range_level = 1;

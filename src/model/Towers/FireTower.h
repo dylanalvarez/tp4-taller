@@ -11,7 +11,7 @@
 
 class FireTower : public Tower {
 public:
-    FireTower(int id, Vector p, const YAML::Node& properties,
+    FireTower(int id, Vector p, YAML::Node& properties,
               Scenario& scneario);
 
     ~FireTower() override;

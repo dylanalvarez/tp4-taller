@@ -9,7 +9,7 @@
 #include "../Upgrades/SlowdownLevelup.h"
 
 WaterTower::WaterTower(int id, Vector position,
-                       const YAML::Node &properties, Scenario &scenario) :
+                       YAML::Node &properties, Scenario &scenario) :
         Tower(id, position, properties, scenario) {
     range_level = 1;
     dmg_level = 1;

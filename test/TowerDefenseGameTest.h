@@ -77,6 +77,7 @@ class TowerDefenseGameTest : public CppUnit::TestCase {
         CPPUNIT_TEST(tornatoHasACooldownTest);
         CPPUNIT_TEST(tornatoDoesNotDealDamageToNearbyEnemiesTest);
         CPPUNIT_TEST(rayDealsDamageToTheTargetTest);
+        CPPUNIT_TEST(addingTowerToPositionAlreadyOccupedThrowsExceptionTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -163,6 +164,7 @@ protected:
     void killingEnemyIncreaseTowerExpByDmgDealedPlusFiftyPercentOfEnemyHealthTest();
     void ifCantLevelUpHisExperienceItsNotReducedTest();
     void levelingNotExistingAttributeThrowExceptionTest();
+    void addingTowerToPositionAlreadyOccupedThrowsExceptionTest();
 
 private:
     TowerDefenseGame* game;
