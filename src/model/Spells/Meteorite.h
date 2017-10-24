@@ -27,12 +27,9 @@ public:
     bool isActive() const override;
 
 private:
-    unsigned int cooldown;
     unsigned int reach;
     unsigned int dmg;
     unsigned int dmg_to_nearby_enemies;
-    time_t last_activation_time;
-    Scenario& scenario;
 };
 
 

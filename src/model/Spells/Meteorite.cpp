@@ -7,15 +7,12 @@
 Meteorite::Meteorite(Scenario& scenario, unsigned int cooldown,
                      unsigned int reach, unsigned int dmg,
                      unsigned int dmg_to_nearby_enemies) :
-                        scenario(scenario), cooldown(cooldown),
+                        Spell(scenario, cooldown),
                         dmg(dmg), dmg_to_nearby_enemies(dmg_to_nearby_enemies),
-                        reach(reach) {
-    is_active = false;
-    last_activation_time = 0;
-}
+                        reach(reach) {}
 
 void Meteorite::applyEffect(Enemy &enemy) {
-    if (difftime(time(nullptr), last_activation_time) < cooldown) { return; }
+    if (isOnCooldown()) { return; }
 
     enemy.reduceLife(dmg);
 

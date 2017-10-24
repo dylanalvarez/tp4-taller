@@ -24,11 +24,6 @@ public:
     void attack() override;
 
     bool isActive() const override;
-
-private:
-    unsigned int cooldown;
-    time_t last_activation_time;
-    Scenario& scenario;
 };
 
 

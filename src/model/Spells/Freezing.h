@@ -25,10 +25,7 @@ public:
     bool isActive() const override;
 
 private:
-    unsigned int cooldown;
     unsigned int duration;
-    time_t last_activation_time;
-    Scenario& scenario;
 };
 
 

@@ -5,12 +5,10 @@
 #include "Terraforming.h"
 
 Terraforming::Terraforming(Scenario &scenario, unsigned int cooldown) :
-                            scenario(scenario), cooldown(cooldown) {
-    is_active = false;
-}
+        Spell(scenario, cooldown) {}
 
 void Terraforming::applyEffect(const Vector &position) {
-    if (difftime(time(nullptr), last_activation_time) < cooldown) { return; }
+    if (isOnCooldown()) { return; }
 
     scenario.addFirmGround(position);
     last_activation_time = time(nullptr);

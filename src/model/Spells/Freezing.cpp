@@ -6,15 +6,12 @@
 
 Freezing::Freezing(Scenario &scenario, unsigned int cooldown,
                    unsigned int duration) :
-        scenario(scenario), cooldown(cooldown), duration(duration) {
-    is_active = false;
-    last_activation_time = 0;
-}
+        Spell(scenario, cooldown), duration(duration) {}
 
 void Freezing::applyEffect(const Vector &position) {}
 
 void Freezing::applyEffect(Enemy &enemy) {
-    if (difftime(time(nullptr), last_activation_time) < cooldown) { return; }
+    if (isOnCooldown()) { return; }
 
     enemy.reduceSpeed(100, duration);
     last_activation_time = time(nullptr);

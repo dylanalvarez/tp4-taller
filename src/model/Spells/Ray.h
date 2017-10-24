@@ -26,11 +26,8 @@ public:
     bool isActive() const override;
 
 private:
-    unsigned int cooldown;
     unsigned int min_dmg;
     unsigned int max_dmg;
-    time_t last_activation_time;
-    Scenario& scenario;
 };
 
 

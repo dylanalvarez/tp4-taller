@@ -27,13 +27,9 @@ public:
     bool isActive() const override;
 
 private:
-    Vector position;
-    unsigned int cooldown;
     unsigned int duration;
     unsigned int min_dmg;
     unsigned int max_dmg;
-    time_t last_activation_time;
-    Scenario& scenario;
 };
 
 

@@ -29,14 +29,10 @@ public:
     bool isActive() const override;
 
 private:
-    Vector position;
-    unsigned int cooldown;
     unsigned int dmg;
     unsigned int duration;
     unsigned int speed_reduction;
     unsigned int speed_reduction_duration;
-    time_t last_activation_time;
-    Scenario& scenario;
 };
 
 

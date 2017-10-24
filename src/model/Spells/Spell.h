@@ -8,21 +8,41 @@
 
 #include "../Vector.h"
 #include "../Enemy.h"
+#include "../Scenario.h"
 
 class Spell {
 public:
+    Spell(Scenario& scenario, unsigned int cooldown);
+
+    // aplica el efecto del hechizo al enemigo o la posicion
     virtual void applyEffect(const Vector& position) = 0;
     virtual void applyEffect(Enemy& enemy) = 0;
 
+    // retorna si puede ser lanzado por un tipo de elemento
+    // por ejemplo tornato puede ser lanzado por el elemento air
     virtual bool canBeThrownBy(const std::string& element) = 0;
 
+    // realiza el ataque del hechizo si se activo con activate
     virtual void attack() = 0;
 
     virtual bool isActive() const = 0;
 
-protected:
-    bool is_active = false;
-};
+    // activa el hechizo
+    void activate(const Vector& position);
 
+    // chequea si paso su duracion
+    void checkIfIsActive(unsigned int duration);
+
+    // chequea si paso su cooldown
+    bool isOnCooldown();
+
+protected:
+    Vector position;
+    bool is_active = false;
+    time_t last_activation_time;
+    Scenario& scenario;
+    unsigned int cooldown;
+    bool is_on_cooldown;
+};
 
 #endif //TOWERDEFENSE_SPELL_H

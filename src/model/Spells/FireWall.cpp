@@ -6,17 +6,12 @@
 
 FireWall::FireWall(Scenario& scenario, unsigned int cooldown,
                    unsigned int dmg, unsigned int duration) :
-        scenario(scenario), cooldown(cooldown), duration(duration), dmg(dmg) {
-    is_active = false;
-    last_activation_time = 0;
-}
+        Spell(scenario, cooldown),
+        duration(duration),
+        dmg(dmg) {}
 
 void FireWall::applyEffect(const Vector &position) {
-    if (difftime(time(nullptr), last_activation_time) < cooldown) { return; }
-
-    is_active = true;
-    this->position = position;
-    last_activation_time = time(nullptr);
+    activate(position);
 }
 
 void FireWall::applyEffect(Enemy &enemy) {}
@@ -26,16 +21,9 @@ bool FireWall::canBeThrownBy(const std::string &element) {
 }
 
 void FireWall::attack() {
-    if (difftime(time(nullptr), last_activation_time) >= duration) {
-        is_active = false;
-    }
+    checkIfIsActive(duration);
 
-    if (!is_active || (!is_active &&
-                       difftime(time(nullptr), last_activation_time) < cooldown)) {
-        // si no esta activo salir.
-        // si se activo y se termino su duracion y no paso su cooldown salir
-        return;
-    }
+    if (!is_active) { return; }
 
     for (Enemy* enemy : scenario.getEnemiesInRange(Range(position, 0))) {
         enemy->reduceLife(dmg);

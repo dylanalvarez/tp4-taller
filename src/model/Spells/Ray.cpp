@@ -5,18 +5,14 @@
 #include "Ray.h"
 
 Ray::Ray(Scenario &scenario, unsigned int cooldown, unsigned int min_dmg,
-         unsigned int max_dmg) : scenario(scenario),
-                                 cooldown(cooldown),
+         unsigned int max_dmg) : Spell(scenario, cooldown),
                                  min_dmg(min_dmg),
-                                 max_dmg(max_dmg) {
-    is_active = false;
-    last_activation_time = 0;
-}
+                                 max_dmg(max_dmg) {}
 
 void Ray::applyEffect(const Vector &position) {}
 
 void Ray::applyEffect(Enemy &enemy) {
-    if (difftime(time(nullptr), last_activation_time) < cooldown) { return; }
+    if (isOnCooldown()) { return; }
 
     // sera usada para obtener un "seed" para el engine generador de numeros
     std::random_device rd;
