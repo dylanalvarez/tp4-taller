@@ -1183,3 +1183,69 @@ void TowerDefenseGameTest::blizzardHasACooldownTest() {
 
     CPPUNIT_ASSERT(actual_hp == reduced_hp);
 }
+
+void TowerDefenseGameTest::tornatoDealsDamageToAllEnemiesInTheAreaTest() {
+    const Player &added_player = game->addPlayer("alguien", "air");
+
+    // comienzan en (0,0)
+    game->addEnemy("spectrum");
+    game->addEnemy("spectrum");
+
+    int first_enemy_hp = game->getAllEnemies()[0].getHealthPoints();
+    int second_enemy_hp = game->getAllEnemies()[1].getHealthPoints();
+
+    game->throwSpell(added_player, "tornato", Vector(0,0));
+
+    game->updateGame();
+
+    CPPUNIT_ASSERT(first_enemy_hp > game->getAllEnemies()[0].getHealthPoints());
+    CPPUNIT_ASSERT(second_enemy_hp > game->getAllEnemies()[1].getHealthPoints());
+}
+
+void TowerDefenseGameTest::tornatoHasACooldownTest() {
+    const Player &added_player = game->addPlayer("alguien", "air");
+
+    // esta en la posicion (0,0)
+    game->addEnemy("spectrum");
+    const Enemy& spectrum = game->getAllEnemies()[0];
+
+    game->throwSpell(added_player, "tornato", Vector(0,0));
+    game->updateGame();
+
+    int actual_hp = spectrum.getHealthPoints();
+
+    sleep(10); // duracion del tornado
+    game->throwSpell(added_player, "tornato", Vector(0,0));
+    game->updateGame();
+
+    int reduced_hp = spectrum.getHealthPoints();
+
+    CPPUNIT_ASSERT(actual_hp == reduced_hp);
+}
+
+void TowerDefenseGameTest::tornatoDoesNotDealDamageToNearbyEnemiesTest() {
+    const Player &added_player = game->addPlayer("alguien", "air");
+
+    // comienzan en (0,0)
+    game->addEnemy("green_demon");
+    game->moveEnemies();
+    int first_enemy_hp = game->getAllEnemies()[0].getHealthPoints();
+
+    game->throwSpell(added_player, "tornato", Vector(0,0));
+    game->updateGame();
+
+    CPPUNIT_ASSERT(first_enemy_hp == game->getAllEnemies()[0].getHealthPoints());
+}
+
+void TowerDefenseGameTest::rayDealsDamageToTheTargetTest() {
+    const Player &added_player = game->addPlayer("alguien", "air");
+
+    // comienza en (0,0)
+    game->addEnemy("spectrum");
+    int enemy_id = game->getAllEnemies()[0].getID();
+    int initial_hp = game->getAllEnemies()[0].getHealthPoints();
+
+    game->throwSpell(added_player, "ray", enemy_id);
+
+    CPPUNIT_ASSERT(initial_hp > game->getAllEnemies()[0].getHealthPoints());
+}

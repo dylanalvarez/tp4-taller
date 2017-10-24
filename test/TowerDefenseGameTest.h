@@ -73,6 +73,10 @@ class TowerDefenseGameTest : public CppUnit::TestCase {
         CPPUNIT_TEST(freezingHasACooldownTest);
         CPPUNIT_TEST(blizzardDealsDamageAndSlowDownEnemiesOnAreaTest);
         CPPUNIT_TEST(blizzardHasACooldownTest);
+        CPPUNIT_TEST(tornatoDealsDamageToAllEnemiesInTheAreaTest);
+        CPPUNIT_TEST(tornatoHasACooldownTest);
+        CPPUNIT_TEST(tornatoDoesNotDealDamageToNearbyEnemiesTest);
+        CPPUNIT_TEST(rayDealsDamageToTheTargetTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -115,6 +119,10 @@ protected:
     void freezingHasACooldownTest();
     void blizzardDealsDamageAndSlowDownEnemiesOnAreaTest();
     void blizzardHasACooldownTest();
+    void tornatoDealsDamageToAllEnemiesInTheAreaTest();
+    void tornatoHasACooldownTest();
+    void tornatoDoesNotDealDamageToNearbyEnemiesTest();
+    void rayDealsDamageToTheTargetTest();
 
     /*** Fire Tower ***/
     void whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest();

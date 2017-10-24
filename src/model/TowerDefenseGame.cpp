@@ -16,6 +16,8 @@
 #include "Spells/FireWall.h"
 #include "Spells/Freezing.h"
 #include "Spells/Blizzard.h"
+#include "Spells/Tornato.h"
+#include "Spells/Ray.h"
 
 TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
                                    const std::string &scenario_file) {
@@ -40,6 +42,8 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
     spells.emplace("fire_wall", new FireWall(*scenario, 10, 10, 5));
     spells.emplace("freezing", new Freezing(*scenario, 15, 5));
     spells.emplace("blizzard", new Blizzard(*scenario, 20, 5, 5, 25, 2));
+    spells.emplace("tornato", new Tornato(*scenario, 20, 1, 50, 10));
+    spells.emplace("ray", new Ray(*scenario, 10, 1, 50));
 }
 
 TowerDefenseGame::~TowerDefenseGame(){
