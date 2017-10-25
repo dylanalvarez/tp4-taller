@@ -83,14 +83,15 @@ void ScenarioTest::getEnemyInRangeWhenNoOneIsRetunsAnEmpyListTest() {
 }
 
 void ScenarioTest::towersCanOnlyBePlacedOnFirmGroundTest() {
-    YAML::Node config = YAML::LoadFile("map.yaml");
+    YAML::Node config = YAML::LoadFile("config.yaml");
+    YAML::Node config_towers = config["towers"];
 
     // firm_ground hay solo en la posicion (1,5)
     Scenario new_scenario(std::move(Path({Vector(0,0), Vector(0,5)})),
                           {Vector(1,5)});
 
-    new_scenario.addTower(new FireTower(1, Vector(1,5), config, new_scenario));
-    Tower* tower = new FireTower(1, Vector(2,5), config, new_scenario);
+    new_scenario.addTower(new FireTower(1, Vector(1,5), config_towers, new_scenario));
+    Tower* tower = new FireTower(1, Vector(2,5), config_towers, new_scenario);
 
     CPPUNIT_ASSERT_THROW(new_scenario.addTower(tower),TowerError);
     CPPUNIT_ASSERT_EQUAL(1, (int)new_scenario.getTowers().size());
@@ -99,15 +100,16 @@ void ScenarioTest::towersCanOnlyBePlacedOnFirmGroundTest() {
 }
 
 void ScenarioTest::cantAddTwoTowersOnTheSamePlaceTest() {
-    YAML::Node config = YAML::LoadFile("map.yaml");
+    YAML::Node config = YAML::LoadFile("config.yaml");
+    YAML::Node config_towers = config["towers"];
 
     // firm_ground hay solo en la posicion (1,5)
     Scenario new_scenario(std::move(Path({Vector(0,0), Vector(0,5)})),
                           {Vector(1,5)});
 
-    new_scenario.addTower(new FireTower(1, Vector(1,5), config, new_scenario));
+    new_scenario.addTower(new FireTower(1, Vector(1,5), config_towers, new_scenario));
 
-    Tower* tower = new FireTower(1, Vector(2,5), config, new_scenario);
+    Tower* tower = new FireTower(1, Vector(2,5), config_towers, new_scenario);
 
     CPPUNIT_ASSERT_THROW(new_scenario.addTower(tower),TowerError);
 

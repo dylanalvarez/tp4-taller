@@ -9,21 +9,46 @@
 #include "../Upgrades/SlowdownLevelup.h"
 
 WaterTower::WaterTower(int id, Vector position,
-                       YAML::Node &properties, Scenario &scenario) :
-        Tower(id, position, properties, scenario) {
+                       YAML::Node &tower_properties, Scenario &scenario) :
+        Tower(id, position, scenario) {
+    YAML::Node properties = tower_properties["water_tower"];
+    // basic properties
+    dmg = properties["damage"].as<unsigned int>();
+    speed_reduction = properties["speed_reduction"].as<unsigned int>();
+    range = Range(position, properties["range"].as<int>());
+    attack_cooldown = properties["attack_rate"].as<unsigned int>();
+    speed_reduction_duration =
+            properties["speed_reduction_duration"].as<unsigned int>();
+
+    // upgrades properties
+    dmg_upgrade = properties["damage_upgrade"].as<unsigned int>();
+    speed_reduction_upgrade =
+            properties["speed_reduction_upgrade"].as<unsigned int>();
+    speed_reduction_duration_upgrade =
+            properties["speed_reduction_duration_upgrade"].as<unsigned int>();
+    range_upgrade = properties["range_upgrade"].as<unsigned int>();
+
+    // experience properties (base y exponente)
+    range_levelingup_function_values.first =
+            properties["range_base"].as<int>();
+    range_levelingup_function_values.second =
+            properties["range_exponent"].as<float>();
+    dmg_levelingup_function_values.first =
+            properties["dmg_base"].as<int>();
+    dmg_levelingup_function_values.second =
+            properties["dmg_exponent"].as<float>();
+    slowdown_levelingup_function_values.first =
+            properties["speed_reduction_base"].as<int>();
+    slowdown_levelingup_function_values.second =
+            properties["speed_reduction_exponent"].as<float>();
+
     range_level = 1;
     dmg_level = 1;
     slowdown_level = 1;
 
-    attack_cooldown = 3;
     last_attack_time = 0;
     current_target = nullptr;
     experience = 0;
-
-    dmg = 4;
-    speed_reduction = 25;
-    speed_reduction_duration = 2;
-    range = Range(position, 3);
 
     levelup_types.emplace("range", new RangeLevelup(*this));
     levelup_types.emplace("damage", new DamageLevelup(*this));
@@ -34,7 +59,8 @@ WaterTower::~WaterTower() = default;
 
 void WaterTower::attack() {
     // si todavia no paso el cooldown desde el ultimo ataque, salir
-    //if (difftime(time(nullptr), last_attack_time) < attack_cooldown) { return; }
+    if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
+    { return; }
 
     std::vector<Enemy*> enemies = std::move(scenario.getEnemiesInRange(range));
     if (enemies.empty()) { return; }
@@ -49,7 +75,9 @@ void WaterTower::attack() {
 WaterTower::WaterTower(WaterTower&& other) noexcept : Tower(std::move(other)) {}
 
 void WaterTower::levelupRange() {
-    double neccessary_exp = 100 * (pow(2,range_level));
+    double neccessary_exp =
+            range_levelingup_function_values.first *
+                    (pow(range_levelingup_function_values.second,range_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
@@ -57,26 +85,30 @@ void WaterTower::levelupRange() {
                          std::to_string(neccessary_exp));
     }
 
-    range = Range(position, range.getRadius() + 1);
+    range = Range(position, range.getRadius() + range_upgrade);
     experience -= neccessary_exp;
     range_level++;
 }
 
 void WaterTower::levelupDamage() {
-    double neccessary_exp = 100 * (pow(1.5,dmg_level));
+    double neccessary_exp =
+            dmg_levelingup_function_values.first *
+                    (pow(dmg_levelingup_function_values.second,dmg_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
                          ", se necesitan" +
                          std::to_string(neccessary_exp));
     }
-    dmg += 4;
+    dmg += dmg_upgrade;
     experience -= neccessary_exp;
     dmg_level++;
 }
 
 void WaterTower::levelupSlowdown() {
-    double neccessary_exp = 100 * (pow(2,slowdown_level));
+    double neccessary_exp =
+            slowdown_levelingup_function_values.first *
+                    (pow(slowdown_levelingup_function_values.second,slowdown_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
@@ -85,9 +117,9 @@ void WaterTower::levelupSlowdown() {
     }
 
     if (speed_reduction >= 100) {
-        speed_reduction_duration++;
+        speed_reduction_duration += speed_reduction_duration_upgrade;
     } else {
-        speed_reduction += 25;
+        speed_reduction += speed_reduction_upgrade;
     }
     experience -= neccessary_exp;
     slowdown_level++;

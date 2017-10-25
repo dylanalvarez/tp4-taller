@@ -30,8 +30,11 @@ public:
 
 private:
     int reach_level;
+    unsigned int reach_upgrade;
     unsigned int reach_of_impact;
     unsigned int dmg_to_nearby_units;
+    unsigned int dmg_to_nearby_units_upgrade;
+    std::pair<int, float> reach_levelingup_function_values;
 };
 
 

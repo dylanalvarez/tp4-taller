@@ -15,8 +15,7 @@ class Scenario;
 
 class Tower {
 public:
-    Tower(int id, Vector position, YAML::Node& properties,
-          Scenario& scenario);
+    Tower(int id, Vector position, Scenario& scenario);
 
     virtual ~Tower();
 
@@ -63,8 +62,8 @@ protected:
     unsigned int damage_dealed_to_current_target;
 
     // atributos para calcular experiencia necesaria para levelear
-    std::pair<int, float> range_necessary_exp;
-    std::pair<int, float> dmg_necessary_exp;
+    std::pair<int, float> range_levelingup_function_values;
+    std::pair<int, float> dmg_levelingup_function_values;
 
     // levels
     int range_level;

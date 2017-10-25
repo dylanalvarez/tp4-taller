@@ -23,23 +23,18 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
                                    const std::string &scenario_file) {
     YAML::Node config = YAML::LoadFile(config_file);
     YAML::Node map = YAML::LoadFile(scenario_file);
-    YAML::Node towers_file = config["towers"];
 
-    loadEnemyProperties(config);
-    loadTowerProperties(towers_file);
+    YAML::Node towers_node = config["towers"];
+    YAML::Node enemies_node = config["enemies"];
+    YAML::Node spells_node = config["spells"];
+
+    loadEnemyProperties(enemies_node);
+    loadTowerProperties(towers_node);
     loadScenarioProperties(map);
+    loadSpellsProperties(spells_node);
 
     tower_id = 1;
     enemy_id = 1;
-
-    spells.emplace("terraforming", new Terraforming(*scenario, 20));
-    spells.emplace("fissure", new Fissure(*scenario, 40, 1));
-    spells.emplace("meteorite", new Meteorite(*scenario, 20, 2, 30, 10));
-    spells.emplace("fire_wall", new FireWall(*scenario, 10, 10, 5));
-    spells.emplace("freezing", new Freezing(*scenario, 15, 5));
-    spells.emplace("blizzard", new Blizzard(*scenario, 20, 5, 5, 25, 2));
-    spells.emplace("tornato", new Tornato(*scenario, 20, 1, 50, 10));
-    spells.emplace("ray", new Ray(*scenario, 10, 1, 50));
 }
 
 TowerDefenseGame::~TowerDefenseGame(){
@@ -77,38 +72,85 @@ void TowerDefenseGame::loadScenarioProperties(YAML::Node& map) {
     scenario = new Scenario(std::move(path), std::move(firm_ground_locations));
 }
 
-void TowerDefenseGame::loadEnemyProperties(YAML::Node& config) {
-    typedef std::pair<std::string, EnemyProperties> pair;
+void TowerDefenseGame::loadSpellsProperties(YAML::Node& spells_node) {
+    YAML::Node terraforming = spells_node["terraforming"];
+    spells.emplace("terraforming", new Terraforming(*scenario,
+                                                    terraforming["cooldown"].as<unsigned int>()));
+    YAML::Node fissure = spells_node["fissure"];
+    spells.emplace("fissure", new Fissure(*scenario,
+                                      fissure["cooldown"].as<unsigned int>(),
+                                      fissure["duration"].as<unsigned int>()));
+    YAML::Node meteorite = spells_node["meteorite"];
+    spells.emplace("meteorite", new Meteorite(*scenario,
+                                          meteorite["cooldown"].as<unsigned int>(),
+                                          meteorite["reach_of_impact"].as<unsigned int>(),
+                                          meteorite["damage"].as<unsigned int>(),
+                                          meteorite["damage_to_nearby_units"].as<unsigned int>()));
+    YAML::Node fire_wall = spells_node["fire_wall"];
+    spells.emplace("fire_wall", new FireWall(*scenario,
+                                         fire_wall["cooldown"].as<unsigned int>(),
+                                         fire_wall["damage"].as<unsigned int>(),
+                                         fire_wall["duration"].as<unsigned int>()));
+    YAML::Node freezing = spells_node["freezing"];
+    spells.emplace("freezing", new Freezing(*scenario,
+                                            freezing["cooldown"].as<unsigned int>(),
+                                            freezing["duration"].as<unsigned int>()));
+    YAML::Node blizzard = spells_node["blizzard"];
+    spells.emplace("blizzard", new Blizzard(*scenario,
+                                            blizzard["cooldown"].as<unsigned int>(),
+                                            blizzard["duration"].as<unsigned int>(),
+                                            blizzard["damage"].as<unsigned int>(),
+                                            blizzard["slowdown"].as<unsigned int>(),
+                                            blizzard["slowdown_duration"].as<unsigned int>()));
+    YAML::Node tornado = spells_node["tornado"];
+    spells.emplace("tornato", new Tornato(*scenario,
+                                          tornado["cooldown"].as<unsigned int>(),
+                                          tornado["min_damage"].as<unsigned int>(),
+                                          tornado["max_damage"].as<unsigned int>(),
+                                          tornado["duration"].as<unsigned int>()));
+    YAML::Node ray = spells_node["ray"];
+    spells.emplace("ray", new Ray(*scenario,
+                                  ray["cooldown"].as<unsigned int>(),
+                                  ray["min_damage"].as<unsigned int>(),
+                                  ray["max_damage"].as<unsigned int>()));
+}
 
-    // green_demon
-    EnemyProperties properties(300, 1, false);
-    pair green_demon("green_demon", properties);
-    // abmonible
-    properties.hp = 200;
-    pair abmonible("abmonible", properties);
-    // goat_man
-    properties.hp = 100;
-    properties.speed = 2;
-    pair goat_man("goat_man", properties);
-    // undead
-    properties.hp = 20;
-    properties.speed = 10;
-    pair undead("undead", properties);
-    // bloody_hawk
-    properties.hp = 100;
-    properties.speed = 4;
-    properties.does_it_fly = true;
-    pair bloody_hawk("bloody_hawk", properties);
-    // spectrum
-    properties.speed = 6;
-    pair spectrum("spectrum", properties);
+void TowerDefenseGame::loadEnemyProperties(YAML::Node& enemies_node) {
+    YAML::Node green_demon_node = enemies_node["green_demon"];
+    EnemyProperties gd_properties(green_demon_node["health"].as<unsigned int>(),
+                               green_demon_node["speed"].as<unsigned int>(),
+                               green_demon_node["fly"].as<bool>());
+    enemies_properties.emplace("green_demon", gd_properties);
 
-    enemies_properties.insert(abmonible);
-    enemies_properties.insert(green_demon);
-    enemies_properties.insert(bloody_hawk);
-    enemies_properties.insert(spectrum);
-    enemies_properties.insert(goat_man);
-    enemies_properties.insert(undead);
+    YAML::Node abmonible_node = enemies_node["abmonible"];
+    EnemyProperties ab_properties(abmonible_node["health"].as<unsigned int>(),
+                               abmonible_node["speed"].as<unsigned int>(),
+                               abmonible_node["fly"].as<bool>());
+    enemies_properties.emplace("abmonible", ab_properties);
+
+    YAML::Node goat_man_node = enemies_node["goat_man"];
+    EnemyProperties gm_properties(goat_man_node["health"].as<unsigned int>(),
+                                  goat_man_node["speed"].as<unsigned int>(),
+                                  goat_man_node["fly"].as<bool>());
+    enemies_properties.emplace("goat_man", gm_properties);
+
+    YAML::Node undead_node = enemies_node["undead"];
+    EnemyProperties u_properties(undead_node["health"].as<unsigned int>(),
+                                 undead_node["speed"].as<unsigned int>(),
+                                 undead_node["fly"].as<bool>());
+    enemies_properties.emplace("undead", u_properties);
+
+    YAML::Node bloody_hawk_node = enemies_node["bloody_hawk"];
+    EnemyProperties bh_properties(bloody_hawk_node["health"].as<unsigned int>(),
+                                  bloody_hawk_node["speed"].as<unsigned int>(),
+                                  bloody_hawk_node["fly"].as<bool>());
+    enemies_properties.emplace("bloody_hawk", bh_properties);
+
+    YAML::Node spectrum_node = enemies_node["spectrum"];
+    EnemyProperties s_properties(spectrum_node["health"].as<unsigned int>(),
+                                 spectrum_node["speed"].as<unsigned int>(),
+                                 spectrum_node["fly"].as<bool>());
+    enemies_properties.emplace("spectrum", s_properties);
 }
 
 void TowerDefenseGame::loadTowerProperties(YAML::Node& properties) {

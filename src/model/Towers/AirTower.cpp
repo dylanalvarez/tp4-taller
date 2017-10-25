@@ -9,7 +9,7 @@
 
 AirTower::AirTower(int id, Vector p, YAML::Node &tower_properties,
                    Scenario &scneario) :
-        Tower(id, p, tower_properties, scneario) {
+        Tower(id, p, scneario) {
 
     YAML::Node properties = tower_properties["air_tower"];
     // basic properties
@@ -25,10 +25,14 @@ AirTower::AirTower(int id, Vector p, YAML::Node &tower_properties,
     range_upgrade = properties["range_upgrade"].as<unsigned int>();
 
     // experience properties (base y exponente)
-    range_necessary_exp.first = properties["range_base"].as<int>();
-    range_necessary_exp.second = properties["range_exponent"].as<float>();
-    dmg_necessary_exp.first = properties["dmg_base"].as<int>();
-    dmg_necessary_exp.second = properties["dmg_exponent"].as<float>();
+    range_levelingup_function_values.first =
+            properties["range_base"].as<int>();
+    range_levelingup_function_values.second =
+            properties["range_exponent"].as<float>();
+    dmg_levelingup_function_values.first =
+            properties["dmg_base"].as<int>();
+    dmg_levelingup_function_values.second =
+            properties["dmg_exponent"].as<float>();
 
     range_level = 1;
     dmg_level = 1;
@@ -44,8 +48,8 @@ AirTower::~AirTower() = default;
 
 void AirTower::attack() {
     // si todavia no paso el cooldown desde el ultimo ataque, salir
-    //if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
-    //{ return; }
+    if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
+    { return; }
 
     std::vector<Enemy*> enemies = std::move(scenario.getEnemiesInRange(range));
     if (enemies.empty()) { return; }
@@ -68,8 +72,8 @@ void AirTower::attack() {
 AirTower::AirTower(AirTower&& other) noexcept : Tower(std::move(other)) {}
 
 void AirTower::levelupRange() {
-    double neccessary_exp = range_necessary_exp.first *
-            (pow(range_necessary_exp.second,range_level));
+    double neccessary_exp = range_levelingup_function_values.first *
+            (pow(range_levelingup_function_values.second,range_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
@@ -83,8 +87,8 @@ void AirTower::levelupRange() {
 }
 
 void AirTower::levelupDamage() {
-    double neccessary_exp = dmg_necessary_exp.first *
-                    pow(dmg_necessary_exp.second, dmg_level);
+    double neccessary_exp = dmg_levelingup_function_values.first *
+                    pow(dmg_levelingup_function_values.second, dmg_level);
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +

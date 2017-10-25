@@ -5,10 +5,11 @@
 #include "Tower.h"
 #include "../Exceptions/TowerError.h"
 
-Tower::Tower(int id, Vector position, YAML::Node& properties,
-             Scenario& scenario) : experience(0), id(id),
-                                   scenario(scenario),
-                                   position(position) {}
+Tower::Tower(int id, Vector position, Scenario& scenario) :
+                                                    experience(0),
+                                                    id(id),
+                                                    scenario(scenario),
+                                                    position(position) {}
 
 Tower::~Tower() {
     for (auto levelup_type : levelup_types){

@@ -91,6 +91,8 @@ private:
     void loadEnemyProperties(YAML::Node&);
     void loadTowerProperties(YAML::Node&);
     void loadScenarioProperties(YAML::Node&);
+    void loadSpellsProperties(YAML::Node&);
+
     bool doesPlayerExist(const Player& player);
 
 private:
