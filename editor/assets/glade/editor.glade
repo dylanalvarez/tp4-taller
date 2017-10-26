@@ -40,18 +40,10 @@
           <object class="GtkGrid" id="initial-grid">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <child>
-              <object class="GtkLabel" id="label2">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Tamaño</property>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">0</property>
-              </packing>
-            </child>
+            <property name="margin_left">10</property>
+            <property name="margin_right">10</property>
+            <property name="margin_top">10</property>
+            <property name="margin_bottom">10</property>
             <child>
               <object class="GtkGrid" id="choose-size-grid">
                 <property name="visible">True</property>
@@ -66,6 +58,7 @@
                       <object class="GtkLabel" id="label3">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_right">5</property>
                         <property name="label" translatable="yes">Ancho (x)</property>
                       </object>
                       <packing>
@@ -97,11 +90,13 @@
                   <object class="GtkGrid" id="grid13">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_left">10</property>
+                    <property name="margin_left">5</property>
+                    <property name="margin_right">5</property>
                     <child>
                       <object class="GtkLabel" id="label4">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_right">5</property>
                         <property name="label" translatable="yes">Alto (y)</property>
                       </object>
                       <packing>
@@ -131,10 +126,12 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="choose-size">
-                    <property name="label" translatable="yes">Siguiente</property>
+                    <property name="label" translatable="yes">Crear</property>
+                    <property name="width_request">200</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="margin_left">10</property>
                   </object>
                   <packing>
                     <property name="left_attach">2</property>
@@ -144,19 +141,22 @@
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">1</property>
+                <property name="top_attach">0</property>
               </packing>
             </child>
             <child>
               <object class="GtkGrid" id="load-file-grid">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_top">5</property>
                 <child>
                   <object class="GtkButton" id="load">
                     <property name="label" translatable="yes">Cargar</property>
+                    <property name="width_request">200</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="margin_left">5</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -167,6 +167,7 @@
                   <object class="GtkEntry" id="file-name">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="margin_right">10</property>
                     <property name="hexpand">True</property>
                     <property name="placeholder_text" translatable="yes">Nombre de archivo (sin extensión .yaml)</property>
                   </object>
@@ -178,7 +179,7 @@
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">2</property>
+                <property name="top_attach">1</property>
               </packing>
             </child>
           </object>
@@ -191,6 +192,10 @@
         <child>
           <object class="GtkGrid" id="main-grid">
             <property name="can_focus">False</property>
+            <property name="margin_left">10</property>
+            <property name="margin_right">10</property>
+            <property name="margin_top">10</property>
+            <property name="margin_bottom">10</property>
             <child>
               <object class="GtkGrid" id="grid2">
                 <property name="visible">True</property>
@@ -199,6 +204,7 @@
                   <object class="GtkGrid" id="grid6">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="margin_left">10</property>
                     <child>
                       <object class="GtkGrid" id="grid7">
                         <property name="visible">True</property>
@@ -294,12 +300,15 @@
                               <object class="GtkGrid" id="grid5">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="margin_bottom">5</property>
                                 <property name="hexpand">True</property>
+                                <property name="vexpand">True</property>
                                 <child>
                                   <object class="GtkLabel" id="applied-hordes">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="hexpand">True</property>
+                                    <property name="vexpand">True</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
@@ -312,6 +321,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
+                                    <property name="vexpand">True</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">1</property>
@@ -346,6 +356,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
+                                    <property name="margin_left">5</property>
                                     <property name="image_position">right</property>
                                     <property name="always_show_image">True</property>
                                   </object>
@@ -358,6 +369,7 @@
                                   <object class="GtkComboBoxText" id="horde-kind">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="margin_right">5</property>
                                     <property name="hexpand">True</property>
                                   </object>
                                   <packing>
@@ -381,10 +393,12 @@
                           <object class="GtkGrid" id="grid4">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="margin_bottom">5</property>
                             <child>
                               <object class="GtkSpinButton" id="time-between-hordes">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="margin_left">5</property>
                                 <property name="progress_pulse_step">1</property>
                                 <property name="adjustment">adjustment1</property>
                                 <property name="climb_rate">1</property>
@@ -453,6 +467,7 @@
               <object class="GtkGrid" id="grid3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_bottom">10</property>
                 <child>
                   <object class="GtkButton" id="save">
                     <property name="label" translatable="yes">Guardar</property>
@@ -471,6 +486,7 @@
                   <object class="GtkGrid" id="ambiance">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="margin_right">10</property>
                     <property name="column_homogeneous">True</property>
                     <child>
                       <object class="GtkRadioButton" id="desert">
