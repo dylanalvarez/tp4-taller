@@ -1,4 +1,4 @@
-# All dimensions and positions are expressed as [x, y]
+# All dimensions and positions are expressed as {x: 1, y: 2}
 
 # In this example, a value from 1 to 10 represents an actual block,
 # and 0 and 11 represent a 'virtual block', needed for entry and exit position
@@ -8,102 +8,63 @@
 name: A map
 setting: desert # other possibilities: 'volcano', 'ice', 'meadow'
 size:
-  - 10
-  - 10
+  x: 10
+  y: 10
 firm_ground:
   -
-    - 7
-    - 3
+    x: 7
+    y: 3
   -
-    - 3
-    - 6
-# Each path has an entry door and an exit door.
-# The first entry door matches the first path, which
-# matches the first exit... and so on.
-doors:
-  entry:
-    -
-      - 2
-      - 0
-    -
-      - 9
-      - 0
-  exit:
-    -
-      - 2
-      - 11
-    -
-      - 9
-      - 11
-# Path is expressed in pixels, they must be in the range [0, 80 * 10], being 80 the height/width of a block,
+    x: 3
+    y: 6
+
+# Path sequence is expressed in pixels, they must be in the range [0, 80 * 10],
+# being 80 the height/width of a block,
 # and 10 the height/width of the map, in blocks.
 paths:
   -
-    -
-      - 132
-      - 44
-    -
-      - 132
-      - 132
-    -
-      - 132
-      - 220
-    -
-      - 132
-      - 308
-    -
-      - 132
-      - 396
-    -
-      - 132
-      - 484
-    -
-      - 132
-      - 572
-    -
-      - 132
-      - 660
-    -
-      - 132
-      - 748
-    -
-      - 132
-      - 836
+    entry:
+      x: 2
+      y: 0
+    exit:
+      x: 9
+      y: 0
+    # Possible horde types:
+    # green_demon, goat_man, undead, spectre, bloody_hawk, abmonible
+    enemies:
+      - type: green_demon
+        quantity: 3
+        seconds_before_arrival: 10
+      - type: goat_man
+        quantity: 4
+        seconds_before_arrival: 20
+    path_sequence:
+      -
+        x: 132
+        y: 44
+      -
+        x: 132
+        y: 836
   -
-    -
-      - 748
-      - 44
-    -
-      - 748
-      - 132
-    -
-      - 748
-      - 220
-    -
-      - 748
-      - 308
-    -
-      - 748
-      - 396
-    -
-      - 748
-      - 484
-    -
-      - 748
-      - 572
-    -
-      - 748
-      - 660
-    -
-      - 748
-      - 748
-    -
-      - 748
-      - 836
-# Possible horde types: green_demon, goat_man, undead, spectre, bloody_hawk, abmonible
-enemies:
-  - type: green_demon
-    quantity: 3
-  - type: goat_man
-    quantity: 4
-time_between_hordes: 10 # seconds
+    entry:
+      x: 2
+      y: 11
+    exit:
+      x: 9
+      y: 11
+    # Possible horde types:
+    # green_demon, goat_man, undead, spectre, bloody_hawk, abmonible
+    enemies:
+      - type: green_demon
+        quantity: 3
+        time_before: 10 # seconds
+      - type: goat_man
+        quantity: 4
+        time_before: 20 # seconds
+    path_sequence:
+      -
+        x: 748
+        y: 44
+      -
+        x: 748
+        y: 836
