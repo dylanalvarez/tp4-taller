@@ -1,0 +1,7 @@
+type: 'tipo'
+# serán segun el tipo:
+position:
+  x: 1
+  y: 2
+# o:
+enemy_id : 2

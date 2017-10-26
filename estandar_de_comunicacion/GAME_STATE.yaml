@@ -1,38 +1,38 @@
 state: 'ongoing' / 'won' / 'lost'
 
-enemy: 
+enemies:
   -
   	id: 1
-  	life: 2
-  	posicion:
+  	position:
   		x: 1
   		y: 3
   	kind: 'yeti'
 	
-tower:
-	id: 2
-	element: 'earth'
-	lv: 2
-	xp: 100
-  damage: 2
-  enemy_slowdown_percentage: 30
-  range_in_squares: 2
-  posicion:
-    x: 1
-    y: 2
-  damaged_player_id: 1
+towers:
+  -
+    id: 2
+    element: 'earth'
+    lv: 2
+    xp: 100
+    damage:
+      normal: 3
+      flying: 5
+      close_by: 4
+    enemy_slowdown:
+      percentage: 43
+      duration: 4
+    range_in_squares: 2
+    explosion_range: 452443
+    position:
+      x: 1
+      y: 2
 
 poderes_posicionales:
-  tipo: 'tipo'
-  posicion:
+  type: 'tipo'
+  position:
     x: 1
     y: 2
 
 poderes_a_enemigos:
-  tipo: 'tipo'
+  type: 'tipo'
   enemy_id : 2
-
-
-
-
-

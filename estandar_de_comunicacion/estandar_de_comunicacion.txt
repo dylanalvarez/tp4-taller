@@ -10,7 +10,7 @@ client -> server: opcode 1 (CHOOSE_MAP): nickname y id del mapa elegido
 client -> server: opcode 2 (CHOSEN_ELEMENT): elemento elegido
 
 server -> client: opcode 2 (MAP_YAML): datos iniciales (mapa)
-server -> client: opcode 3 (GAME_STATE): estado del juego (cualquiera sean los datos que se dan periodicamente) (a definir) (deshilachar en eventos)
+server -> client: opcode 3 (GAME_STATE): estado del juego
 
 server -> client: opcode 4 (RECEIVED_MESSAGE): nuevo mensaje de chat
 client -> server: opcode 3 (SEND_MESSAGE): nuevo mensaje de chat
