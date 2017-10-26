@@ -25,8 +25,6 @@ public:
     // Pre: el tipo debe ser valido
     void addEnemy(const std::string& enemy_type);
 
-    const std::vector<Enemy>& getAllEnemies() const;
-
     /*** Towers ***/
 
     // añade la torre de tipo type en la posicion position
@@ -66,12 +64,23 @@ public:
     // los enemigos muertos
     void updateGame();
 
+    /*** Getters ***/
+
+    const std::string& getGameName();
+    const std::string& getGameSetting();
+    const std::vector<Enemy>& getAllEnemies() const;
+
     TowerDefenseGame(const TowerDefenseGame&) = delete;
     TowerDefenseGame& operator=(const TowerDefenseGame&) = delete;
     TowerDefenseGame(TowerDefenseGame&&) = delete;
     TowerDefenseGame& operator=(TowerDefenseGame&&) = delete;
 
 private:
+    // nombre de la partida
+    std::string name;
+    // estilo de mapa (desierto, pradera, etc.)
+    std::string setting;
+
     int tower_id;
     int enemy_id;
     Scenario* scenario;
@@ -81,6 +90,9 @@ private:
 
     void loadEnemyProperties(YAML::Node&);
     void loadTowerProperties(YAML::Node&);
+    void loadScenarioProperties(YAML::Node&);
+    void loadSpellsProperties(YAML::Node&);
+
     bool doesPlayerExist(const Player& player);
 
 private:

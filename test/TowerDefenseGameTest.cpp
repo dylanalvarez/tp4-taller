@@ -11,7 +11,7 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(TowerDefenseGameTest);
 
 void TowerDefenseGameTest::setUp(){
-    game = new TowerDefenseGame("map.yaml", "map.yaml");
+    game = new TowerDefenseGame("config.yaml", "map.yaml");
 }
 
 void TowerDefenseGameTest::tearDown() {
@@ -130,8 +130,6 @@ void TowerDefenseGameTest::ifNotAddedPlayerTriesToAddTowerThrowExceptionTest() {
 
 void TowerDefenseGameTest::addedPlayerCanAddTowerTest() {
     const Player& added_player = game->addPlayer("alguien", "fire");
-
-    game->addTower(added_player, "fire", Vector(5,5));
 
     CPPUNIT_ASSERT_NO_THROW(game->addTower(added_player, "fire", Vector(5,5)));
 }
@@ -1248,4 +1246,11 @@ void TowerDefenseGameTest::rayDealsDamageToTheTargetTest() {
     game->throwSpell(added_player, "ray", enemy_id);
 
     CPPUNIT_ASSERT(initial_hp > game->getAllEnemies()[0].getHealthPoints());
+}
+
+void TowerDefenseGameTest::addingTowerToPositionAlreadyOccupedThrowsExceptionTest() {
+    const Player &added_player = game->addPlayer("alguien", "air");
+
+    game->addTower(added_player, "air", Vector(5,5));
+    CPPUNIT_ASSERT_THROW(game->addTower(added_player, "air", Vector(5,5)), TowerError);
 }

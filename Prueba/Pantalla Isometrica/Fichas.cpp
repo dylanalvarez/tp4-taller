@@ -1,6 +1,8 @@
 #include "Fichas.h"
 #include <stdlib.h>
 
+//esta funcion puede ser mejorada a futuro.
+
 Ficha::Ficha(int x2, int y2, int id2, int tipo2): x(x2), y(y2), id(id2), tipo(tipo2){
  spriteActual = 0;
  medioLargoX = 44;
@@ -12,8 +14,8 @@ Ficha::Ficha(const Ficha &p): Ficha(p.x, p.y, p.id, p.tipo){
   }
 }
 
-void Ficha::dibujar(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY){
- sprites[spriteActual].dibujarIsometrico(cr,desplasamientoX,desplasamientoY); //en el futuro pasar x y y
+void Ficha::dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales){
+ sprites[spriteActual].dibujarIsometrico(cr, datosActuales); //en el futuro pasar x y y
 }
 
 void Ficha::ejecutarSicloDeAnimacion(){
@@ -126,10 +128,10 @@ FichaTorre::FichaTorre(const FichaTorre &p): Ficha(p){
 }
 
 void FichaTorre::dibujar(const Cairo::RefPtr<Cairo::Context>& cr,
-   int desplasamientoX, int desplasamientoY){
- sprites[spriteActual].dibujarIsometrico(cr,desplasamientoX,desplasamientoY);
+   DatosPantalla datosActuales){
+ sprites[spriteActual].dibujarIsometrico(cr,datosActuales);
  if (tipo != FichaTorreDeTierra) {
-   sprites[spriteActualSubAnimacion].dibujarIsometrico(cr,desplasamientoX,desplasamientoY);
+   sprites[spriteActualSubAnimacion].dibujarIsometrico(cr,datosActuales);
  }
 }
 
@@ -171,9 +173,9 @@ FichaEnemigo::FichaEnemigo(const FichaEnemigo &p): Ficha(p){
   inicioAnimiacionActual = p.inicioAnimiacionActual;
 }
 void FichaEnemigo::dibujar(const Cairo::RefPtr<Cairo::Context>& cr,
-   int desplasamientoX, int desplasamientoY){
+   DatosPantalla datosActuales){
     sprites[inicioAnimiacionActual + spriteActual].cambiarPosicion(x,y);
-    sprites[inicioAnimiacionActual + spriteActual].dibujarIsometrico(cr,desplasamientoX,desplasamientoY);
+    sprites[inicioAnimiacionActual + spriteActual].dibujarIsometrico(cr,datosActuales);
   }
 void FichaEnemigo::ejecutarSicloDeAnimacion(){
   spriteActual++;
@@ -208,9 +210,9 @@ FichaPortal::FichaPortal(const FichaPortal &p): Ficha(p){
   spriteActualSubAnimacion = p.spriteActualSubAnimacion;
 }
 void FichaPortal::dibujar(const Cairo::RefPtr<Cairo::Context>& cr,
-   int desplasamientoX, int desplasamientoY){
-    sprites[spriteActualSubAnimacion].dibujarIsometrico(cr,desplasamientoX,desplasamientoY);
-    sprites[spriteActual].dibujarIsometrico(cr,desplasamientoX,desplasamientoY);
+   DatosPantalla datosActuales){
+    sprites[spriteActualSubAnimacion].dibujarIsometrico(cr,datosActuales);
+    sprites[spriteActual].dibujarIsometrico(cr,datosActuales);
    }
 void FichaPortal::ejecutarSicloDeAnimacion(){
   spriteActualSubAnimacion++;

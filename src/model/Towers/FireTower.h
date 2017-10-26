@@ -11,7 +11,7 @@
 
 class FireTower : public Tower {
 public:
-    FireTower(int id, Vector p, const YAML::Node& properties,
+    FireTower(int id, Vector p, YAML::Node& properties,
               Scenario& scneario);
 
     ~FireTower() override;
@@ -30,8 +30,11 @@ public:
 
 private:
     int reach_level;
+    unsigned int reach_upgrade;
     unsigned int reach_of_impact;
     unsigned int dmg_to_nearby_units;
+    unsigned int dmg_to_nearby_units_upgrade;
+    std::pair<int, float> reach_levelingup_function_values;
 };
 
 

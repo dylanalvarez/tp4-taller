@@ -21,9 +21,9 @@ void OrdenadorDeFichas::agregarTerreno(FichaTerreno nuevaFicha){
   terreno.emplace(std::make_pair(nuevaFicha.getId(),nuevaFicha));
 }
 void OrdenadorDeFichas::imprimirTerreno(const Cairo::RefPtr<Cairo::Context>& cr,
-                      int desplasamientoX, int desplasamientoY){
+                      DatosPantalla datosActuales){
   for (auto it = terreno.begin(); it != terreno.end(); ++it){
-    it->second.dibujar(cr,desplasamientoX,desplasamientoY);
+    it->second.dibujar(cr,datosActuales);
   }
 }
 int OrdenadorDeFichas::ObetenerTerrenoEnEstaPosicion(int x, int y){
@@ -34,14 +34,19 @@ int OrdenadorDeFichas::ObetenerTerrenoEnEstaPosicion(int x, int y){
   }
   return error;
 }
+FichaTerreno& OrdenadorDeFichas::getTerreno(int id){
+  return terreno.at(id);
+}
+
+
 //torres
 void OrdenadorDeFichas::agregarTorre(FichaTorre nuevaFicha){
   torres.emplace(std::make_pair(nuevaFicha.getId(),nuevaFicha));
 }
 void OrdenadorDeFichas::imprimirTorres(const Cairo::RefPtr<Cairo::Context>& cr,
-                      int desplasamientoX, int desplasamientoY){
+                      DatosPantalla datosActuales){
   for (auto it = torres.begin(); it != torres.end(); ++it){
-    it->second.dibujar(cr,desplasamientoX,desplasamientoY);
+    it->second.dibujar(cr,datosActuales);
   }
 }
 int OrdenadorDeFichas::ObetenerTorreEnEstaPosicion(int x, int y){
@@ -62,9 +67,9 @@ void OrdenadorDeFichas::agregarEnemigo(FichaEnemigo nuevaFicha){
   enemigos.emplace(std::make_pair(nuevaFicha.getId(),nuevaFicha));
 }
 void OrdenadorDeFichas::imprimirEnemigo(const Cairo::RefPtr<Cairo::Context>& cr,
-                       int desplasamientoX, int desplasamientoY){
+                       DatosPantalla datosActuales){
   for (auto it = enemigos.begin(); it != enemigos.end(); ++it){
-    it->second.dibujar(cr,desplasamientoX,desplasamientoY);
+    it->second.dibujar(cr,datosActuales);
   }
 }
 /*int OrdenadorDeFichas::ObetenerTorreEnEstaPosicion(int x, int y){
@@ -86,8 +91,8 @@ void OrdenadorDeFichas::agregarPortal(FichaPortal nuevaFicha){
   portales.push_back(nuevaFicha);
 }
 void OrdenadorDeFichas::imprimirPortal(const Cairo::RefPtr<Cairo::Context>& cr,
-                      int desplasamientoX, int desplasamientoY){
+                      DatosPantalla datosActuales){
   for (auto it = portales.begin(); it != portales.end(); ++it){
-    it->dibujar(cr,desplasamientoX,desplasamientoY);
+    it->dibujar(cr,datosActuales);
   }
 }

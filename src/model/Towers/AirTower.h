@@ -10,7 +10,7 @@
 
 class AirTower : public Tower {
 public:
-    AirTower(int id, Vector p, const YAML::Node& properties,
+    AirTower(int id, Vector p, YAML::Node& properties,
                Scenario& scneario);
 
     ~AirTower() override;
@@ -29,6 +29,7 @@ public:
 
 private:
     unsigned int dmg_to_flying_units;
+    unsigned int dmg_to_flying_units_upgrade;
 };
 
 

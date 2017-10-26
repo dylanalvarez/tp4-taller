@@ -30,7 +30,7 @@
 #define SpritePortalAzul3 22
 
 #define SpriteAbominableInicial 23
-#define SpriteAbominableTotal 11
+#define SpriteAbominableTotal 47
  //van a ser 44... cargarlos de a uno ya no tiene sentido.
 
 class VectorDeSprites{

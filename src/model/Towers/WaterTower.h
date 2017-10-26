@@ -10,7 +10,7 @@
 
 class WaterTower : public Tower {
 public:
-    WaterTower(int id, Vector position, const YAML::Node& properties,
+    WaterTower(int id, Vector position, YAML::Node& properties,
           Scenario& scenario);
 
     ~WaterTower() override;
@@ -31,6 +31,9 @@ private:
     int slowdown_level;
     unsigned int speed_reduction;
     unsigned int speed_reduction_duration;
+    unsigned int speed_reduction_duration_upgrade;
+    unsigned int speed_reduction_upgrade;
+    std::pair<int, float> slowdown_levelingup_function_values;
 };
 
 

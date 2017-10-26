@@ -7,6 +7,7 @@
 #include <map>
 #include "sprites.h"
 #include "Fichas.h"
+#include "TiposDeDatosExpeciales.h"
 
 
 class OrdenadorDeFichas{
@@ -22,22 +23,23 @@ public:
 
  void agregarTerreno(FichaTerreno nuevaFicha);
  void imprimirTerreno(const Cairo::RefPtr<Cairo::Context>& cr,
-                      int desplasamientoX, int desplasamientoY);
+                      DatosPantalla datosActuales);
  int ObetenerTerrenoEnEstaPosicion(int x, int y);
+ FichaTerreno& getTerreno(int id);
 
  void agregarTorre(FichaTorre nuevaFicha);
  void imprimirTorres(const Cairo::RefPtr<Cairo::Context>& cr,
-                       int desplasamientoX, int desplasamientoY);
+                       DatosPantalla datosActuales);
  int ObetenerTorreEnEstaPosicion(int x, int y);
  FichaTorre& getTorre(int id);
 
  void agregarEnemigo(FichaEnemigo nuevaFicha);
  void imprimirEnemigo(const Cairo::RefPtr<Cairo::Context>& cr,
-                       int desplasamientoX, int desplasamientoY);
+                       DatosPantalla datosActuales);
  int ObetenerEnemigoEnEstaPosicion(int x, int y);
 
  void agregarPortal(FichaPortal nuevaFicha);
  void imprimirPortal(const Cairo::RefPtr<Cairo::Context>& cr,
-                       int desplasamientoX, int desplasamientoY);
+                       DatosPantalla datosActuales);
 };
 #endif

@@ -10,7 +10,7 @@
 
 class WaterTowerFactory : public TowerFactory {
 public:
-    Tower* create(int id, Vector position, const YAML::Node& properties,
+    Tower* create(int id, Vector position, YAML::Node& properties,
                   Scenario& scenario) override;
 };
 

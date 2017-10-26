@@ -8,23 +8,15 @@
 #include "OrdenadorDeFichas.h"
 #include "controladorDeSiclos.h"
 #include "menuTorres.h"
-
+#include "TiposDeDatosExpeciales.h"
 
 //esta clase es solo para dirigir el movimiento en este caso.
 
 #define largo 88
-
-void timer(ControladorDeSiclos* controlador){
-    controlador->iniciar();
-}
-
-
 int main(int argc, char *argv[])
 {
   //Crea la aplicación de gtkmm
   auto app = Gtk::Application::create(argc, argv);
-  //Gtk::Window ventana;
-  //ventana.set_default_size(1000, 1000);
   VectorDeSprites sprites;
   OrdenadorDeFichas fichas;
   int id = 0;
@@ -47,17 +39,7 @@ int main(int argc, char *argv[])
   fichas.agregarEnemigo(FichaEnemigo(largo*2, largo*2, id, Abmonible, sprites));
 
   fichas.agregarPortal(FichaPortal(largo*0, largo*0, 0, FichaPortalAzul, sprites));
-  //creo boton
-  /*Gtk::Button pulso("Pulsasion");
-  pulso.signal_clicked().connect( sigc::mem_fun(
-        area, &PantallaDeJuego::pulsaion) );
 
-  Gtk::Box m_box1;
-  m_box1.pack_start(pulso);
-  m_box1.pack_start(area);
-  ventana.add(m_box1);
-  ventana.show_all();
-*/
 	Gtk::Window* window;
   Gtk::Box* Box;
 
@@ -65,6 +47,7 @@ int main(int argc, char *argv[])
 	refBuilder->add_from_file("Sprites/Pantallas/Pantalla principal.glade");
   //creo pantalla
   PantallaDeJuego area (fichas, refBuilder);
+  area.agregarElemento(tierra);
 
 	refBuilder->get_widget("cajaJuego", Box);
   Box->pack_start(area);
@@ -72,21 +55,13 @@ int main(int argc, char *argv[])
   window->show_all();
 
 //mejorar nombres
-  int TiempoEnMilesegundos = 200;
+  int TiempoEnMilesegundos = 100;
   sigc::slot<bool> my_slot = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDeAnimacion);
   sigc::connection conn = Glib::signal_timeout().connect(my_slot,TiempoEnMilesegundos);
   TiempoEnMilesegundos = 50;
   sigc::slot<bool> my_slot2 = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDesplasamientos);
   sigc::connection conn2 = Glib::signal_timeout().connect(my_slot2,TiempoEnMilesegundos);
 
-
   app->run(*window);
-/*
-
-  ControladorDeSiclos controlador; //igual servira a futuro para otra cosa.
-  std::thread pulso(timer, &controlador);
-    app->run(*window);
-  controlador.terminar();
-  pulso.join();*/
   return 0;
 }

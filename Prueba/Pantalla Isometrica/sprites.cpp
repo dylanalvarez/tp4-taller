@@ -26,14 +26,19 @@ void Sprite::dibujar(const Cairo::RefPtr<Cairo::Context>& cr){
 }
 
 void Sprite::dibujarIsometrico(const Cairo::RefPtr<Cairo::Context>& cr,
-                                      int desplasamientoX, int desplasamientoY){
+                                      DatosPantalla datosActuales){
   int x2, y2;
   //lo pongo isometrico
   x2 = (0.897727272)*(x-y); //79/88
   y2 = (0.443181818)*(x+y); //39/88
   //lo desplaso por la pantalla.
-  x2 = x2 + desplasamientoX;
-  y2 = y2 + desplasamientoY;
+  x2 = x2 + datosActuales.desplasamientoX;
+  y2 = y2 + datosActuales.desplasamientoY;
+
+  if (x2 < (0-100) || x2 > (datosActuales.width+100) ||
+        y2 < (0-200) || y2 > (datosActuales.height+200))
+    return;
+
   int correctorX = image->get_width()/2, correctorY = image->get_height()/2;
   //esto "carga" la imagen
   Gdk::Cairo::set_source_pixbuf(cr, image, x2- correctorX,y2- correctorY);
@@ -57,31 +62,11 @@ void Sprite::cambiarPosicion(int x2, int y2){
 
 Sprite::~Sprite(){
 }
-/*
-FichaGift::FichaGift(int x2, int y2): FichaSprite(x2, y2){
-  //Cambiar luego por otras
-  image1 = Gdk::Pixbuf::create_from_file("Sprites/PisoFirme.png");
-  image2 = Gdk::Pixbuf::create_from_file("Rojo.png");
-  animacion.push_back(&image1);
-  animacion.push_back(&image2);
-  imageActual = &image1;
-  pulsacionesParaCambio = 2;
-  i = 0;
-} //La idea es que cada sprite sea un objetio distinto.
 
-
-void FichaGift::dibujarme(const Cairo::RefPtr<Cairo::Context>& cr){
-  Gdk::Cairo::set_source_pixbuf(cr, (*imageActual), x,y);
-	cr->rectangle(x, y, x + (*imageActual)->get_width(), y + (*imageActual)->get_height()); //esto es importante.
-	cr->fill();
-	cr->restore();
+int Sprite::obtenerAlto(){
+  return image->get_height();
 }
-void FichaGift::pulsaion(){
-  i ++;
-  if (i == pulsacionesParaCambio) {
-    i = 0;
-    animacion.push_back(imageActual);
-    imageActual = animacion.front();
-    animacion.pop_front();
-  }
-}*/
+
+int Sprite::obtenerHancho(){
+  return image->get_width();
+}

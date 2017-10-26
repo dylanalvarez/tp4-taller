@@ -9,21 +9,42 @@
 #include "../Upgrades/DamageLevelup.h"
 #include "../Upgrades/ReachLevelup.h"
 
-FireTower::FireTower(int id, const Vector position, const YAML::Node& properties,
+FireTower::FireTower(int id, const Vector position, YAML::Node& tower_properties,
                      Scenario& scenario) :
-        Tower(id, position, properties, scenario) {
+        Tower(id, position, scenario) {
+    YAML::Node properties = tower_properties["fire_tower"];
+    // basic properties
+    dmg = properties["damage"].as<unsigned int>();
+    dmg_to_nearby_units = properties["damage_to_nearby"].as<unsigned int>();
+    range = Range(position, properties["range"].as<int>());
+    attack_cooldown = properties["attack_rate"].as<unsigned int>();
+    reach_of_impact = properties["reach"].as<unsigned int>();
+
+    // upgrades properties
+    dmg_upgrade = properties["damage_upgrade"].as<unsigned int>();
+    dmg_to_nearby_units_upgrade =
+            properties["damage_to_nearby_upgrade"].as<unsigned int>();
+    range_upgrade = properties["range_upgrade"].as<unsigned int>();
+    reach_upgrade = properties["reach_upgrade"].as<unsigned int>();
+
+    // experience properties (base y exponente)
+    range_levelingup_function_values.first =
+            properties["range_base"].as<int>();
+    range_levelingup_function_values.second =
+            properties["range_exponent"].as<float>();
+    dmg_levelingup_function_values.first =
+            properties["dmg_base"].as<int>();
+    dmg_levelingup_function_values.second =
+            properties["dmg_exponent"].as<float>();
+    reach_levelingup_function_values.first =
+            properties["reach_base"].as<int>();
+    reach_levelingup_function_values.second =
+            properties["reach_exponent"].as<float>();
 
     range_level = 1;
     dmg_level = 1;
     reach_level = 1;
 
-    dmg = 6;
-    dmg_to_nearby_units = 3;
-    reach_of_impact = 1;
-    range = Range(position, 3);
-
-    // un ataque cada 3 segundos
-    attack_cooldown = 3;
     last_attack_time = 0;
     current_target = nullptr;
     experience = 0;
@@ -37,8 +58,8 @@ FireTower::~FireTower() = default;
 
 void FireTower::attack() {
     // si todavia no paso el cooldown desde el ultimo ataque, salir
-    //if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
-    //{ return; }
+    if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
+    { return; }
 
     std::vector<Enemy*> enemies = std::move(scenario.getEnemiesInRange(range));
     if (enemies.empty()) { return; }
@@ -62,7 +83,9 @@ void FireTower::attack() {
 FireTower::FireTower(FireTower&& other) noexcept : Tower(std::move(other)) {}
 
 void FireTower::levelupRange() {
-    double neccessary_exp = 100 * (pow(2,range_level));
+    double neccessary_exp =
+            range_levelingup_function_values.first *
+                    (pow(range_levelingup_function_values.second,range_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
@@ -70,27 +93,31 @@ void FireTower::levelupRange() {
                          std::to_string(neccessary_exp));
     }
 
-    range = Range(position, range.getRadius() + 1);
+    range = Range(position, range.getRadius() + range_upgrade);
     experience -= neccessary_exp;
     range_level++;
 }
 
 void FireTower::levelupDamage() {
-    double neccessary_exp = 100 * (pow(1.5,dmg_level));
+    double neccessary_exp =
+            dmg_levelingup_function_values.first *
+                    (pow(dmg_levelingup_function_values.second,dmg_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
                          ", se necesitan" +
                          std::to_string(neccessary_exp));
     }
-    dmg += 6;
-    dmg_to_nearby_units += 3;
+    dmg += dmg_upgrade;
+    dmg_to_nearby_units += dmg_to_nearby_units_upgrade;
     experience -= neccessary_exp;
     dmg_level++;
 }
 
 void FireTower::levelupReachOfImpact() {
-    double neccessary_exp = 500 * (pow(2,reach_level));
+    double neccessary_exp =
+            reach_levelingup_function_values.first *
+                    (pow(reach_levelingup_function_values.second,reach_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
@@ -98,7 +125,7 @@ void FireTower::levelupReachOfImpact() {
                          std::to_string(neccessary_exp));
 
     }
-    reach_of_impact++;
+    reach_of_impact += reach_upgrade;
     experience -= neccessary_exp;
     reach_level++;
 }

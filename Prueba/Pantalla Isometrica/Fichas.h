@@ -5,6 +5,7 @@
 #include <iostream>
 #include "sprites.h"
 #include "VectorDeSprites.h"
+#include "TiposDeDatosExpeciales.h"
 
 class Ficha{
 private:
@@ -21,7 +22,7 @@ protected:
 public:
   Ficha(int x2, int y2, int id2, int tipo2);
   Ficha(const Ficha &p);
-  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
+  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
   virtual void ejecutarSicloDeAnimacion(); //Para los gif
   void cambiarPosicion(int x2, int y2);
   virtual ~Ficha();
@@ -61,7 +62,7 @@ protected:
 public:
   FichaTorre(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
   FichaTorre(const FichaTorre &p);
-  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
+  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
   virtual void ejecutarSicloDeAnimacion(); //Para los gif
   int getDanio() const;
   int getRango() const;
@@ -73,11 +74,15 @@ public:
 class FichaEnemigo: public Ficha{
 private:
 protected:
+//para las voladoras.
+ //int correccionX;
+ //int correccionY;
  int inicioAnimiacionActual;
 public:
+  //todo se puede intentar mejorar. Con una correccion de la posicion.
   FichaEnemigo(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
   FichaEnemigo(const FichaEnemigo &p);
-  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
+  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
   virtual void ejecutarSicloDeAnimacion(); //Para los gif
 };
 
@@ -91,7 +96,7 @@ protected:
 public:
   FichaPortal(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
   FichaPortal(const FichaPortal &p);
-  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
+  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
   virtual void ejecutarSicloDeAnimacion(); //Para los gif
 };
 

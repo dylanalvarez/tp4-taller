@@ -5,11 +5,11 @@
 #include "Tower.h"
 #include "../Exceptions/TowerError.h"
 
-Tower::Tower(int id, Vector position, const YAML::Node& properties,
-             Scenario& scenario) : experience(0), id(id),
-                                   properties(properties),
-                                   scenario(scenario),
-                                   position(position) {}
+Tower::Tower(int id, Vector position, Scenario& scenario) :
+                                                    experience(0),
+                                                    id(id),
+                                                    scenario(scenario),
+                                                    position(position) {}
 
 Tower::~Tower() {
     for (auto levelup_type : levelup_types){
@@ -76,7 +76,7 @@ void Tower::hitCurrentTarget(unsigned int dmg) {
     }
 }
 
-Tower::Tower(Tower&& other) noexcept : properties(properties), scenario(scenario) {
+Tower::Tower(Tower&& other) noexcept : scenario(scenario) {
     this->id = other.id;
     this->experience = other.experience;
     this->position = other.position;
