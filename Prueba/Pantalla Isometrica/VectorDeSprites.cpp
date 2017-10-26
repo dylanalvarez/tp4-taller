@@ -48,6 +48,43 @@ VectorDeSprites::VectorDeSprites(){
   cargarSprite("Sprites/AbmonibleCaminarAdelante10.png");
   cargarSprite("Sprites/AbmonibleCaminarAdelante11.png");
   cargarSprite("Sprites/AbmonibleCaminarAdelante12.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante13.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante14.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante15.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante16.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante17.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante18.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante19.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante20.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante21.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante22.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante23.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante24.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante25.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante26.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante27.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante28.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante29.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante30.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante31.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante32.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante33.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante34.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante35.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante36.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante37.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante38.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante39.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante40.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante41.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante42.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante43.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante44.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante45.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante46.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante47.png");
+  cargarSprite("Sprites/AbmonibleCaminarAdelante48.png");
+
 }
 Glib::RefPtr<Gdk::Pixbuf>& VectorDeSprites::obtener (int n){
   return (sprites[n]);

@@ -4,7 +4,7 @@
 #include <gtkmm.h>
 #include <iostream>
 #include <list>
-
+#include "TiposDeDatosExpeciales.h"
 
 //FichaSprite Sobre todo me aleja a mi de la logica de imprimir imagenes.
 class Sprite{
@@ -15,9 +15,11 @@ protected:
 public:
   Sprite(int x2, int y2, Glib::RefPtr<Gdk::Pixbuf>& image2);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr);
-  virtual void dibujarIsometrico(const Cairo::RefPtr<Cairo::Context>& cr, int desplasamientoX, int desplasamientoY);
+  virtual void dibujarIsometrico(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
   virtual void pulsaion();
   void cambiarPosicion(int x2, int y2);
+  int obtenerAlto();
+  int obtenerHancho();
   virtual ~Sprite();
 };
 /*

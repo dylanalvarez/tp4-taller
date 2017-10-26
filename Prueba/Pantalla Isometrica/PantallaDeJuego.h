@@ -7,17 +7,22 @@
 #include "Fichas.h"
 #include "OrdenadorDeFichas.h"
 #include "menuTorres.h"
+#include "TiposDeDatosExpeciales.h"
 
 
 class PantallaDeJuego: public Gtk::DrawingArea{
+public:
+  PantallaDeJuego(OrdenadorDeFichas &fichas2, Glib::RefPtr<Gtk::Builder> &ventana);
+  bool ejecutarSicloDeAnimacion();
+  bool ejecutarSicloDesplasamientos();
+	void agregarElemento(Elementos elemento);  
+  virtual ~PantallaDeJuego();
 private:
   //tal vez un mapa no sea lo mejor.
+ std::vector<Elementos> elementos;
  OrdenadorDeFichas &fichas;
  MenuTorres menuTorres;
- int width;
- int height;
- int desplasamientoX;
- int desplasamientoY;
+ DatosPantalla datosActuales;
  bool incirementeEnX;
  bool decrementoEnX;
  bool incirementeEnY;
@@ -32,10 +37,5 @@ private:
   void desplasamientoDecrementoEnY();
 protected:
   bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override; //la verdad de la milaneza
-public:
-  PantallaDeJuego(OrdenadorDeFichas &fichas2, Glib::RefPtr<Gtk::Builder> &ventana);
-  bool ejecutarSicloDeAnimacion();
-  bool ejecutarSicloDesplasamientos();
-  virtual ~PantallaDeJuego();
 };
 #endif
