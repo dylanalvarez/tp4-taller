@@ -7,15 +7,15 @@ class GameClientReceiver {
 public:
     GameClientReceiver();
 
-    void sendInitialData(const std::vector<NameAndID> &matches,
+    void getInitialData(const std::vector<NameAndID> &matches,
                          const std::vector<NameAndID> &maps);
 
     // map will be the raw YAML file content
-    void sendMap(std::string &&map);
+    void getMap(std::string &&map);
 
-    void sendGameState(const GameState &gameState);
+    void getGameState(const GameState &gameState);
 
-    void sendChatMessage(std::string &&message,
+    void getChatMessage(std::string &&message,
                          std::string &&nickname);
 
     ~GameClientReceiver();

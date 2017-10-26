@@ -8,21 +8,21 @@ class GameServerReceiver {
 public:
     GameServerReceiver();
 
-    void chooseTeam(std::string &&nickname, int teamID);
+    void getChosenTeam(std::string &&nickname, int teamID);
 
-    void chooseMap(std::string &&nickname, int mapID);
+    void getChosenMap(std::string &&nickname, int mapID);
 
-    void chooseElement(Element element);
+    void getChosenElement(Element element);
 
-    void sendChatMessage(std::string &&message);
+    void getChatMessage(std::string &&message);
 
-    void pingTile(int x, int y);
+    void getPingedTile(int x, int y);
 
-    void applySpell(PositionalPower power);
+    void getSpell(PositionalPower power);
 
-    void applySpell(TargetPower power);
+    void getSpell(TargetPower power);
 
-    void applyUpgrade(Upgrade upgrade);
+    void getUpgrade(Upgrade upgrade);
 
     void buildTower(int x, int y, Tower::Type type);
 
