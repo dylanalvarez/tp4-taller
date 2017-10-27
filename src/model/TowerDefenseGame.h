@@ -23,7 +23,7 @@ public:
 
     // añade un enemigo de tipo enemy_type
     // Pre: el tipo debe ser valido
-    void addEnemy(const std::string& enemy_type);
+    void addEnemy(const std::string& enemy_type, unsigned int path_number = 1);
 
     /*** Towers ***/
 
@@ -75,6 +75,8 @@ public:
     TowerDefenseGame(TowerDefenseGame&&) = delete;
     TowerDefenseGame& operator=(TowerDefenseGame&&) = delete;
 
+    bool isGameOver() const;
+
 private:
     // nombre de la partida
     std::string name;
@@ -83,6 +85,7 @@ private:
 
     int tower_id;
     int enemy_id;
+    bool is_game_over;
     Scenario* scenario;
     std::vector<Player> players;
 

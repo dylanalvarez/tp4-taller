@@ -17,7 +17,7 @@ public:
 
     // mueve el enemigo la cantidad de coordenadas indicadas por speed
     // en la direccion correspondiente (segun el path)
-    void move();
+    void move(int units_to_move = 1);
 
     // mueve el enemigo en la direccion opuesta a la que venia
     void moveBack();
@@ -38,6 +38,7 @@ public:
     int getHealthPoints() const;
     float getSpeed() const;
     bool canIFlight() const;
+    bool reachTheEnd() const;
 
 private:
     Path& path;
@@ -50,6 +51,8 @@ private:
     float speed;
     float original_speed;
     bool can_i_fly;
+    // si llego al final del path
+    bool i_reach_the_end;
     time_t last_speed_reduction_time;
     unsigned int speed_reduction_time;
 };

@@ -35,6 +35,7 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
 
     tower_id = 1;
     enemy_id = 1;
+    is_game_over = false;
 }
 
 TowerDefenseGame::~TowerDefenseGame(){
@@ -56,20 +57,26 @@ void TowerDefenseGame::loadScenarioProperties(YAML::Node& map) {
 
     std::vector<Vector> firm_ground_locations;
     YAML::Node firm_g = map["firm_ground"];
-    for (YAML::const_iterator it = firm_g.begin(); it != firm_g.end(); ++it ) {
+    for (auto it = firm_g.begin(); it != firm_g.end(); ++it ) {
         firm_ground_locations.push_back(it->as<Vector>());
     }
 
-    std::vector<Vector> road;
-    YAML::Node paths = map["paths"];
-    for (YAML::const_iterator path = paths.begin(); path != paths.end(); ++path ) {
-        for (YAML::const_iterator it = path->begin(); it != path->end(); ++it) {
+    std::vector<Path> paths;
+    YAML::Node paths_node = map["paths"];
+    for (auto path = paths_node.begin(); path != paths_node.end(); ++path ) {
+        // se busca el nodo "path_sequence"
+        YAML::Node path_secuence = (*path)["path_sequence"];
+
+        std::vector<Vector> road;
+        road.push_back((*path)["entry"].as<Vector>());
+        for (auto it = path_secuence.begin(); it != path_secuence.end(); ++it) {
             road.push_back(it->as<Vector>());
         }
+        road.push_back((*path)["exit"].as<Vector>());
+        paths.push_back(std::move(Path(std::move(road))));
     }
 
-    Path path(std::move(road));
-    scenario = new Scenario(std::move(path), std::move(firm_ground_locations));
+    scenario = new Scenario(std::move(paths), std::move(firm_ground_locations));
 }
 
 void TowerDefenseGame::loadSpellsProperties(YAML::Node& spells_node) {
@@ -162,11 +169,12 @@ void TowerDefenseGame::loadTowerProperties(YAML::Node& properties) {
 }
 //endregion
 
-void TowerDefenseGame::addEnemy(const std::string &enemy_type) {
+void TowerDefenseGame::addEnemy(const std::string &enemy_type,
+                                unsigned int path_number) {
     try{
         EnemyProperties properties = enemies_properties.at(enemy_type);
-        Enemy enemy(enemy_id++, scenario->getPath(), properties.hp, properties.speed,
-                             properties.does_it_fly);
+        Enemy enemy(enemy_id++, scenario->getPath(path_number), properties.hp,
+                    properties.speed, properties.does_it_fly);
         scenario->addEnemy(enemy);
     } catch (std::exception& e) {
         throw EnemyError("Error al agregar enemigo -> El tipo: " + enemy_type
@@ -181,6 +189,7 @@ const std::vector<Enemy> &TowerDefenseGame::getAllEnemies() const {
 void TowerDefenseGame::moveEnemies() {
     for (Enemy& enemy : scenario->getAllEnemies()){
         enemy.move();
+        if (enemy.reachTheEnd()) { is_game_over = true; }
     }
 }
 
@@ -297,4 +306,8 @@ const std::string &TowerDefenseGame::getGameName() {
 
 const std::string &TowerDefenseGame::getGameSetting() {
     return setting;
+}
+
+bool TowerDefenseGame::isGameOver() const {
+    return is_game_over;
 }

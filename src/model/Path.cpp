@@ -15,7 +15,7 @@ const Vector &Path::getNextPosition(const Vector& actual) {
     return positions.back();
 }
 
-const Vector &Path::getInitialPosition() {
+const Vector &Path::getInitialPosition() const {
     return positions[0];
 }
 
@@ -39,4 +39,8 @@ bool Path::containsPosition(const Vector &position) {
         }
     }
     return false;
+}
+
+const Vector &Path::getFinalPositon() const {
+    return positions.back();
 }

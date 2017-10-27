@@ -8,7 +8,7 @@ Enemy::Enemy(Path &path, int health_points, float speed,
              bool does_it_fly) :
         path(path),
         hp(health_points),
-        speed(speed),
+        speed(speed * pixels_per_unit),
         original_speed(speed),
         can_i_fly(does_it_fly),
         current_pos(path.getInitialPosition()),
@@ -17,6 +17,7 @@ Enemy::Enemy(Path &path, int health_points, float speed,
     direction.normalizeAndRound();
     last_speed_reduction_time = 0;
     speed_reduction_time = 0;
+    i_reach_the_end = false;
 }
 
 Enemy::Enemy(int id, Path &path, int health_points, float speed,
@@ -24,8 +25,8 @@ Enemy::Enemy(int id, Path &path, int health_points, float speed,
     this->id = id;
 }
 
-void Enemy::move() {
-    for (int i = 0; i < getSpeed(); i++){
+void Enemy::move(int units_to_move) {
+    for (int i = 0; i < getSpeed() * units_to_move; i++){
         current_pos += direction;
 
         if (current_pos == current_destiny){
@@ -35,6 +36,7 @@ void Enemy::move() {
             direction.normalizeAndRound();
         }
     }
+    if (current_pos == path.getFinalPositon()) { i_reach_the_end = true; }
 }
 
 const Vector &Enemy::getCurrentPosition() const {
@@ -84,4 +86,8 @@ void Enemy::moveBack() {
 
 bool Enemy::isDead() const {
     return hp == 0;
+}
+
+bool Enemy::reachTheEnd() const {
+    return i_reach_the_end;
 }

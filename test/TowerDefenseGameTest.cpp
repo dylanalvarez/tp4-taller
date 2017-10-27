@@ -1254,3 +1254,17 @@ void TowerDefenseGameTest::addingTowerToPositionAlreadyOccupedThrowsExceptionTes
     game->addTower(added_player, "air", Vector(5,5));
     CPPUNIT_ASSERT_THROW(game->addTower(added_player, "air", Vector(5,5)), TowerError);
 }
+
+void TowerDefenseGameTest::whenEnemyCompletesPathTheGameIsOverTest() {
+    const Player &added_player = game->addPlayer("alguien", "air");
+
+    CPPUNIT_ASSERT(!game->isGameOver());
+
+    game->addEnemy("undead");
+
+    game->moveEnemies();
+    game->moveEnemies();
+    game->moveEnemies();
+
+    CPPUNIT_ASSERT(game->isGameOver());
+}

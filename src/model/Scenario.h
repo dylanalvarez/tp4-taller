@@ -13,6 +13,8 @@
 class Scenario {
 public:
     Scenario(Path&& path, std::vector<Vector>&& firm_ground_locations);
+    Scenario(std::vector<Path>&& paths,
+             std::vector<Vector>&& firm_ground_locations);
     ~Scenario();
 
     void addEnemy(Enemy& enemy);
@@ -41,7 +43,7 @@ public:
 
     std::vector<Tower*>& getTowers();
 
-    Path& getPath();
+    Path& getPath(unsigned int number = 1);
 
     Scenario(const Scenario&) = delete;
     Scenario& operator=(const Scenario&) = delete;
@@ -52,7 +54,7 @@ private:
     std::vector<Enemy> enemies;
     std::vector<Tower*> towers;
     std::vector<Vector> firm_ground_locations;
-    Path path;
+    std::vector<Path> paths;
 };
 
 
