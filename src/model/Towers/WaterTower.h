@@ -22,6 +22,10 @@ public:
     void levelupReachOfImpact() override;
     void levelupSlowdown() override;
 
+    Communication::Tower::Damage getDamage_() const override;
+    Communication::Tower::Type getType() const override;
+    Communication::Tower::EnemySlowdown getslowdown() const override;
+
     WaterTower(const WaterTower&) = delete;
     WaterTower& operator=(const WaterTower&) = delete;
     WaterTower& operator=(WaterTower&&) = delete;

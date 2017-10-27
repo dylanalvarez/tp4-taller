@@ -6,14 +6,15 @@
 #define TOWERDEFENSE_ENEMY_H
 
 #include "Path.h"
+#include "../../estandar_de_comunicacion/CommunicationUtils.h"
 
 class Enemy {
 public:
     Enemy(Path &path, int health_points, float speed,
-          bool does_it_fly);
+          bool does_it_fly, const std::string& type = "green_demon");
 
     Enemy(int id, Path &path, int health_points, float speed,
-          bool does_it_flight);
+          bool does_it_flight, const std::string& type = "green_demon");
 
     // mueve el enemigo la cantidad de coordenadas indicadas por speed
     // en la direccion correspondiente (segun el path)
@@ -32,6 +33,8 @@ public:
 
     bool isDead() const;
 
+    Communication::Enemy::Type getType() const;
+
     // getters
     const Vector& getCurrentPosition() const;
     int getID() const;
@@ -46,6 +49,7 @@ private:
     Vector current_destiny;
     Vector direction;
 
+    const std::string type;
     int id;
     int hp;
     float speed;

@@ -3,6 +3,7 @@
 //
 
 #include "FireWall.h"
+#include "../Exceptions/MatchError.h"
 
 FireWall::FireWall(Scenario& scenario, unsigned int cooldown,
                    unsigned int dmg, unsigned int duration) :
@@ -32,4 +33,17 @@ void FireWall::attack() {
 
 bool FireWall::isActive() const {
     return is_active;
+}
+
+Communication::PositionalPower::Type FireWall::getPositionalType() const {
+    return Communication::PositionalPower::Type::fireWall;
+}
+
+Communication::TargetPower::Type FireWall::getTargetType() const {
+    throw MatchError("Error al solicitar tipo de hechizo:"
+                             " fireWall es posicional");
+}
+
+bool FireWall::isPositional() const {
+    return true;
 }

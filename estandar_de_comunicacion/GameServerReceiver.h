@@ -4,6 +4,14 @@
 #include <string>
 #include "CommunicationUtils.h"
 
+using Communication::GameState;
+using Communication::NameAndID;
+using Communication::Element;
+using Communication::PositionalPower;
+using Communication::TargetPower;
+using Communication::Upgrade;
+using Communication::Tower;
+
 class GameServerReceiver {
 public:
     GameServerReceiver();

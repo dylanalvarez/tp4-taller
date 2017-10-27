@@ -24,8 +24,8 @@ public:
     Match& operator=(Match&&) = delete;
 
 private:
-    // en milisegundos
-    const float time_step = 15;
+    // en micro segundos
+    const unsigned int time_step = 15000; // 15 milisegundos;
 
     TowerDefenseGame game;
 };

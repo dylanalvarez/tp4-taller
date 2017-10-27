@@ -5,6 +5,9 @@
 #include "CommunicationUtils.h"
 #include "GameServerReceiver.h"
 
+using Communication::GameState;
+using Communication::NameAndID;
+
 class GameServerSocket {
 public:
     // When it recieves a message, it will invoke a method in the receiver.

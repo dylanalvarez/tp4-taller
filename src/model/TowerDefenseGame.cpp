@@ -174,7 +174,7 @@ void TowerDefenseGame::addEnemy(const std::string &enemy_type,
     try{
         EnemyProperties properties = enemies_properties.at(enemy_type);
         Enemy enemy(enemy_id++, scenario->getPath(path_number), properties.hp,
-                    properties.speed, properties.does_it_fly);
+                    properties.speed, properties.does_it_fly, enemy_type);
         scenario->addEnemy(enemy);
     } catch (std::exception& e) {
         throw EnemyError("Error al agregar enemigo -> El tipo: " + enemy_type
@@ -229,7 +229,7 @@ const Player& TowerDefenseGame::addPlayer(const std::string &name,
     return players.back();
 }
 
-void TowerDefenseGame::performeAttacks() {
+void TowerDefenseGame::performAttacks() {
     for (auto& spell : spells) {
         if (spell.second->isActive()) {
             spell.second->attack();
@@ -247,7 +247,8 @@ void TowerDefenseGame::levelupTower(const Tower& tower,
 }
 
 void TowerDefenseGame::updateGame() {
-    performeAttacks();
+    moveEnemies();
+    performAttacks();
     scenario->cleanEnemies();
 }
 
@@ -310,4 +311,48 @@ const std::string &TowerDefenseGame::getGameSetting() {
 
 bool TowerDefenseGame::isGameOver() const {
     return is_game_over;
+}
+
+Communication::GameState TowerDefenseGame::getGameState() const {
+    Communication::GameState gameState{};
+    // enemies
+    for (const Enemy& enemy : getAllEnemies()) {
+        Communication::Enemy enemy_info{};
+        enemy_info.id = enemy.getID();
+        enemy_info.x = (int)enemy.getCurrentPosition().getX();
+        enemy_info.y = (int)enemy.getCurrentPosition().getY();
+        enemy_info.type = enemy.getType();
+        gameState.enemy.push_back(enemy_info);
+    }
+
+    // towers
+    for (const Tower* tower: scenario->getTowers()) {
+        Communication::Tower tower_info{};
+        tower_info.experience = (int)tower->getExperience();
+        tower_info.id = tower->getID();
+        tower_info.type = tower->getType();
+        tower_info.damage = tower->getDamage_();
+        tower_info.slowdown = tower->getslowdown();
+        tower_info.rangeInSquares = (int)tower->getRange().getRadius();
+        tower_info.ExplosionRange = tower->getExplosionRange();
+        gameState.towers.push_back(tower_info);
+    }
+
+    // positional powers
+    for (auto& spell: spells) {
+        if (spell.second->isPositional()){
+            Communication::PositionalPower positional_spell{};
+            positional_spell.type = spell.second->getPositionalType();
+            positional_spell.x = (int)spell.second->getPosition().getX();
+            positional_spell.y = (int)spell.second->getPosition().getY();
+            gameState.positionalPowers.push_back(positional_spell);
+        } else {
+            Communication::TargetPower target_spell{};
+            target_spell.type = spell.second->getTargetType();
+            target_spell.enemyID = spell.second->getTargetID();
+            gameState.targetPowers.push_back(target_spell);
+        }
+    }
+
+    return gameState;
 }

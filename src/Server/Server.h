@@ -8,10 +8,11 @@
 
 #include "Thread.h"
 #include "../../client-server/server_ServerSocket.h"
+#include "Match.h"
 
 class Server : public Thread {
 public:
-    Server(const std::string& port);
+    explicit Server(const std::string& port);
     ~Server() override;
 
     // cuando el server se inicia comienza a aceptar clientes
@@ -27,6 +28,7 @@ public:
 
 private:
     ServerSocket accept_socket;
+    std::vector<Match> matchs;
 };
 
 

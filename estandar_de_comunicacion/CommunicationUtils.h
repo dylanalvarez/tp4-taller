@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 
+namespace Communication {
 struct NameAndID {
     std::string name;
     int id;
@@ -73,6 +74,7 @@ struct GameState {
     std::vector<PositionalPower> positionalPowers;
     std::vector<TargetPower> targetPowers;
 };
+}
 
 
 #endif //TP4_TALLER_COMMUNICATION_UTILS_H

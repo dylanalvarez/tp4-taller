@@ -5,14 +5,15 @@
 #include "Enemy.h"
 
 Enemy::Enemy(Path &path, int health_points, float speed,
-             bool does_it_fly) :
-        path(path),
-        hp(health_points),
-        speed(speed * pixels_per_unit),
-        original_speed(speed),
-        can_i_fly(does_it_fly),
-        current_pos(path.getInitialPosition()),
-        current_destiny(path.getNextPosition(current_pos)) {
+             bool does_it_fly, const std::string& type) :
+                                                path(path),
+                                                hp(health_points),
+                                                speed(speed * pixels_per_unit),
+                                                original_speed(speed),
+                                                can_i_fly(does_it_fly),
+                                                current_pos(path.getInitialPosition()),
+                                                current_destiny(path.getNextPosition(current_pos)),
+                                                type(type) {
     direction = (current_destiny - current_pos);
     direction.normalizeAndRound();
     last_speed_reduction_time = 0;
@@ -21,7 +22,8 @@ Enemy::Enemy(Path &path, int health_points, float speed,
 }
 
 Enemy::Enemy(int id, Path &path, int health_points, float speed,
-             bool does_it_fly) : Enemy(path, health_points, speed, does_it_fly) {
+             bool does_it_fly, const std::string& type) :
+        Enemy(path, health_points, speed, does_it_fly, type) {
     this->id = id;
 }
 
@@ -90,4 +92,15 @@ bool Enemy::isDead() const {
 
 bool Enemy::reachTheEnd() const {
     return i_reach_the_end;
+}
+
+Communication::Enemy::Type Enemy::getType() const {
+    typedef Communication::Enemy::Type enemyType;
+
+    if (type == "green_demon") { return enemyType::greenDemon; }
+    if (type == "abmonible") { return enemyType::abmonible; }
+    if (type == "undead") { return enemyType::undead; }
+    if (type == "bloody_hawk") { return enemyType::bloodyHawk; }
+    if (type == "spectrum") { return enemyType::spectre; }
+    if (type == "goat_man") { return enemyType::goatMan; }
 }

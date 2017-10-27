@@ -11,5 +11,9 @@ Match::Match(const std::string &config_file_path,
 Match::~Match() = default;
 
 void Match::run() {
-
+    while(!game.isGameOver()) {
+        game.updateGame();
+        /** enviar el estado del juego */
+        usleep(time_step);
+    }
 }

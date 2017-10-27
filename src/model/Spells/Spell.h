@@ -36,13 +36,23 @@ public:
     // chequea si paso su cooldown
     bool isOnCooldown();
 
+    virtual bool isPositional() const = 0;
+    virtual Communication::PositionalPower::Type getPositionalType() const = 0;
+    virtual Communication::TargetPower::Type getTargetType() const = 0;
+
+    const Vector& getPosition() const;
+    const int getTargetID() const;
+
 protected:
     Vector position;
+    int target_id;
     bool is_active = false;
     time_t last_activation_time;
     Scenario& scenario;
     unsigned int cooldown;
     bool is_on_cooldown;
+
+    const int tile_size = 2; // en pixeles
 };
 
 #endif //TOWERDEFENSE_SPELL_H

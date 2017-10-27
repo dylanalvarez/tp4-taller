@@ -24,6 +24,10 @@ public:
     void attack() override;
 
     bool isActive() const override;
+
+    bool isPositional() const override;
+    Communication::PositionalPower::Type getPositionalType() const override;
+    Communication::TargetPower::Type getTargetType() const override;
 };
 
 

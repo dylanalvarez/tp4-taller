@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "Factory/TowerFactory.h"
 #include "Spells/Spell.h"
+#include "../../estandar_de_comunicacion/CommunicationUtils.h"
 
 class TowerDefenseGame {
 public:
@@ -57,9 +58,8 @@ public:
 
     // mueve todos los enemigos
     void moveEnemies();
-    // realiza los ataques
-    void performeAttacks();
-
+    // realiza los ataques (torres y hechizos)
+    void performAttacks();
     // llama a moveEnemies y performe attacks ademas de limpiar
     // los enemigos muertos
     void updateGame();
@@ -69,6 +69,7 @@ public:
     const std::string& getGameName();
     const std::string& getGameSetting();
     const std::vector<Enemy>& getAllEnemies() const;
+    Communication::GameState getGameState() const;
 
     TowerDefenseGame(const TowerDefenseGame&) = delete;
     TowerDefenseGame& operator=(const TowerDefenseGame&) = delete;

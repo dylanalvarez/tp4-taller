@@ -18,6 +18,7 @@ void Spell::activate(const Vector &position) {
     is_active = true;
     this->position = position;
     last_activation_time = time(nullptr);
+    target_id = -1;
 }
 
 void Spell::checkIfIsActive(unsigned int duration) {
@@ -31,4 +32,12 @@ bool Spell::isOnCooldown() {
     is_on_cooldown = difftime(time(nullptr), last_activation_time) < cooldown;
 
     return is_on_cooldown;
+}
+
+const Vector &Spell::getPosition() const {
+    return position;
+}
+
+const int Spell::getTargetID() const {
+    return target_id;
 }

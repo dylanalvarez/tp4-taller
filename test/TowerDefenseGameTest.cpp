@@ -161,7 +161,7 @@ void TowerDefenseGameTest::whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life > enemy.getHealthPoints());
 }
@@ -189,7 +189,7 @@ void TowerDefenseGameTest::fireTowerAttacksAllnearbyEnemiesWithLessDamageTest() 
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 > enemies[0].getHealthPoints());
     CPPUNIT_ASSERT(initial_life_enemy2 > enemies[1].getHealthPoints());
@@ -212,7 +212,7 @@ void TowerDefenseGameTest::fireTowerDoesNotAttacksEnemiesThatAreNotInRangeTest()
     int initial_life_enemy2 = enemies[1].getHealthPoints();
     int initial_life_enemy3 = enemies[2].getHealthPoints();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 == enemies[0].getHealthPoints());
     CPPUNIT_ASSERT(initial_life_enemy2 == enemies[1].getHealthPoints());
@@ -235,19 +235,19 @@ void TowerDefenseGameTest::fireTowerAttacksOneTimeEveryThreeSecondsTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 > enemies[0].getHealthPoints());
 
     initial_life_enemy1 = enemies[0].getHealthPoints();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 == enemies[0].getHealthPoints());
 
     sleep(3);
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 > enemies[0].getHealthPoints());
 }
@@ -272,7 +272,7 @@ void TowerDefenseGameTest::fireTowerDoesNotChangeObjetiveIfItsAliveTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life2 > goat_man.getHealthPoints());
     CPPUNIT_ASSERT(initial_life1 == green_demon.getHealthPoints());
@@ -281,7 +281,7 @@ void TowerDefenseGameTest::fireTowerDoesNotChangeObjetiveIfItsAliveTest() {
 
     game->moveEnemies();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life2 > goat_man.getHealthPoints());
     CPPUNIT_ASSERT(initial_life1 == green_demon.getHealthPoints());
@@ -303,7 +303,7 @@ void TowerDefenseGameTest::attackWhenIsInRangeAndStopAttackingWhenIsOutTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life > enemy.getHealthPoints());
     initial_life = enemy.getHealthPoints();
@@ -313,7 +313,7 @@ void TowerDefenseGameTest::attackWhenIsInRangeAndStopAttackingWhenIsOutTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life == enemy.getHealthPoints());
 
@@ -335,7 +335,7 @@ void TowerDefenseGameTest::whenEnemyIsInRangeOfWaterTowerItAttacksHimTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life > enemy.getHealthPoints());
 }
@@ -356,19 +356,19 @@ void TowerDefenseGameTest::waterTowerAttacksOneTimeEveryThreeSecondsTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 > enemies[0].getHealthPoints());
 
     initial_life_enemy1 = enemies[0].getHealthPoints();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 == enemies[0].getHealthPoints());
 
     sleep(3); // cooldown de la torre
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 > enemies[0].getHealthPoints());
 }
@@ -392,7 +392,7 @@ void TowerDefenseGameTest::waterTowerDoesNotChangeObjetiveIfItsAliveTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life2 > enemy2.getHealthPoints());
     CPPUNIT_ASSERT(initial_life1 == enemy.getHealthPoints());
@@ -401,7 +401,7 @@ void TowerDefenseGameTest::waterTowerDoesNotChangeObjetiveIfItsAliveTest() {
 
     game->moveEnemies();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life2 > enemy2.getHealthPoints());
     CPPUNIT_ASSERT(initial_life1 == enemy.getHealthPoints());
@@ -432,7 +432,7 @@ void TowerDefenseGameTest::waterTowerReduceEnemySpeedTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_enemy_speed > game->getAllEnemies()[0].getSpeed());
 }
@@ -452,7 +452,7 @@ void TowerDefenseGameTest::waterTowerReduceEnemySpeedDuringTwoSecondsTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     sleep(2);
 
@@ -475,7 +475,7 @@ void TowerDefenseGameTest::whenEnemyIsInRangeOfEarthTowerItAttacksHimTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life > enemy.getHealthPoints());
 }
@@ -496,19 +496,19 @@ void TowerDefenseGameTest::earthTowerAttacksOneTimeEveryFiveSecondsTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 > enemies[0].getHealthPoints());
 
     initial_life_enemy1 = enemies[0].getHealthPoints();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 == enemies[0].getHealthPoints());
 
     sleep(5); // cooldown de la torre
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 > enemies[0].getHealthPoints());
 }
@@ -533,7 +533,7 @@ void TowerDefenseGameTest::earthTowerDoesNotChangeObjetiveIfItsAliveTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life2 > enemy2.getHealthPoints());
     CPPUNIT_ASSERT(initial_life1 == enemy.getHealthPoints());
@@ -542,7 +542,7 @@ void TowerDefenseGameTest::earthTowerDoesNotChangeObjetiveIfItsAliveTest() {
 
     game->moveEnemies();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life2 > enemy2.getHealthPoints());
     CPPUNIT_ASSERT(initial_life1 == enemy.getHealthPoints());
@@ -564,7 +564,7 @@ void TowerDefenseGameTest::whenEnemyIsInRangeOfAirTowerItAttacksHimTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life > enemy.getHealthPoints());
 }
@@ -585,19 +585,19 @@ void TowerDefenseGameTest::airTowerAttacksOneTimeEveryFiveSecondsTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 > enemies[0].getHealthPoints());
 
     initial_life_enemy1 = enemies[0].getHealthPoints();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 == enemies[0].getHealthPoints());
 
     sleep(5); // cooldown de la torre
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life_enemy1 > enemies[0].getHealthPoints());
 }
@@ -620,7 +620,7 @@ void TowerDefenseGameTest::airTowerDoesNotChangeObjetiveIfItsAliveTest() {
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life2 > enemy2.getHealthPoints());
     CPPUNIT_ASSERT(initial_life1 == enemy.getHealthPoints());
@@ -629,7 +629,7 @@ void TowerDefenseGameTest::airTowerDoesNotChangeObjetiveIfItsAliveTest() {
 
     game->moveEnemies();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(initial_life2 > enemy2.getHealthPoints());
     CPPUNIT_ASSERT(initial_life1 == enemy.getHealthPoints());
@@ -652,7 +652,7 @@ void TowerDefenseGameTest::airTowerMovesBackEnemyWhenHitHimTest() {
 
     Vector enemy_last_position = enemy.getCurrentPosition();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     // cuando le pega el enemigo esta en (3,5) y pasa a (2,5)
     CPPUNIT_ASSERT_EQUAL(1, (int)(enemy_last_position - enemy.getCurrentPosition()).getX());
@@ -675,7 +675,7 @@ void TowerDefenseGameTest::airTowerHitsFlyingEnemiesHarderTest() {
 
     int initial_green_demon_health = green_demon.getHealthPoints();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     int dmg_dealed_to_green_demon = initial_green_demon_health
                                              - green_demon.getHealthPoints();
@@ -695,7 +695,7 @@ void TowerDefenseGameTest::airTowerHitsFlyingEnemiesHarderTest() {
 
     int initial_spectrum_health = spectrum.getHealthPoints();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     int dmg_dealed_to_spectrum = initial_spectrum_health
                                           - spectrum.getHealthPoints();
@@ -714,7 +714,7 @@ void TowerDefenseGameTest::whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest() 
         game->moveEnemies();
     }
 
-    game->performeAttacks();
+    game->performAttacks();
 
     game->addEnemy("green_demon");
 
@@ -726,7 +726,7 @@ void TowerDefenseGameTest::whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest() 
     const Enemy& green_demon = game->getAllEnemies()[0];
     int current_health = green_demon.getHealthPoints();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(current_health == green_demon.getHealthPoints());
 }
@@ -742,7 +742,7 @@ void TowerDefenseGameTest::earthTowerCantAttackFlyingUnitsTest() {
 
     int initial_life = game->getAllEnemies()[0].getHealthPoints();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT_EQUAL(game->getAllEnemies()[0].getHealthPoints(), initial_life);
 }
@@ -762,7 +762,7 @@ void TowerDefenseGameTest::hittingAnEnemyIncreaseFireTowerExperienceByDealedDama
     // se situa en rango de la torre
     game->moveEnemies();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(tower.getDamage() == tower.getExperience());
 }
@@ -779,7 +779,7 @@ TowerDefenseGameTest::killingEnemyIncreaseTowerExpByDmgDealedPlusFiftyPercentOfE
 
     for (int i = 0; i < 4; i++) {
         // con 4 ataques lo mata
-        game->performeAttacks();
+        game->performAttacks();
     }
 
     // si la torre lo mata, gana 20 exp + 50% de 20 = 30 exp
@@ -797,7 +797,7 @@ void TowerDefenseGameTest::cantLevelupWaterTowerWithInsuficientExpPointsTest() {
 
     for (int i = 0; i < 5; i++) {
         // con 4 ataques lo mata
-        game->performeAttacks();
+        game->performAttacks();
     }
 
     // cuando lo mata gana 30 de exp y para levelear el rango necesita 200
@@ -820,7 +820,7 @@ void TowerDefenseGameTest::whenEarthTowerLevelupHisExperienceIsReducedTest() {
     game->moveEnemies();
     for (int j = 0; j < 6 ; j++){
         // con 1 ataque lo mata
-        game->performeAttacks();
+        game->performAttacks();
     }
 
     game->levelupTower(tower, "damage");
@@ -837,7 +837,7 @@ void TowerDefenseGameTest::ifCantLevelUpHisExperienceItsNotReducedTest() {
 
     // se situa en rango de la torre
     game->moveEnemies();
-    game->performeAttacks();
+    game->performAttacks();
 
     CPPUNIT_ASSERT_THROW(game->levelupTower(tower, "damage"), TowerError);
     CPPUNIT_ASSERT_EQUAL(30, (int)tower.getExperience());
@@ -857,7 +857,7 @@ void TowerDefenseGameTest::levelingTwoTimesDamageOfEarthTowerIncreaseItByTwentyT
     game->moveEnemies();
     for (int j = 0; j < 13 ; j++){
         // con 1 ataque lo mata
-        game->performeAttacks();
+        game->performAttacks();
     }
 
     game->levelupTower(tower, "damage");
@@ -887,7 +887,7 @@ void TowerDefenseGameTest::levelingImpactRangeOfFiretowerIncreasesItByOnesTest()
     // con 34 ataques mueren
     for (int j = 0; j < 5; j++) {
         for (int i = 0; i < 34; i++){
-            game->performeAttacks();
+            game->performAttacks();
         }
     }
 
@@ -907,7 +907,7 @@ void TowerDefenseGameTest::levelingImpactRangeOfFiretowerIncreasesItByOnesTest()
 
     int initial_hp = game->getAllEnemies()[6].getHealthPoints();
 
-    game->performeAttacks();
+    game->performAttacks();
 
     float dmg_dealed = initial_hp - game->getAllEnemies()[6].getHealthPoints();
 
@@ -928,7 +928,7 @@ void TowerDefenseGameTest::deadEnemiesAreDestroyedTest() {
     game->addEnemy("undead");
     game->moveEnemies();
 
-    game->performeAttacks();
+    game->performAttacks();
     // ya murio
 
     game->updateGame();
@@ -970,7 +970,7 @@ void TowerDefenseGameTest::throwSpellFissureDestroysAllEnemysInPositionTest() {
     const Player &added_player = game->addPlayer("alguien", "earth");
 
     // comienza en (0,0)
-    game->addEnemy("undead");
+    game->addEnemy("green_demon");
 
     game->throwSpell(added_player, "fissure", Vector(0,0));
 
@@ -987,7 +987,7 @@ void TowerDefenseGameTest::fissureOnlyLastOneSecondTest() {
     sleep(1);
 
     game->addEnemy("undead");
-    game->updateGame();
+    game->performAttacks();
 
     CPPUNIT_ASSERT_EQUAL(1, (int)game->getAllEnemies().size());
 }
@@ -998,7 +998,6 @@ void TowerDefenseGameTest::EnemyPassingThrowFissureDieTest() {
     game->throwSpell(added_player, "fissure", Vector(0,1));
 
     game->addEnemy("green_demon");
-    game->moveEnemies();
     game->updateGame();
 
     CPPUNIT_ASSERT_EQUAL(0, (int)game->getAllEnemies().size());
@@ -1012,7 +1011,7 @@ void TowerDefenseGameTest::fissureDoesNotAffectFlyingEnemiesTest() {
 
     game->throwSpell(added_player, "fissure", Vector(0,0));
 
-    game->updateGame();
+    game->performAttacks();
 
     CPPUNIT_ASSERT_EQUAL(1, (int)game->getAllEnemies().size());
 }
@@ -1063,7 +1062,7 @@ void TowerDefenseGameTest::fireWallDealDamageToEnemiesInTheAreaTest() {
 
     game->throwSpell(added_player, "fire_wall", Vector(0,0));
 
-    game->updateGame();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(first_enemy_hp > game->getAllEnemies()[0].getHealthPoints());
     CPPUNIT_ASSERT(second_enemy_hp > game->getAllEnemies()[1].getHealthPoints());
@@ -1079,7 +1078,7 @@ void TowerDefenseGameTest::fireWallOnlyLastFiveSecondsTest() {
     game->addEnemy("spectrum");
     int second_enemy_hp = game->getAllEnemies()[0].getHealthPoints();
 
-    game->updateGame();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(second_enemy_hp == game->getAllEnemies()[0].getHealthPoints());
 }
@@ -1148,7 +1147,7 @@ void TowerDefenseGameTest::blizzardDealsDamageAndSlowDownEnemiesOnAreaTest() {
     int undead_initial_hp = undead.getHealthPoints();
 
     game->throwSpell(added_player, "blizzard", Vector(0,0));
-    game->updateGame();
+    game->performAttacks();
 
     float spectrum_reduced_speed = spectrum.getSpeed();
     int spectrum_reduced_hp = spectrum.getHealthPoints();
@@ -1169,13 +1168,13 @@ void TowerDefenseGameTest::blizzardHasACooldownTest() {
     const Enemy& spectrum = game->getAllEnemies()[0];
 
     game->throwSpell(added_player, "blizzard", Vector(0,0));
-    game->updateGame();
+    game->performAttacks();
 
     int actual_hp = spectrum.getHealthPoints();
 
     sleep(5);
     game->throwSpell(added_player, "blizzard", Vector(0,0));
-    game->updateGame();
+    game->performAttacks();
 
     int reduced_hp = spectrum.getHealthPoints();
 
@@ -1194,7 +1193,7 @@ void TowerDefenseGameTest::tornatoDealsDamageToAllEnemiesInTheAreaTest() {
 
     game->throwSpell(added_player, "tornato", Vector(0,0));
 
-    game->updateGame();
+    game->performAttacks();
 
     CPPUNIT_ASSERT(first_enemy_hp > game->getAllEnemies()[0].getHealthPoints());
     CPPUNIT_ASSERT(second_enemy_hp > game->getAllEnemies()[1].getHealthPoints());
@@ -1208,13 +1207,13 @@ void TowerDefenseGameTest::tornatoHasACooldownTest() {
     const Enemy& spectrum = game->getAllEnemies()[0];
 
     game->throwSpell(added_player, "tornato", Vector(0,0));
-    game->updateGame();
+    game->performAttacks();
 
     int actual_hp = spectrum.getHealthPoints();
 
     sleep(10); // duracion del tornado
     game->throwSpell(added_player, "tornato", Vector(0,0));
-    game->updateGame();
+    game->performAttacks();
 
     int reduced_hp = spectrum.getHealthPoints();
 
@@ -1225,8 +1224,8 @@ void TowerDefenseGameTest::tornatoDoesNotDealDamageToNearbyEnemiesTest() {
     const Player &added_player = game->addPlayer("alguien", "air");
 
     // comienzan en (0,0)
-    game->addEnemy("green_demon");
-    game->moveEnemies();
+    game->addEnemy("spectrum");
+    game->updateGame();
     int first_enemy_hp = game->getAllEnemies()[0].getHealthPoints();
 
     game->throwSpell(added_player, "tornato", Vector(0,0));

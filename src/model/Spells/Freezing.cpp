@@ -3,6 +3,7 @@
 //
 
 #include "Freezing.h"
+#include "../Exceptions/MatchError.h"
 
 Freezing::Freezing(Scenario &scenario, unsigned int cooldown,
                    unsigned int duration) :
@@ -15,6 +16,7 @@ void Freezing::applyEffect(Enemy &enemy) {
 
     enemy.reduceSpeed(100, duration);
     last_activation_time = time(nullptr);
+    target_id = enemy.getID();
 }
 
 bool Freezing::canBeThrownBy(const std::string &element) {
@@ -25,4 +27,17 @@ void Freezing::attack() {}
 
 bool Freezing::isActive() const {
     return is_active;
+}
+
+Communication::PositionalPower::Type Freezing::getPositionalType() const {
+    throw MatchError("Error al solicitar tipo de hechizo:"
+                             " freezing no es posicional");
+}
+
+Communication::TargetPower::Type Freezing::getTargetType() const {
+    return Communication::TargetPower::Type::freezing;
+}
+
+bool Freezing::isPositional() const {
+    return false;
 }

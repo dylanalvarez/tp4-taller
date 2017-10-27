@@ -23,6 +23,10 @@ public:
     void levelupReachOfImpact() override;
     void levelupSlowdown() override;
 
+    Communication::Tower::Damage getDamage_() const override;
+    Communication::Tower::Type getType() const override;
+    int getExplosionRange() const override;
+
     FireTower(const FireTower&) = delete;
     FireTower& operator=(const FireTower&) = delete;
     FireTower& operator=(FireTower&&) = delete;

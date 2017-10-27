@@ -3,6 +3,7 @@
 //
 
 #include "Tornato.h"
+#include "../Exceptions/MatchError.h"
 
 Tornato::Tornato(Scenario &scenario, unsigned int cooldown,
                  unsigned int min_dmg, unsigned int max_dmg, unsigned int duration) :
@@ -33,11 +34,24 @@ void Tornato::attack() {
     // distribucion uniforme
     std::uniform_int_distribution<> distribution(min_dmg, max_dmg);
 
-    for (Enemy* enemy : scenario.getEnemiesInRange(Range(position, 0))) {
+    for (Enemy* enemy : scenario.getEnemiesInRange(Range(position, tile_size))) {
         enemy->reduceLife((unsigned)distribution(gen));
     }
 }
 
 bool Tornato::isActive() const {
     return is_active;
+}
+
+bool Tornato::isPositional() const {
+    return true;
+}
+
+Communication::PositionalPower::Type Tornato::getPositionalType() const {
+    return Communication::PositionalPower::Type::tornado;
+}
+
+Communication::TargetPower::Type Tornato::getTargetType() const {
+    throw MatchError("Error al solicitar tipo de hechizo:"
+                             " tornado es posicional");
 }
