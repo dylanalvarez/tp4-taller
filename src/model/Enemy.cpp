@@ -17,17 +17,22 @@ Enemy::Enemy(Path &path, int health_points, float speed,
     direction = (current_destiny - current_pos);
     direction.normalizeAndRound();
     last_speed_reduction_time = 0;
+    last_moved_time = 0;
     speed_reduction_time = 0;
     i_reach_the_end = false;
 }
 
 Enemy::Enemy(int id, Path &path, int health_points, float speed,
-             bool does_it_fly, const std::string& type) :
+             bool does_it_fly, const std::string& type, int movement_cooldown) :
         Enemy(path, health_points, speed, does_it_fly, type) {
     this->id = id;
 }
 
 void Enemy::move(int units_to_move) {
+    if (difftime(time(nullptr), last_moved_time) < movement_cooldown) {
+        return;
+    }
+
     for (int i = 0; i < getSpeed() * units_to_move; i++){
         current_pos += direction;
 
@@ -39,6 +44,7 @@ void Enemy::move(int units_to_move) {
         }
     }
     if (current_pos == path.getFinalPositon()) { i_reach_the_end = true; }
+    last_moved_time = time(nullptr);
 }
 
 const Vector &Enemy::getCurrentPosition() const {
