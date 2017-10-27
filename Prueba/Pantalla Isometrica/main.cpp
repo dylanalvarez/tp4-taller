@@ -26,19 +26,22 @@ int main(int argc, char *argv[])
       id++;
     }
   }
-  fichas.agregarTorre(FichaTorre(largo*5, largo*3, id, FichaTorreDeTierra, sprites));
-  id++;
-  fichas.agregarTorre(FichaTorre(largo*6, largo*3, id, FichaTorreDeTierra, sprites));
-  id++;
-  fichas.agregarTorre(FichaTorre(largo*7, largo*3, id, FichaTorreDeFuego, sprites));
-  id++;
-  fichas.agregarTorre(FichaTorre(largo*7, largo*7, id, FichaTorreDeAire, sprites));
-  id++;
-  fichas.agregarTorre(FichaTorre(largo*1, largo*8, id, FichaTorreDeAgua, sprites));
-  id++;
-  fichas.agregarEnemigo(FichaEnemigo(largo*2, largo*2, id, Abmonible, sprites));
+  fichas.agregarTorre(FichaTorre(largo*5, largo*3, 1, FichaTorreDeTierra, sprites));
+
+  fichas.agregarTorre(FichaTorre(largo*6, largo*3, 2, FichaTorreDeTierra, sprites));
+
+  fichas.agregarTorre(FichaTorre(largo*7, largo*3, 3, FichaTorreDeFuego, sprites));
+
+  fichas.agregarTorre(FichaTorre(largo*7, largo*7, 4, FichaTorreDeAire, sprites));
+
+  fichas.agregarTorre(FichaTorre(largo*1, largo*8, 5, FichaTorreDeAgua, sprites));
+
+  fichas.agregarEnemigo(FichaEnemigo(largo*2, largo*2, 1, Abmonible, sprites));
 
   fichas.agregarPortal(FichaPortal(largo*0, largo*0, 0, FichaPortalAzul, sprites));
+
+  fichas.agregarEfectos(1, 1, 1, sprites);
+
 
 	Gtk::Window* window;
   Gtk::Box* Box;

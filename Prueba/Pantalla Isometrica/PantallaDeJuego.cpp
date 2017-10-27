@@ -91,7 +91,7 @@ bool PantallaDeJuego::on_button_press_event(GdkEventButton* event){
 
   if (menuTorres.estamosCasteando()){
     menuTorres.lanzarHechizo(fichas.ObetenerTerrenoEnEstaPosicion(x2,y2), //corregir esto.
-                              fichas.ObetenerTorreEnEstaPosicion(x2,y2));
+                              fichas.ObetenerEnemigoEnEstaPosicion(x2,y2));
     return Gtk::DrawingArea::on_button_press_event(event);
   }
 
@@ -122,6 +122,7 @@ bool PantallaDeJuego::on_draw(const Cairo::RefPtr<Cairo::Context>& cr){
   fichas.imprimirPortal(cr,datosActuales);
   fichas.imprimirEnemigo(cr,datosActuales);
   fichas.imprimirTorres(cr,datosActuales);
+  fichas.imprimirEfectos(cr,datosActuales);
   return true; //esto es parte del formato de timer..
 }
 

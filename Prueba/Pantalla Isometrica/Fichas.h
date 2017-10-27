@@ -7,19 +7,22 @@
 #include "VectorDeSprites.h"
 #include "TiposDeDatosExpeciales.h"
 
+//corregir Srpites y sprites
+
 class Ficha{
-private:
-protected:
- std::vector<Sprite> sprites;
- //esto es enificiente para el piso. Pero eficiente para todo lo demas
- int spriteActual;
- int x;
- int y;
- int id;
- int tipo;
- int medioLargoX;
- int medioAltoY;
-public:
+ private:
+ protected:
+  std::vector<Sprite> sprites;
+  //esto es enificiente para el piso. Pero eficiente para todo lo demas
+  int spriteActual;
+  int x;
+  int y;
+  int id;
+  int tipo;
+  int medioLargoX;
+  int medioAltoY;
+ public:
+  Ficha();
   Ficha(int x2, int y2, int id2, int tipo2);
   Ficha(const Ficha &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
@@ -29,19 +32,19 @@ public:
   int getId() const;
   int getTipo() const;
   bool colisionaConmigo(int x2, int y2);
-  //echa para revisar nada mas. Quitar despues.
-  void imprimierCordenadas();
+  void imprimierCordenadas() const;   //echa para revisar nada mas. Quitar despues.
+  Posicion getPosicio() const;
 };
-//FichaTerreno, FichaTorre, FichaEnemigo
+//FichaTerreno
 
 #define FichaPisoFirme 0
 #define FichaPisoEnemigos 1
 #define FichaPisoFondoLava 2
 
 class FichaTerreno: public Ficha{
-private:
-protected:
-public:
+ private:
+ protected:
+ public:
   FichaTerreno(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
   FichaTerreno(const FichaTerreno &p);
   void cambiarTipo(int tipo);
@@ -53,13 +56,13 @@ public:
 #define FichaTorreDeAgua 3
 
 class FichaTorre: public Ficha{
-private:
-protected:
- int danio;
- int rango;
- int especial;
- int spriteActualSubAnimacion;
-public:
+ private:
+ protected:
+  int danio;
+  int rango;
+  int especial;
+  int spriteActualSubAnimacion;
+ public:
   FichaTorre(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
   FichaTorre(const FichaTorre &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
@@ -72,13 +75,13 @@ public:
 #define Abmonible 0
 
 class FichaEnemigo: public Ficha{
-private:
-protected:
-//para las voladoras.
- //int correccionX;
- //int correccionY;
- int inicioAnimiacionActual;
-public:
+ private:
+ protected:
+ //para las voladoras.
+  int correccionX;
+  int correccionY;
+  int inicioAnimiacionActual;
+ public:
   //todo se puede intentar mejorar. Con una correccion de la posicion.
   FichaEnemigo(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
   FichaEnemigo(const FichaEnemigo &p);
@@ -88,16 +91,35 @@ public:
 
 #define FichaPortalAzul 0
 #define FichaPortalRojo 1
-//las fichas de efecto son varias con comportameinetos distintos.
+
 class FichaPortal: public Ficha{
-private:
-protected:
- int spriteActualSubAnimacion;
-public:
+ private:
+ protected:
+  int spriteActualSubAnimacion;
+ public:
   FichaPortal(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
   FichaPortal(const FichaPortal &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
   virtual void ejecutarSicloDeAnimacion(); //Para los gif
+};
+
+#define ProllectilTierra 0
+#define FichaPortalRojo 1
+//valas. Poderes estatico y poderes a objetivos
+class FichaEfectos: public Ficha{
+ private:
+ protected:
+  int tiempoImpacto;
+  FichaEnemigo *objetivo;
+  bool destrulleme;
+ public:
+  FichaEfectos(FichaTorre &inicio, int id2, VectorDeSprites &sprites,
+     FichaEnemigo &objetivo2);
+  //FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites, FichaEnemigo *objetivo2);
+  FichaEfectos(const FichaEfectos &p);
+  virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
+  virtual void ejecutarSicloDeAnimacion(); //Para los gif
+  bool siguesVivo() const; //Para los gif
 };
 
 #endif

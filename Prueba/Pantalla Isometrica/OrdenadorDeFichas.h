@@ -15,7 +15,7 @@ private:
  std::map<int,FichaTerreno> terreno;
  std::map<int,FichaTorre> torres;
  std::map<int,FichaEnemigo> enemigos;
- std::map<int,Ficha> poderes;
+ std::map<int,FichaEfectos> poderes;
  std::vector<FichaPortal> portales;
 protected:
 public:
@@ -37,6 +37,11 @@ public:
  void imprimirEnemigo(const Cairo::RefPtr<Cairo::Context>& cr,
                        DatosPantalla datosActuales);
  int ObetenerEnemigoEnEstaPosicion(int x, int y);
+ FichaEnemigo& getEnemigo(int id);
+
+ void agregarEfectos(int inicio, int objetivo, int id2, VectorDeSprites &sprites);
+ void imprimirEfectos(const Cairo::RefPtr<Cairo::Context>& cr,
+                       DatosPantalla datosActuales);
 
  void agregarPortal(FichaPortal nuevaFicha);
  void imprimirPortal(const Cairo::RefPtr<Cairo::Context>& cr,

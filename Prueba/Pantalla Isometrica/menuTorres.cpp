@@ -3,12 +3,14 @@
 
 MenuTorres::MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2): ventana(ventana2){
   	ventana->get_widget("NombreTorre", titulo);
+
   	ventana->get_widget("Datos1", rango);
     ventana->get_widget("Upgred1", upgradeRango);
     ventana->get_widget("Datos2", danio);
     ventana->get_widget("Upgred2", upgradeDanio);
     ventana->get_widget("Datos3", especial);
     ventana->get_widget("Upgred3", upgradeEspecial);
+
     ventana->get_widget("Terraforming", Terraforming);
   	ventana->get_widget("Congelacion", Congelacion);
     ventana->get_widget("Grieta", Grieta);
@@ -17,12 +19,36 @@ MenuTorres::MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2): ventana(ventana2)
     ventana->get_widget("Tornado", Tornado);
     ventana->get_widget("MuroDeFuego", MuroDeFuego);
     ventana->get_widget("Rayos", Rayos);
+
+    ventana->get_widget("Menu terreno", menuTerreno);
+    ventana->get_widget("Fuego", botonFuego);
+    ventana->get_widget("Tierra", botonTierra);
+    ventana->get_widget("Agua", botonAgua);
+    ventana->get_widget("Aire", botonAire);
+
+    ventana->get_widget("Enviar", botonEnviar);
+    ventana->get_widget("mensaje", mensajeEntrada);
+    ventana->get_widget("charla del Chat", chat);
+
     upgradeRango->signal_clicked().connect(
       sigc::mem_fun(this, &MenuTorres::avisarUpgradeRango));
     upgradeDanio->signal_clicked().connect(
       sigc::mem_fun(this, &MenuTorres::avisarUpgradeRango));
     upgradeEspecial->signal_clicked().connect(
       sigc::mem_fun(this, &MenuTorres::avisarUpgradeEspecial));
+
+    botonFuego->signal_clicked().connect(
+      sigc::mem_fun(this, &MenuTorres::avisarConstruirTorreFuego));
+    botonTierra->signal_clicked().connect(
+      sigc::mem_fun(this, &MenuTorres::avisarConstruirTorreTierra));
+    botonAgua->signal_clicked().connect(
+      sigc::mem_fun(this, &MenuTorres::avisarConstruirTorreAgua));
+    botonAire->signal_clicked().connect(
+      sigc::mem_fun(this, &MenuTorres::avisarConstruirTorreAire));
+
+    botonEnviar->signal_clicked().connect(
+      sigc::mem_fun(this, &MenuTorres::enviarMensajeChat));
+    chat->set_sensitive(false);
 
     Terraforming->signal_toggled().connect(
       sigc::mem_fun(this, &MenuTorres::prepararTerraforming));
@@ -31,7 +57,8 @@ MenuTorres::MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2): ventana(ventana2)
   }
 
 void MenuTorres::selecionarTorre (const FichaTorre &torre2){
-  titulo->show();
+  decelecionar();
+
   rango->show();
   upgradeRango->show();
   danio->show();
@@ -86,17 +113,49 @@ void MenuTorres::selecionarTorre (const FichaTorre &torre2){
 }
 
 void MenuTorres::decelecionar(){
-  titulo->hide();
+  titulo->set_text(" ");
   rango->hide();
   upgradeRango->hide();
   danio->hide();
   upgradeDanio->hide();
   especial->hide();
   upgradeEspecial->hide();
+  menuTerreno->hide();
   }
 
 void MenuTorres::selecionarTerreno(const FichaTerreno &terreno2){
+    terreno =  &terreno2;
     decelecionar();
+    titulo->set_text(" ");
+    switch (terreno->getTipo()){
+      case FichaPisoFirme:
+          titulo->set_text("Piso Firme");
+          menuTerreno->show();
+      break;
+      case FichaPisoEnemigos:
+          titulo->set_text("Piso Enemigo");
+      break;
+      default:
+          titulo->set_text("Fondo");
+      break;
+      }
+}
+
+void MenuTorres::avisarConstruirTorreTierra(){
+  printf("Construir Torre de Tierra en:  ");
+  terreno->imprimierCordenadas();
+  }
+void MenuTorres::avisarConstruirTorreAgua(){
+  printf("Construir Torre de Agua en:  ");
+  terreno->imprimierCordenadas();
+  }
+void MenuTorres::avisarConstruirTorreFuego(){
+  printf("Construir Torre de Fuego en:  ");
+  terreno->imprimierCordenadas();
+  }
+void MenuTorres::avisarConstruirTorreAire(){
+  printf("Construir Torre de Aire en:  ");
+  terreno->imprimierCordenadas();
   }
 
 //estas son las vericones "betas"
@@ -120,6 +179,7 @@ void MenuTorres::MostrarBotones(Elementos elemento){
       case fuego:
         Meteorito->show();
         MuroDeFuego->show();
+        botonFuego->show();
       break;
       case agua:
         Congelacion->show();
@@ -132,6 +192,7 @@ void MenuTorres::MostrarBotones(Elementos elemento){
       case tierra:
         Terraforming->show();
         Grieta->show();
+        botonTierra->show();
       break;
     }
   }
@@ -143,12 +204,12 @@ void MenuTorres::prepararTerraforming(){
     titulo->hide();
     return; //si estamos desactivando. Da igual.
   }
+  hechizoActual = Hechizo::Terraforming;
+  deselecionarHechizos();
   decelecionar();
-  Grieta->set_active(false); //pensar mejor a futuro.
   casteando = true;
   titulo->set_text("Terraforming");
   titulo->show();
-  hechizoActual = Hechizo::Terraforming;
 }
 void MenuTorres::prepararGrieta(){
   if (!(Grieta->get_active())){
@@ -156,17 +217,21 @@ void MenuTorres::prepararGrieta(){
     titulo->hide();
     return; //si estamos desactivando. Da igual.
   }
+  hechizoActual = Hechizo::Grieta;
   decelecionar();
-  Terraforming->set_active(false); //pensar mejor a futuro.
+  deselecionarHechizos();
   casteando = true;
   titulo->set_text("Grieta");
   titulo->show();
-  hechizoActual = Hechizo::Grieta;
 //  reActivarHechizo(*Terraforming);
 }
 
 void MenuTorres::deselecionarHechizos(){
-  //cosa a ver a futuro
+  //es horriblo..
+  if (hechizoActual != Hechizo::Grieta)
+    Grieta->set_active(false);
+  if (hechizoActual != Hechizo::Terraforming)
+    Terraforming->set_active(false);
 }
 bool MenuTorres::estamosCasteando(){
   return casteando;
@@ -195,4 +260,18 @@ void MenuTorres::lanzarHechizo(int terreno, int objetivo){
 void MenuTorres::reActivarHechizo(Gtk::ToggleButton& hechizo){
   hechizo.set_sensitive(true);
   hechizo.set_active(false);
+}
+
+void MenuTorres::enviarMensajeChat(){
+  auto c = mensajeEntrada->get_text();
+  recivirMensajeChat();
+  mensajeEntrada->set_text(" ");
+}
+
+void MenuTorres::recivirMensajeChat(){
+  auto aux = chat->get_buffer ();
+  auto c = mensajeEntrada->get_text(); //esto es lo que hay que cambiar.
+  aux->insert_at_cursor("\n");
+  aux->insert_at_cursor(c);
+  chat->set_buffer(aux);
 }

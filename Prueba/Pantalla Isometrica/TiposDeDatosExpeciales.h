@@ -4,6 +4,7 @@
 
 #define NoColicion 0
 
+
 enum Elementos{
   fuego,agua,aire,tierra  };
 
@@ -19,4 +20,10 @@ struct DatosPantalla{
   int desplasamientoX;
   int desplasamientoY;
 };
+
+struct Posicion{
+  int X;
+  int Y;
+};
+
 #endif

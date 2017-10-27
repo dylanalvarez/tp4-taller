@@ -11,6 +11,16 @@ void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
   for (auto it = enemigos.begin(); it != enemigos.end(); ++it){
     it->second.ejecutarSicloDeAnimacion();
   }
+  //primero vorra los efectos viejos
+  for (auto it = poderes.begin(); it != poderes.end(); ++it){
+    if (it->second.siguesVivo()) {
+      poderes.erase (it); 
+    }
+  }
+  //ahora sigo
+  for (auto it = poderes.begin(); it != poderes.end(); ++it){
+    it->second.ejecutarSicloDeAnimacion();
+  }
   for (auto it = portales.begin(); it != portales.end(); ++it){
     it->ejecutarSicloDeAnimacion();
   }
@@ -72,7 +82,8 @@ void OrdenadorDeFichas::imprimirEnemigo(const Cairo::RefPtr<Cairo::Context>& cr,
     it->second.dibujar(cr,datosActuales);
   }
 }
-/*int OrdenadorDeFichas::ObetenerTorreEnEstaPosicion(int x, int y){
+
+int OrdenadorDeFichas::ObetenerEnemigoEnEstaPosicion(int x, int y){
   for (auto it = enemigos.begin(); it != enemigos.end(); ++it){
     if (it->second.colisionaConmigo(x,y)) {
       return it->first;
@@ -81,10 +92,22 @@ void OrdenadorDeFichas::imprimirEnemigo(const Cairo::RefPtr<Cairo::Context>& cr,
   return 0;
 }
 
-FichaTorre& OrdenadorDeFichas::getTorre(int id){
-  return torres.at(id);
-}*/
+FichaEnemigo& OrdenadorDeFichas::getEnemigo(int id){
+  return enemigos.at(id);
+}
 
+//efecto
+void OrdenadorDeFichas::agregarEfectos(int inicio, int objetivo,
+   int id2, VectorDeSprites &sprites){
+  FichaEfectos nuevaFicha = FichaEfectos(getTorre(inicio), 1, sprites, getEnemigo(objetivo));
+  poderes.emplace(std::make_pair(nuevaFicha.getId(),nuevaFicha));
+}
+void OrdenadorDeFichas::imprimirEfectos(const Cairo::RefPtr<Cairo::Context>& cr,
+                      DatosPantalla datosActuales){
+ for (auto it = poderes.begin(); it != poderes.end(); ++it){
+   it->second.dibujar(cr,datosActuales);
+ }
+}
 
 //Portal
 void OrdenadorDeFichas::agregarPortal(FichaPortal nuevaFicha){
