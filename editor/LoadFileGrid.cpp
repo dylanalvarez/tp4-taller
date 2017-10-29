@@ -1,5 +1,6 @@
 #include <fstream>
 #include <gtkmm/viewport.h>
+#include <gtkmm/scrolledwindow.h>
 #include "LoadFileGrid.h"
 #include "MapGrid.h"
 #include "NameEntry.h"
@@ -35,13 +36,12 @@ void LoadFileGrid::loadFile() {
     builder.get_widget("main-grid", mainGrid);
     mainGrid->show();
 
-    Gtk::Viewport *mapViewport;
-    builder.get_widget("map", mapViewport);
-
+    Gtk::ScrolledWindow *mapScrolledWindow;
+    builder.get_widget("map", mapScrolledWindow);
     MapGrid *mapGrid = Gtk::manage(
             new MapGrid(*map, builder, map->getWidth(), map->getHeight(),
                         saveButton));
-    mapViewport->add(*mapGrid);
+    mapScrolledWindow->add(*mapGrid);
 
     NameEntry *nameEntry;
     builder.get_widget_derived("name", nameEntry, *map, mapGrid);
