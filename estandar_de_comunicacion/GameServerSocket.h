@@ -9,22 +9,10 @@
 class GameServerSocket {
 public:
     // When it recieves a message, it will invoke a method in the receiver.
-    GameServerSocket(Socket&& socket);
+    GameServerSocket(const GameServerReceiver& receiver, Socket&& socket);
 
     void sendInitialData(const std::vector<Communication::NameAndID> &matches,
                          const std::vector<Communication::NameAndID> &maps);
-
-    // retorna si esta creando partida o uniendose a existente
-    bool isCreating();
-
-    // retorna el id del mapa o el match elegido
-    // ya sea para crear o unirse a partida
-    int getChosen();
-
-    // retorna el nickname del jugador
-    std::string& getNickName();
-
-    std::string& getElement();
 
     // Filename relative to executable
     void sendMap(std::string &&filename);
@@ -46,7 +34,7 @@ private:
     // lo puede acceder el cliente pidiendo que se envie un mensaje
     // y lo puede acceder el thread match enviando el estado del juego
     std::mutex mutex;
-    GameServerReceiver receiver;
+    const GameServerReceiver& receiver;
 };
 
 #endif //TP4_TALLER_GAME_SERVER_SOCKET_H

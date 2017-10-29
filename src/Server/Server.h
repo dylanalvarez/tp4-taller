@@ -35,6 +35,7 @@ public:
     Server& operator=(Server&&) = delete;
 
 private:
+    std::mutex mutex;
     ServerSocket accept_socket;
     std::map<int, Match> matchs;
     std::vector<Client> connecting_client_list;

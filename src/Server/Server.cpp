@@ -20,7 +20,6 @@ void Server::run() {
         if (accept_socket.canAccept()) {
             // se pudo cerrar el socket en el accept
             Client client(std::move(new_client), matchs_id, maps, *this);
-            client.start();
             connecting_client_list.push_back(std::move(client));
         }
     }
@@ -31,8 +30,9 @@ void Server::stop() {
 }
 
 Match& Server::joinToMatch(Client &client, int id, bool is_creating) {
-   if (is_creating) {
-       try {
+    std::lock_guard<std::mutex> lock(mutex);
+    if (is_creating) {
+        try {
            Match new_match(maps_paths.at(id), config_file_path, match_id);
            new_match.addPlayer(std::move(client));
            new_match.start();
@@ -41,7 +41,7 @@ Match& Server::joinToMatch(Client &client, int id, bool is_creating) {
        } catch (std::out_of_range& e) {
            // el mapa no existe
        }
-   }
+    }
     // se esta uniendo
     Match& match = matchs.at(id);
     match.addPlayer(std::move(client));

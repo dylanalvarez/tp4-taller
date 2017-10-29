@@ -14,8 +14,7 @@ public:
           bool does_it_fly, const std::string& type = "green_demon");
 
     Enemy(int id, Path &path, int health_points, float speed,
-          bool does_it_flight, const std::string& type = "green_demon",
-          int movement_cooldown = 0);
+          bool does_it_flight, const std::string& type = "green_demon");
 
     // mueve el enemigo la cantidad de coordenadas indicadas por speed
     // en la direccion correspondiente (segun el path)
@@ -60,9 +59,6 @@ private:
     bool i_reach_the_end;
     time_t last_speed_reduction_time;
     unsigned int speed_reduction_time;
-
-    time_t last_moved_time;
-    int movement_cooldown;
 };
 
 #endif //TOWERDEFENSE_ENEMY_H

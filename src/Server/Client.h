@@ -13,16 +13,14 @@
 
 class Server;
 
-class Client : public Thread {
+class Client {
 public:
     Client(Socket&& socket,
            const std::vector<Communication::NameAndID> &matches,
            const std::vector<Communication::NameAndID> &maps,
            Server& server);
 
-    ~Client() override;
-
-    void run() override;
+    ~Client();
 
     void sendGameState(const Communication::GameState &gameState);
 
@@ -32,15 +30,8 @@ public:
     Client(Client&&) noexcept;
 
 private:
+    GameServerReceiver receiver;
     GameServerSocket serverSocket;
-    Server& server;
-
-    const std::vector<Communication::NameAndID> &maps;
-    const std::vector<Communication::NameAndID> &matches;
-
-    TowerDefenseGame* game;
-
-    void performInitialTasks();
 };
 
 #endif //TOWERDEFENSE_CLIENT_H

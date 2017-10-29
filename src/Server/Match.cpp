@@ -8,11 +8,7 @@ Match::Match(const std::string &config_file_path,
              const std::string &map_file_path, int id) :
                 game(config_file_path, map_file_path), id(id) {}
 
-Match::~Match() {
-    for (Client& client : clients) {
-        client.join();
-    }
-}
+Match::~Match() = default;
 
 void Match::run() {
     while(!game.isGameOver()) {

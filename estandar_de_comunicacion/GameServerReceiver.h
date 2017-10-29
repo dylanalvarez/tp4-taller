@@ -3,10 +3,16 @@
 
 #include <string>
 #include "CommunicationUtils.h"
+#include "../src/model/TowerDefenseGame.h"
 
-class GameServerReceiver {
+class Server;
+
+class GameServerReceiver : public Thread {
 public:
-    GameServerReceiver();
+    GameServerReceiver(Socket& socket, Server& server);
+    ~GameServerReceiver() override;
+
+    void run() override;
 
     void getChosenTeam(std::string &&nickname, int teamID);
 
@@ -26,7 +32,12 @@ public:
 
     void buildTower(int x, int y, Communication::Tower::Type type);
 
-    ~GameServerReceiver();
+    GameServerReceiver(GameServerReceiver&&) noexcept ;
+
+private:
+    Socket& socket;
+    Server& server;
+    TowerDefenseGame* game; // o cola bloqueante
 };
 
 #endif //TP4_TALLER_GAME_SERVER_RECEIVER_H
