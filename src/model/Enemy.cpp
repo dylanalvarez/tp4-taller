@@ -5,27 +5,35 @@
 #include "Enemy.h"
 
 Enemy::Enemy(Path &path, int health_points, float speed,
-             bool does_it_fly) :
-        path(path),
-        hp(health_points),
-        speed(speed),
-        original_speed(speed),
-        can_i_fly(does_it_fly),
-        current_pos(path.getInitialPosition()),
-        current_destiny(path.getNextPosition(current_pos)) {
+             bool does_it_fly, const std::string& type) :
+                                                path(path),
+                                                hp(health_points),
+                                                speed(speed * pixels_per_unit),
+                                                original_speed(speed),
+                                                can_i_fly(does_it_fly),
+                                                current_pos(path.getInitialPosition()),
+                                                current_destiny(path.getNextPosition(current_pos)),
+                                                type(type) {
     direction = (current_destiny - current_pos);
     direction.normalizeAndRound();
     last_speed_reduction_time = 0;
+    last_moved_time = 0;
     speed_reduction_time = 0;
+    i_reach_the_end = false;
 }
 
 Enemy::Enemy(int id, Path &path, int health_points, float speed,
-             bool does_it_fly) : Enemy(path, health_points, speed, does_it_fly) {
+             bool does_it_fly, const std::string& type, int movement_cooldown) :
+        Enemy(path, health_points, speed, does_it_fly, type) {
     this->id = id;
 }
 
-void Enemy::move() {
-    for (int i = 0; i < getSpeed(); i++){
+void Enemy::move(int units_to_move) {
+    if (difftime(time(nullptr), last_moved_time) < movement_cooldown) {
+        return;
+    }
+
+    for (int i = 0; i < getSpeed() * units_to_move; i++){
         current_pos += direction;
 
         if (current_pos == current_destiny){
@@ -35,6 +43,8 @@ void Enemy::move() {
             direction.normalizeAndRound();
         }
     }
+    if (current_pos == path.getFinalPositon()) { i_reach_the_end = true; }
+    last_moved_time = time(nullptr);
 }
 
 const Vector &Enemy::getCurrentPosition() const {
@@ -84,4 +94,19 @@ void Enemy::moveBack() {
 
 bool Enemy::isDead() const {
     return hp == 0;
+}
+
+bool Enemy::reachTheEnd() const {
+    return i_reach_the_end;
+}
+
+Communication::Enemy::Type Enemy::getType() const {
+    typedef Communication::Enemy::Type enemyType;
+
+    if (type == "green_demon") { return enemyType::greenDemon; }
+    if (type == "abmonible") { return enemyType::abmonible; }
+    if (type == "undead") { return enemyType::undead; }
+    if (type == "bloody_hawk") { return enemyType::bloodyHawk; }
+    if (type == "spectrum") { return enemyType::spectre; }
+    if (type == "goat_man") { return enemyType::goatMan; }
 }

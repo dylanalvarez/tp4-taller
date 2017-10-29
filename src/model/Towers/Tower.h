@@ -36,6 +36,14 @@ public:
     const Vector& getPosition() const;
     const Range& getRange() const;
     unsigned int getDamage() const;
+    int getRangeLevel() const;
+    int getDamageLevel() const;
+    int getID() const;
+
+    virtual Communication::Tower::Damage getDamage_() const = 0;
+    virtual Communication::Tower::Type getType() const = 0;
+    virtual Communication::Tower::EnemySlowdown getslowdown() const;
+    virtual int getExplosionRange() const;
 
     Tower(const Tower&) = delete;
     Tower& operator=(const Tower&) = delete;

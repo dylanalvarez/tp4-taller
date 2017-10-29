@@ -126,3 +126,21 @@ void WaterTower::levelupSlowdown() {
 }
 
 void WaterTower::levelupReachOfImpact() {}
+
+Communication::Tower::Damage WaterTower::getDamage_() const {
+    Communication::Tower::Damage dmg_info{};
+    dmg_info.close_by = 0;
+    dmg_info.flying = dmg;
+    dmg_info.normal = dmg;
+
+    return dmg_info;
+}
+
+Communication::Tower::Type WaterTower::getType() const {
+    return Communication::Tower::Type::water;
+}
+
+Communication::Tower::EnemySlowdown WaterTower::getslowdown() const {
+    return Communication::Tower::EnemySlowdown
+            {(int)speed_reduction, (int)speed_reduction_duration};
+}

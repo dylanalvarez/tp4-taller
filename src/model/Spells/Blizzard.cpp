@@ -3,6 +3,7 @@
 //
 
 #include "Blizzard.h"
+#include "../Exceptions/MatchError.h"
 
 Blizzard::Blizzard(Scenario& scenario, unsigned int cooldown,
                    unsigned int duration, unsigned int dmg,
@@ -37,4 +38,17 @@ void Blizzard::attack() {
 
 bool Blizzard::isActive() const {
     return is_active;
+}
+
+Communication::PositionalPower::Type Blizzard::getPositionalType() const {
+    return Communication::PositionalPower::Type::blizzard;
+}
+
+Communication::TargetPower::Type Blizzard::getTargetType() const {
+   throw MatchError("Error al solicitar tipo de hechizo:"
+                            " blizzard es posicional");
+}
+
+bool Blizzard::isPositional() const {
+    return true;
 }

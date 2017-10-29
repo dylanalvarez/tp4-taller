@@ -3,6 +3,7 @@
 //
 
 #include "Ray.h"
+#include "../Exceptions/MatchError.h"
 
 Ray::Ray(Scenario &scenario, unsigned int cooldown, unsigned int min_dmg,
          unsigned int max_dmg) : Spell(scenario, cooldown),
@@ -24,6 +25,7 @@ void Ray::applyEffect(Enemy &enemy) {
     enemy.reduceLife((unsigned)distribution(gen));
 
     last_activation_time = time(nullptr);
+    target_id = enemy.getID();
 }
 
 bool Ray::canBeThrownBy(const std::string &element) {
@@ -34,4 +36,17 @@ void Ray::attack() {}
 
 bool Ray::isActive() const {
     return is_active;
+}
+
+Communication::PositionalPower::Type Ray::getPositionalType() const {
+    throw MatchError("Error al solicitar tipo de hechizo:"
+                             " ray no es posicional");
+}
+
+Communication::TargetPower::Type Ray::getTargetType() const {
+    return Communication::TargetPower::Type::ray;
+}
+
+bool Ray::isPositional() const {
+    return false;
 }

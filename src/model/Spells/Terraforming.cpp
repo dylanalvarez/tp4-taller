@@ -3,6 +3,7 @@
 //
 
 #include "Terraforming.h"
+#include "../Exceptions/MatchError.h"
 
 Terraforming::Terraforming(Scenario &scenario, unsigned int cooldown) :
         Spell(scenario, cooldown) {}
@@ -24,4 +25,17 @@ void Terraforming::applyEffect(Enemy &enemy) {}
 
 bool Terraforming::isActive() const {
     return is_active;
+}
+
+bool Terraforming::isPositional() const {
+    return true;
+}
+
+Communication::PositionalPower::Type Terraforming::getPositionalType() const {
+    return Communication::PositionalPower::Type::terraforming;
+}
+
+Communication::TargetPower::Type Terraforming::getTargetType() const {
+    throw MatchError("Error al solicitar tipo de hechizo:"
+                             " terraforming es posicional");
 }

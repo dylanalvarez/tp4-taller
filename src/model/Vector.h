@@ -5,7 +5,7 @@
 #ifndef TOWERDEFENSE_POSITION_H
 #define TOWERDEFENSE_POSITION_H
 
-#define pixels_per_unit 1.0f
+#define pixels_per_unit 1.0f // debe ser multiplo de 4
 
 #include <complex>
 #include <yaml-cpp/yaml.h>
@@ -29,6 +29,7 @@ public:
     bool operator>(const Vector&) const;
     Vector operator+(const Vector&) const;
     Vector& operator *=(float);
+    Vector operator *(float) const;
 
     // divide cada coordenada por la norma del vector
     void normalize();
@@ -50,10 +51,10 @@ namespace YAML {
     template<>
     struct convert<Vector> {
         static bool decode(const Node& node, Vector& vector) {
-            if(!node.IsSequence() || node.size() != 2) {
+            if(!node.IsMap() || node.size() != 2) {
                 return false;
             }
-            vector.set_coordinates(node[0].as<float>(), node[1].as<float>());
+            vector.set_coordinates(node["x"].as<float>(), node["y"].as<float>());
             return true;
         }
     };

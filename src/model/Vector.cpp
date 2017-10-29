@@ -96,3 +96,7 @@ Vector &Vector::operator-=(const Vector& other) {
 
     return *this;
 }
+
+Vector Vector::operator*(float num) const {
+    return Vector(this->x * num, this->y * num);
+}

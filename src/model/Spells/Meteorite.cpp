@@ -3,6 +3,7 @@
 //
 
 #include "Meteorite.h"
+#include "../Exceptions/MatchError.h"
 
 Meteorite::Meteorite(Scenario& scenario, unsigned int cooldown,
                      unsigned int reach, unsigned int dmg,
@@ -17,7 +18,7 @@ void Meteorite::applyEffect(Enemy &enemy) {
     enemy.reduceLife(dmg);
 
     std::vector<Enemy*> enemies = std::move(scenario.getEnemiesInRange(
-            Range(enemy.getCurrentPosition()), reach));
+            Range(enemy.getCurrentPosition()), reach * tile_size));
 
     for (Enemy* target : enemies) {
         if (target->getID() == enemy.getID()) { continue; }
@@ -37,4 +38,17 @@ void Meteorite::applyEffect(const Vector &position) {}
 
 bool Meteorite::isActive() const {
     return is_active;
+}
+
+Communication::PositionalPower::Type Meteorite::getPositionalType() const {
+    return Communication::PositionalPower::Type::meteorite;
+}
+
+Communication::TargetPower::Type Meteorite::getTargetType() const {
+    throw MatchError("Error al solicitar tipo de hechizo:"
+                             " meteorite es posicional");
+}
+
+bool Meteorite::isPositional() const {
+    return true;
 }

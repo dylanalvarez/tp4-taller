@@ -22,6 +22,9 @@ public:
     void levelupReachOfImpact() override;
     void levelupSlowdown() override;
 
+    Communication::Tower::Damage getDamage_() const override;
+    Communication::Tower::Type getType() const override;
+
     EarthTower(const EarthTower&) = delete;
     EarthTower& operator=(const EarthTower&) = delete;
     EarthTower& operator=(EarthTower&&) = delete;

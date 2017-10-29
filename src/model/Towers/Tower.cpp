@@ -91,3 +91,23 @@ Tower::Tower(Tower&& other) noexcept : scenario(scenario) {
     this->dmg_level = other.dmg_level;
     this->levelup_types = std::move(other.levelup_types);
 }
+
+int Tower::getRangeLevel() const {
+    return range_level;
+}
+
+int Tower::getDamageLevel() const {
+    return dmg_level;
+}
+
+int Tower::getID() const {
+    return id;
+}
+
+Communication::Tower::EnemySlowdown Tower::getslowdown() const {
+    return Communication::Tower::EnemySlowdown {0,0};
+}
+
+int Tower::getExplosionRange() const {
+    return 0;
+}

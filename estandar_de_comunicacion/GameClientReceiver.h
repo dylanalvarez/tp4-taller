@@ -3,6 +3,9 @@
 
 #include "CommunicationUtils.h"
 
+using Communication::GameState;
+using Communication::NameAndID;
+
 class GameClientReceiver {
 public:
     GameClientReceiver();

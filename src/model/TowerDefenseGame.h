@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "Factory/TowerFactory.h"
 #include "Spells/Spell.h"
+#include "../../estandar_de_comunicacion/CommunicationUtils.h"
 
 class TowerDefenseGame {
 public:
@@ -23,7 +24,7 @@ public:
 
     // añade un enemigo de tipo enemy_type
     // Pre: el tipo debe ser valido
-    void addEnemy(const std::string& enemy_type);
+    void addEnemy(const std::string& enemy_type, unsigned int path_number = 1);
 
     /*** Towers ***/
 
@@ -57,9 +58,8 @@ public:
 
     // mueve todos los enemigos
     void moveEnemies();
-    // realiza los ataques
-    void performeAttacks();
-
+    // realiza los ataques (torres y hechizos)
+    void performAttacks();
     // llama a moveEnemies y performe attacks ademas de limpiar
     // los enemigos muertos
     void updateGame();
@@ -69,11 +69,14 @@ public:
     const std::string& getGameName();
     const std::string& getGameSetting();
     const std::vector<Enemy>& getAllEnemies() const;
+    Communication::GameState getGameState() const;
 
     TowerDefenseGame(const TowerDefenseGame&) = delete;
     TowerDefenseGame& operator=(const TowerDefenseGame&) = delete;
     TowerDefenseGame(TowerDefenseGame&&) = delete;
     TowerDefenseGame& operator=(TowerDefenseGame&&) = delete;
+
+    bool isGameOver() const;
 
 private:
     // nombre de la partida
@@ -83,6 +86,7 @@ private:
 
     int tower_id;
     int enemy_id;
+    bool is_game_over;
     Scenario* scenario;
     std::vector<Player> players;
 

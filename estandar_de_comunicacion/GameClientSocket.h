@@ -5,6 +5,14 @@
 #include "CommunicationUtils.h"
 #include "GameClientReceiver.h"
 
+using Communication::GameState;
+using Communication::NameAndID;
+using Communication::Element;
+using Communication::PositionalPower;
+using Communication::TargetPower;
+using Communication::Upgrade;
+using Communication::Tower;
+
 class GameClientSocket {
 public:
     // When it recieves a message, it will invoke a method in the receiver.

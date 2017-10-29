@@ -9,8 +9,14 @@
 // TODO chequeo de size del mapa
 
 Scenario::Scenario(Path&& path, std::vector<Vector>&& firm_ground_locations) :
-        path(std::move(path)),
-        firm_ground_locations(std::move(firm_ground_locations)) {}
+        firm_ground_locations(std::move(firm_ground_locations)) {
+    paths.push_back(std::move(path));
+}
+
+Scenario::Scenario(std::vector<Path> &&paths,
+                   std::vector<Vector> &&firm_ground_locations) :
+        firm_ground_locations(std::move(firm_ground_locations)),
+        paths(std::move(paths)) {}
 
 Scenario::~Scenario() {
     for (auto &tower : towers) {
@@ -38,7 +44,7 @@ void Scenario::addEnemy(Enemy& enemy) {
     enemies.push_back(enemy);
 }
 
-Scenario::Scenario(Scenario&& other) noexcept : path(std::move(other.path)) {
+Scenario::Scenario(Scenario&& other) noexcept : paths(std::move(other.paths)) {
     this->enemies = std::move(other.enemies);
     this->towers = std::move(other.towers);
     this->firm_ground_locations = std::move(other.firm_ground_locations);
@@ -60,8 +66,8 @@ std::vector<Tower*>& Scenario::getTowers() {
     return towers;
 }
 
-Path &Scenario::getPath() {
-    return path;
+Path &Scenario::getPath(unsigned int number) {
+    return paths.at(number - 1);
 }
 
 void Scenario::addTower(Tower* tower) {
@@ -107,10 +113,12 @@ void Scenario::cleanEnemies() {
 
 void Scenario::addFirmGround(const Vector &position) {
     // no se puede agregar en un camino
-    if (path.containsPosition(position)) {
-        throw MatchError("Error al agregar terreno firme: la posicion" +
-                         position.to_string() +
-                         " esta ocupada por camino");
+    for (Path& path : paths) {
+        if (path.containsPosition(position)) {
+            throw MatchError("Error al agregar terreno firme: la posicion" +
+                             position.to_string() +
+                             " esta ocupada por camino");
+        }
     }
 
     // no se puede agregar en tierra firme

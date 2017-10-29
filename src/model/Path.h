@@ -16,7 +16,8 @@ public:
     // devuelve la siguiente posicion en la direccion adecuada
     const Vector& getNextPosition(const Vector& actual);
 
-    const Vector& getInitialPosition();
+    const Vector& getInitialPosition() const;
+    const Vector& getFinalPositon() const;
 
     bool containsPosition(const Vector& position);
 
