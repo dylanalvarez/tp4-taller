@@ -78,8 +78,7 @@ MapGrid::SquareType MapGrid::getSquareType() const {
 }
 
 void MapGrid::updateDisabledButtons() const {
-    saveButton->set_sensitive(startX != -1 &&
-                              !unfinishedPath &&
+    saveButton->set_sensitive(!unfinishedPath &&
                               !map.getName().empty());
     for (int x = 0; x <= width + 1; x++) {
         for (int y = 0; y <= height + 1; y++) {
