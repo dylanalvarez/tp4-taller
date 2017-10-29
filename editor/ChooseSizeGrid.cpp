@@ -34,6 +34,11 @@ void ChooseSizeGrid::chooseSize() {
             new MapGrid(*map, builder, width, height, saveButton));
     mapScrolledWindow->add(*mapGrid);
 
+#ifdef __APPLE__ // natural scrolling on macOS
+    mapScrolledWindow->set_policy(
+            Gtk::PolicyType::POLICY_EXTERNAL, Gtk::PolicyType::POLICY_EXTERNAL);
+#endif
+
     NameEntry *nameEntry;
     builder.get_widget_derived("name", nameEntry, *map, mapGrid);
 

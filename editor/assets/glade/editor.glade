@@ -29,6 +29,16 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="adjustment5">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment6">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkWindow" id="main-window">
     <property name="can_focus">False</property>
     <child>
@@ -459,14 +469,17 @@
                 </child>
                 <child>
                   <object class="GtkScrolledWindow" id="map">
+                    <property name="width_request">600</property>
+                    <property name="height_request">600</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
                     <property name="resize_mode">queue</property>
-                    <property name="hscrollbar_policy">external</property>
-                    <property name="vscrollbar_policy">external</property>
-                    <property name="min_content_width">900</property>
-                    <property name="min_content_height">600</property>
-                    <property name="kinetic_scrolling">False</property>
+                    <property name="hadjustment">adjustment5</property>
+                    <property name="vadjustment">adjustment6</property>
+                    <property name="min_content_width">0</property>
+                    <property name="min_content_height">0</property>
                     <child>
                       <placeholder/>
                     </child>
