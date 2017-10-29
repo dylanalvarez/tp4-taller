@@ -83,25 +83,23 @@ void Map::exportToFile(const std::string &filename) const {
         emitter << YAML::Key << "x" << YAML::Value << path.exit.x;
         emitter << YAML::Key << "y" << YAML::Value << path.exit.y;
         emitter << YAML::EndMap;
+        emitter << YAML::Key << "enemies";
+        emitter << YAML::Value;
+        emitter << YAML::BeginSeq;
+        for (const Horde &horde: path.hordes) {
+            emitter << YAML::BeginMap;
+            emitter << YAML::Key << "type";
+            emitter << YAML::Value << _toString(horde.type);
+            emitter << YAML::Key << "quantity";
+            emitter << YAML::Value << horde.quantity;
+            emitter << YAML::Key << "seconds_before_arrival";
+            emitter << YAML::Value << horde.secondsBeforeIt;
+            emitter << YAML::EndMap;
+        }
+        emitter << YAML::EndSeq;
         emitter << YAML::EndMap;
     }
     emitter << YAML::EndSeq;
-
-    emitter << YAML::Key << "enemies";
-    emitter << YAML::Value;
-    emitter << YAML::BeginSeq;
-    for (Horde horde: hordes) {
-        emitter << YAML::BeginMap;
-        emitter << YAML::Key << "type";
-        emitter << YAML::Value << _toString(horde.type);
-        emitter << YAML::Key << "quantity";
-        emitter << YAML::Value << horde.quantity;
-        emitter << YAML::Key << "seconds_before_arrival";
-        emitter << YAML::Value << horde.secondsBeforeIt;
-        emitter << YAML::EndMap;
-    }
-    emitter << YAML::EndSeq;
-
     emitter << YAML::EndMap;
 
     std::ofstream destination(filename);
@@ -133,15 +131,14 @@ void Map::loadFromFile(std::ifstream &source) {
         this->paths.back().exit = Map::Coordinate(
                 path["exit"]["x"].as<int>(),
                 path["exit"]["y"].as<int>());
-    }
-    this->hordes.clear();
-    const YAML::Node &hordesAsNode = file["enemies"];
-    for (const YAML::Node &hordeAsNode : hordesAsNode) {
-        this->hordes.emplace_back(
-                _hordeTypeFromString(hordeAsNode["type"].as<std::string>()),
-                hordeAsNode["quantity"].as<int>(),
-                hordeAsNode["seconds_before_arrival"].as<int>()
-        );
+        const YAML::Node &hordesAsNode = path["enemies"];
+        for (const YAML::Node &hordeAsNode : hordesAsNode) {
+            this->paths.back().hordes.emplace_back(
+                    _hordeTypeFromString(hordeAsNode["type"].as<std::string>()),
+                    hordeAsNode["quantity"].as<int>(),
+                    hordeAsNode["seconds_before_arrival"].as<int>()
+            );
+        }
     }
 }
 
@@ -192,12 +189,11 @@ void Map::setSetting(Setting setting) {
     this->setting = setting;
 }
 
-void Map::clearHordes() {
-    hordes.clear();
-}
-
-void Map::addHorde(Horde &horde) {
-    hordes.emplace_back(horde);
+std::string Map::addHorde(Horde &horde) {
+    auto pathNumber = paths.size();
+    if (pathNumber == 0) { throw std::exception(); }
+    paths.back().hordes.emplace_back(horde);
+    return std::to_string(pathNumber);
 }
 
 std::string Map::toString(Map::HordeType hordeType) {
@@ -288,10 +284,6 @@ Map::Setting Map::getSetting() {
     return this->setting;
 }
 
-const std::vector<Map::Horde> &Map::getHordes() {
-    return hordes;
-}
-
 const std::vector<Map::Coordinate> &Map::getFirmGround() {
     return firmGround;
 }
@@ -300,8 +292,8 @@ const std::vector<Map::Path> &Map::getPaths() {
     return paths;
 }
 
-std::string Map::Horde::toString() {
-    return std::to_string(this->quantity)
+std::string Map::Horde::toString(const std::string &pathName) {
+    return "Camino " + pathName + ": " + std::to_string(this->quantity)
            + " " + Map::toString(this->type)
-           + " (" + std::to_string(this->secondsBeforeIt) + " seg.)";
+           + " (" + std::to_string(this->secondsBeforeIt) + " seg)";
 }

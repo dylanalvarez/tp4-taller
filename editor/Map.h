@@ -25,7 +25,7 @@ public:
                 quantity(quantity),
                 secondsBeforeIt(secondsBeforeIt) {}
 
-        std::string toString();
+        std::string toString(const std::string &pathName);
 
         HordeType type;
         int quantity;
@@ -43,6 +43,7 @@ public:
         std::vector<Coordinate> pathSequence;
         Coordinate entry;
         Coordinate exit;
+        std::vector<Horde> hordes;
     };
 
     Map();
@@ -59,15 +60,13 @@ public:
 
     int getWidth();
 
-    const std::vector<Horde>& getHordes();
-
     const std::vector<Coordinate>& getFirmGround();
 
     const std::vector<Path>& getPaths();
 
     Setting getSetting();
 
-    void addHorde(Horde &horde);
+    std::string addHorde(Horde &horde);
 
     void addFirmGround(int x, int y);
 
@@ -76,8 +75,6 @@ public:
     std::string addExitDoor(int x, int y);
 
     std::string addPathStep(int x, int y);
-
-    void clearHordes();
 
     void exportToFile(const std::string &filename) const;
 
@@ -109,7 +106,6 @@ private:
     Coordinate size;
     std::vector<Coordinate> firmGround;
     std::vector<Path> paths;
-    std::vector<Horde> hordes;
 };
 
 

@@ -20,14 +20,6 @@ AddHordeGrid::AddHordeGrid(BaseObjectType *obj,
     addHordeButton->signal_clicked().connect(
             sigc::mem_fun(this, &AddHordeGrid::onAddHorde));
 
-    this->builder.get_widget("clear-hordes", clearHordesButton);
-    clearHordesButton->signal_clicked().connect(
-            sigc::mem_fun(this, &AddHordeGrid::onClearHordes));
-
-    this->builder.get_widget("clear-hordes", clearHordesButton);
-    clearHordesButton->signal_clicked().connect(
-            sigc::mem_fun(this, &AddHordeGrid::onClearHordes));
-
     this->builder.get_widget("horde-kind", hordeKindComboBox);
     hordeKindComboBox->append(Map::toString(Map::greenDemon));
     hordeKindComboBox->append(Map::toString(Map::goatMan));
@@ -56,17 +48,15 @@ void AddHordeGrid::onChangeTimeBefore() {
 }
 
 void AddHordeGrid::onAddHorde() {
-    map->addHorde(horde);
-    _addHordeToList(horde);
+    try {
+        _addHordeToList(horde, map->addHorde(horde));
+    } catch (std::exception& e) {}
 }
 
-void AddHordeGrid::_addHordeToList(Map::Horde horde) {
-    hordeList->set_text(hordeList->get_text() + "\n" + horde.toString());
-}
-
-void AddHordeGrid::onClearHordes() {
-    map->clearHordes();
-    hordeList->set_text("");
+void AddHordeGrid::_addHordeToList(Map::Horde horde,
+                                   const std::string &pathName) {
+    hordeList->set_text(hordeList->get_text()
+                        + "\n" + horde.toString(pathName));
 }
 
 void AddHordeGrid::onHordeKindChange() {
@@ -74,7 +64,11 @@ void AddHordeGrid::onHordeKindChange() {
 }
 
 void AddHordeGrid::setFromMap() {
-    for (const Map::Horde& horde : map->getHordes()) {
-        _addHordeToList(horde);
+    int pathNumber = 0;
+    for (const Map::Path& path : map->getPaths()) {
+        pathNumber++;
+        for (const Map::Horde& horde: path.hordes) {
+            _addHordeToList(horde, std::to_string(pathNumber));
+        }
     }
 }

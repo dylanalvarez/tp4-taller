@@ -26,11 +26,9 @@ private:
 
     void onAddHorde();
 
-    void onClearHordes();
-
     void onHordeKindChange();
 
-    void _addHordeToList(Map::Horde horde);
+    void _addHordeToList(Map::Horde horde, const std::string &pathName);
 
     Map *map = nullptr;
     Builder builder;
@@ -39,7 +37,6 @@ private:
     Gtk::SpinButton *timeBeforeHordeButton;
     Gtk::Button *addHordeButton;
     Gtk::Label *hordeList;
-    Gtk::Button *clearHordesButton;
     Gtk::ComboBoxText *hordeKindComboBox;
 };
 
