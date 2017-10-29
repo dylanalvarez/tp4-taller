@@ -56,22 +56,29 @@ void Map::exportToFile(const std::string &filename) const {
     emitter << YAML::Value;
     _appendVectorOfCoordinate(firmGround, emitter);
 
-    emitter << YAML::Key << "doors";
-    emitter << YAML::BeginMap;
-    emitter << YAML::Key << "entry";
-    emitter << YAML::Value;
-    _appendVectorOfCoordinate(entryDoors, emitter);
-    emitter << YAML::Key << "exit";
-    emitter << YAML::Value;
-    _appendVectorOfCoordinate(exitDoors, emitter);
-    emitter << YAML::EndMap;
-
     emitter << YAML::Key << "paths";
     emitter << YAML::Value;
     emitter << YAML::BeginSeq;
     for (const auto &path: paths) {
-        _appendVectorOfCoordinate(path, emitter,
+        emitter << YAML::BeginMap;
+        emitter << YAML::Key << "path_sequence";
+        emitter << YAML::Value;
+        _appendVectorOfCoordinate(path.pathSequence,
+                                  emitter,
                                   [](int coord) { return 88 * coord - 44; });
+        emitter << YAML::Key << "entry";
+        emitter << YAML::Value;
+        emitter << YAML::BeginMap;
+        emitter << YAML::Key << "x" << YAML::Value << path.entry.x;
+        emitter << YAML::Key << "y" << YAML::Value << path.entry.y;
+        emitter << YAML::EndMap;
+        emitter << YAML::Key << "exit";
+        emitter << YAML::Value;
+        emitter << YAML::BeginMap;
+        emitter << YAML::Key << "x" << YAML::Value << path.exit.x;
+        emitter << YAML::Key << "y" << YAML::Value << path.exit.y;
+        emitter << YAML::EndMap;
+        emitter << YAML::EndMap;
     }
     emitter << YAML::EndSeq;
 
@@ -109,32 +116,26 @@ void Map::loadFromFile(std::ifstream &source) {
     for (std::vector<int> &firmGround: firmGroundsAsVector) {
         this->firmGround.emplace_back(firmGround[0], firmGround[1]);
     }
-    this->entryDoors.clear();
-    std::vector<std::vector<int>> entryDoorsAsVector =
-            file["doors"]["entry"].as<std::vector<std::vector<int>>>();
-    for (std::vector<int> &entryDoor: entryDoorsAsVector) {
-        this->entryDoors.emplace_back(entryDoor[0], entryDoor[1]);
-    }
-    this->exitDoors.clear();
-    std::vector<std::vector<int>> exitDoorsAsVector =
-            file["doors"]["exit"].as<std::vector<std::vector<int>>>();
-    for (std::vector<int> &exitDoor: exitDoorsAsVector) {
-        this->exitDoors.emplace_back(exitDoor[0], exitDoor[1]);
-    }
     this->paths.clear();
-    std::vector<std::vector<std::vector<int>>> pathsAsVector =
-            file["paths"].as<std::vector<std::vector<std::vector<int>>>>();
-    for (std::vector<std::vector<int>> &pathAsVector : pathsAsVector) {
+    YAML::Node paths = file["paths"];
+    for (const YAML::Node &path : paths) {
         this->paths.emplace_back();
-        for (std::vector<int> &pathStepAsVector : pathAsVector) {
-            this->paths.back().emplace_back(
+        for (std::vector<int> &pathStepAsVector :
+                path["path_sequence"].as<std::vector<std::vector<int>>>()) {
+            this->paths.back().pathSequence.emplace_back(
                     (pathStepAsVector[0] + 44) / 88,
                     (pathStepAsVector[1] + 44) / 88);
         }
+        this->paths.back().entry = Map::Coordinate(
+                path["entry"]["x"].as<int>(),
+                path["entry"]["y"].as<int>());
+        this->paths.back().exit = Map::Coordinate(
+                path["exit"]["x"].as<int>(),
+                path["exit"]["y"].as<int>());
     }
     this->hordes.clear();
-    const YAML::Node& hordesAsNode = file["enemies"];
-    for (const YAML::Node& hordeAsNode : hordesAsNode) {
+    const YAML::Node &hordesAsNode = file["enemies"];
+    for (const YAML::Node &hordeAsNode : hordesAsNode) {
         this->hordes.emplace_back(
                 _hordeTypeFromString(hordeAsNode["type"].as<std::string>()),
                 hordeAsNode["quantity"].as<int>()
@@ -265,15 +266,15 @@ void Map::addFirmGround(int x, int y) {
 
 void Map::addEntryDoor(int x, int y) {
     paths.emplace_back();
-    entryDoors.emplace_back(x, y);
+    paths.back().entry = Coordinate(x, y);
 }
 
 void Map::addExitDoor(int x, int y) {
-    exitDoors.emplace_back(x, y);
+    paths.back().exit = Coordinate(x, y);
 }
 
 void Map::addPathStep(int x, int y) {
-    paths.back().emplace_back(x, y);
+    paths.back().pathSequence.emplace_back(x, y);
 }
 
 int Map::getHeight() {
@@ -300,15 +301,7 @@ const std::vector<Map::Coordinate> &Map::getFirmGround() {
     return firmGround;
 }
 
-const std::vector<Map::Coordinate> &Map::getEntryDoors() {
-    return entryDoors;
-}
-
-const std::vector<Map::Coordinate> &Map::getExitDoors() {
-    return exitDoors;
-}
-
-const std::vector<std::vector<Map::Coordinate>> &Map::getPaths() {
+const std::vector<Map::Path> &Map::getPaths() {
     return paths;
 }
 

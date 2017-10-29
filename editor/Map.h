@@ -30,8 +30,15 @@ public:
 
     struct Coordinate {
         Coordinate(int x, int y) : x(x), y(y) {}
+        Coordinate() : x(0), y(0) {}
 
         int x, y;
+    };
+
+    struct Path {
+        std::vector<Coordinate> pathSequence;
+        Coordinate entry;
+        Coordinate exit;
     };
 
     Map();
@@ -56,11 +63,7 @@ public:
 
     const std::vector<Coordinate>& getFirmGround();
 
-    const std::vector<Coordinate>& getEntryDoors();
-
-    const std::vector<Coordinate>& getExitDoors();
-
-    const std::vector<std::vector<Coordinate>>& getPaths();
+    const std::vector<Path>& getPaths();
 
     Setting getSetting();
 
@@ -105,9 +108,7 @@ private:
     Setting setting;
     Coordinate size;
     std::vector<Coordinate> firmGround;
-    std::vector<Coordinate> entryDoors;
-    std::vector<Coordinate> exitDoors;
-    std::vector<std::vector<Coordinate>> paths;
+    std::vector<Path> paths;
     std::vector<Horde> hordes;
     int secondsBetweenHordes;
 };

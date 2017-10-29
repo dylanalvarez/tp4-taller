@@ -58,14 +58,10 @@ void MapGrid::setFromMap() {
     for (const Map::Coordinate& firmGround : map.getFirmGround()){
         grid[firmGround.x][firmGround.y]->set_label(FIRM_GROUND_STR);
     }
-    for (const Map::Coordinate& entryDoor : map.getEntryDoors()){
-        grid[entryDoor.x][entryDoor.y]->set_label(ENTRY_DOOR_STR);
-    }
-    for (const Map::Coordinate& exitDoor : map.getExitDoors()){
-        grid[exitDoor.x][exitDoor.y]->set_label(EXIT_DOOR_STR);
-    }
-    for (const std::vector<Map::Coordinate>& path : map.getPaths()){
-        for (const Map::Coordinate& pathStep : path) {
+    for (const Map::Path& path : map.getPaths()){
+        grid[path.entry.x][path.entry.y]->set_label(ENTRY_DOOR_STR);
+        grid[path.exit.x][path.exit.y]->set_label(EXIT_DOOR_STR);
+        for (const Map::Coordinate& pathStep : path.pathSequence) {
             grid[pathStep.x][pathStep.y]->set_label(PATH_STR);
         }
     }
