@@ -55,6 +55,8 @@ public:
 
     void setSize(int width, int height);
 
+    int getHeight();
+
     int getWidth();
 
     const std::vector<Horde>& getHordes();

@@ -277,6 +277,10 @@ int Map::getWidth() {
     return size.x;
 }
 
+int Map::getHeight() {
+    return size.y;
+}
+
 Map::Setting Map::getSetting() {
     return this->setting;
 }

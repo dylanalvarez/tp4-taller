@@ -39,7 +39,7 @@ void LoadFileGrid::loadFile() {
     builder.get_widget("map", mapViewport);
 
     MapGrid *mapGrid = Gtk::manage(
-            new MapGrid(*map, builder, map->getWidth(), map->getWidth(),
+            new MapGrid(*map, builder, map->getWidth(), map->getHeight(),
                         saveButton));
     mapViewport->add(*mapGrid);
 
