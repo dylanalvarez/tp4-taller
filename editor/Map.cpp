@@ -26,9 +26,12 @@ void Map::_appendVectorOfCoordinate(
         const std::function<int(int)> &transformation) const {
     emitter << YAML::BeginSeq;
     for (Coordinate coordinate : vector) {
-        emitter << YAML::BeginSeq
-                << transformation(coordinate.x) << transformation(coordinate.y)
-                << YAML::EndSeq;
+        emitter << YAML::BeginMap
+                << YAML::Key << "x"
+                << YAML::Value << transformation(coordinate.x)
+                << YAML::Key << "y"
+                << YAML::Value << transformation(coordinate.y)
+                << YAML::EndMap;
     }
     emitter << YAML::EndSeq;
 }
@@ -49,8 +52,10 @@ void Map::exportToFile(const std::string &filename) const {
     emitter << YAML::Value << _toString(setting);
 
     emitter << YAML::Key << "size";
-    emitter << YAML::Value
-            << YAML::BeginSeq << size.x << size.y << YAML::EndSeq;
+    emitter << YAML::Value << YAML::BeginMap
+            << YAML::Key << "x" << YAML::Value << size.x
+            << YAML::Key << "y" << YAML::Value << size.y
+            << YAML::EndMap;
 
     emitter << YAML::Key << "firm_ground";
     emitter << YAML::Value;
@@ -108,23 +113,20 @@ void Map::loadFromFile(std::ifstream &source) {
     YAML::Node file = YAML::Load(source);
     name = file["name"].as<std::string>();
     setting = settingFromString(file["setting"].as<std::string>());
-    std::vector<int> sizeAsVector = file["size"].as<std::vector<int>>();
-    size = Coordinate(sizeAsVector[0], sizeAsVector[1]);
+    size = Coordinate(file["size"]["x"].as<int>(), file["size"]["y"].as<int>());
     this->firmGround.clear();
-    std::vector<std::vector<int>> firmGroundsAsVector =
-            file["firm_ground"].as<std::vector<std::vector<int>>>();
-    for (std::vector<int> &firmGround: firmGroundsAsVector) {
-        this->firmGround.emplace_back(firmGround[0], firmGround[1]);
+    for (const YAML::Node &firmGround: file["firm_ground"]) {
+        this->firmGround.emplace_back(firmGround["x"].as<int>(),
+                                      firmGround["y"].as<int>());
     }
     this->paths.clear();
     YAML::Node paths = file["paths"];
     for (const YAML::Node &path : paths) {
         this->paths.emplace_back();
-        for (std::vector<int> &pathStepAsVector :
-                path["path_sequence"].as<std::vector<std::vector<int>>>()) {
+        for (const YAML::Node &pathStep : path["path_sequence"]) {
             this->paths.back().pathSequence.emplace_back(
-                    (pathStepAsVector[0] + 44) / 88,
-                    (pathStepAsVector[1] + 44) / 88);
+                    (pathStep["x"].as<int>() + 44) / 88,
+                    (pathStep["y"].as<int>() + 44) / 88);
         }
         this->paths.back().entry = Map::Coordinate(
                 path["entry"]["x"].as<int>(),
