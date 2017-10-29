@@ -96,12 +96,11 @@ void Map::exportToFile(const std::string &filename) const {
         emitter << YAML::Value << _toString(horde.type);
         emitter << YAML::Key << "quantity";
         emitter << YAML::Value << horde.quantity;
+        emitter << YAML::Key << "seconds_before_arrival";
+        emitter << YAML::Value << horde.secondsBeforeIt;
         emitter << YAML::EndMap;
     }
     emitter << YAML::EndSeq;
-
-    emitter << YAML::Key << "time_between_hordes";
-    emitter << YAML::Value << secondsBetweenHordes;
 
     emitter << YAML::EndMap;
 
@@ -140,15 +139,14 @@ void Map::loadFromFile(std::ifstream &source) {
     for (const YAML::Node &hordeAsNode : hordesAsNode) {
         this->hordes.emplace_back(
                 _hordeTypeFromString(hordeAsNode["type"].as<std::string>()),
-                hordeAsNode["quantity"].as<int>()
+                hordeAsNode["quantity"].as<int>(),
+                hordeAsNode["seconds_before_arrival"].as<int>()
         );
     }
-    this->secondsBetweenHordes = file["time_between_hordes"].as<int>();
 }
 
 Map::Map() : setting(DEFAULT_SETTING),
-             size(DEFAULT_SIZE_X, DEFAULT_SIZE_Y),
-             secondsBetweenHordes(DEFAULT_SECONDS_BETWEEN_HORDES) {}
+             size(DEFAULT_SIZE_X, DEFAULT_SIZE_Y) {}
 
 std::string Map::_toString(Map::Setting setting) const {
     switch (setting) {
@@ -192,10 +190,6 @@ std::string Map::getName() {
 
 void Map::setSetting(Setting setting) {
     this->setting = setting;
-}
-
-void Map::setSecondsBetweenHordes(int seconds) {
-    secondsBetweenHordes = seconds;
 }
 
 void Map::clearHordes() {
@@ -279,20 +273,12 @@ void Map::addPathStep(int x, int y) {
     paths.back().pathSequence.emplace_back(x, y);
 }
 
-int Map::getHeight() {
-    return size.y;
-}
-
 int Map::getWidth() {
     return size.x;
 }
 
 Map::Setting Map::getSetting() {
     return this->setting;
-}
-
-int Map::getSecondsBetweenHordes() {
-    return secondsBetweenHordes;
 }
 
 const std::vector<Map::Horde> &Map::getHordes() {
@@ -308,5 +294,7 @@ const std::vector<Map::Path> &Map::getPaths() {
 }
 
 std::string Map::Horde::toString() {
-    return std::to_string(this->quantity) + " " + Map::toString(this->type);
+    return std::to_string(this->quantity)
+           + " " + Map::toString(this->type)
+           + " (" + std::to_string(this->secondsBeforeIt) + " seg.)";
 }

@@ -8,7 +8,6 @@
 #include "Map.h"
 #include "SaveButton.h"
 #include "AmbianceGrid.h"
-#include "HordeFrequencySpinButton.h"
 #include "AddHordeGrid.h"
 
 class LoadFileGrid : public Gtk::Grid {
@@ -17,7 +16,6 @@ public:
 
     void init(Map &map, SaveButton* saveButton,
               AmbianceGrid *ambianceGrid,
-              HordeFrequencySpinButton *hordeFrequencySpinButton,
               AddHordeGrid *addHordeGrid);
 
 private:
@@ -29,7 +27,6 @@ private:
     Gtk::Button* loadButton;
     SaveButton* saveButton;
     AmbianceGrid *ambianceGrid;
-    HordeFrequencySpinButton *hordeFrequencySpinButton;
     AddHordeGrid *addHordeGrid;
 };
 

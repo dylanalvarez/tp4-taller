@@ -1,6 +1,5 @@
 #include "SaveButton.h"
 #include "AmbianceGrid.h"
-#include "HordeFrequencySpinButton.h"
 #include "AddHordeGrid.h"
 #include "ChooseSizeGrid.h"
 #include "LoadFileGrid.h"
@@ -27,17 +26,12 @@ int main(int argc, char **argv) {
     AmbianceGrid *ambianceGrid;
     builder.get_widget_derived("ambiance", ambianceGrid, map);
 
-    HordeFrequencySpinButton *hordeFrequencySpinButton;
-    builder.get_widget_derived(
-            "time-between-hordes", hordeFrequencySpinButton, map);
-
     AddHordeGrid *addHordeGrid;
     builder.get_widget_derived("add-horde-grid", addHordeGrid, map);
 
     LoadFileGrid *loadFileGrid;
     builder.get_widget_derived("load-file-grid", loadFileGrid, map, saveButton,
-                               ambianceGrid, hordeFrequencySpinButton,
-                               addHordeGrid);
+                               ambianceGrid, addHordeGrid);
 
     auto returnCode = app->run(*mainWindow);
     delete mainWindow;

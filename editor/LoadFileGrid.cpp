@@ -15,12 +15,10 @@ LoadFileGrid::LoadFileGrid(
 
 void LoadFileGrid::init(Map &map, SaveButton *saveButton,
                         AmbianceGrid *ambianceGrid,
-                        HordeFrequencySpinButton *hordeFrequencySpinButton,
                         AddHordeGrid *addHordeGrid) {
     this->map = &map;
     this->saveButton = saveButton;
     this->ambianceGrid = ambianceGrid;
-    this->hordeFrequencySpinButton = hordeFrequencySpinButton;
     this->addHordeGrid = addHordeGrid;
 }
 
@@ -51,7 +49,6 @@ void LoadFileGrid::loadFile() {
 
     mapGrid->setFromMap();
     ambianceGrid->setFromMap();
-    hordeFrequencySpinButton->setFromMap();
     addHordeGrid->setFromMap();
 
     mapGrid->show();

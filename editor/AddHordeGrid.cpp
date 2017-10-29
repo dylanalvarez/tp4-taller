@@ -5,10 +5,16 @@ AddHordeGrid::AddHordeGrid(BaseObjectType *obj,
                            Glib::RefPtr<Gtk::Builder> &builder) :
         Gtk::Grid(obj),
         builder(builder),
-        horde(DEFAULT_HORDE_TYPE, DEFAULT_HORDE_COUNT) {
+        horde(DEFAULT_HORDE_TYPE,
+              DEFAULT_HORDE_COUNT,
+              DEFAULT_SECONDS_BEFORE_HORDE) {
     this->builder.get_widget("horde-quantity", hordeQuantityButton);
     hordeQuantityButton->signal_value_changed().connect(
             sigc::mem_fun(this, &AddHordeGrid::onChangeHordeQuantity));
+
+    this->builder.get_widget("time-between-hordes", timeBeforeHordeButton);
+    timeBeforeHordeButton->signal_value_changed().connect(
+            sigc::mem_fun(this, &AddHordeGrid::onChangeTimeBefore));
 
     this->builder.get_widget("add-horde", addHordeButton);
     addHordeButton->signal_clicked().connect(
@@ -43,6 +49,10 @@ void AddHordeGrid::init(Map &map) { this->map = &map; }
 
 void AddHordeGrid::onChangeHordeQuantity() {
     horde.quantity = hordeQuantityButton->get_value_as_int();
+}
+
+void AddHordeGrid::onChangeTimeBefore() {
+    horde.secondsBeforeIt = timeBeforeHordeButton->get_value_as_int();
 }
 
 void AddHordeGrid::onAddHorde() {

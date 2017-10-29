@@ -6,6 +6,7 @@
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
 #include <gtkmm/comboboxtext.h>
+#include <gtkmm/spinbutton.h>
 #include "Map.h"
 #include "Builder.h"
 
@@ -21,6 +22,8 @@ public:
 private:
     void onChangeHordeQuantity();
 
+    void onChangeTimeBefore();
+
     void onAddHorde();
 
     void onClearHordes();
@@ -33,6 +36,7 @@ private:
     Builder builder;
     Map::Horde horde;
     Gtk::SpinButton *hordeQuantityButton;
+    Gtk::SpinButton *timeBeforeHordeButton;
     Gtk::Button *addHordeButton;
     Gtk::Label *hordeList;
     Gtk::Button *clearHordesButton;

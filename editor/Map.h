@@ -2,11 +2,11 @@
 #define TP4_TALLER_MAP_H
 
 #define DEFAULT_HORDE_COUNT 1
+#define DEFAULT_SECONDS_BEFORE_HORDE 10
 #define DEFAULT_HORDE_TYPE Map::greenDemon
 #define DEFAULT_SETTING Map::desert
 #define DEFAULT_SIZE_X 10
 #define DEFAULT_SIZE_Y 10
-#define DEFAULT_SECONDS_BETWEEN_HORDES 10
 
 #include <yaml-cpp/yaml.h>
 
@@ -20,12 +20,16 @@ public:
     };
 
     struct Horde {
-        Horde(HordeType type, int quantity) : type(type), quantity(quantity) {}
+        Horde(HordeType type, int quantity, int secondsBeforeIt) :
+                type(type),
+                quantity(quantity),
+                secondsBeforeIt(secondsBeforeIt) {}
 
         std::string toString();
 
         HordeType type;
         int quantity;
+        int secondsBeforeIt;
     };
 
     struct Coordinate {
@@ -49,15 +53,9 @@ public:
 
     void setSetting(Map::Setting setting);
 
-    void setSecondsBetweenHordes(int seconds);
-
     void setSize(int width, int height);
 
-    int getHeight();
-
     int getWidth();
-
-    int getSecondsBetweenHordes();
 
     const std::vector<Horde>& getHordes();
 
@@ -110,7 +108,6 @@ private:
     std::vector<Coordinate> firmGround;
     std::vector<Path> paths;
     std::vector<Horde> hordes;
-    int secondsBetweenHordes;
 };
 
 
