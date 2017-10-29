@@ -260,17 +260,20 @@ void Map::addFirmGround(int x, int y) {
     firmGround.emplace_back(x, y);
 }
 
-void Map::addEntryDoor(int x, int y) {
+std::string Map::addEntryDoor(int x, int y) {
     paths.emplace_back();
     paths.back().entry = Coordinate(x, y);
+    return std::to_string(paths.size());
 }
 
-void Map::addExitDoor(int x, int y) {
+std::string Map::addExitDoor(int x, int y) {
     paths.back().exit = Coordinate(x, y);
+    return std::to_string(paths.size());
 }
 
-void Map::addPathStep(int x, int y) {
+std::string Map::addPathStep(int x, int y) {
     paths.back().pathSequence.emplace_back(x, y);
+    return std::to_string(paths.size());
 }
 
 int Map::getWidth() {

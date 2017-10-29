@@ -71,11 +71,11 @@ public:
 
     void addFirmGround(int x, int y);
 
-    void addEntryDoor(int x, int y);
+    std::string addEntryDoor(int x, int y);
 
-    void addExitDoor(int x, int y);
+    std::string addExitDoor(int x, int y);
 
-    void addPathStep(int x, int y);
+    std::string addPathStep(int x, int y);
 
     void clearHordes();
 

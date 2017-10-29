@@ -1,6 +1,5 @@
 #include <gtkmm/button.h>
 #include <gtkmm/radiobutton.h>
-#include <cmath>
 #include "MapGrid.h"
 #include "MapButton.h"
 
@@ -58,12 +57,15 @@ void MapGrid::setFromMap() {
     for (const Map::Coordinate& firmGround : map.getFirmGround()){
         grid[firmGround.x][firmGround.y]->set_label(FIRM_GROUND_STR);
     }
+    int pathNumber = 1;
     for (const Map::Path& path : map.getPaths()){
-        grid[path.entry.x][path.entry.y]->set_label(ENTRY_DOOR_STR);
-        grid[path.exit.x][path.exit.y]->set_label(EXIT_DOOR_STR);
+        std::string pathLabel = std::to_string(pathNumber);
+        grid[path.entry.x][path.entry.y]->set_label(ENTRY_DOOR_STR + pathLabel);
+        grid[path.exit.x][path.exit.y]->set_label(EXIT_DOOR_STR + pathLabel);
         for (const Map::Coordinate& pathStep : path.pathSequence) {
-            grid[pathStep.x][pathStep.y]->set_label(PATH_STR);
+            grid[pathStep.x][pathStep.y]->set_label(PATH_STR + pathLabel);
         }
+        pathNumber++;
     }
     updateDisabledButtons();
 }
@@ -143,15 +145,16 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
             int start = yIsGreater ? lastY + 1 : y;
             int end = yIsGreater ? y : lastY - 1;
             for (int currentY = start; currentY <= end; ++currentY) {
-                grid[x][currentY]->set_label(PATH_STR);
-                map.addPathStep(x, currentY);
+                grid[x][currentY]->set_label(PATH_STR
+                                             + map.addPathStep(x, currentY));
             }
         } else if (sharesPathOnY) {
             bool xIsGreater = x > lastX;
             int start = xIsGreater ? lastX + 1 : x;
             int end = xIsGreater ? x : lastX - 1;
             for (int currentX = start; currentX <= end; ++currentX) {
-                grid[currentX][y]->set_label(PATH_STR);
+                grid[currentX][y]->set_label(PATH_STR
+                                             + map.addPathStep(currentX, y));
                 map.addPathStep(currentX, y);
             }
         }
