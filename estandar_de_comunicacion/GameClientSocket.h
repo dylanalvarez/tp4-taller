@@ -5,14 +5,6 @@
 #include "CommunicationUtils.h"
 #include "GameClientReceiver.h"
 
-using Communication::GameState;
-using Communication::NameAndID;
-using Communication::Element;
-using Communication::PositionalPower;
-using Communication::TargetPower;
-using Communication::Upgrade;
-using Communication::Tower;
-
 class GameClientSocket {
 public:
     // When it recieves a message, it will invoke a method in the receiver.
@@ -22,19 +14,19 @@ public:
 
     void chooseMap(std::string &&nickname, int mapID);
 
-    void chooseElement(Element element);
+    void chooseElement(Communication::Element element);
 
     void sendChatMessage(std::string &&message);
 
     void pingTile(int x, int y);
 
-    void applySpell(PositionalPower power);
+    void applySpell(Communication::PositionalPower power);
 
-    void applySpell(TargetPower power);
+    void applySpell(Communication::TargetPower power);
 
-    void applyUpgrade(Upgrade upgrade);
+    void applyUpgrade(Communication::Upgrade upgrade);
 
-    void buildTower(int x, int y, Tower::Type type);
+    void buildTower(int x, int y, Communication::Tower::Type type);
 
     // After calling disconnect, this socket will be unusable
     void disconnect();

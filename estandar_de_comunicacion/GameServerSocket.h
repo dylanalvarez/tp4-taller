@@ -2,24 +2,34 @@
 #define TP4_TALLER_GAME_SERVER_SOCKET_H
 
 #include <string>
+#include <mutex>
 #include "CommunicationUtils.h"
 #include "GameServerReceiver.h"
-
-using Communication::GameState;
-using Communication::NameAndID;
 
 class GameServerSocket {
 public:
     // When it recieves a message, it will invoke a method in the receiver.
-    GameServerSocket(const GameServerReceiver &receiver, int port);
+    GameServerSocket(Socket&& socket);
 
-    void sendInitialData(const std::vector<NameAndID> &matches,
-                         const std::vector<NameAndID> &maps);
+    void sendInitialData(const std::vector<Communication::NameAndID> &matches,
+                         const std::vector<Communication::NameAndID> &maps);
+
+    // retorna si esta creando partida o uniendose a existente
+    bool isCreating();
+
+    // retorna el id del mapa o el match elegido
+    // ya sea para crear o unirse a partida
+    int getChosen();
+
+    // retorna el nickname del jugador
+    std::string& getNickName();
+
+    std::string& getElement();
 
     // Filename relative to executable
     void sendMap(std::string &&filename);
 
-    void sendGameState(const GameState &gameState);
+    void sendGameState(const Communication::GameState &gameState);
 
     void sendChatMessage(std::string &&message,
                          std::string &&nickname);
@@ -27,6 +37,16 @@ public:
     void disconnect();
 
     ~GameServerSocket();
+
+    GameServerSocket(GameServerSocket&&) noexcept ;
+    GameServerSocket operator=(GameServerSocket&&) noexcept ;
+
+private:
+    // el socket es un recurso compartido
+    // lo puede acceder el cliente pidiendo que se envie un mensaje
+    // y lo puede acceder el thread match enviando el estado del juego
+    std::mutex mutex;
+    GameServerReceiver receiver;
 };
 
 #endif //TP4_TALLER_GAME_SERVER_SOCKET_H

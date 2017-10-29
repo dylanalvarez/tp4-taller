@@ -3,22 +3,38 @@
 //
 
 #include "Client.h"
+#include "Server.h"
 
-Client::Client(Socket &&socket, TowerDefenseGame& game) :
-        socket(socket), game(game) {}
+Client::Client(Socket&& socket,
+               const std::vector<Communication::NameAndID> &matches,
+               const std::vector<Communication::NameAndID> &maps, Server& server) :
+        serverSocket(std::move(socket)),
+        server(server), maps(maps), matches(matches) {}
 
 Client::~Client() = default;
 
 void Client::run() {
-    /** int opcode = receiver.getOpcode()
-     *  switch(opcode) {
-     *      case 7:
-     *          receiver.getSpell(...);
-     *          game.throwSpell(...)
-     *          break;
-     *       .
-     *       .
-     *       .
-     *  }
-     */
+    performInitialTasks();
+    /** recibir opcodes de hechizos, construccion de torres, mensajes y ping */
+}
+
+void Client::performInitialTasks() {
+    serverSocket.sendInitialData(matches, maps);
+    int id = serverSocket.getChosen();
+    game = server.joinToMatch(*this, id, serverSocket.isCreating()).getGame();
+
+    game->addPlayer(serverSocket.getNickName(), serverSocket.getElement());
+}
+
+void Client::sendGameState(const Communication::GameState &gameState) {
+    serverSocket.sendGameState(gameState);
+}
+
+Client::Client(Client&& other) noexcept :
+        serverSocket(std::move(other.serverSocket)),
+        server(other.server),
+        maps(other.maps),
+        matches(matches) {
+    this->game = other.game;
+    other.game = nullptr;
 }

@@ -14,6 +14,7 @@ class Spell {
 public:
     Spell(Scenario& scenario, unsigned int cooldown);
 
+    virtual ~Spell();
     // aplica el efecto del hechizo al enemigo o la posicion
     virtual void applyEffect(const Vector& position) = 0;
     virtual void applyEffect(Enemy& enemy) = 0;

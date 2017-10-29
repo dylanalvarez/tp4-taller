@@ -68,7 +68,7 @@ void FireTower::attack() {
     hitCurrentTarget(dmg);
 
     // daño a los enemigos cercanos
-    for (int i = 1; i < enemies.size(); i++) {
+    for (unsigned int i = 1; i < enemies.size(); i++) {
         if ((enemies[i]->getCurrentPosition() -
              enemies[0]->getCurrentPosition()).getNorm() <=
                 reach_of_impact) {

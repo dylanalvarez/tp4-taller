@@ -7,7 +7,7 @@
 Path::Path(std::vector<Vector>&& positions) : positions(std::move(positions)) {}
 
 const Vector &Path::getNextPosition(const Vector& actual) {
-    for (int i = 0; i < positions.size() - 1; i++){
+    for (unsigned int i = 0; i < positions.size() - 1; i++){
         if (positions[i] == actual){
             return positions[i + 1];
         }
@@ -29,7 +29,7 @@ Path &Path::operator=(Path&& other) noexcept {
 }
 
 bool Path::containsPosition(const Vector &position) {
-    for (int i = 0; i < positions.size() - 1; i++) {
+    for (unsigned int i = 0; i < positions.size() - 1; i++) {
         Vector direction = positions[i + 1] - positions[i];
         direction.normalizeAndRound();
         Vector initial = positions[i];

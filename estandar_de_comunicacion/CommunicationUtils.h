@@ -69,6 +69,7 @@ struct GameState {
     enum State {
         won, lost, ongoing
     };
+    State state;
     std::vector<Enemy> enemy;
     std::vector<Tower> towers;
     std::vector<PositionalPower> positionalPowers;

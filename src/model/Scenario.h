@@ -33,7 +33,8 @@ public:
     void levelupTower(const Tower&, const std::string& type);
 
     // remueve los enemigos muertos
-    void cleanEnemies();
+    // retorna la cantidad eliminada
+    int cleanEnemies();
 
     // retorna los n primeros enemigos dentro del rango
     // cuando es -1 retorna todos los que esten en rango

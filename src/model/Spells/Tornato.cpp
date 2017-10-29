@@ -8,9 +8,9 @@
 Tornato::Tornato(Scenario &scenario, unsigned int cooldown,
                  unsigned int min_dmg, unsigned int max_dmg, unsigned int duration) :
 Spell(scenario, cooldown),
+duration(duration),
 min_dmg(min_dmg),
-max_dmg(max_dmg),
-duration(duration) {}
+max_dmg(max_dmg) {}
 
 void Tornato::applyEffect(const Vector &position) {
    activate(position);

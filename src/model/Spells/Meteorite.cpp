@@ -9,8 +9,9 @@ Meteorite::Meteorite(Scenario& scenario, unsigned int cooldown,
                      unsigned int reach, unsigned int dmg,
                      unsigned int dmg_to_nearby_enemies) :
                         Spell(scenario, cooldown),
-                        dmg(dmg), dmg_to_nearby_enemies(dmg_to_nearby_enemies),
-                        reach(reach) {}
+                        reach(reach),
+                        dmg(dmg),
+                        dmg_to_nearby_enemies(dmg_to_nearby_enemies) {}
 
 void Meteorite::applyEffect(Enemy &enemy) {
     if (isOnCooldown()) { return; }

@@ -6,10 +6,10 @@
 #include "../Exceptions/TowerError.h"
 
 Tower::Tower(int id, Vector position, Scenario& scenario) :
-                                                    experience(0),
                                                     id(id),
-                                                    scenario(scenario),
-                                                    position(position) {}
+                                                    experience(0),
+                                                    position(position),
+                                                    scenario(scenario) {}
 
 Tower::~Tower() {
     for (auto levelup_type : levelup_types){

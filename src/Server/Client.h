@@ -8,22 +8,39 @@
 
 #include "Thread.h"
 #include "../../client-server/common_Socket.h"
-#include "../../estandar_de_comunicacion/GameServerReceiver.h"
 #include "../../estandar_de_comunicacion/GameServerSocket.h"
 #include "../model/TowerDefenseGame.h"
 
+class Server;
+
 class Client : public Thread {
 public:
-    explicit Client(Socket&& socket, TowerDefenseGame& game);
+    Client(Socket&& socket,
+           const std::vector<Communication::NameAndID> &matches,
+           const std::vector<Communication::NameAndID> &maps,
+           Server& server);
+
     ~Client() override;
 
     void run() override;
 
-private:
-    GameServerReceiver receiver;
-    TowerDefenseGame& game;
-    Socket socket;
-};
+    void sendGameState(const Communication::GameState &gameState);
 
+    Client(const Client&) = delete;
+    Client& operator=(const Client&) = delete;
+    Client& operator=(Client&&) = delete;
+    Client(Client&&) noexcept;
+
+private:
+    GameServerSocket serverSocket;
+    Server& server;
+
+    const std::vector<Communication::NameAndID> &maps;
+    const std::vector<Communication::NameAndID> &matches;
+
+    TowerDefenseGame* game;
+
+    void performInitialTasks();
+};
 
 #endif //TOWERDEFENSE_CLIENT_H

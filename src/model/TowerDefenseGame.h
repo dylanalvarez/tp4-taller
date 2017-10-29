@@ -17,7 +17,8 @@
 class TowerDefenseGame {
 public:
     TowerDefenseGame(const std::string& config_file,
-                     const std::string& scenario_file);
+                     const std::string& scenario_file,
+                     int enemy_count = 0);
     ~TowerDefenseGame();
 
     /*** Enemies ***/
@@ -73,7 +74,7 @@ public:
 
     TowerDefenseGame(const TowerDefenseGame&) = delete;
     TowerDefenseGame& operator=(const TowerDefenseGame&) = delete;
-    TowerDefenseGame(TowerDefenseGame&&) = delete;
+    TowerDefenseGame(TowerDefenseGame&&) noexcept ;
     TowerDefenseGame& operator=(TowerDefenseGame&&) = delete;
 
     bool isGameOver() const;
@@ -87,6 +88,7 @@ private:
     int tower_id;
     int enemy_id;
     bool is_game_over;
+    int enemy_count;
     Scenario* scenario;
     std::vector<Player> players;
 

@@ -41,3 +41,5 @@ const Vector &Spell::getPosition() const {
 const int Spell::getTargetID() const {
     return target_id;
 }
+
+Spell::~Spell() = default;

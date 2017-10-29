@@ -7,13 +7,13 @@
 Enemy::Enemy(Path &path, int health_points, float speed,
              bool does_it_fly, const std::string& type) :
                                                 path(path),
+                                                current_pos(path.getInitialPosition()),
+                                                current_destiny(path.getNextPosition(current_pos)),
+                                                type(type),
                                                 hp(health_points),
                                                 speed(speed * pixels_per_unit),
                                                 original_speed(speed),
-                                                can_i_fly(does_it_fly),
-                                                current_pos(path.getInitialPosition()),
-                                                current_destiny(path.getNextPosition(current_pos)),
-                                                type(type) {
+                                                can_i_fly(does_it_fly) {
     direction = (current_destiny - current_pos);
     direction.normalizeAndRound();
     last_speed_reduction_time = 0;
@@ -26,6 +26,7 @@ Enemy::Enemy(int id, Path &path, int health_points, float speed,
              bool does_it_fly, const std::string& type, int movement_cooldown) :
         Enemy(path, health_points, speed, does_it_fly, type) {
     this->id = id;
+    this->movement_cooldown = movement_cooldown;
 }
 
 void Enemy::move(int units_to_move) {
@@ -108,5 +109,5 @@ Communication::Enemy::Type Enemy::getType() const {
     if (type == "undead") { return enemyType::undead; }
     if (type == "bloody_hawk") { return enemyType::bloodyHawk; }
     if (type == "spectrum") { return enemyType::spectre; }
-    if (type == "goat_man") { return enemyType::goatMan; }
+    return enemyType::goatMan;
 }

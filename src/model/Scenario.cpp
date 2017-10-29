@@ -30,7 +30,7 @@ std::vector<Enemy*> Scenario::getEnemiesInRange(const Range &range,
     for (Enemy& enemy : enemies){
         if (range.isInRange(enemy.getCurrentPosition())) {
             closest_enemies.push_back(&enemy);
-            if (count != -1 && closest_enemies.size() == count) {
+            if (count != -1 && (int)closest_enemies.size() == count) {
                 // si es -1 -> devolver todos los que esten en rango
                 break;
             }
@@ -99,16 +99,18 @@ void Scenario::levelupTower(const Tower& tower_to_lvl, const std::string& type) 
     }
 }
 
-void Scenario::cleanEnemies() {
+int Scenario::cleanEnemies() {
     std::vector<Enemy> not_dead_enemies;
-
+    int deads_count = 0;
     for (Enemy& enemy: enemies){
         if (!enemy.isDead()){
             not_dead_enemies.push_back(enemy);
-        }
+        } else { deads_count++; }
     }
 
     std::swap(enemies, not_dead_enemies);
+
+    return deads_count;
 }
 
 void Scenario::addFirmGround(const Vector &position) {
