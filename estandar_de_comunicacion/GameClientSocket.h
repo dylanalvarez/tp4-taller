@@ -8,7 +8,7 @@
 class GameClientSocket {
 public:
     // When it recieves a message, it will invoke a method in the receiver.
-    GameClientSocket(const GameClientReceiver &receiver, int port);
+    GameClientSocket(const GameClientReceiver &receiver, Socket&& socket);
 
     void chooseTeam(std::string &&nickname, int teamID);
 
