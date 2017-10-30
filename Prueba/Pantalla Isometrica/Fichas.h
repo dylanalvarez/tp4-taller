@@ -40,6 +40,11 @@ class Ficha{
 #define FichaPisoFirme 0
 #define FichaPisoEnemigos 1
 #define FichaPisoFondoLava 2
+//Terminar de Programar a futuro
+#define FichaPisoFondoPradera 2
+#define FichaPisoFondoGelido 2
+#define FichaPisoFondoDesierto 2
+
 
 class FichaTerreno: public Ficha{
  private:
@@ -47,7 +52,7 @@ class FichaTerreno: public Ficha{
  public:
   FichaTerreno(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
   FichaTerreno(const FichaTerreno &p);
-  void cambiarTipo(int tipo);
+  void cambiarTipo(int tipo, VectorDeSprites &vectorDeSprites);
 };
 
 #define FichaTorreDeTierra 0
@@ -74,6 +79,11 @@ class FichaTorre: public Ficha{
 
 #define Abmonible 0
 
+#define masX 36;
+#define masY 24;
+#define menosX 12;
+#define menosY 0;
+
 class FichaEnemigo: public Ficha{
  private:
  protected:
@@ -84,9 +94,11 @@ class FichaEnemigo: public Ficha{
  public:
   //todo se puede intentar mejorar. Con una correccion de la posicion.
   FichaEnemigo(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
+  FichaEnemigo(Communication::Enemy actualzacion, VectorDeSprites &sprites);
   FichaEnemigo(const FichaEnemigo &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
   virtual void ejecutarSicloDeAnimacion(); //Para los gif
+  void actualizar(Communication::Enemy actualzacion);
 };
 
 #define FichaPortalAzul 0
@@ -103,8 +115,7 @@ class FichaPortal: public Ficha{
   virtual void ejecutarSicloDeAnimacion(); //Para los gif
 };
 
-#define ProllectilTierra 0
-#define FichaPortalRojo 1
+#define FichaGrieta 4
 //valas. Poderes estatico y poderes a objetivos
 class FichaEfectos: public Ficha{
  private:
@@ -115,7 +126,8 @@ class FichaEfectos: public Ficha{
  public:
   FichaEfectos(FichaTorre &inicio, int id2, VectorDeSprites &sprites,
      FichaEnemigo &objetivo2);
-  //FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites, FichaEnemigo *objetivo2);
+  FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
+  //FichaEfectos(int id2, int tipo, VectorDeSprites &sprites, FichaEnemigo *objetivo2);
   FichaEfectos(const FichaEfectos &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
   virtual void ejecutarSicloDeAnimacion(); //Para los gif

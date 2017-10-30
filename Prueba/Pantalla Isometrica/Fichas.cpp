@@ -39,8 +39,8 @@ Posicion Ficha::getPosicio() const{
 Ficha::~Ficha(){
 }
 bool Ficha::colisionaConmigo(int x2, int y2){
-  return ((x-medioLargoX)<x2)&&((x+medioLargoX)>x2)&&
-          ((y-medioAltoY)<y2)&&((y+medioAltoY)>y2);
+  return ((x-medioLargoX)<=x2)&&((x+medioLargoX)>=x2)&&
+          ((y-medioAltoY)<=y2)&&((y+medioAltoY)>=y2);
 }
 
 //echa para revisar nada mas. Quitar despues.
@@ -73,10 +73,39 @@ FichaTerreno::FichaTerreno(int x2, int y2, int id2, int tipo,
 }
 FichaTerreno::FichaTerreno(const FichaTerreno &p): Ficha(p){
 }
-void FichaTerreno::cambiarTipo(int tipo){
+void FichaTerreno::cambiarTipo(int tipo, VectorDeSprites &vectorDeSprites){
+  sprites.clear();
+  this->tipo = tipo;
+  int random;
+  switch (tipo) {
+    case FichaPisoFirme:
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpritePisoFirme)));
+      break;
+    case FichaPisoEnemigos:
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteSueloEnemigo)));
+      break;
+    case FichaPisoFondoLava:
+      random = rand() % 3;
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteSueloLava1 + random)));
+      /*los suelos de lava van son en verdad int de 2 a 5.
+      Por lo que el random te hace de ir de uno a ottros
+      La otra opcion es un switch dentro de un switch*/
+      break;
+    default:
+    //falta que aca salte un error.
+    break;
+  }
 }
 
 //FichaTorre
+#define CPTT 42 //correccion Posicion Torre Tierra
+#define CPTF 42 //correccion Posicion Torre Fuego
+#define CPEF 112 //correccion Posicion Efecto Fuego
+#define CPTW 52 //correccion Posicion Torre Agua
+#define CPEW 120 //correccion Posicion Efecto Agua
+#define CPTA 42 //correccion Posicion Torre Aire
+#define CPEA 120 //correccion Posicion Efecto Aire
+
 FichaTorre::FichaTorre(int x2, int y2, int id2, int tipo,
                         VectorDeSprites &vectorDeSprites): Ficha(x2, y2, id2, tipo){
   spriteActualSubAnimacion = 1;
@@ -85,34 +114,34 @@ FichaTorre::FichaTorre(int x2, int y2, int id2, int tipo,
       danio = 20;
       rango = 2;
       especial = 0;
-      sprites.push_back(Sprite(x-67, y-67, vectorDeSprites.obtener(SpriteTorreDeTierra)));
+      sprites.push_back(Sprite(x-CPTT, y-CPTT, vectorDeSprites.obtener(SpriteTorreDeTierra)));
       break;
     case FichaTorreDeFuego:
       danio = 6;
       rango = 3;
       especial = 1;
-      sprites.push_back(Sprite(x-110, y-110, vectorDeSprites.obtener(SpriteTorreDeFuego)));
-      sprites.push_back(Sprite(x-290, y-290, vectorDeSprites.obtener(SpriteFuego1)));
-      sprites.push_back(Sprite(x-290, y-290, vectorDeSprites.obtener(SpriteFuego2)));
-      sprites.push_back(Sprite(x-290, y-290, vectorDeSprites.obtener(SpriteFuego3)));
+      sprites.push_back(Sprite(x-CPTF, y-CPTF, vectorDeSprites.obtener(SpriteTorreDeFuego)));
+      sprites.push_back(Sprite(x-CPEF, y-CPEF, vectorDeSprites.obtener(SpriteFuego1)));
+      sprites.push_back(Sprite(x-CPEF, y-CPEF, vectorDeSprites.obtener(SpriteFuego2)));
+      sprites.push_back(Sprite(x-CPEF, y-CPEF, vectorDeSprites.obtener(SpriteFuego3)));
       break;
     case FichaTorreDeAgua:
       danio = 4;
       rango = 3;
       especial = 25; //%
-      sprites.push_back(Sprite(x-52, y-52, vectorDeSprites.obtener(SpriteTorreDeAgua)));
-      sprites.push_back(Sprite(x-120, y-120, vectorDeSprites.obtener(SpriteAgua1)));
-      sprites.push_back(Sprite(x-120, y-120, vectorDeSprites.obtener(SpriteAgua2)));
-      sprites.push_back(Sprite(x-120, y-120, vectorDeSprites.obtener(SpriteAgua3)));
+      sprites.push_back(Sprite(x-CPTW, y-CPTW, vectorDeSprites.obtener(SpriteTorreDeAgua)));
+      sprites.push_back(Sprite(x-CPEW, y-CPEW, vectorDeSprites.obtener(SpriteAgua1)));
+      sprites.push_back(Sprite(x-CPEW, y-CPEW, vectorDeSprites.obtener(SpriteAgua2)));
+      sprites.push_back(Sprite(x-CPEW, y-CPEW, vectorDeSprites.obtener(SpriteAgua3)));
       break;
     case FichaTorreDeAire:
       danio = 2;
       rango = 5;
       especial = 10; //Daño contra areo.
-      sprites.push_back(Sprite(x-110, y-110, vectorDeSprites.obtener(SpriteTorreDeAire)));
-      sprites.push_back(Sprite(x-290, y-290, vectorDeSprites.obtener(SpriteAire1)));
-      sprites.push_back(Sprite(x-290, y-290, vectorDeSprites.obtener(SpriteAire2)));
-      sprites.push_back(Sprite(x-290, y-290, vectorDeSprites.obtener(SpriteAire3)));
+      sprites.push_back(Sprite(x-CPTA, y-CPTA, vectorDeSprites.obtener(SpriteTorreDeAire)));
+      sprites.push_back(Sprite(x-CPEA, y-CPEA, vectorDeSprites.obtener(SpriteAire1)));
+      sprites.push_back(Sprite(x-CPEA, y-CPEA, vectorDeSprites.obtener(SpriteAire2)));
+      sprites.push_back(Sprite(x-CPEA, y-CPEA, vectorDeSprites.obtener(SpriteAire3)));
       break;
     default:
     //falta que aca salte un error.
@@ -168,7 +197,13 @@ FichaEnemigo::FichaEnemigo(int x2, int y2, int id2, int tipo,
       break;
   }
 }
-//aunque esto puede que no tenga razon de ser.
+int traducirTipEnemigo(Communication::Enemy::Type tipo){
+  return Abmonible;
+}
+FichaEnemigo::FichaEnemigo(Communication::Enemy actualzacion,
+  VectorDeSprites &sprites): FichaEnemigo(actualzacion.x, actualzacion.y,
+     actualzacion.id, traducirTipEnemigo(actualzacion.type), sprites){
+}
 FichaEnemigo::FichaEnemigo(const FichaEnemigo &p): Ficha(p){
   inicioAnimiacionActual = p.inicioAnimiacionActual;
 }
@@ -182,6 +217,18 @@ void FichaEnemigo::ejecutarSicloDeAnimacion(){
   if (spriteActual == 11) {
      spriteActual = 0;
   }
+}
+void FichaEnemigo::actualizar(Communication::Enemy actualzacion){
+  if ( x< actualzacion.x)
+    inicioAnimiacionActual = masX;
+  if ( x> actualzacion.x)
+    inicioAnimiacionActual = menosX;
+  if ( y< actualzacion.y)
+    inicioAnimiacionActual = masY;
+  if ( y> actualzacion.y)
+    inicioAnimiacionActual = menosY;    
+  x= actualzacion.x;
+  y= actualzacion.y;
 }
 
 
@@ -233,13 +280,36 @@ FichaEfectos::FichaEfectos(FichaTorre &inicio, int id2,
   destrulleme = false;
   Posicion posicionInicial;
   posicionInicial = inicio.getPosicio();
-  x = posicionInicial.X;
-  y = posicionInicial.Y;
   tipo = inicio.getTipo();
-  this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
-  tiempoImpacto = 20;
+  switch (tipo) {
+    case FichaTorreDeTierra:
+      x = posicionInicial.X - 100;
+      y = posicionInicial.Y - 100;
+      this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
+      tiempoImpacto = 20;
+      break;
+    default:
+      x = posicionInicial.X - 100;
+      y = posicionInicial.Y - 100;
+      this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
+      tiempoImpacto = 20;
+      break;
+  }
 }
-
+FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites):
+                            Ficha(x2, y2, id2, tipo){
+    objetivo = NULL;
+    destrulleme = false;
+    switch (tipo) {
+      case FichaGrieta:
+          this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
+          tiempoImpacto = 10;
+      break;
+      default:
+      //falta que aca salte un error.
+      break;
+    }
+}
 FichaEfectos::FichaEfectos(const FichaEfectos &p): Ficha(p){
   tiempoImpacto = p.tiempoImpacto;
   objetivo = p.objetivo;
@@ -255,12 +325,21 @@ void FichaEfectos::ejecutarSicloDeAnimacion(){
    destrulleme = true;
    return;
  }
- Posicion posicionFinal;
- posicionFinal = objetivo->getPosicio();
- int x2 = posicionFinal.X;
- int y2 = posicionFinal.Y;
- x = x - (x-x2)/tiempoImpacto;
- y = y - (y-y2)/tiempoImpacto;
+ int x2;
+ int y2;
+ switch (tipo) {
+   case FichaTorreDeTierra:
+      Posicion posicionFinal;
+      posicionFinal = objetivo->getPosicio();
+      x2 = posicionFinal.X;
+      y2 = posicionFinal.Y;
+      x = x - (x-x2)/tiempoImpacto;
+      y = y - (y-y2)/tiempoImpacto;
+   break;
+   default:
+   //
+   break;
+ }
  tiempoImpacto--;
 }
 

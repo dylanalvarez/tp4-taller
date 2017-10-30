@@ -13,35 +13,41 @@
 //esta clase es solo para dirigir el movimiento en este caso.
 
 #define largo 88
+#define teimpoActualizacionModelo 15
+
 int main(int argc, char *argv[])
 {
+  //GameClientReceiver(Socket& socket);
+  //GameClientSocket(const GameClientReceiver &receiver, Socket&& socket);
+
   //Crea la aplicación de gtkmm
   auto app = Gtk::Application::create(argc, argv);
   VectorDeSprites sprites;
   OrdenadorDeFichas fichas;
+
+//mapa Hercodado.
+  int XpisosFirmos[] = {2,3,6,6,6,7,8,9};
+  int YpisosFirmos[] = {3,3,3,4,5,8,8,8};
+  int XpisosEnemigo[] = {44,44,132,132,220,220,308,308,396,396,396,396,396,396,
+    396,484,484,572,572,660,660,748,748,836,836};
+  int YpisosEnemigo[] = {132,132,132,132,132,132,132,132,132,132,220,308,396,484,
+    572,572,572,572,572,572,572,572,572,572,572};
+
   int id = 0;
   for (size_t i = 0; i < 10; i++) {
     for (size_t j = 0; j < 10; j++) {
-      fichas.agregarTerreno(FichaTerreno(largo*i, largo*j, id, FichaPisoFirme, sprites));
       id++;
+      fichas.agregarTerreno(FichaTerreno(largo*i, largo*j, id, FichaPisoFondoLava, sprites));
     }
   }
-  fichas.agregarTorre(FichaTorre(largo*5, largo*3, 1, FichaTorreDeTierra, sprites));
-
-  fichas.agregarTorre(FichaTorre(largo*6, largo*3, 2, FichaTorreDeTierra, sprites));
-
-  fichas.agregarTorre(FichaTorre(largo*7, largo*3, 3, FichaTorreDeFuego, sprites));
-
-  fichas.agregarTorre(FichaTorre(largo*7, largo*7, 4, FichaTorreDeAire, sprites));
-
-  fichas.agregarTorre(FichaTorre(largo*1, largo*8, 5, FichaTorreDeAgua, sprites));
-
-  fichas.agregarEnemigo(FichaEnemigo(largo*2, largo*2, 1, Abmonible, sprites));
-
-  fichas.agregarPortal(FichaPortal(largo*0, largo*0, 0, FichaPortalAzul, sprites));
-
-  fichas.agregarEfectos(1, 1, 1, sprites);
-
+  for (size_t i = 0; i < 8; i++) {
+    id = fichas.ObetenerTerrenoEnEstaPosicion((XpisosFirmos[i]-1)*88,(YpisosFirmos[i]-1)*88);
+    fichas.getTerreno(id).cambiarTipo(FichaPisoFirme, sprites);
+  }
+  for (size_t i = 0; i < 24; i++) {
+    id = fichas.ObetenerTerrenoEnEstaPosicion(XpisosEnemigo[i],YpisosEnemigo[i]);
+    fichas.getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
+  }
 
 	Gtk::Window* window;
   Gtk::Box* Box;
@@ -57,6 +63,9 @@ int main(int argc, char *argv[])
 	refBuilder->get_widget("applicationwindow1", window);
   window->show_all();
 
+//mensaje falsos.
+  ControladorDeSiclos falso =  ControladorDeSiclos(1, fichas);
+
 //mejorar nombres
   int TiempoEnMilesegundos = 100;
   sigc::slot<bool> my_slot = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDeAnimacion);
@@ -64,6 +73,11 @@ int main(int argc, char *argv[])
   TiempoEnMilesegundos = 50;
   sigc::slot<bool> my_slot2 = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDesplasamientos);
   sigc::connection conn2 = Glib::signal_timeout().connect(my_slot2,TiempoEnMilesegundos);
+  TiempoEnMilesegundos = teimpoActualizacionModelo;
+  sigc::slot<bool> my_slot3 = sigc::mem_fun(falso, &ControladorDeSiclos::siclo);
+  sigc::connection conn3 = Glib::signal_timeout().connect(my_slot3,TiempoEnMilesegundos);
+
+
 
   app->run(*window);
   return 0;

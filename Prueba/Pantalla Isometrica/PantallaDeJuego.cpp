@@ -45,7 +45,6 @@ bool PantallaDeJuego::on_key_press_event(GdkEventKey* event){
       desplasamientoIncirementeEnX();
   if (event->keyval == GDK_KEY_d)
       desplasamientoDecrementoEnX();
-  queue_draw();
   return Gtk::DrawingArea::on_key_press_event(event);
 }
 bool PantallaDeJuego::on_motion_notify_event(GdkEventMotion* event){

@@ -3,18 +3,19 @@
 
 #include <gtkmm.h>
 #include <iostream>
-#include <vector>
-#include <map>
+#include <list>
 #include "sprites.h"
 #include "Fichas.h"
 #include "TiposDeDatosExpeciales.h"
-
+#include "VectorDeSprites.h"
 
 class OrdenadorDeFichas{
 private:
+ VectorDeSprites sprites; //para creara  las fichas.
  std::map<int,FichaTerreno> terreno;
  std::map<int,FichaTorre> torres;
  std::map<int,FichaEnemigo> enemigos;
+ int idEnemigo = 0;
  std::map<int,FichaEfectos> poderes;
  std::vector<FichaPortal> portales;
 protected:
@@ -38,8 +39,10 @@ public:
                        DatosPantalla datosActuales);
  int ObetenerEnemigoEnEstaPosicion(int x, int y);
  FichaEnemigo& getEnemigo(int id);
+ void actualizarEnemigo(Communication::Enemy actualzacion);
 
  void agregarEfectos(int inicio, int objetivo, int id2, VectorDeSprites &sprites);
+ void agregarEfectos(FichaEfectos nuevaFicha);
  void imprimirEfectos(const Cairo::RefPtr<Cairo::Context>& cr,
                        DatosPantalla datosActuales);
 

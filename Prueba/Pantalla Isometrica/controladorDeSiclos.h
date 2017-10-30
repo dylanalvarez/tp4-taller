@@ -3,17 +3,23 @@
 
 #include <gtkmm.h>
 #include <iostream>
+#include "TiposDeDatosExpeciales.h"
+#include "OrdenadorDeFichas.h"
+#include <vector>
 
-
+//aun es falso.
 class ControladorDeSiclos{
 private:
 public:
+  ControladorDeSiclos(int id, OrdenadorDeFichas& fichas2); //falso
   void iniciar();
-  typedef sigc::signal<void> type_pulso;
-  type_pulso getPulso();
   void terminar();
+  bool siclo();
+  Communication::Enemy estadoActual();
 protected:
+  OrdenadorDeFichas& fichas;
+  std::list<Communication::Enemy> posiciones;
   bool seguir = true;
-  type_pulso pulso;
+  bool esperar = true;
 };
 #endif
