@@ -4,12 +4,16 @@
 #include <string>
 #include "CommunicationUtils.h"
 #include "../src/model/TowerDefenseGame.h"
+#include "../src/Server/Thread.h"
+#include "../client-server/common_Socket.h"
+
 
 class Server;
+class Client;
 
 class GameServerReceiver : public Thread {
 public:
-    GameServerReceiver(Socket& socket, Server& server);
+    GameServerReceiver(Socket &socket, Server &server, Client& client);
     ~GameServerReceiver() override;
 
     void run() override;
@@ -33,10 +37,13 @@ public:
     void buildTower(int x, int y, Communication::Tower::Type type);
 
     GameServerReceiver(GameServerReceiver&&) noexcept ;
+    GameServerReceiver(const GameServerReceiver&) = delete;
+    GameServerReceiver& operator=(const GameServerReceiver&) = delete;
 
 private:
     Socket& socket;
     Server& server;
+    Client& client;
     TowerDefenseGame* game; // o cola bloqueante
 };
 

@@ -9,7 +9,7 @@
 class GameServerSocket {
 public:
     // When it recieves a message, it will invoke a method in the receiver.
-    GameServerSocket(const GameServerReceiver& receiver, Socket&& socket);
+    GameServerSocket(GameServerReceiver& receiver, Socket&& socket);
 
     void sendInitialData(const std::vector<Communication::NameAndID> &matches,
                          const std::vector<Communication::NameAndID> &maps);
@@ -33,8 +33,8 @@ private:
     // el socket es un recurso compartido
     // lo puede acceder el cliente pidiendo que se envie un mensaje
     // y lo puede acceder el thread match enviando el estado del juego
-    std::mutex mutex;
-    const GameServerReceiver& receiver;
+    GameServerReceiver& receiver;
+    Socket socket;
 };
 
 #endif //TP4_TALLER_GAME_SERVER_SOCKET_H

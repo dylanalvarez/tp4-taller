@@ -9,9 +9,8 @@
 Client::Client(Socket&& socket,
                const std::vector<Communication::NameAndID> &matches,
                const std::vector<Communication::NameAndID> &maps, Server& server) :
-        receiver(socket, server), serverSocket(receiver, std::move(socket)) {
-    serverSocket.sendInitialData(matches, maps);
-    // el start del receiver lo puede hacer el serverSocket o el cliente aca mismo
+        receiver(socket, server, *this), serverSocket(receiver, std::move(socket)) {
+    //serverSocket.sendInitialData(matches, maps);
 }
 
 Client::~Client() = default;
