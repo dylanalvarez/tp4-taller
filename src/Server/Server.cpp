@@ -3,6 +3,7 @@
 //
 
 #include <syslog.h>
+#include <fstream>
 #include "Server.h"
 #include "../../client-server/common_AcceptFailedException.h"
 
@@ -25,7 +26,7 @@ void Server::run() {
             Client client(std::move(new_client), matchs_id, maps, *this);
             connecting_client_list.push_back(std::move(client));
         } catch (AcceptFailedException& e) {
-            syslog(LOG_CRIT, "Error al aceptar socket");
+            // se cerro el socket
         }
     }
 }
@@ -36,6 +37,7 @@ void Server::stop() {
 
 Match& Server::joinToMatch(Client &client, int id, bool is_creating) {
     std::lock_guard<std::mutex> lock(mutex);
+
     if (is_creating) {
         try {
             Match new_match(maps_paths.at(id), config_file_path, match_id);

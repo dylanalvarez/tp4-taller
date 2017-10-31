@@ -341,17 +341,19 @@ Communication::GameState TowerDefenseGame::getGameState() const {
 
     // positional powers
     for (auto& spell: spells) {
-        if (spell.second->isPositional()){
-            Communication::PositionalPower positional_spell{};
-            positional_spell.type = spell.second->getPositionalType();
-            positional_spell.x = (int)spell.second->getPosition().getX();
-            positional_spell.y = (int)spell.second->getPosition().getY();
-            gameState.positionalPowers.push_back(positional_spell);
-        } else {
-            Communication::TargetPower target_spell{};
-            target_spell.type = spell.second->getTargetType();
-            target_spell.enemyID = spell.second->getTargetID();
-            gameState.targetPowers.push_back(target_spell);
+        if (spell.second->isActive()) {
+            if (spell.second->isPositional()){
+                Communication::PositionalPower positional_spell{};
+                positional_spell.type = spell.second->getPositionalType();
+                positional_spell.x = (int)spell.second->getPosition().getX();
+                positional_spell.y = (int)spell.second->getPosition().getY();
+                gameState.positionalPowers.push_back(positional_spell);
+            } else {
+                Communication::TargetPower target_spell{};
+                target_spell.type = spell.second->getTargetType();
+                target_spell.enemyID = spell.second->getTargetID();
+                gameState.targetPowers.push_back(target_spell);
+            }
         }
     }
 

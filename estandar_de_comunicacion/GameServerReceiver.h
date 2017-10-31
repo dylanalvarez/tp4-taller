@@ -7,16 +7,17 @@
 #include "../src/Server/Thread.h"
 #include "../client-server/common_Socket.h"
 
-
 class Server;
 class Client;
 
-class GameServerReceiver : public Thread {
+class GameServerReceiver {
 public:
-    GameServerReceiver(Socket &socket, Server &server, Client& client);
-    ~GameServerReceiver() override;
+    GameServerReceiver(Server &server, Client& client);
+    ~GameServerReceiver();
 
-    void run() override;
+    void joinToMatch(int match_id, const std::string& player_name);
+
+    void createMatch(int map_id, const std::string& player_name);
 
     void getChosenTeam(std::string &&nickname, int teamID);
 
@@ -41,7 +42,6 @@ public:
     GameServerReceiver& operator=(const GameServerReceiver&) = delete;
 
 private:
-    Socket& socket;
     Server& server;
     Client& client;
     TowerDefenseGame* game; // o cola bloqueante

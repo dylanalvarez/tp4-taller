@@ -6,7 +6,9 @@
 
 Match::Match(const std::string &config_file_path,
              const std::string &map_file_path, int id) :
-                game(config_file_path, map_file_path), id(id) {}
+                game(config_file_path, map_file_path), id(id) {
+    game.addEnemy("abmonible");
+}
 
 Match::~Match() = default;
 
@@ -37,5 +39,6 @@ Match::Match(Match&& other) noexcept : game(std::move(other.game)),
 }
 
 void Match::addPlayer(Client &&client) {
+    std::lock_guard<std::mutex> lock(mutex);
     clients.push_back(std::move(client));
 }

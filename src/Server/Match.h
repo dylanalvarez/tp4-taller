@@ -30,6 +30,7 @@ public:
     Match& operator=(Match&&) = delete;
 
 private:
+    std::mutex mutex;
     std::vector<Client> clients;
     TowerDefenseGame game;
     int id;

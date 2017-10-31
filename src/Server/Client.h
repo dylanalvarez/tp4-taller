@@ -24,6 +24,9 @@ public:
 
     void sendGameState(const Communication::GameState &gameState);
 
+    void setPlayer(const Player& player);
+    void setName(std::string&& name);
+
     Client(const Client&) = delete;
     Client& operator=(const Client&) = delete;
     Client& operator=(Client&&) = delete;
@@ -32,6 +35,8 @@ public:
 private:
     GameServerReceiver receiver;
     GameServerSocket serverSocket;
+    const Player* player;
+    std::string name;
 };
 
 #endif //TOWERDEFENSE_CLIENT_H

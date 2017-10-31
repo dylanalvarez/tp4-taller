@@ -7,9 +7,7 @@
 
 GameServerSocket::GameServerSocket(GameServerReceiver& receiver,
                                    Socket &&socket) : receiver(receiver),
-                                                      socket(std::move(socket)) {
-    receiver.start();
-}
+                                                      socket(std::move(socket)) {}
 
 void GameServerSocket::sendGameState(
         const Communication::GameState &gameState) {
@@ -17,6 +15,7 @@ void GameServerSocket::sendGameState(
 
     game_node["state"] = Communication::GameState::to_string(gameState.state);
 
+    game_node["enemies"];
     for (const Communication::Enemy& enemy : gameState.enemy) {
         YAML::Node enemy_node;
         enemy_node["id"] = enemy.id;
@@ -29,6 +28,7 @@ void GameServerSocket::sendGameState(
         game_node["enemies"].push_back(enemy_node);
     }
 
+    game_node["towers"];
     for (const Communication::Tower& tower : gameState.towers) {
         YAML::Node tower_node;
 
@@ -55,6 +55,7 @@ void GameServerSocket::sendGameState(
         game_node["towers"].push_back(tower_node);
     }
 
+    game_node["positional_powers"];
     for (const Communication::PositionalPower& power: gameState.positionalPowers) {
         YAML::Node power_node;
         power_node["type"] = Communication::PositionalPower::to_string(power.type);
@@ -66,6 +67,7 @@ void GameServerSocket::sendGameState(
         game_node["positional_powers"].push_back(power_node);
     }
 
+    game_node["positional_powers"];
     for (const Communication::TargetPower& power: gameState.targetPowers) {
         YAML::Node power_node;
         power_node["type"] = Communication::TargetPower::to_string(power.type);
@@ -73,7 +75,9 @@ void GameServerSocket::sendGameState(
 
         game_node["directed_powers"].push_back(power_node);
     }
-    std::string yaml_to_send = game_node.as<std::string>();
+    YAML::Emitter emitter;
+    emitter << game_node;
+    std::string yaml_to_send(emitter.c_str());
 
     socket.send("3" + std::to_string(yaml_to_send.length()) + yaml_to_send);
 }
@@ -81,6 +85,4 @@ void GameServerSocket::sendGameState(
 GameServerSocket::GameServerSocket(GameServerSocket&& other) noexcept :
         receiver(other.receiver), socket(std::move(other.socket)) {}
 
-GameServerSocket::~GameServerSocket() {
-    receiver.join();
-}
+GameServerSocket::~GameServerSocket() = default;
