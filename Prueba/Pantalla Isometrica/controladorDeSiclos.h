@@ -15,11 +15,12 @@ public:
   void iniciar();
   void terminar();
   bool siclo();
-  Communication::Enemy estadoActual();
+  bool continuar();
+  Communication::GameState estadoActual();
 protected:
   OrdenadorDeFichas& fichas;
-  std::list<Communication::Enemy> posiciones;
+  std::list<Communication::GameState> estados;
   bool seguir = true;
-  bool esperar = true;
+  bool siguiente = true;
 };
 #endif

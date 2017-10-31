@@ -9,18 +9,24 @@
 #include "controladorDeSiclos.h"
 #include "menuTorres.h"
 #include "TiposDeDatosExpeciales.h"
+#include "common_Socket.h"
 
 //esta clase es solo para dirigir el movimiento en este caso.
 
 #define largo 88
 #define teimpoActualizacionModelo 15
 
-int main(int argc, char *argv[])
-{
+void foo(ControladorDeSiclos* falso){
+  falso->iniciar();
+}
+
+int main(int argc, char *argv[]){
+  //Socket socket("127.0.0.1", "8080");
+
   //GameClientReceiver(Socket& socket);
   //GameClientSocket(const GameClientReceiver &receiver, Socket&& socket);
 
-  //Crea la aplicación de gtkmm
+  //Crea la aplicación de gtkmm (Todo esto tendria que ser un un clase)
   auto app = Gtk::Application::create(argc, argv);
   VectorDeSprites sprites;
   OrdenadorDeFichas fichas;
@@ -73,12 +79,15 @@ int main(int argc, char *argv[])
   TiempoEnMilesegundos = 50;
   sigc::slot<bool> my_slot2 = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDesplasamientos);
   sigc::connection conn2 = Glib::signal_timeout().connect(my_slot2,TiempoEnMilesegundos);
+
   TiempoEnMilesegundos = teimpoActualizacionModelo;
-  sigc::slot<bool> my_slot3 = sigc::mem_fun(falso, &ControladorDeSiclos::siclo);
+  sigc::slot<bool> my_slot3 = sigc::mem_fun(falso, &ControladorDeSiclos::continuar);
   sigc::connection conn3 = Glib::signal_timeout().connect(my_slot3,TiempoEnMilesegundos);
 
-
-
+  std::thread hilo (foo, &falso);
   app->run(*window);
+  falso.terminar();
+  hilo.join();
+
   return 0;
 }
