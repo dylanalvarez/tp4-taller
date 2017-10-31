@@ -6,6 +6,7 @@
 #include "../src/model/TowerDefenseGame.h"
 #include "../src/Server/Thread.h"
 #include "../client-server/common_Socket.h"
+#include "../src/Server/QueueProtected.h"
 
 class Server;
 class Client;
@@ -18,6 +19,8 @@ public:
     void joinToMatch(int match_id, const std::string& player_name);
 
     void createMatch(int map_id, const std::string& player_name);
+
+    void startMatch();
 
     void getChosenTeam(std::string &&nickname, int teamID);
 
@@ -37,6 +40,8 @@ public:
 
     void buildTower(int x, int y, Communication::Tower::Type type);
 
+    void setActionsQueue(QueueProtected& queue);
+
     GameServerReceiver(GameServerReceiver&&) noexcept ;
     GameServerReceiver(const GameServerReceiver&) = delete;
     GameServerReceiver& operator=(const GameServerReceiver&) = delete;
@@ -44,7 +49,9 @@ public:
 private:
     Server& server;
     Client& client;
-    TowerDefenseGame* game; // o cola bloqueante
+    int my_match_id;
+
+    QueueProtected* actions_queue;
 };
 
 #endif //TP4_TALLER_GAME_SERVER_RECEIVER_H

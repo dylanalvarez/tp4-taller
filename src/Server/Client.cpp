@@ -24,10 +24,30 @@ Client::Client(Client&& other) noexcept : receiver(std::move(other.receiver)),
     other.player = nullptr;
 }
 
-void Client::setPlayer(const Player& player) {
+void Client::setModelPlayer(const Player &player) {
     this->player = &player;
 }
 
 void Client::setName(std::string&& name) {
     this->name = std::move(name);
+}
+
+const std::string &Client::getName() const {
+    return name;
+}
+
+const std::string &Client::getElement() const {
+    return element;
+}
+
+void Client::addElement(std::string &&element) {
+    this->element = std::move(element);
+}
+
+void Client::sendMessage(std::string& msg) {
+    serverSocket.sendChatMessage(std::move(msg), std::move(name));
+}
+
+void Client::setActionsQueue(QueueProtected &queue) {
+    receiver.setActionsQueue(queue);
 }

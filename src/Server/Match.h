@@ -9,6 +9,8 @@
 #include "Thread.h"
 #include "../model/TowerDefenseGame.h"
 #include "Client.h"
+#include "QueueProtected.h"
+#include "HordeCreator.h"
 
 class Match : public Thread {
 public:
@@ -30,10 +32,14 @@ public:
     Match& operator=(Match&&) = delete;
 
 private:
+    HordeCreator horde_creator;
+
     std::mutex mutex;
     std::vector<Client> clients;
+    QueueProtected actions_queue;
     TowerDefenseGame game;
     int id;
+    bool has_started;
 
     // en micro segundos
     const unsigned int time_step = 15000; // 15 milisegundos;

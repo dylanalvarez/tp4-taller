@@ -85,4 +85,8 @@ void GameServerSocket::sendGameState(
 GameServerSocket::GameServerSocket(GameServerSocket&& other) noexcept :
         receiver(other.receiver), socket(std::move(other.socket)) {}
 
+void GameServerSocket::sendChatMessage(std::string &&message, std::string &&nickname) {
+
+}
+
 GameServerSocket::~GameServerSocket() = default;
