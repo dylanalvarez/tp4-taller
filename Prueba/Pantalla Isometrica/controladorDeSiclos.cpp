@@ -39,7 +39,7 @@ Communication::GameState ControladorDeSiclos::estadoActual(){
 }
 
 bool ControladorDeSiclos::siclo(){
-  if (estados.size() <0 )
+  if (estados.empty())
     return false;
   auto aux = estadoActual();
   for (auto it = aux.enemy.begin() ; it != aux.enemy.end(); ++it)
