@@ -12,4 +12,8 @@ GameServerReceiver::GameServerReceiver(GameServerReceiver&& other) noexcept :
         server(other.server),
         client(other.client) {}
 
+void GameServerReceiver::setActionsQueue(QueueProtected &queue) {
+    actions_queue = &queue;
+}
+
 GameServerReceiver::~GameServerReceiver() = default;

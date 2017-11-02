@@ -42,7 +42,6 @@ Match& Server::joinToMatch(Client &client, int id, bool is_creating) {
         try {
             Match new_match(maps_paths.at(id), config_file_path, match_id);
             new_match.addPlayer(std::move(client));
-            new_match.start();
 
             Communication::NameAndID new_match_;
             new_match_.id = match_id;
@@ -73,4 +72,14 @@ void Server::addMap(const std::string& file_path) {
     new_map.id = map_id++;
     new_map.name = YAML::LoadFile(file_path)["name"].as<std::string>();
     maps.push_back(std::move(new_map));
+}
+
+void Server::startMatch(int match_id) {
+    std::lock_guard<std::mutex> lock(mutex);
+
+    try {
+        matchs.at(match_id).start();
+    } catch (std::exception& e) {
+        // el match no existe
+    }
 }

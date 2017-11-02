@@ -21,6 +21,7 @@ public:
     void run() override;
 
     Match& joinToMatch(Client& client, int match_id, bool is_creating);
+    void startMatch(int match_id);
 
     // añade un mapa al servidor
     // Pre: el server no esta corriendo

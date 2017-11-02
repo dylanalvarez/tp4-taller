@@ -49,8 +49,14 @@ void Recptor::iniciar(){
     }
   }
 }
+<<<<<<< HEAD
 bool Recptor::siclo(){
   if (estados.empty() )
+=======
+
+bool ControladorDeSiclos::siclo(){
+  if (estados.empty())
+>>>>>>> 72662e57041d1185abe54e873d22fb25acf8d8e6
     return false;
   siguiente = true;
   return true;
