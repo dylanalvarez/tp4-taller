@@ -1,22 +1,30 @@
 #include "controladorDeSiclos.h"
 #include <thread>
 
+void hiloRecepto(Recptor* receiver){
+  receiver->iniciar();
+}
+
 void ControladorDeSiclos::iniciar(){
-  //C Solo me permite dormir por 1 segundo como minimo.
-  while (seguir) {
-    if (siguiente) {
-      siguiente = false;
-      siclo();
-      //acara irira un recivir
-    }
-  }
+  threads.push_back(std::thread(hiloRecepto, &receptor));
 }
 
 void ControladorDeSiclos::terminar(){
-  seguir = false;
+  receptor.terminar();
+  for (auto& th : threads) th.join();
 }
 
-ControladorDeSiclos::ControladorDeSiclos(int id, OrdenadorDeFichas& fichas2): fichas(fichas2){
+ControladorDeSiclos::ControladorDeSiclos(OrdenadorDeFichas& fichas2,
+   MenuTorres& menues2): receptor(fichas2, menues2){
+}
+
+bool ControladorDeSiclos::continuar(){
+  return receptor.siclo();
+}
+
+//receptor
+Recptor::Recptor(OrdenadorDeFichas& fichas2, MenuTorres& menues2):
+      reciver(fichas2, menues2){
   Communication::Enemy aux;
   Communication::GameState aux2;
   aux2.state = Communication::GameState::State::ongoing;
@@ -31,18 +39,41 @@ ControladorDeSiclos::ControladorDeSiclos(int id, OrdenadorDeFichas& fichas2): fi
     estados.push_back(aux2);
   }
 }
-
-Communication::GameState ControladorDeSiclos::estadoActual(){
-  auto retorno = estados.front();
-  estados.pop_front();
-  return retorno;
+void Recptor::iniciar(){
+  while (seguir) {
+    if (siguiente) {
+      siguiente = false;
+      auto aux = estados.front();
+      estados.pop_front();
+      reciver.getGameState(aux);
+    }
+  }
+}
+bool Recptor::siclo(){
+  if (estados.empty() )
+    return false;
+  siguiente = true;
+  return true;
+}
+void Recptor::terminar(){
+  seguir = false;
 }
 
-bool ControladorDeSiclos::siclo(){
-  if (estados.size() <0 )
-    return false;
-  auto aux = estadoActual();
-  for (auto it = aux.enemy.begin() ; it != aux.enemy.end(); ++it)
+
+
+
+//GameClientReceiver
+GameClientReceiver::GameClientReceiver(OrdenadorDeFichas& fichas2,
+   MenuTorres& menues2): fichas(fichas2), menues(menues2){
+   }
+
+void GameClientReceiver::getInitialData(const std::vector<Communication::NameAndID> &matches,
+                     const std::vector<Communication::NameAndID> &maps){
+                     }
+void GameClientReceiver::getMap(std::string &&map){
+}//aun no haec nada.
+void GameClientReceiver::getGameState(const Communication::GameState &gameState){
+  for (auto it = gameState.enemy.begin() ; it != gameState.enemy.end(); ++it)
     fichas.actualizarEnemigo(*it);
 /*
   for (auto it = aux.towers.begin() ; it != aux.towers.end(); ++it)
@@ -52,10 +83,9 @@ bool ControladorDeSiclos::siclo(){
   for (auto it = aux.targetPowers.begin() ; it != aux.targetPowers.end(); ++it)
     fichas.actualizarEnemigo(*it);
 */
-  return true;
 }
-
-bool ControladorDeSiclos::continuar(){
-  siguiente = true;
-  return true;
+void GameClientReceiver::getChatMessage(std::string &&message,
+                     std::string &&nickname){
+                     }
+GameClientReceiver::~GameClientReceiver(){
 }

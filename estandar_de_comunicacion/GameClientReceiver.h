@@ -6,7 +6,8 @@
 
 class GameClientReceiver {
 public:
-    GameClientReceiver(Socket& socket);
+    //GameClientReceiver(Socket& socket);
+    GameClientReceiver();
 
     void getInitialData(const std::vector<Communication::NameAndID> &matches,
                          const std::vector<Communication::NameAndID> &maps);

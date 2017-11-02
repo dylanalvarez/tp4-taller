@@ -223,7 +223,7 @@ void MenuTorres::prepararGrieta(){
   casteando = true;
   titulo->set_text("Grieta");
   titulo->show();
-//  reActivarHechizo(*Terraforming);
+
 }
 
 void MenuTorres::deselecionarHechizos(){
@@ -263,15 +263,14 @@ void MenuTorres::reActivarHechizo(Gtk::ToggleButton& hechizo){
 }
 
 void MenuTorres::enviarMensajeChat(){
-  auto c = mensajeEntrada->get_text();
-  recivirMensajeChat();
+  recivirMensajeChat(mensajeEntrada->get_text().c_str());
   mensajeEntrada->set_text(" ");
 }
 
-void MenuTorres::recivirMensajeChat(){
+void MenuTorres::recivirMensajeChat(std::string entrada){
   auto aux = chat->get_buffer ();
   auto c = mensajeEntrada->get_text(); //esto es lo que hay que cambiar.
   aux->insert_at_cursor("\n");
-  aux->insert_at_cursor(c);
+  aux->insert_at_cursor(entrada.c_str());
   chat->set_buffer(aux);
 }

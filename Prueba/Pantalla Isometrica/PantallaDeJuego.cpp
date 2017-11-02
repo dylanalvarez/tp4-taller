@@ -141,3 +141,6 @@ void PantallaDeJuego::agregarElemento(Elementos elemento){
   menuTorres.agregarElemento(elemento);
   elementos.push_back(elemento);
 }
+MenuTorres& PantallaDeJuego::getMenuTorres(){
+  return menuTorres;
+}

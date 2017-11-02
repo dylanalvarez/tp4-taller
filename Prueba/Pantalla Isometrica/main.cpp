@@ -16,10 +16,6 @@
 #define largo 88
 #define teimpoActualizacionModelo 15
 
-void foo(ControladorDeSiclos* falso){
-  falso->iniciar();
-}
-
 int main(int argc, char *argv[]){
   //Socket socket("127.0.0.1", "8080");
 
@@ -70,7 +66,7 @@ int main(int argc, char *argv[]){
   window->show_all();
 
 //mensaje falsos.
-  ControladorDeSiclos falso =  ControladorDeSiclos(1, fichas);
+  ControladorDeSiclos falso =  ControladorDeSiclos(fichas, area.getMenuTorres());
 
 //mejorar nombres
   int TiempoEnMilesegundos = 100;
@@ -84,10 +80,9 @@ int main(int argc, char *argv[]){
   sigc::slot<bool> my_slot3 = sigc::mem_fun(falso, &ControladorDeSiclos::continuar);
   sigc::connection conn3 = Glib::signal_timeout().connect(my_slot3,TiempoEnMilesegundos);
 
-  std::thread hilo (foo, &falso);
+  falso.iniciar();
   app->run(*window);
   falso.terminar();
-  hilo.join();
 
   return 0;
 }
