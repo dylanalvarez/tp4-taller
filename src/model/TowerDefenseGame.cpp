@@ -74,7 +74,7 @@ void TowerDefenseGame::loadScenarioProperties(YAML::Node& map) {
             road.push_back(it->as<Vector>());
         }
         road.push_back((*path)["exit"].as<Vector>());
-        paths.push_back(std::move(Path(std::move(road))));
+        paths.push_back(Path(std::move(road)));
     }
 
     scenario = new Scenario(std::move(paths), std::move(firm_ground_locations));

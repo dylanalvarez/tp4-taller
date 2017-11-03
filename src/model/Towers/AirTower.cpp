@@ -51,7 +51,7 @@ void AirTower::attack() {
     if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
     { return; }
 
-    std::vector<Enemy*> enemies = std::move(scenario.getEnemiesInRange(range));
+    std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
     if (enemies.empty()) { return; }
 
     changeTarget(enemies);

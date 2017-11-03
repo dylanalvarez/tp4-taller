@@ -18,8 +18,8 @@ void Meteorite::applyEffect(Enemy &enemy) {
 
     enemy.reduceLife(dmg);
 
-    std::vector<Enemy*> enemies = std::move(scenario.getEnemiesInRange(
-            Range(enemy.getCurrentPosition()), reach * tile_size));
+    std::vector<Enemy*> enemies = scenario.getEnemiesInRange(
+            Range(enemy.getCurrentPosition()), reach * tile_size);
 
     for (Enemy* target : enemies) {
         if (target->getID() == enemy.getID()) { continue; }

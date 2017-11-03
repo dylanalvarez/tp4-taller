@@ -923,7 +923,7 @@ void TowerDefenseGameTest::levelingNotExistingAttributeThrowExceptionTest() {
 
 void TowerDefenseGameTest::deadEnemiesAreDestroyedTest() {
     const Player &added_player = game->addPlayer("alguien", "earth");
-    const Tower &tower = game->addTower(added_player, "earth", Vector(2, 4));
+    game->addTower(added_player, "earth", Vector(2, 4));
 
     game->addEnemy("undead");
     game->moveEnemies();
@@ -1255,7 +1255,7 @@ void TowerDefenseGameTest::addingTowerToPositionAlreadyOccupedThrowsExceptionTes
 }
 
 void TowerDefenseGameTest::whenEnemyCompletesPathTheGameIsOverTest() {
-    const Player &added_player = game->addPlayer("alguien", "air");
+    game->addPlayer("alguien", "air");
 
     CPPUNIT_ASSERT(!game->isGameOver());
 
