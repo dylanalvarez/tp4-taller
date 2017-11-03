@@ -23,6 +23,8 @@ void Server::run() {
         try {
             Socket new_client = accept_socket.accept();
             // se pudo cerrar el socket en el accept
+            Client client(std::move(new_client),
+                          matchs_id, maps, *this);
             clients_waiting_for_match.emplace_back(std::move(new_client),
                                                    matchs_id, maps, *this);
         } catch (AcceptFailedException& e) {
@@ -40,7 +42,7 @@ Match& Server::joinMatch(Client& client, int id, bool is_creating) {
 
     if (is_creating) {
         try {
-            Match new_match(maps_paths.at(id), config_file_path, match_id);
+            Match new_match(config_file_path, maps_paths.at(id), match_id);
             new_match.addPlayer(std::move(client));
             new_match.start();
             Communication::NameAndID new_match_;

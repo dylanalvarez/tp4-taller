@@ -28,9 +28,9 @@ public:
     void sendMessage(std::string& msg);
 
     void setModelPlayer(const Player &player);
-    void setName(std::string&& name);
+    void setName(const std::string& name);
     void setActionsQueue(QueueProtected& queue);
-    void addElement(std::string&& element);
+    void addElement(const std::string& element);
 
     const std::string& getName() const;
     const std::string& getElement() const;

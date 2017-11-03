@@ -13,6 +13,9 @@ Client::Client(Socket&& socket,
         serverReceiver(server, *this),
         serverSocket(serverReceiver, std::move(socket)),
         sender(serverSocket, queue) {
+    this->element = "fire";
+    this->name = "alguien";
+    serverReceiver.joinToMatch(0, this->name);
     sender.start();
 }
 
@@ -34,8 +37,8 @@ void Client::setModelPlayer(const Player &player) {
     this->player = &player;
 }
 
-void Client::setName(std::string&& name) {
-    this->name = std::move(name);
+void Client::setName(const std::string& name) {
+    this->name = name;
 }
 
 const std::string &Client::getName() const {
@@ -46,8 +49,8 @@ const std::string &Client::getElement() const {
     return element;
 }
 
-void Client::addElement(std::string &&element) {
-    this->element = std::move(element);
+void Client::addElement(const std::string& element) {
+    this->element = element;
 }
 
 Client::Client(Client&& other) noexcept : serverReceiver(std::move(other.serverReceiver)),

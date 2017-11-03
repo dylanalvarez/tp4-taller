@@ -6,9 +6,7 @@
 #include "../src/Server/Server.h"
 
 GameServerReceiver::GameServerReceiver(Server &server, Client& client) :
-        server(server), client(client) {
-    server.joinMatch(client, 0, true);
-}
+        server(server), client(client) {}
 
 GameServerReceiver::GameServerReceiver(GameServerReceiver&& other) noexcept :
         server(other.server),
@@ -20,7 +18,7 @@ void GameServerReceiver::setActionsQueue(QueueProtected &queue) {
 
 void GameServerReceiver::joinToMatch(int match_id,
                                      const std::string &player_name) {
-    server.joinMatch(client, match_id, false);
+    server.joinMatch(client, match_id, true);
 }
 
 GameServerReceiver::~GameServerReceiver() = default;
