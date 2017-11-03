@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#define MESSAGE_LENGTH_CHARACTER_COUNT 8
 
 namespace Communication {
 struct NameAndID {

@@ -30,6 +30,8 @@ public:
     GameServerSocket operator=(GameServerSocket&&) noexcept ;
 
 private:
+    std::string _toFixedLengthString(long messageLength, int length);
+
     // el socket es un recurso compartido
     // lo puede acceder el cliente pidiendo que se envie un mensaje
     // y lo puede acceder el thread match enviando el estado del juego
