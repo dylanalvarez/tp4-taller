@@ -10,6 +10,8 @@ public:
     // When it recieves a message, it will invoke a method in the receiver.
     GameClientSocket(const GameClientReceiver &receiver, Socket&& socket);
 
+	//falta un Start(). Para controlar en que hilo recibe.
+
     void chooseTeam(std::string &&nickname, int teamID);
 
     void chooseMap(std::string &&nickname, int mapID);

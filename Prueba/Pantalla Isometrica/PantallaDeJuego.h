@@ -15,13 +15,14 @@ public:
   PantallaDeJuego(OrdenadorDeFichas &fichas2, Glib::RefPtr<Gtk::Builder> &ventana);
   bool ejecutarSicloDeAnimacion();
   bool ejecutarSicloDesplasamientos();
-	void agregarElemento(Elementos elemento);  
+	void agregarElemento(Elementos elemento);
   virtual ~PantallaDeJuego();
+  MenuTorres& getMenuTorres();
 private:
   //tal vez un mapa no sea lo mejor.
  std::vector<Elementos> elementos;
  OrdenadorDeFichas &fichas;
- MenuTorres menuTorres;
+ MenuTorres menuTorres; //necesitamos un get de esto.
  DatosPantalla datosActuales;
  bool incirementeEnX;
  bool decrementoEnX;

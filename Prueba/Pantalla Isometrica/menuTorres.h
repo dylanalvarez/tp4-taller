@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Fichas.h"
 #include "TiposDeDatosExpeciales.h"
+#include <string>
 
 //nombre a cambiar A Menu
 class MenuTorres{
@@ -68,7 +69,7 @@ public:
 	void avisarUpgradeEspecial();
 
 	void enviarMensajeChat();
-	void recivirMensajeChat();	//eterminar de definir entrada
+	void recivirMensajeChat(std::string entrada);	//eterminar de definir entrada
 
   MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2);
   void selecionarTorre(const FichaTorre &torre2);
