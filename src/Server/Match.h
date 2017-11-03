@@ -38,6 +38,7 @@ private:
     std::vector<Client> clients;
     QueueProtected actions_queue;
     TowerDefenseGame game;
+    Context context;
     int id;
     bool has_started;
 

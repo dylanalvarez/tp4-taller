@@ -8,7 +8,8 @@ QueueProtected::QueueProtected() = default;
 
 QueueProtected::~QueueProtected() {
     while (!actions.empty()) {
-        this->pop();
+        delete actions.front();
+        actions.pop();
     }
 }
 
@@ -24,11 +25,22 @@ void QueueProtected::pop() {
 }
 
 Action &QueueProtected::front() {
-    std::lock_guard<std::mutex> lock(mutex);
+
     return *actions.front();
 }
 
 bool QueueProtected::empty() {
     std::lock_guard<std::mutex> lock(mutex);
     return actions.empty();
+}
+
+QueueProtected::QueueProtected(QueueProtected&& other) noexcept {
+    std::lock_guard<std::mutex> lock(mutex);
+    this->actions = std::move(other.actions);
+}
+
+QueueProtected& QueueProtected::operator=(QueueProtected&& other) noexcept {
+    std::lock_guard<std::mutex> lock(mutex);
+    this->actions = std::move(other.actions);
+    return *this;
 }

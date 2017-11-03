@@ -5,17 +5,17 @@
 #ifndef TOWERDEFENSE_ACTION_H
 #define TOWERDEFENSE_ACTION_H
 
-
 #include "../../model/TowerDefenseGame.h"
+#include "../Context.h"
 
 class Client;
+class Context;
 
 class Action {
 public:
     virtual ~Action() = default;
 
-    virtual void apply(TowerDefenseGame& game) = 0;
-    virtual void apply(std::vector<Client>& clients) {};
+    virtual void apply(Context&) = 0;
 };
 
 

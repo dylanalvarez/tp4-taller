@@ -8,6 +8,6 @@ AddEnemyAction::AddEnemyAction(std::string &enemy_type,
                                unsigned int path_number) :
         enemy_type(enemy_type), path_number(path_number) {}
 
-void AddEnemyAction::apply(TowerDefenseGame &game) {
-    game.addEnemy(enemy_type, path_number);
+void AddEnemyAction::apply(Context& context) {
+    context.getGame().addEnemy(enemy_type, path_number);
 }

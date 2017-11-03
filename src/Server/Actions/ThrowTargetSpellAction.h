@@ -13,7 +13,7 @@ public:
     ThrowTargetSpellAction(std::string& spell, const Player& player,
                            int enemy_id);
 
-    void apply(TowerDefenseGame& game) override;
+    void apply(Context& context) override;
 
     ThrowTargetSpellAction(const ThrowTargetSpellAction&) = delete;
     ThrowTargetSpellAction& operator=(const ThrowTargetSpellAction&) = delete;

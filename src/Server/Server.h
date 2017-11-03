@@ -20,7 +20,7 @@ public:
     // y los distribuye por las distintas partidas
     void run() override;
 
-    Match& joinToMatch(Client& client, int match_id, bool is_creating);
+    Match& joinMatch(Client &client, int match_id, bool is_creating);
     void startMatch(int match_id);
 
     // añade un mapa al servidor
@@ -39,7 +39,7 @@ private:
     std::mutex mutex;
     ServerSocket accept_socket;
     std::map<int, Match> matchs;
-    std::vector<Client> connecting_client_list;
+    std::vector<Client> clients_waiting_for_match;
 
     std::vector<Communication::NameAndID> matchs_id;
     std::vector<Communication::NameAndID> maps;

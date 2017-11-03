@@ -14,7 +14,7 @@ public:
     BuildTowerAction(const Player& player, std::string& element,
                      Vector position);
 
-    void apply(TowerDefenseGame& game) override;
+    void apply(Context& context) override;
 
     BuildTowerAction(const BuildTowerAction&) = delete;
     BuildTowerAction& operator=(const BuildTowerAction&) = delete;

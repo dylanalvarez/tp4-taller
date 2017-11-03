@@ -10,6 +10,6 @@ ThrowPositionalSpellAction::ThrowPositionalSpellAction(std::string &spell,
                                                      spell(std::move(spell)),
                                                      position(vector) {}
 
-void ThrowPositionalSpellAction::apply(TowerDefenseGame &game) {
-    game.throwSpell(player, spell, position);
+void ThrowPositionalSpellAction::apply(Context& context) {
+    context.getGame().throwSpell(player, spell, position);
 }

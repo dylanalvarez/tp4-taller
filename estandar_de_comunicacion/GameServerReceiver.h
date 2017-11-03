@@ -10,6 +10,7 @@
 
 class Server;
 class Client;
+class QueueProtected;
 
 class GameServerReceiver {
 public:

@@ -4,24 +4,30 @@
 
 #include "Client.h"
 #include "Server.h"
+#include "Actions/SendGameStateAction.h"
+#include "Actions/SendMessageAction.h"
 
 Client::Client(Socket&& socket,
                const std::vector<Communication::NameAndID> &matches,
                const std::vector<Communication::NameAndID> &maps, Server& server) :
-        receiver(server, *this), serverSocket(receiver, std::move(socket)) {
-    //serverSocket.sendInitialData(matches, maps);
+        serverReceiver(server, *this),
+        serverSocket(serverReceiver, std::move(socket)),
+        sender(serverSocket, queue) {
+    sender.start();
 }
 
 Client::~Client() = default;
 
 void Client::sendGameState(const Communication::GameState &gameState) {
-    serverSocket.sendGameState(gameState);
+    queue.push(new SendGameStateAction(gameState));
 }
 
-Client::Client(Client&& other) noexcept : receiver(std::move(other.receiver)),
-                                          serverSocket(std::move(other.serverSocket)) {
-    this->player = other.player;
-    other.player = nullptr;
+void Client::sendMessage(std::string& msg) {
+   queue.push(new SendMessageAction(msg, name));
+}
+
+void Client::setActionsQueue(QueueProtected &queue) {
+    serverReceiver.setActionsQueue(queue);
 }
 
 void Client::setModelPlayer(const Player &player) {
@@ -44,10 +50,12 @@ void Client::addElement(std::string &&element) {
     this->element = std::move(element);
 }
 
-void Client::sendMessage(std::string& msg) {
-    serverSocket.sendChatMessage(std::move(msg), std::move(name));
-}
-
-void Client::setActionsQueue(QueueProtected &queue) {
-    receiver.setActionsQueue(queue);
+Client::Client(Client&& other) noexcept : serverReceiver(std::move(other.serverReceiver)),
+                                 serverSocket(std::move(other.serverSocket)),
+                                 sender(std::move(other.sender)),
+                                 queue(std::move(other.queue)),
+                                 player(other.player),
+                                 name(std::move(other.name)),
+                                 element(std::move(other.element)) {
+    other.player = nullptr;
 }

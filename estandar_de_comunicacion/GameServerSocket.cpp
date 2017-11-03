@@ -12,7 +12,9 @@
 
 GameServerSocket::GameServerSocket(GameServerReceiver& receiver,
                                    Socket &&socket) : receiver(receiver),
-                                                      socket(std::move(socket)) {}
+                                                      socket(std::move(socket)) {
+    keep_running = true;
+}
 
 void GameServerSocket::sendGameState(
         const Communication::GameState &gameState) {
@@ -96,7 +98,7 @@ GameServerSocket::GameServerSocket(GameServerSocket&& other) noexcept :
 
 void GameServerSocket::sendChatMessage(
         std::string &&message,
-        std::string &&nickname) {}
+        std::string &nickname) {}
 
 void GameServerSocket::sendInitialData(
         const std::vector<Communication::NameAndID> &matches,
@@ -134,8 +136,19 @@ void GameServerSocket::sendMap(std::string &&filename) {
 
 GameServerSocket::~GameServerSocket() = default;
 
-std::string _toFixedLengthString(long messageLength, int length) {
+std::string GameServerSocket::_toFixedLengthString(long messageLength,
+                                                   int length) {
     std::string numberAsString = std::to_string(messageLength);
     std::string padding = std::string(length - numberAsString.length(), '0');
     return padding + numberAsString;
+}
+
+void GameServerSocket::run() {
+    while (keep_running) {
+        // recibir opcode y llamar a receiver
+    }
+}
+
+void GameServerSocket::disconnect() {
+    keep_running = false;
 }
