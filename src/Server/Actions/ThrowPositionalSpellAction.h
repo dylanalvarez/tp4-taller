@@ -13,7 +13,7 @@ public:
     ThrowPositionalSpellAction(std::string& spell, const Player& player,
                                Vector& vector);
 
-    void apply(TowerDefenseGame& game) override;
+    void apply(Context& context) override;
 
     ThrowPositionalSpellAction(const ThrowPositionalSpellAction&) = delete;
     ThrowPositionalSpellAction& operator=(const ThrowPositionalSpellAction&)

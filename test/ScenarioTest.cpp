@@ -87,7 +87,7 @@ void ScenarioTest::towersCanOnlyBePlacedOnFirmGroundTest() {
     YAML::Node config_towers = config["towers"];
 
     // firm_ground hay solo en la posicion (1,5)
-    Scenario new_scenario(std::move(Path({Vector(0,0), Vector(0,5)})),
+    Scenario new_scenario(Path({Vector(0,0), Vector(0,5)}),
                           {Vector(1,5)});
 
     new_scenario.addTower(new FireTower(1, Vector(1,5), config_towers, new_scenario));
@@ -104,7 +104,7 @@ void ScenarioTest::cantAddTwoTowersOnTheSamePlaceTest() {
     YAML::Node config_towers = config["towers"];
 
     // firm_ground hay solo en la posicion (1,5)
-    Scenario new_scenario(std::move(Path({Vector(0,0), Vector(0,5)})),
+    Scenario new_scenario(Path({Vector(0,0), Vector(0,5)}),
                           {Vector(1,5)});
 
     new_scenario.addTower(new FireTower(1, Vector(1,5), config_towers, new_scenario));

@@ -8,7 +8,7 @@ Match::Match(const std::string &config_file_path,
              const std::string &map_file_path, int id) :
                 horde_creator(config_file_path),
                 game(config_file_path, map_file_path, horde_creator.getTotalAmountOfEnemies()),
-                id(id) {
+                context(game, clients), id(id)  {
     has_started = false;
 }
 
@@ -25,8 +25,7 @@ void Match::run() {
         }
 
         while (!actions_queue.empty()) {
-            actions_queue.front().apply(game);
-            actions_queue.front().apply(clients);
+            actions_queue.front().apply(context);
             actions_queue.pop();
         }
 
@@ -52,12 +51,13 @@ int Match::getID() const {
 
 Match::Match(Match&& other) noexcept : horde_creator(std::move(other.horde_creator)),
                                        game(std::move(other.game)),
+                                       context(std::move(other.context)),
                                        time_step(other.time_step){
     this->id = other.id;
     other.id = -1;
 }
 
-void Match::addPlayer(Client &&client) {
+void Match::addPlayer(Client&& client) {
     if (has_started) { return; }
 
     const Player& player = game.addPlayer(client.getName(), client.getElement());

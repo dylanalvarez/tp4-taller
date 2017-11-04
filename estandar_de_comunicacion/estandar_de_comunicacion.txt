@@ -1,6 +1,6 @@
 protocolo de comunicación
-| opcode          | largo          | YAML |
-| 1 unsigned char | 1 unsigned int |      | big endian, int de 64 bit
+| opcode          | largo            | YAML |
+| como texto "01" | texto "00000010" |      |
 
 server -> client: opcode 0 (INIT): matchs (id y nombre) y mapas (id y nombre)
 

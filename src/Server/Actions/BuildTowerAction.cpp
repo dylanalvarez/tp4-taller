@@ -10,6 +10,6 @@ BuildTowerAction::BuildTowerAction(const Player &player,
                                                       element(std::move(element)),
                                                       position(position) {}
 
-void BuildTowerAction::apply(TowerDefenseGame &game) {
-    game.addTower(player, element, position);
+void BuildTowerAction::apply(Context& context) {
+    context.getGame().addTower(player, element, position);
 }

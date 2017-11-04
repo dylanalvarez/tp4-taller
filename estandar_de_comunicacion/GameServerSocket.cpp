@@ -2,12 +2,19 @@
 // Created by facundo on 30/10/17.
 //
 
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+#include <fstream>
 #include "GameServerReceiver.h"
 #include "GameServerSocket.h"
 
 GameServerSocket::GameServerSocket(GameServerReceiver& receiver,
                                    Socket &&socket) : receiver(receiver),
-                                                      socket(std::move(socket)) {}
+                                                      socket(std::move(socket)) {
+    keep_running = true;
+}
 
 void GameServerSocket::sendGameState(
         const Communication::GameState &gameState) {
@@ -79,14 +86,69 @@ void GameServerSocket::sendGameState(
     emitter << game_node;
     std::string yaml_to_send(emitter.c_str());
 
-    socket.send("3" + std::to_string(yaml_to_send.length()) + yaml_to_send);
+    socket.send("03"
+                + _toFixedLengthString(
+            yaml_to_send.length(),
+            MESSAGE_LENGTH_CHARACTER_COUNT)
+                + yaml_to_send);
 }
 
 GameServerSocket::GameServerSocket(GameServerSocket&& other) noexcept :
         receiver(other.receiver), socket(std::move(other.socket)) {}
 
-void GameServerSocket::sendChatMessage(std::string &&message, std::string &&nickname) {
+void GameServerSocket::sendChatMessage(
+        std::string &&message,
+        std::string &nickname) {}
 
+void GameServerSocket::sendInitialData(
+        const std::vector<Communication::NameAndID> &matches,
+        const std::vector<Communication::NameAndID> &maps) {
+    YAML::Node initialData;
+    initialData["matches"];
+    for (auto& match : matches) {
+        YAML::Node matchNode;
+        matchNode["id"] = match.id;
+        matchNode["name"] = match.name;
+        initialData["matches"].push_back(matchNode);
+    }
+    initialData["maps"];
+    for (auto& map : maps) {
+        YAML::Node mapNode;
+        mapNode["id"] = map.id;
+        mapNode["name"] = map.name;
+        initialData["matches"].push_back(mapNode);
+    }
+    YAML::Emitter emitter;
+    emitter << initialData;
+    std::string yaml_to_send(emitter.c_str());
+
+    socket.send("00"
+                + _toFixedLengthString(yaml_to_send.length(),
+                                       MESSAGE_LENGTH_CHARACTER_COUNT)
+                + yaml_to_send);
+}
+
+void GameServerSocket::sendMap(std::string &&filename) {
+    std::ifstream file(filename);
+    socket.send(std::string(std::istreambuf_iterator<char>(file),
+                            std::istreambuf_iterator<char>()));
 }
 
 GameServerSocket::~GameServerSocket() = default;
+
+std::string GameServerSocket::_toFixedLengthString(long messageLength,
+                                                   int length) {
+    std::string numberAsString = std::to_string(messageLength);
+    std::string padding = std::string(length - numberAsString.length(), '0');
+    return padding + numberAsString;
+}
+
+void GameServerSocket::run() {
+    while (keep_running) {
+        // recibir opcode y llamar a receiver
+    }
+}
+
+void GameServerSocket::disconnect() {
+    keep_running = false;
+}

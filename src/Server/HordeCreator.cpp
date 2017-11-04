@@ -13,7 +13,7 @@ HordeCreator::HordeCreator(const std::string &map_file) {
             total_amount_of_enemies += (*it)["quantity"].as<int>();
             std::string type = (*it)["type"].as<std::string>();
             Horde horde(type,
-                           (*it)["time_before_arrival"].as<int>(),
+                           (*it)["seconds_before_arrival"].as<int>(),
                            (*it)["quantity"].as<int>());
             hordes.push(horde);
         }

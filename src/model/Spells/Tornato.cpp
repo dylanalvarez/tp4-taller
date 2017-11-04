@@ -2,6 +2,7 @@
 // Created by facundo on 24/10/17.
 //
 
+#include <random>
 #include "Tornato.h"
 #include "../Exceptions/MatchError.h"
 

@@ -16,4 +16,9 @@ void GameServerReceiver::setActionsQueue(QueueProtected &queue) {
     actions_queue = &queue;
 }
 
+void GameServerReceiver::joinToMatch(int match_id,
+                                     const std::string &player_name) {
+    server.joinMatch(client, match_id, true);
+}
+
 GameServerReceiver::~GameServerReceiver() = default;

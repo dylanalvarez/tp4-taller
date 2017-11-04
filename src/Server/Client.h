@@ -11,6 +11,7 @@
 #include "../../estandar_de_comunicacion/GameServerSocket.h"
 #include "../model/TowerDefenseGame.h"
 #include "QueueProtected.h"
+#include "ClientSender.h"
 
 class Server;
 
@@ -27,9 +28,9 @@ public:
     void sendMessage(std::string& msg);
 
     void setModelPlayer(const Player &player);
-    void setName(std::string&& name);
+    void setName(const std::string& name);
     void setActionsQueue(QueueProtected& queue);
-    void addElement(std::string&& element);
+    void addElement(const std::string& element);
 
     const std::string& getName() const;
     const std::string& getElement() const;
@@ -37,11 +38,14 @@ public:
     Client(const Client&) = delete;
     Client& operator=(const Client&) = delete;
     Client& operator=(Client&&) = delete;
-    Client(Client&&) noexcept;
+    Client(Client&&) noexcept ;
 
 private:
-    GameServerReceiver receiver;
+    GameServerReceiver serverReceiver;
     GameServerSocket serverSocket;
+
+    ClientSender sender;
+    BlockingQueue queue;
 
     const Player* player;
     std::string name;

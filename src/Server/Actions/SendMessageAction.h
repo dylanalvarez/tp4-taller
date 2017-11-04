@@ -10,15 +10,16 @@
 
 class SendMessageAction : public Action {
 public:
-    explicit SendMessageAction(std::string& msg);
+    explicit SendMessageAction(std::string& msg, std::string& nickname);
 
-    void apply(std::vector<Client>& clients) override;
+    void apply(Context& context) override;
 
     SendMessageAction(const SendMessageAction&) = delete;
     SendMessageAction& operator=(const SendMessageAction&) = delete;
 
 private:
     std::string msg;
+    std::string& name;
 };
 
 

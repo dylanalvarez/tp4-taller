@@ -20,6 +20,9 @@ public:
     void getChatMessage(std::string &&message,
                          std::string &&nickname);
 
+    // notificar con que elemento te quedaste O
+    // cual dejo de ser disponible para seleccion
+
     ~GameClientReceiver();
 };
 

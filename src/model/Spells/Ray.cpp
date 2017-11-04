@@ -2,6 +2,7 @@
 // Created by facundo on 24/10/17.
 //
 
+#include <random>
 #include "Ray.h"
 #include "../Exceptions/MatchError.h"
 

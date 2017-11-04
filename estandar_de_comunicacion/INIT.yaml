@@ -1,0 +1,8 @@
+matchs:
+  -
+    id: 2
+    name: "the cool kids"
+maps:
+  -
+    id: 1
+    name: "the hard one"

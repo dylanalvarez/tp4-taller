@@ -9,6 +9,8 @@
 #include <mutex>
 #include "Actions/Action.h"
 
+class Action;
+
 class QueueProtected {
 public:
     QueueProtected();
@@ -27,8 +29,8 @@ public:
 
     QueueProtected(const QueueProtected&) = delete;
     QueueProtected& operator=(const QueueProtected&) = delete;
-    QueueProtected(QueueProtected&&) = delete;
-    QueueProtected operator=(QueueProtected&&) = delete;
+    QueueProtected(QueueProtected&&) noexcept ;
+    QueueProtected& operator=(QueueProtected&&) noexcept ;
 
 private:
     std::mutex mutex;

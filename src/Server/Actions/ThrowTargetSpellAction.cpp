@@ -10,6 +10,6 @@ ThrowTargetSpellAction::ThrowTargetSpellAction(std::string &spell,
                                                                spell(std::move(spell)),
                                                                enemy_id(enemy_id) {}
 
-void ThrowTargetSpellAction::apply(TowerDefenseGame &game) {
-    game.throwSpell(player, spell, enemy_id);
+void ThrowTargetSpellAction::apply(Context& context) {
+    context.getGame().throwSpell(player, spell, enemy_id);
 }
