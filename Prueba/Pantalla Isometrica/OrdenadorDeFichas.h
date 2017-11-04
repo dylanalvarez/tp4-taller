@@ -21,6 +21,7 @@ private:
 protected:
 public:
  void ejecutarSicloDeAnimacion();
+ void preprarParaActualizacion();
 
  void agregarTerreno(FichaTerreno nuevaFicha);
  void imprimirTerreno(const Cairo::RefPtr<Cairo::Context>& cr,

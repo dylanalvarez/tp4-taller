@@ -8,11 +8,14 @@
 #include "OrdenadorDeFichas.h"
 #include "menuTorres.h"
 #include "TiposDeDatosExpeciales.h"
+#include "emisor.h"
 
 
 class PantallaDeJuego: public Gtk::DrawingArea{
 public:
-  PantallaDeJuego(OrdenadorDeFichas &fichas2, Glib::RefPtr<Gtk::Builder> &ventana);
+  PantallaDeJuego(OrdenadorDeFichas &fichas2,
+                  Glib::RefPtr<Gtk::Builder> &ventana,
+                  Emisor& emisor);
   bool ejecutarSicloDeAnimacion();
   bool ejecutarSicloDesplasamientos();
 	void agregarElemento(Elementos elemento);

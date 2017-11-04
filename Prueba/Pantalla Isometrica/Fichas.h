@@ -21,6 +21,7 @@ class Ficha{
   int tipo;
   int medioLargoX;
   int medioAltoY;
+  bool destrulleme = false;
  public:
   Ficha();
   Ficha(int x2, int y2, int id2, int tipo2);
@@ -33,7 +34,9 @@ class Ficha{
   int getTipo() const;
   bool colisionaConmigo(int x2, int y2);
   void imprimierCordenadas() const;   //echa para revisar nada mas. Quitar despues.
-  Posicion getPosicio() const;
+  Posicion getPosicion() const;
+  bool siguesVivo() const; //Para los gif
+  void setDestrulleme(bool valor);
 };
 //FichaTerreno
 
@@ -122,7 +125,6 @@ class FichaEfectos: public Ficha{
  protected:
   int tiempoImpacto;
   FichaEnemigo *objetivo;
-  bool destrulleme;
  public:
   FichaEfectos(FichaTorre &inicio, int id2, VectorDeSprites &sprites,
      FichaEnemigo &objetivo2);
@@ -131,7 +133,6 @@ class FichaEfectos: public Ficha{
   FichaEfectos(const FichaEfectos &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
   virtual void ejecutarSicloDeAnimacion(); //Para los gif
-  bool siguesVivo() const; //Para los gif
 };
 
 #endif

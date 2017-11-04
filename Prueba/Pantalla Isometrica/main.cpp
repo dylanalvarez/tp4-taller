@@ -57,7 +57,8 @@ int main(int argc, char *argv[]){
 	Glib::RefPtr<Gtk::Builder> refBuilder = Gtk::Builder::create();
 	refBuilder->add_from_file("Sprites/Pantallas/Pantalla principal.glade");
   //creo pantalla
-  PantallaDeJuego area (fichas, refBuilder);
+  Emisor emisor;
+  PantallaDeJuego area (fichas, refBuilder, emisor);
   area.agregarElemento(tierra);
 
 	refBuilder->get_widget("cajaJuego", Box);
@@ -65,8 +66,9 @@ int main(int argc, char *argv[]){
 	refBuilder->get_widget("applicationwindow1", window);
   window->show_all();
 
-//mensaje falsos.
-  ControladorDeSiclos falso =  ControladorDeSiclos(fichas, area.getMenuTorres());
+
+  Receptor receptor(fichas, area.getMenuTorres());
+  ControladorDeSiclos falso(receptor, emisor);
 
 //mejorar nombres
   int TiempoEnMilesegundos = 100;

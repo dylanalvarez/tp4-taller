@@ -87,9 +87,12 @@ bool PantallaDeJuego::on_button_press_event(GdkEventButton* event){
   y = y - datosActuales.desplasamientoY;
   int x2 = (x+y*(2.025641025))/(1.795454544);
   int y2 = (x-y*(2.025641025))/(-1.795454544);
-
+  int aux0;
   if (menuTorres.estamosCasteando()){
-    menuTorres.lanzarHechizo(fichas.ObetenerTerrenoEnEstaPosicion(x2,y2), //corregir esto.
+    if ((aux0 = fichas.ObetenerTerrenoEnEstaPosicion(x2,y2)) == NoColicion)
+      return Gtk::DrawingArea::on_button_press_event(event);
+    auto posicion = fichas.getTerreno(aux0).getPosicion();
+    menuTorres.lanzarHechizo(posicion.X, posicion.Y, //corregir esto.
                               fichas.ObetenerEnemigoEnEstaPosicion(x2,y2));
     return Gtk::DrawingArea::on_button_press_event(event);
   }
@@ -126,8 +129,8 @@ bool PantallaDeJuego::on_draw(const Cairo::RefPtr<Cairo::Context>& cr){
 }
 
 PantallaDeJuego::PantallaDeJuego(OrdenadorDeFichas &fichas2,
-                            	Glib::RefPtr<Gtk::Builder> &ventana):
-                            fichas(fichas2), menuTorres(ventana){
+                            	Glib::RefPtr<Gtk::Builder> &ventana, Emisor& emisor):
+                            fichas(fichas2), menuTorres(ventana,emisor){
   set_can_focus(true); //activa la relacion con el teclado
   add_events(Gdk::BUTTON_PRESS_MASK);
   add_events(Gdk::LEAVE_NOTIFY_MASK);

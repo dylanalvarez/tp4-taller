@@ -9,6 +9,11 @@ void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
     it->second.ejecutarSicloDeAnimacion();
   }
   for (auto it = enemigos.begin(); it != enemigos.end(); ++it){
+    if (it->second.siguesVivo()) {
+      enemigos.erase (it);
+    }
+  }
+  for (auto it = enemigos.begin(); it != enemigos.end(); ++it){
     it->second.ejecutarSicloDeAnimacion();
   }
   //primero vorra los efectos viejos
@@ -16,8 +21,7 @@ void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
     if (it->second.siguesVivo()) {
       poderes.erase (it);
     }
-  }
-  //ahora sigo
+  } //ahora sigo
   for (auto it = poderes.begin(); it != poderes.end(); ++it){
     it->second.ejecutarSicloDeAnimacion();
   }
@@ -26,6 +30,11 @@ void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
   }
 }
 
+void OrdenadorDeFichas::preprarParaActualizacion(){
+  for (auto it = enemigos.begin(); it != enemigos.end(); ++it){
+    it->second.setDestrulleme(true);
+  }
+}
 //terreno
 void OrdenadorDeFichas::agregarTerreno(FichaTerreno nuevaFicha){
   terreno.emplace(std::make_pair(nuevaFicha.getId(),nuevaFicha));

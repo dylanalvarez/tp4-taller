@@ -30,7 +30,7 @@ int Ficha::getId() const{
 int Ficha::getTipo() const{
   return tipo;
 }
-Posicion Ficha::getPosicio() const{
+Posicion Ficha::getPosicion() const{
   Posicion retorno;
   retorno.X = x;
   retorno.Y = y;
@@ -46,6 +46,12 @@ bool Ficha::colisionaConmigo(int x2, int y2){
 //echa para revisar nada mas. Quitar despues.
 void Ficha::imprimierCordenadas() const{
   printf("x: %i, y: %i\n", x, y);
+}
+bool Ficha::siguesVivo() const{
+  return destrulleme;
+}
+void Ficha::setDestrulleme(bool valor){
+  destrulleme = valor;
 }
 
 //fichasTerreno
@@ -226,9 +232,10 @@ void FichaEnemigo::actualizar(Communication::Enemy actualzacion){
   if ( y< actualzacion.y)
     inicioAnimiacionActual = masY;
   if ( y> actualzacion.y)
-    inicioAnimiacionActual = menosY;    
+    inicioAnimiacionActual = menosY;
   x= actualzacion.x;
   y= actualzacion.y;
+  destrulleme = false;
 }
 
 
@@ -279,7 +286,7 @@ FichaEfectos::FichaEfectos(FichaTorre &inicio, int id2,
   id = id2;
   destrulleme = false;
   Posicion posicionInicial;
-  posicionInicial = inicio.getPosicio();
+  posicionInicial = inicio.getPosicion();
   tipo = inicio.getTipo();
   switch (tipo) {
     case FichaTorreDeTierra:
@@ -316,10 +323,6 @@ FichaEfectos::FichaEfectos(const FichaEfectos &p): Ficha(p){
   destrulleme = p.destrulleme;
 }
 
-bool FichaEfectos::siguesVivo() const{
-  return destrulleme;
-}
-
 void FichaEfectos::ejecutarSicloDeAnimacion(){
  if (tiempoImpacto == 0) {
    destrulleme = true;
@@ -330,7 +333,7 @@ void FichaEfectos::ejecutarSicloDeAnimacion(){
  switch (tipo) {
    case FichaTorreDeTierra:
       Posicion posicionFinal;
-      posicionFinal = objetivo->getPosicio();
+      posicionFinal = objetivo->getPosicion();
       x2 = posicionFinal.X;
       y2 = posicionFinal.Y;
       x = x - (x-x2)/tiempoImpacto;

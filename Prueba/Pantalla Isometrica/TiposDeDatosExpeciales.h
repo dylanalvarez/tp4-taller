@@ -3,7 +3,9 @@
 
 
 #define NoColicion 0
-
+#include <gtkmm.h>
+#include <iostream>
+#include <vector>
 
 enum Elementos{
   fuego,agua,aire,tierra  };
@@ -100,5 +102,20 @@ struct GameState {
 };
 }
 
+struct Mensaje {
+  enum Type {
+    chooseTeam, chooseMap, chooseElement, sendChatMessage, pingTile, applySpell1,
+     applySpell2, applyUpgrade, buildTower
+  };
+  Type tipo;
+  std::string elString;
+  int elInt1;
+  int elInt2;
+  Communication::Element elElemento;
+  Communication::PositionalPower elPoderPosicional;
+  Communication::TargetPower elPoderTargetado;
+  Communication::Upgrade laMejora;
+  Communication::Tower::Type elTypoDeTorre;
+};
 
 #endif

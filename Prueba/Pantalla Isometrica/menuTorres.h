@@ -5,11 +5,13 @@
 #include <iostream>
 #include "Fichas.h"
 #include "TiposDeDatosExpeciales.h"
+#include "emisor.h"
 #include <string>
 
 //nombre a cambiar A Menu
 class MenuTorres{
 private:
+	Emisor& emisorComandos;
 	std::vector<Elementos> elementos;
 	bool casteando;
 	Hechizo hechizoActual;
@@ -60,7 +62,7 @@ public:
 
 	void prepararTerraforming();
 	void prepararGrieta();
-	void lanzarHechizo(int terreno, int objetivo); //mejorar cuando sea el momento.
+	void lanzarHechizo(int x, int y, int objetivo); //mejorar cuando sea el momento.
 	bool estamosCasteando();
 	void reActivarHechizo(Gtk::ToggleButton& hechizo);
 
@@ -71,7 +73,7 @@ public:
 	void enviarMensajeChat();
 	void recivirMensajeChat(std::string entrada);	//eterminar de definir entrada
 
-  MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2);
+  MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2, Emisor& emisor);
   void selecionarTorre(const FichaTorre &torre2);
   void selecionarTerreno(const FichaTerreno &terreno2);
 	void agregarElemento(Elementos elemento);

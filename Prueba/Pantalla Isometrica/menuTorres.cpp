@@ -1,7 +1,8 @@
 #include "menuTorres.h"
 
 
-MenuTorres::MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2): ventana(ventana2){
+MenuTorres::MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2, Emisor& emisor):
+                  emisorComandos(emisor), ventana(ventana2){
   	ventana->get_widget("NombreTorre", titulo);
 
   	ventana->get_widget("Datos1", rango);
@@ -142,31 +143,58 @@ void MenuTorres::selecionarTerreno(const FichaTerreno &terreno2){
 }
 
 void MenuTorres::avisarConstruirTorreTierra(){
-  printf("Construir Torre de Tierra en:  ");
-  terreno->imprimierCordenadas();
+  auto posicion = terreno->getPosicion();
+  emisorComandos.cosntruirTorre(posicion.X, posicion.Y,
+                    Communication::Tower::Type::earth);
+  //printf("Construir Torre de Tierra en:  ");
+  //terreno->imprimierCordenadas();
   }
 void MenuTorres::avisarConstruirTorreAgua(){
-  printf("Construir Torre de Agua en:  ");
-  terreno->imprimierCordenadas();
+  auto posicion = terreno->getPosicion();
+  emisorComandos.cosntruirTorre(posicion.X, posicion.Y,
+                    Communication::Tower::Type::water);
+  //printf("Construir Torre de Agua en:  ");
+  //terreno->imprimierCordenadas();
   }
 void MenuTorres::avisarConstruirTorreFuego(){
-  printf("Construir Torre de Fuego en:  ");
-  terreno->imprimierCordenadas();
+  auto posicion = terreno->getPosicion();
+  emisorComandos.cosntruirTorre(posicion.X, posicion.Y,
+                    Communication::Tower::Type::fire);
+//  printf("Construir Torre de Fuego en:  ");
+//  terreno->imprimierCordenadas();
   }
 void MenuTorres::avisarConstruirTorreAire(){
-  printf("Construir Torre de Aire en:  ");
-  terreno->imprimierCordenadas();
+  auto posicion = terreno->getPosicion();
+  emisorComandos.cosntruirTorre(posicion.X, posicion.Y,
+                    Communication::Tower::Type::air);
+//  printf("Construir Torre de Aire en:  ");
+//  terreno->imprimierCordenadas();
   }
 
 //estas son las vericones "betas"
 void MenuTorres::avisarUpgradeDanio(){
-  printf("Upgrade Daño de %i\n", torre->getId());
+  Communication::Upgrade aux;
+  aux.type = Communication::Upgrade::Type::range;
+  aux.towerID = torre->getId();
+  emisorComandos.upgraTorre(aux);
+  //printf("Upgrade Daño de %i\n", torre->getId());
   }
 void MenuTorres::avisarUpgradeRango(){
-  printf("Upgrade Rango de %i\n", torre->getId());
+  Communication::Upgrade aux;
+  aux.type = Communication::Upgrade::Type::damage;
+  aux.towerID = torre->getId();
+  emisorComandos.upgraTorre(aux);
+  //printf("Upgrade Rango de %i\n", torre->getId());
   }
 void MenuTorres::avisarUpgradeEspecial(){
-  printf("Upgrade Especial de %i\n", torre->getId());
+  Communication::Upgrade aux;
+  if (torre->getTipo()==FichaTorreDeFuego)
+    aux.type = Communication::Upgrade::Type::reach;
+  else
+    aux.type = Communication::Upgrade::Type::slowdown;
+  aux.towerID = torre->getId();
+  emisorComandos.upgraTorre(aux);
+  //printf("Upgrade Especial de %i\n", torre->getId());
   }
 
 void MenuTorres::agregarElemento(Elementos elemento){
@@ -236,18 +264,24 @@ void MenuTorres::deselecionarHechizos(){
 bool MenuTorres::estamosCasteando(){
   return casteando;
 }
-void MenuTorres::lanzarHechizo(int terreno, int objetivo){
+void MenuTorres::lanzarHechizo(int x, int y, int objetivo){
   switch (hechizoActual) {
     case Hechizo::Terraforming:
       if(terreno == NoColicion)
         return; //agregar algo mas de logica.. preguntar esto.
-      printf("Terraforming en %i\n", terreno);
+      printf("Terraforming en %i, %i\n", x,y);
+      /*Communication::PositionalPower aux;
+      auto
+      aux.type = Communication::PositionalPower::Type::terraforming
+      aux.x
+      aux.y*/
+      //emisorComandos.lansarEchizo(aux);
       Terraforming->set_sensitive(false);
     break;
     case Hechizo::Grieta:
       if(terreno == NoColicion)
         return; //agregar algo mas de logica.. preguntar esto.
-      printf("Grieta en %i\n", terreno);
+      printf("Grieta en %i, %i\n", x,y);
       Grieta->set_sensitive(false);
     break;
     default:
