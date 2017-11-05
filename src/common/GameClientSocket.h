@@ -4,6 +4,7 @@
 #include <string>
 #include "CommunicationUtils.h"
 #include "GameClientReceiver.h"
+#include "Socket.h"
 
 class GameClientSocket {
 public:
