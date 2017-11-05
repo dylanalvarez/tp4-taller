@@ -34,7 +34,7 @@ private:
   Gtk::Button* botonTierra;
   Gtk::Button* botonAgua;
   Gtk::Button* botonAire;
-  Gtk::Button* botonPing; //falta el codigo de esto.
+//  Gtk::Button* botonPing; //falta el codigo de esto.
 
 	//poderes
   Gtk::ToggleButton* Terraforming;
