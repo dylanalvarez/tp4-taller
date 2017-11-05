@@ -4,9 +4,9 @@
 #include <string>
 #include "CommunicationUtils.h"
 #include "../src/model/TowerDefenseGame.h"
-#include "../src/Server/Thread.h"
+#include "../src/server/Thread.h"
 #include "../client-server/common_Socket.h"
-#include "../src/Server/QueueProtected.h"
+#include "../src/server/QueueProtected.h"
 
 class Server;
 class Client;

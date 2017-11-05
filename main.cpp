@@ -1,5 +1,5 @@
 #include <iostream>
-#include "src/Server/Server.h"
+#include "src/server/Server.h"
 
 int main(int argc, char *argv[]) {
     Server server("8080");

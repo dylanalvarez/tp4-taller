@@ -1,0 +1,128 @@
+# All dimensions and positions are expressed as {x: 1, y: 2}
+
+# In this example, a value from 1 to 10 represents an actual block,
+# and 0 and 11 represent a 'virtual block', needed for entry and exit position
+# disambiguation. [0, 0], [11, 11], [0, 11] and [11, 0] are invalid.
+# Negative values or values greater than 11 are invalid.
+
+name: A map
+setting: desert # other possibilities: 'volcano', 'ice', 'meadow'
+size:
+  x: 11
+  y: 15
+firm_ground:
+  - x: 2
+    y: 3
+  - x: 6
+    y: 10
+  - x: 2
+    y: 13
+  - x: 10
+    y: 6
+
+# Path sequence is expressed in pixels, they must be in the range [0, 80 * 10],
+# being 80 the height/width of a block,
+# and 10 the height/width of the map, in blocks.
+paths:
+  - entry:
+      x: 3
+      y: 0
+    exit:
+      x: 0
+      y: 6
+    # Possible horde types:
+    # green_demon, goat_man, undead, spectre, bloody_hawk, abmonible
+    enemies:
+      - type: green_demon
+        quantity: 3
+        seconds_before_arrival: 8
+      - type: bloody_hawk
+        quantity: 5
+        seconds_before_arrival: 6
+      - type: bloody_hawk
+        quantity: 7
+        seconds_before_arrival: 5
+    path_sequence:
+      - x: 220
+        y: 44
+      - x: 220
+        y: 132
+      - x: 220
+        y: 220
+      - x: 220
+        y: 308
+      - x: 220
+        y: 396
+      - x: 220
+        y: 484
+      - x: 44
+        y: 484
+      - x: 44
+        y: 484
+      - x: 132
+        y: 484
+      - x: 132
+        y: 484
+  - path_sequence:
+      - x: 572
+        y: 44
+      - x: 572
+        y: 132
+      - x: 572
+        y: 220
+      - x: 572
+        y: 308
+      - x: 572
+        y: 396
+      - x: 572
+        y: 484
+      - x: 572
+        y: 572
+      - x: 572
+        y: 660
+      - x: 572
+        y: 748
+      - x: 572
+        y: 836
+      - x: 572
+        y: 924
+      - x: 572
+        y: 1012
+      - x: 572
+        y: 1100
+      - x: 572
+        y: 1188
+      - x: 572
+        y: 1276
+      - x: 660
+        y: 1276
+      - x: 660
+        y: 1276
+      - x: 748
+        y: 1276
+      - x: 748
+        y: 1276
+      - x: 836
+        y: 1276
+      - x: 836
+        y: 1276
+      - x: 924
+        y: 1276
+      - x: 924
+        y: 1276
+    entry:
+      x: 7
+      y: 0
+    exit:
+      x: 12
+      y: 15
+    enemies:
+      - type: undead
+        quantity: 6
+        seconds_before_arrival: 7
+      - type: goat_man
+        quantity: 6
+        seconds_before_arrival: 7
+      - type: goat_man
+        quantity: 1
+        seconds_before_arrival: 1

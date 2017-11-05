@@ -10,4 +10,4 @@ client-server/client
 client-server/server
 *.DS_Store
 *.glade~
-editor/*.yaml
+src/editor/*.yaml
