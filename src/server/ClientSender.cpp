@@ -5,7 +5,7 @@
 #include "ClientSender.h"
 
 ClientSender::ClientSender(GameServerSocket &socket, BlockingQueue &queue) :
-        socket(socket), queue(queue), context(socket) {
+        queue(queue), context(socket) {
     keep_running = true;
 }
 

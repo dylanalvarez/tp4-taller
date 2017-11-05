@@ -25,7 +25,6 @@ public:
 
 private:
     bool keep_running;
-    GameServerSocket& socket;
     BlockingQueue& queue;
     Context context;
 
