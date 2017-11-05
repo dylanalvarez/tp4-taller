@@ -8,10 +8,11 @@
 
 #include "Thread.h"
 #include "../../client-server/common_Socket.h"
-#include "../../estandar_de_comunicacion/GameServerSocket.h"
+#include "../common/GameServerReceiver.h"
 #include "../model/TowerDefenseGame.h"
 #include "QueueProtected.h"
 #include "ClientSender.h"
+#include "../common/GameServerSocket.h"
 
 class Server;
 

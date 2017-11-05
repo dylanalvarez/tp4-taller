@@ -12,7 +12,6 @@
 #include "Player.h"
 #include "Factory/TowerFactory.h"
 #include "Spells/Spell.h"
-#include "../../estandar_de_comunicacion/CommunicationUtils.h"
 
 class TowerDefenseGame {
 public:

@@ -5,7 +5,7 @@
 #ifndef TOWERDEFENSE_CONTEXT_H
 #define TOWERDEFENSE_CONTEXT_H
 
-#include "../../estandar_de_comunicacion/GameServerSocket.h"
+#include "../model/TowerDefenseGame.h"
 
 class GameServerSocket;
 class Client;

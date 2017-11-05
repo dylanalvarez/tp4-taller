@@ -6,6 +6,7 @@
 #define TOWERDEFENSE_SENDGAMESTATEACTION_H
 
 
+#include "../../common/GameServerSocket.h"
 #include "Action.h"
 
 class SendGameStateAction : public Action {

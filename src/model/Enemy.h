@@ -6,7 +6,7 @@
 #define TOWERDEFENSE_ENEMY_H
 
 #include "Path.h"
-#include "../../estandar_de_comunicacion/CommunicationUtils.h"
+#include "../common/CommunicationUtils.h"
 
 class Enemy {
 public:

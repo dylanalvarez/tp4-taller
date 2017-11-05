@@ -3,7 +3,7 @@
 //
 
 #include "GameServerReceiver.h"
-#include "../src/server/Server.h"
+#include "../server/Server.h"
 
 GameServerReceiver::GameServerReceiver(Server &server, Client& client) :
         server(server), client(client) {}

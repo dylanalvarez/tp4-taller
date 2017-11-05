@@ -6,8 +6,8 @@
 #define TOWERDEFENSE_CLIENTSENDER_H
 
 
-#include "../../estandar_de_comunicacion/GameServerSocket.h"
 #include "BlockingQueue.h"
+#include "Thread.h"
 
 class ClientSender : public Thread {
 public:
