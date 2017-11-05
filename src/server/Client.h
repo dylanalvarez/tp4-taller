@@ -6,7 +6,7 @@
 #define TOWERDEFENSE_CLIENT_H
 
 
-#include "Thread.h"
+#include "../common/Thread.h"
 #include "../common/Socket.h"
 #include "../common/GameServerReceiver.h"
 #include "../model/TowerDefenseGame.h"

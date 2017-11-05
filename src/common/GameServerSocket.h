@@ -5,7 +5,7 @@
 #include <mutex>
 #include "GameServerReceiver.h"
 #include "CommunicationUtils.h"
-#include "../server/Thread.h"
+#include "Thread.h"
 
 class GameServerReceiver;
 

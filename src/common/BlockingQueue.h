@@ -10,7 +10,7 @@
 #include <mutex>
 #include <string>
 #include <condition_variable>
-#include "Actions/Action.h"
+#include "../server/Actions/Action.h"
 
 // BlockingQueue es una estructura de datos bloqueante.
 // Cuando un thread intenta sacar un elemento y esta vacia, es

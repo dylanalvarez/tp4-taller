@@ -6,7 +6,7 @@
 #define TOWERDEFENSE_MATCH_H
 
 
-#include "Thread.h"
+#include "../common/Thread.h"
 #include "../model/TowerDefenseGame.h"
 #include "Client.h"
 #include "QueueProtected.h"

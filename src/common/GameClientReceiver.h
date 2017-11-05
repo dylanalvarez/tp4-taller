@@ -2,7 +2,7 @@
 #define TP4_TALLER_GAME_CLIENT_RECEIVER_H
 
 #include "CommunicationUtils.h"
-#include "../client-server/common_Socket.h"
+#include "Socket.h"
 
 class GameClientReceiver {
 public:

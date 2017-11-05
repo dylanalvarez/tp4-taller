@@ -5,11 +5,12 @@
 #include "CommunicationUtils.h"
 #include "GameClientReceiver.h"
 #include "Socket.h"
+#include "Thread.h"
 
-class GameClientSocket {
+class GameClientSocket : public Thread {
 public:
     // When it recieves a message, it will invoke a method in the receiver.
-    GameClientSocket(const GameClientReceiver &receiver, Socket&& socket);
+    GameClientSocket(GameClientReceiver &receiver, Socket&& socket);
 
 	//falta un Start(). Para controlar en que hilo recibe.
 
@@ -36,6 +37,10 @@ public:
 
     // Will disconnect when going out of scope
     ~GameClientSocket();
+
+private:
+    GameClientReceiver& receiver;
+    Socket socket;
 };
 
 #endif //TP4_TALLER_GAME_CLIENT_SOCKET_H
