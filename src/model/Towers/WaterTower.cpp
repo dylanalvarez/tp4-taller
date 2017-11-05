@@ -128,12 +128,7 @@ void WaterTower::levelupSlowdown() {
 void WaterTower::levelupReachOfImpact() {}
 
 Communication::Tower::Damage WaterTower::getDamage_() const {
-    Communication::Tower::Damage dmg_info{};
-    dmg_info.close_by = 0;
-    dmg_info.flying = dmg;
-    dmg_info.normal = dmg;
-
-    return dmg_info;
+    return Communication::Tower::Damage(dmg, dmg, 0);
 }
 
 Communication::Tower::Type WaterTower::getType() const {

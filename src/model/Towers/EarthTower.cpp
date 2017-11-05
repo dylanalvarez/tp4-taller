@@ -120,12 +120,7 @@ void EarthTower::levelupReachOfImpact() {}
 void EarthTower::levelupSlowdown() {}
 
 Communication::Tower::Damage EarthTower::getDamage_() const {
-    Communication::Tower::Damage dmg_info{};
-    dmg_info.close_by = 0;
-    dmg_info.flying = 0;
-    dmg_info.normal = dmg;
-
-    return dmg_info;
+    return Communication::Tower::Damage(dmg, 0, 0);
 }
 
 Communication::Tower::Type EarthTower::getType() const {

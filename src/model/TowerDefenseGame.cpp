@@ -319,41 +319,44 @@ Communication::GameState TowerDefenseGame::getGameState() const {
     Communication::GameState gameState{};
     // enemies
     for (const Enemy& enemy : getAllEnemies()) {
-        Communication::Enemy enemy_info{};
-        enemy_info.id = enemy.getID();
-        enemy_info.x = (int)enemy.getCurrentPosition().getX();
-        enemy_info.y = (int)enemy.getCurrentPosition().getY();
-        enemy_info.type = enemy.getType();
-        gameState.enemy.push_back(enemy_info);
+        gameState.enemies.emplace_back(
+                enemy.getType(),
+                enemy.getID(),
+                (int)enemy.getCurrentPosition().getX(),
+                (int)enemy.getCurrentPosition().getY()
+        );
     }
 
     // towers
     for (const Tower* tower: scenario->getTowers()) {
-        Communication::Tower tower_info{};
-        tower_info.experience = (int)tower->getExperience();
-        tower_info.id = tower->getID();
-        tower_info.type = tower->getType();
-        tower_info.damage = tower->getDamage_();
-        tower_info.slowdown = tower->getslowdown();
-        tower_info.rangeInSquares = (int)tower->getRange().getRadius();
-        tower_info.ExplosionRange = tower->getExplosionRange();
-        gameState.towers.push_back(tower_info);
+        gameState.towers.emplace_back(
+                tower->getID(),
+                0,
+                (int)tower->getExperience(),
+                (int)tower->getRange().getRadius(),
+                tower->getExplosionRange(),
+                0,
+                0,
+                tower->getslowdown(),
+                tower->getDamage_(),
+                tower->getType()
+        );
     }
 
     // positional powers
     for (auto& spell: spells) {
         if (spell.second->isActive()) {
             if (spell.second->isPositional()){
-                Communication::PositionalPower positional_spell{};
-                positional_spell.type = spell.second->getPositionalType();
-                positional_spell.x = (int)spell.second->getPosition().getX();
-                positional_spell.y = (int)spell.second->getPosition().getY();
-                gameState.positionalPowers.push_back(positional_spell);
+                gameState.positionalPowers.emplace_back(
+                        spell.second->getPositionalType(),
+                        (int)spell.second->getPosition().getX(),
+                        (int)spell.second->getPosition().getY()
+                );
             } else {
-                Communication::TargetPower target_spell{};
-                target_spell.type = spell.second->getTargetType();
-                target_spell.enemyID = spell.second->getTargetID();
-                gameState.targetPowers.push_back(target_spell);
+                gameState.targetPowers.emplace_back(
+                        spell.second->getTargetType(),
+                        spell.second->getTargetID()
+                );
             }
         }
     }

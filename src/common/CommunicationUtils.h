@@ -11,7 +11,8 @@
 
 namespace Communication {
     struct NameAndID {
-        NameAndID(std::string, int);
+        NameAndID(const std::string &, int);
+
         NameAndID();
 
         std::string name;
@@ -42,22 +43,40 @@ namespace Communication {
 
         static std::string to_string(const Enemy::Type &type);
 
+        Enemy(const std::string &type, int id, int x, int y);
+
+        Enemy(Type type, int id, int x, int y);
+
         int id, x, y;
         Type type;
     };
 
     struct Tower {
         struct EnemySlowdown {
+            EnemySlowdown(int percentage, int duration);
+
             int percentage, duration;
         };
+
         struct Damage {
+            Damage(int normal, int flying, int close_by);
+
             int normal, flying, close_by;
         };
+
         enum Type {
             earth, water, fire, air
         };
 
         static std::string to_string(const Tower::Type &type);
+
+        Tower(int id, int level, int experience, int rangeInSquares,
+              int ExplosionRange, int x, int y, EnemySlowdown slowdown,
+              Damage damage, const std::string &type);
+
+        Tower(int id, int level, int experience, int rangeInSquares,
+              int ExplosionRange, int x, int y, EnemySlowdown slowdown,
+              Damage damage, Type type);
 
         int id, level, experience, rangeInSquares, ExplosionRange, x, y;
 
@@ -73,6 +92,10 @@ namespace Communication {
 
         static std::string to_string(const PositionalPower::Type &type);
 
+        PositionalPower(const std::string &, int x, int y);
+
+        PositionalPower(Type, int x, int y);
+
         Type type;
         int x, y;
     };
@@ -83,6 +106,10 @@ namespace Communication {
         };
 
         static std::string to_string(const TargetPower::Type &type);
+
+        TargetPower(const std::string &type, int enemyID);
+
+        TargetPower(Type type, int enemyID);
 
         Type type;
         int enemyID;
@@ -95,8 +122,10 @@ namespace Communication {
 
         static std::string to_string(const GameState::State &state);
 
+        void setState(const std::string &stateAsString);
+
         State state;
-        std::vector<Enemy> enemy;
+        std::vector<Enemy> enemies;
         std::vector<Tower> towers;
         std::vector<PositionalPower> positionalPowers;
         std::vector<TargetPower> targetPowers;

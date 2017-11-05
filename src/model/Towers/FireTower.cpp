@@ -133,12 +133,7 @@ void FireTower::levelupReachOfImpact() {
 void FireTower::levelupSlowdown() {}
 
 Communication::Tower::Damage FireTower::getDamage_() const {
-    Communication::Tower::Damage dmg_info{};
-    dmg_info.close_by = dmg_to_nearby_units;
-    dmg_info.flying = dmg;
-    dmg_info.normal = dmg;
-
-    return dmg_info;
+    return Communication::Tower::Damage(dmg, dmg, dmg_to_nearby_units);
 }
 
 Communication::Tower::Type FireTower::getType() const {

@@ -150,7 +150,48 @@ void GameClientSocket::_handleInitialData(YAML::Node &node) {
 }
 
 void GameClientSocket::_handleGameState(YAML::Node &node) {
-    throw Exception("Not yet implemented");
+    Communication::GameState state;
+    state.setState(node["state"].as<std::string>());
+    for (const auto& enemy : node["enemies"]) {
+        state.enemies.emplace_back(
+                enemy["kind"].as<std::string>(),
+                enemy["id"].as<int>(),
+                enemy["position"]["x"].as<int>(),
+                enemy["position"]["y"].as<int>());
+    }
+    for (const auto& tower : node["towers"]) {
+        state.towers.emplace_back(
+                tower["id"].as<int>(),
+                tower["lv"].as<int>(),
+                tower["xp"].as<int>(),
+                tower["range_in_squares"].as<int>(),
+                tower["explosion_range"].as<int>(),
+                tower["position"]["x"].as<int>(),
+                tower["position"]["y"].as<int>(),
+                Communication::Tower::EnemySlowdown(
+                        tower["enemy_slowdown"]["percentage"].as<int>(),
+                        tower["enemy_slowdown"]["duration"].as<int>()),
+                Communication::Tower::Damage(
+                        tower["damage"]["normal"].as<int>(),
+                        tower["damage"]["flying"].as<int>(),
+                        tower["damage"]["close_by"].as<int>()),
+                tower["element"].as<std::string>()
+        );
+    }
+    for (const auto& positionalPower : node["positional_powers"]) {
+        state.positionalPowers.emplace_back(
+                positionalPower["type"].as<std::string>(),
+                positionalPower["position"]["x"].as<int>(),
+                positionalPower["position"]["y"].as<int>()
+        );
+    }
+    for (const auto& directedPower : node["directed_powers"]) {
+        state.targetPowers.emplace_back(
+                directedPower["type"].as<std::string>(),
+                directedPower["enemy_id"].as<int>()
+        );
+    }
+    receiver.getGameState(state);
 }
 
 void GameClientSocket::_handleRecievedMessage(YAML::Node &node) {

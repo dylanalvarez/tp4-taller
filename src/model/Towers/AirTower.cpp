@@ -107,12 +107,7 @@ void AirTower::levelupReachOfImpact() {}
 void AirTower::levelupSlowdown() {}
 
 Communication::Tower::Damage AirTower::getDamage_() const {
-    Communication::Tower::Damage dmg_info{};
-    dmg_info.close_by = 0;
-    dmg_info.flying = dmg_to_flying_units;
-    dmg_info.normal = dmg;
-
-    return dmg_info;
+    return Communication::Tower::Damage(dmg, dmg_to_flying_units, 0);
 }
 
 Communication::Tower::Type AirTower::getType() const {

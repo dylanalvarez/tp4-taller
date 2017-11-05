@@ -21,7 +21,7 @@ void GameServerSocket::sendGameState(
     game_node["state"] = Communication::GameState::to_string(gameState.state);
 
     game_node["enemies"] = YAML::Load("[ ]");
-    for (const Communication::Enemy &enemy : gameState.enemy) {
+    for (const Communication::Enemy &enemy : gameState.enemies) {
         YAML::Node enemy_node;
         enemy_node["id"] = enemy.id;
         YAML::Node position;
