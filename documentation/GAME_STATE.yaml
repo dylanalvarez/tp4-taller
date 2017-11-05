@@ -28,11 +28,13 @@ towers:
       y: 2
 
 positional_powers:
-  type: 'tipo'
-  position:
-    x: 1
-    y: 2
+  -
+    type: 'tipo'
+    position:
+      x: 1
+      y: 2
 
 directed_powers:
-  type: 'tipo'
-  enemy_id : 2
+  -
+    type: 'tipo'
+    enemy_id : 2
