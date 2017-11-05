@@ -4,18 +4,19 @@
 
 #include <syslog.h>
 #include <fstream>
+#include <iostream>
 #include "Server.h"
 #include "../common/AcceptFailedException.h"
 
 Server::Server(const std::string& port) : accept_socket(port) {
     map_id = 0;
     match_id = 0;
-    maps_paths.emplace(map_id, "mapa_inicial.yaml");
+    maps_paths.emplace(map_id++, "mapa_inicial.yaml");
 }
 
 Server::~Server() {
     for (auto& match : matchs) {
-        match.second->join();
+        if (match.second->hasStarted()) { match.second->join(); }
         delete match.second;
     }
 }
@@ -26,8 +27,8 @@ void Server::run() {
             Socket new_client = accept_socket.accept();
             // se pudo cerrar el socket en el accept
             auto* client = new Client(std::move(new_client), matchs_id, maps, *this);
-            client->start();
             clients.push_back(client);
+            client->start();
         } catch (AcceptFailedException& e) {
             // se cerro el socket
         }
@@ -39,33 +40,24 @@ void Server::stop() {
     for (auto &match : matchs) {
         match.second->stop();
     }
+    for (Client* client : clients) {
+        // clientes que no estan en una partida
+        client->stop();
+        delete client;
+    }
 }
 
-Match& Server::joinMatch(Client& client, int id, bool is_creating) {
+void Server::joinMatch(Client& client, int id) {
     std::lock_guard<std::mutex> lock(mutex);
 
-    if (is_creating) {
-        try {
-            auto* match = new Match(config_file_path, maps_paths.at(id), match_id);
-            matchs.emplace(match_id, match);
-            matchs.at(match_id)->addPlayer(&client);
-            std::remove(clients.begin(), clients.end(), &client);
-
-            Communication::NameAndID new_match_;
-            new_match_.id = match_id;
-            new_match_.name = YAML::LoadFile(maps_paths.at(id))["name"].as<std::string>();
-            matchs_id.push_back(std::move(new_match_));
-            return *matchs.at(match_id++);
-        } catch (std::out_of_range& e) {
-            // el mapa no existe
-            // enviar error al cliente
-        }
+    try {
+        Match* match = matchs.at(id);
+        match->addPlayer(&client);
+        clients.erase(std::remove(clients.begin(), clients.end(), &client));
+    } catch (std::exception& e) {
+        // la partida no existe
+        // enviar error al cliente
     }
-    // se esta uniendo
-    Match* match = matchs.at(id);
-    match->addPlayer(&client);
-    std::remove(clients.begin(), clients.end(), &client);
-    return *match;
 }
 
 void Server::addMap(const std::string& file_path) {
@@ -73,6 +65,8 @@ void Server::addMap(const std::string& file_path) {
         YAML::LoadFile(file_path);
     } catch (YAML::BadFile& e) {
         syslog(LOG_CRIT, "Error en el archivo: %s\n%s\n", file_path.c_str(), e.what());
+        std::cerr << "Error al agregar mapa, ver syslog para mas informacion\n";
+        return;
     }
 
     maps_paths.emplace(map_id, file_path);
@@ -85,10 +79,32 @@ void Server::addMap(const std::string& file_path) {
 void Server::startMatch(int match_id) {
     std::lock_guard<std::mutex> lock(mutex);
 
+    if (matchs.at(match_id)->hasStarted()) { return; }
+
     try {
         matchs.at(match_id)->start();
     } catch (std::exception& e) {
         // el match no existe
+        // enviar error al cliente
+    }
+}
+
+void Server::createMatch(Client &client, int map_id) {
+    std::lock_guard<std::mutex> lock(mutex);
+
+    try {
+        auto* match = new Match(config_file_path, maps_paths.at(map_id), match_id);
+        matchs.emplace(match_id, match);
+        matchs.at(match_id)->addPlayer(&client);
+        clients.erase(std::remove(clients.begin(), clients.end(), &client));
+
+        Communication::NameAndID new_match_;
+        new_match_.id = match_id;
+        new_match_.name = matchs.at(match_id)->getGame()->getGameName();
+        matchs_id.push_back(std::move(new_match_));
+        match_id++;
+    } catch (std::out_of_range& e) {
+        // el mapa no existe
         // enviar error al cliente
     }
 }

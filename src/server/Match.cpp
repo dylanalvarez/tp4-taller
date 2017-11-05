@@ -14,7 +14,11 @@ Match::Match(const std::string &config_file_path,
     keep_running = true;
 }
 
-Match::~Match() = default;
+Match::~Match() {
+    for (Client* client : clients) {
+        delete client;
+    }
+}
 
 void Match::run() {
     has_started = true;
@@ -41,7 +45,6 @@ void Match::run() {
 
         usleep(time_step);
     }
-    std::cout << "match closed\n";
 }
 
 TowerDefenseGame *Match::getGame() {
@@ -63,4 +66,11 @@ void Match::addPlayer(Client* client) {
 
 void Match::stop() {
     keep_running = false;
+    for (Client* client : clients) {
+        client->stop();
+    }
+}
+
+bool Match::hasStarted() const {
+    return has_started;
 }

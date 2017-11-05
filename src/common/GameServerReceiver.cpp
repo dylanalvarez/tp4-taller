@@ -16,15 +16,14 @@ void GameServerReceiver::setActionsQueue(QueueProtected &queue) {
     actions_queue = &queue;
 }
 
-void GameServerReceiver::joinToMatch(int match_id,
-                                     const std::string &player_name) {
-    server.joinMatch(client, match_id, false);
-    server.startMatch(match_id);
+void GameServerReceiver::joinMatch(int match_id,
+                                   const std::string &player_name) {
+    server.joinMatch(client, match_id);
 }
 
 void GameServerReceiver::createMatch(int map_id,
                                      const std::string &player_name) {
-    server.joinMatch(client, map_id, true);
+    server.createMatch(client, map_id);
     server.startMatch(map_id);
 }
 

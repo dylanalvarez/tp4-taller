@@ -24,6 +24,7 @@ public:
            Server& server);
 
     void start();
+    void stop();
 
     ~Client();
 

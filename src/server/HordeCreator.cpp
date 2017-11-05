@@ -6,6 +6,7 @@
 #include "HordeCreator.h"
 
 HordeCreator::HordeCreator(const std::string &map_file) {
+    total_amount_of_enemies = 0;
     YAML::Node map = YAML::LoadFile(map_file);
     YAML::Node paths = map["paths"];
     for (auto path = paths.begin(); path != paths.end(); ++path) {

@@ -15,7 +15,7 @@ public:
     GameServerReceiver(Server &server, Client& client);
     ~GameServerReceiver();
 
-    void joinToMatch(int match_id, const std::string& player_name);
+    void joinMatch(int match_id, const std::string &player_name);
 
     void createMatch(int map_id, const std::string& player_name);
 

@@ -27,6 +27,7 @@ public:
 
     TowerDefenseGame* getGame();
     int getID() const;
+    bool hasStarted() const;
 
     Match(const Match&) = delete;
     Match(Match&&) = delete ;

@@ -19,6 +19,8 @@ public:
 
     void stop();
 
+    bool isOperational() const;
+
     ClientSender(const ClientSender&) = delete;
     ClientSender& operator=(const ClientSender&) = delete;
     ClientSender(ClientSender&&) = delete ;

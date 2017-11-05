@@ -6,6 +6,7 @@
 #include "Server.h"
 #include "Actions/SendGameStateAction.h"
 #include "Actions/SendMessageAction.h"
+#include "Actions/DisconnectAction.h"
 
 Client::Client(Socket&& socket,
                const std::vector<Communication::NameAndID> &matches,
@@ -18,18 +19,20 @@ Client::Client(Socket&& socket,
 }
 
 Client::~Client() {
-    sender.stop();
     sender.join();
-    serverSocket.disconnect();
     serverSocket.join();
 }
 
 void Client::sendGameState(const Communication::GameState &gameState) {
-    queue.push(new SendGameStateAction(gameState));
+    if (sender.isOperational()) {
+        queue.push(new SendGameStateAction(gameState));
+    }
 }
 
 void Client::sendMessage(std::string&& msg) {
-   queue.push(new SendMessageAction(std::move(msg), name));
+    if (sender.isOperational()) {
+        queue.push(new SendMessageAction(std::move(msg), name));
+    }
 }
 
 void Client::setActionsQueue(QueueProtected &queue) {
@@ -58,5 +61,12 @@ void Client::addElement(const std::string& element) {
 
 void Client::start() {
     sender.start();
+    serverSocket.start();
     serverReceiver.createMatch(0, name);
+}
+
+void Client::stop() {
+    sender.stop();
+    serverSocket.disconnect();
+    queue.push(new DisconnectAction());
 }
