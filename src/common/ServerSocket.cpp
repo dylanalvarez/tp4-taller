@@ -8,8 +8,8 @@
 #include <vector>
 #include <cstring>
 
-#include "server_ServerSocket.h"
-#include "common_AcceptFailedException.h"
+#include "ServerSocket.h"
+#include "AcceptFailedException.h"
 
 ServerSocket::ServerSocket(const std::string &port) :
         wasManuallyShutDown(false) {

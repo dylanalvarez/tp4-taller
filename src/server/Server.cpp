@@ -5,7 +5,7 @@
 #include <syslog.h>
 #include <fstream>
 #include "Server.h"
-#include "../../client-server/common_AcceptFailedException.h"
+#include "../common/AcceptFailedException.h"
 
 Server::Server(const std::string& port) : accept_socket(port) {
     map_id = 0;

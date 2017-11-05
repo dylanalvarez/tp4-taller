@@ -8,8 +8,8 @@
 #include <vector>
 #include <cstring>
 
-#include "common_Exception.h"
-#include "common_Socket.h"
+#include "Exception.h"
+#include "Socket.h"
 
 
 #ifndef MSG_NOSIGNAL

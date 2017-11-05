@@ -7,7 +7,7 @@
 
 
 #include "Thread.h"
-#include "../../client-server/common_Socket.h"
+#include "../common/Socket.h"
 #include "../common/GameServerReceiver.h"
 #include "../model/TowerDefenseGame.h"
 #include "QueueProtected.h"

@@ -4,7 +4,7 @@
 #include <string>
 #include "CommunicationUtils.h"
 #include "../model/TowerDefenseGame.h"
-#include "../../client-server/common_Socket.h"
+#include "Socket.h"
 #include "../server/QueueProtected.h"
 
 class Server;

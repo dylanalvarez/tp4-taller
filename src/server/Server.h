@@ -8,7 +8,7 @@
 
 #include <mutex>
 #include "Thread.h"
-#include "../../client-server/server_ServerSocket.h"
+#include "../common/ServerSocket.h"
 #include "Match.h"
 
 class Server : public Thread {
