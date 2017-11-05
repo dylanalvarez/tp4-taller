@@ -20,7 +20,7 @@ void GameServerSocket::sendGameState(
 
     game_node["state"] = Communication::GameState::to_string(gameState.state);
 
-    game_node["enemies"];
+    game_node["enemies"] = YAML::Load("[ ]");
     for (const Communication::Enemy &enemy : gameState.enemy) {
         YAML::Node enemy_node;
         enemy_node["id"] = enemy.id;
@@ -33,7 +33,7 @@ void GameServerSocket::sendGameState(
         game_node["enemies"].push_back(enemy_node);
     }
 
-    game_node["towers"];
+    game_node["towers"] = YAML::Load("[ ]");
     for (const Communication::Tower &tower : gameState.towers) {
         YAML::Node tower_node;
 
@@ -60,7 +60,7 @@ void GameServerSocket::sendGameState(
         game_node["towers"].push_back(tower_node);
     }
 
-    game_node["positional_powers"];
+    game_node["positional_powers"] = YAML::Load("[ ]");
     for (const Communication::PositionalPower &power: gameState.positionalPowers) {
         YAML::Node power_node;
         power_node["type"] = Communication::PositionalPower::to_string(
@@ -73,7 +73,7 @@ void GameServerSocket::sendGameState(
         game_node["positional_powers"].push_back(power_node);
     }
 
-    game_node["positional_powers"];
+    game_node["directed_powers"] = YAML::Load("[ ]");
     for (const Communication::TargetPower &power: gameState.targetPowers) {
         YAML::Node power_node;
         power_node["type"] = Communication::TargetPower::to_string(power.type);
