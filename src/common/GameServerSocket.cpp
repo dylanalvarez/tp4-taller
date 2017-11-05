@@ -98,7 +98,17 @@ GameServerSocket::GameServerSocket(GameServerSocket &&other) noexcept :
 void GameServerSocket::sendChatMessage(
         std::string &&message,
         std::string &nickname) {
-    socket.send(message + nickname);
+    YAML::Node initialData;
+    initialData["message"] = message;
+    initialData["nickname"] = nickname;
+    YAML::Emitter emitter;
+    emitter << initialData;
+    std::string yaml_to_send(emitter.c_str());
+    socket.send(Communication::toFixedLengthString(4, OPCODE_CHARACTER_COUNT));
+    socket.send(Communication::toFixedLengthString(
+            yaml_to_send.length(),
+            MESSAGE_LENGTH_CHARACTER_COUNT));
+    socket.send(yaml_to_send);
 }
 
 void GameServerSocket::sendInitialData(

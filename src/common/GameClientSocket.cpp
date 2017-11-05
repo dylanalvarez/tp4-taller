@@ -195,7 +195,10 @@ void GameClientSocket::_handleGameState(YAML::Node &node) {
 }
 
 void GameClientSocket::_handleRecievedMessage(YAML::Node &node) {
-    throw Exception("Not yet implemented");
+    receiver.getChatMessage(
+            node["message"].as<std::string>(),
+            node["nickname"].as<std::string>()
+    );
 }
 
 GameClientSocket::GameClientSocket(GameClientSocket &&other) noexcept :
