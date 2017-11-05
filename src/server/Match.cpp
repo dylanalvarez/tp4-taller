@@ -7,7 +7,7 @@
 
 Match::Match(const std::string &config_file_path,
              const std::string &map_file_path, int id) :
-                horde_creator(config_file_path),
+                horde_creator(map_file_path),
                 game(config_file_path, map_file_path, horde_creator.getTotalAmountOfEnemies()),
                 context(game, clients), id(id)  {
     has_started = false;
@@ -25,7 +25,7 @@ void Match::run() {
     horde_creator.start();
 
     while(!game.isGameOver() && keep_running) {
-        /*Horde horde = horde_creator.getNextHorde();
+        Horde horde = horde_creator.getNextHorde();
         for (int i = 0; i < horde.getQuantity(); i++) {
             game.addEnemy(horde.getType());
         }
@@ -33,7 +33,7 @@ void Match::run() {
         while (!actions_queue.empty()) {
             actions_queue.front().apply(context);
             actions_queue.pop();
-        }*/
+        }
 
         game.updateGame();
 
