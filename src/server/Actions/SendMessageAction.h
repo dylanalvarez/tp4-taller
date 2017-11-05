@@ -10,7 +10,7 @@
 
 class SendMessageAction : public Action {
 public:
-    explicit SendMessageAction(std::string& msg, std::string& nickname);
+    explicit SendMessageAction(std::string&& msg, std::string& nickname);
 
     void apply(Context& context) override;
 

@@ -21,9 +21,3 @@ void ClientSender::run() {
 void ClientSender::stop() {
     keep_running = false;
 }
-
-ClientSender::ClientSender(ClientSender&& other) noexcept :
-        keep_running(other.keep_running),
-        socket(other.socket),
-        queue(other.queue),
-        context(std::move(other.context)) {}

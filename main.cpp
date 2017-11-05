@@ -2,7 +2,7 @@
 #include "src/server/Server.h"
 
 int main(int argc, char *argv[]) {
-    Server server("8080");
+    Server server(argv[1]);
 
     std::cout << "Ingrese las rutas de los mapas,"
             " que estaran disponibles para seleccionar.\n"

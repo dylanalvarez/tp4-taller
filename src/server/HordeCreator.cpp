@@ -2,11 +2,12 @@
 // Created by facundo on 31/10/17.
 //
 
+#include <iostream>
 #include "HordeCreator.h"
 
 HordeCreator::HordeCreator(const std::string &map_file) {
-    YAML::Node paths = YAML::LoadFile(map_file)["paths"];
-
+    YAML::Node map = YAML::LoadFile(map_file);
+    YAML::Node paths = map["paths"];
     for (auto path = paths.begin(); path != paths.end(); ++path) {
         YAML::Node enemies = (*path)["enemies"];
         for (auto it = enemies.begin(); it != enemies.end(); ++it) {
@@ -18,10 +19,12 @@ HordeCreator::HordeCreator(const std::string &map_file) {
             hordes.push(horde);
         }
     }
+    last_horde_sended_time = 0;
 }
 
 Horde HordeCreator::getNextHorde() {
-    if (difftime(time(nullptr), last_horde_sended) <
+    if (hordes.empty()) { return Horde(); }
+    if (difftime(time(nullptr), last_horde_sended_time) <
             hordes.front().getTimeBeforeArrival()) { return Horde(); }
 
     Horde horde = hordes.front();
@@ -30,7 +33,7 @@ Horde HordeCreator::getNextHorde() {
 }
 
 void HordeCreator::start() {
-    last_horde_sended = time(nullptr);
+    last_horde_sended_time = time(nullptr);
 }
 
 int HordeCreator::getTotalAmountOfEnemies() const {

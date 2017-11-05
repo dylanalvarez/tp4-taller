@@ -17,7 +17,7 @@ BlockingQueue::~BlockingQueue() {
 void BlockingQueue::push(Action* action){
     std::unique_lock<std::mutex> lock(mutex);
     queue.push(action);
-    is_there_something.notify_one();
+    is_there_something.notify_all();
 }
 
 Action& BlockingQueue::front() {

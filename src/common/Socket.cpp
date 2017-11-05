@@ -85,9 +85,21 @@ std::string Socket::receiveString(size_t length) const {
 }
 
 Socket::~Socket() {
+    if (fileDescriptor == -1) { return; }
     shutdown(this->fileDescriptor, SHUT_RDWR);
     close(this->fileDescriptor);
 }
 
 Socket::Socket(int fileDescriptor) :
         fileDescriptor(fileDescriptor) {}
+
+Socket::Socket(Socket && other) noexcept {
+    this->fileDescriptor = other.fileDescriptor;
+    other.fileDescriptor = -1;
+}
+
+Socket &Socket::operator=(Socket && other) noexcept {
+    this->fileDescriptor = other.fileDescriptor;
+    other.fileDescriptor = -1;
+    return *this;
+}

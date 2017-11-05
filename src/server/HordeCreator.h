@@ -31,7 +31,7 @@ private:
     std::queue<Horde> hordes;
     int total_amount_of_enemies;
 
-    time_t last_horde_sended;
+    time_t last_horde_sended_time;
 };
 
 

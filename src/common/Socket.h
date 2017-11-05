@@ -21,6 +21,9 @@ public:
 
     Socket &operator=(const Socket &) = delete;
 
+    Socket(Socket&&) noexcept ;
+    Socket& operator=(Socket&&) noexcept ;
+
     ~Socket();
 
     explicit Socket(int fileDescriptor);
