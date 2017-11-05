@@ -9,7 +9,7 @@
 #include "controladorDeSiclos.h"
 #include "menuTorres.h"
 #include "TiposDeDatosExpeciales.h"
-#include "common_Socket.h"
+#include "../common/Socket.h"
 
 //esta clase es solo para dirigir el movimiento en este caso.
 
