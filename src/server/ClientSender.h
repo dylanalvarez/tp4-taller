@@ -21,7 +21,7 @@ public:
 
     ClientSender(const ClientSender&) = delete;
     ClientSender& operator=(const ClientSender&) = delete;
-    ClientSender(ClientSender&&) noexcept ;
+    ClientSender(ClientSender&&) = delete ;
 
 private:
     bool keep_running;

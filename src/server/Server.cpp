@@ -9,12 +9,14 @@
 
 Server::Server(const std::string& port) : accept_socket(port) {
     map_id = 0;
-    maps_paths.emplace(map_id++, "mapa_inicial.yaml");
+    match_id = 0;
+    maps_paths.emplace(map_id, "mapa_inicial.yaml");
 }
 
 Server::~Server() {
     for (auto& match : matchs) {
-        match.second.join();
+        match.second->join();
+        delete match.second;
     }
 }
 
@@ -23,10 +25,9 @@ void Server::run() {
         try {
             Socket new_client = accept_socket.accept();
             // se pudo cerrar el socket en el accept
-            Client client(std::move(new_client),
-                          matchs_id, maps, *this);
-            clients_waiting_for_match.emplace_back(std::move(new_client),
-                                                   matchs_id, maps, *this);
+            auto* client = new Client(std::move(new_client), matchs_id, maps, *this);
+            client->start();
+            clients.push_back(client);
         } catch (AcceptFailedException& e) {
             // se cerro el socket
         }
@@ -35,6 +36,9 @@ void Server::run() {
 
 void Server::stop() {
     accept_socket.shutdown();
+    for (auto &match : matchs) {
+        match.second->stop();
+    }
 }
 
 Match& Server::joinMatch(Client& client, int id, bool is_creating) {
@@ -42,25 +46,26 @@ Match& Server::joinMatch(Client& client, int id, bool is_creating) {
 
     if (is_creating) {
         try {
-            Match new_match(config_file_path, maps_paths.at(id), match_id);
-            new_match.addPlayer(std::move(client));
-            new_match.start();
+            auto* match = new Match(config_file_path, maps_paths.at(id), match_id);
+            matchs.emplace(match_id, match);
+            matchs.at(match_id)->addPlayer(&client);
+            std::remove(clients.begin(), clients.end(), &client);
+
             Communication::NameAndID new_match_;
             new_match_.id = match_id;
             new_match_.name = YAML::LoadFile(maps_paths.at(id))["name"].as<std::string>();
             matchs_id.push_back(std::move(new_match_));
-
-            matchs.emplace(match_id, std::move(new_match));
-            return matchs.at(match_id++);
+            return *matchs.at(match_id++);
         } catch (std::out_of_range& e) {
             // el mapa no existe
             // enviar error al cliente
         }
     }
     // se esta uniendo
-    Match& match = matchs.at(id);
-    match.addPlayer(std::move(client));
-    return match;
+    Match* match = matchs.at(id);
+    match->addPlayer(&client);
+    std::remove(clients.begin(), clients.end(), &client);
+    return *match;
 }
 
 void Server::addMap(const std::string& file_path) {
@@ -81,7 +86,7 @@ void Server::startMatch(int match_id) {
     std::lock_guard<std::mutex> lock(mutex);
 
     try {
-        matchs.at(match_id).start();
+        matchs.at(match_id)->start();
     } catch (std::exception& e) {
         // el match no existe
         // enviar error al cliente

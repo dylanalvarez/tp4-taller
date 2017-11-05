@@ -38,8 +38,8 @@ public:
 private:
     std::mutex mutex;
     ServerSocket accept_socket;
-    std::map<int, Match> matchs;
-    std::vector<Client> clients_waiting_for_match;
+    std::map<int, Match*> matchs;
+    std::vector<Client*> clients;
 
     std::vector<Communication::NameAndID> matchs_id;
     std::vector<Communication::NameAndID> maps;

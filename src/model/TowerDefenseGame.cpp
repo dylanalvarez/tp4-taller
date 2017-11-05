@@ -36,6 +36,7 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
 
     tower_id = 1;
     enemy_id = 1;
+    this->enemy_count = enemy_count;
     is_game_over = false;
 }
 
@@ -364,18 +365,4 @@ Communication::GameState TowerDefenseGame::getGameState() const {
     } else { gameState.state = Communication::GameState::State::ongoing; }
 
     return gameState;
-}
-
-TowerDefenseGame::TowerDefenseGame(TowerDefenseGame&& other) noexcept :
-        name(std::move(other.name)),
-        setting(std::move(other.setting)),
-        tower_id(other.tower_id), enemy_id(other.enemy_id),
-        is_game_over(other.is_game_over), enemy_count(other.enemy_count),
-        players(std::move(other.players)),
-        tower_properties(std::move(other.tower_properties)),
-        enemies_properties(std::move(other.enemies_properties)),
-        towers_factory(std::move(other.towers_factory)),
-        spells(std::move(other.spells)) {
-    this->scenario = other.scenario;
-    other.scenario = nullptr;
 }

@@ -73,7 +73,7 @@ public:
 
     TowerDefenseGame(const TowerDefenseGame&) = delete;
     TowerDefenseGame& operator=(const TowerDefenseGame&) = delete;
-    TowerDefenseGame(TowerDefenseGame&&) noexcept ;
+    TowerDefenseGame(TowerDefenseGame&&) = delete ;
     TowerDefenseGame& operator=(TowerDefenseGame&&) = delete;
 
     bool isGameOver() const;

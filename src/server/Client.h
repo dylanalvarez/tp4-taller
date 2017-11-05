@@ -23,10 +23,12 @@ public:
            const std::vector<Communication::NameAndID> &maps,
            Server& server);
 
+    void start();
+
     ~Client();
 
     void sendGameState(const Communication::GameState &gameState);
-    void sendMessage(std::string& msg);
+    void sendMessage(std::string&& msg);
 
     void setModelPlayer(const Player &player);
     void setName(const std::string& name);
@@ -39,14 +41,15 @@ public:
     Client(const Client&) = delete;
     Client& operator=(const Client&) = delete;
     Client& operator=(Client&&) = delete;
-    Client(Client&&) noexcept ;
+    Client(Client&&) = delete ;
 
 private:
+    BlockingQueue queue;
+
     GameServerReceiver serverReceiver;
     GameServerSocket serverSocket;
 
     ClientSender sender;
-    BlockingQueue queue;
 
     const Player* player;
     std::string name;

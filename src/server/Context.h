@@ -14,12 +14,12 @@ class Context {
 public:
     explicit Context(GameServerSocket& socket);
     explicit Context(TowerDefenseGame& game);
-    explicit Context(std::vector<Client>& clients);
-    Context(TowerDefenseGame& game, std::vector<Client>& clients);
+    explicit Context(std::vector<Client*>& clients);
+    Context(TowerDefenseGame& game, std::vector<Client*>& clients);
 
     GameServerSocket& getSocket();
     TowerDefenseGame& getGame();
-    std::vector<Client>& getClients();
+    std::vector<Client*>& getClients();
 
     Context(const Context&) = delete;
     Context& operator=(const Context&) = delete;
@@ -29,7 +29,7 @@ public:
 private:
     GameServerSocket* socket;
     TowerDefenseGame* game;
-    std::vector<Client>* clients;
+    std::vector<Client*>* clients;
 };
 
 

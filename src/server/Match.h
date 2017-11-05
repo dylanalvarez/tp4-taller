@@ -21,26 +21,28 @@ public:
 
     void run() override;
 
-    void addPlayer(Client&& client);
+    void stop();
+
+    void addPlayer(Client* client);
 
     TowerDefenseGame* getGame();
     int getID() const;
 
     Match(const Match&) = delete;
-    Match(Match&&) noexcept ;
+    Match(Match&&) = delete ;
     Match& operator=(const Match&) = delete;
     Match& operator=(Match&&) = delete;
 
 private:
     HordeCreator horde_creator;
 
-    std::mutex mutex;
-    std::vector<Client> clients;
+    std::vector<Client*> clients;
     QueueProtected actions_queue;
     TowerDefenseGame game;
     Context context;
     int id;
     bool has_started;
+    bool keep_running;
 
     // en micro segundos
     const unsigned int time_step = 15000; // 15 milisegundos;

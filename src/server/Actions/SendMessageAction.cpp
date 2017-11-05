@@ -5,7 +5,7 @@
 #include "SendMessageAction.h"
 #include "../Client.h"
 
-SendMessageAction::SendMessageAction(std::string& msg,
+SendMessageAction::SendMessageAction(std::string&& msg,
                                      std::string& nickname) :
         msg(std::move(msg)), name(nickname){}
 

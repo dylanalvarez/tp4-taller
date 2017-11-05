@@ -8,9 +8,9 @@ Context::Context(GameServerSocket &socket) : socket(&socket) {}
 
 Context::Context(TowerDefenseGame &game) : game(&game) {}
 
-Context::Context(std::vector<Client> &clients) : clients(&clients){}
+Context::Context(std::vector<Client*> &clients) : clients(&clients){}
 
-Context::Context(TowerDefenseGame &game, std::vector<Client> &clients) :
+Context::Context(TowerDefenseGame &game, std::vector<Client*> &clients) :
         game(&game), clients(&clients){}
 
 GameServerSocket& Context::getSocket() {
@@ -21,7 +21,7 @@ TowerDefenseGame &Context::getGame() {
     return *game;
 }
 
-std::vector<Client>& Context::getClients() {
+std::vector<Client*>& Context::getClients() {
     return *clients;
 }
 

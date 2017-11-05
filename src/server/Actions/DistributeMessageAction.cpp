@@ -9,7 +9,7 @@ DistributeMessageAction::DistributeMessageAction(std::string &&msg) :
         msg(std::move(msg)) {}
 
 void DistributeMessageAction::apply(Context &contex) {
-    for (Client& client : contex.getClients()) {
+    /*for (Client& client : contex.getClients()) {
         client.sendMessage(msg);
-    }
+    }*/
 }

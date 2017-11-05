@@ -11,7 +11,7 @@
 #include "GameServerSocket.h"
 
 GameServerSocket::GameServerSocket(GameServerReceiver& receiver,
-                                   Socket &&socket) : receiver(receiver),
+                                   Socket&& socket) : receiver(receiver),
                                                       socket(std::move(socket)) {
     keep_running = true;
 }
@@ -98,7 +98,9 @@ GameServerSocket::GameServerSocket(GameServerSocket&& other) noexcept :
 
 void GameServerSocket::sendChatMessage(
         std::string &&message,
-        std::string &nickname) {}
+        std::string &nickname) {
+    socket.send(message + nickname);
+}
 
 void GameServerSocket::sendInitialData(
         const std::vector<Communication::NameAndID> &matches,

@@ -15,18 +15,21 @@ Client::Client(Socket&& socket,
         sender(serverSocket, queue) {
     this->element = "fire";
     this->name = "alguien";
-    serverReceiver.joinToMatch(0, this->name);
-    sender.start();
 }
 
-Client::~Client() = default;
+Client::~Client() {
+    sender.stop();
+    sender.join();
+    serverSocket.disconnect();
+    serverSocket.join();
+}
 
 void Client::sendGameState(const Communication::GameState &gameState) {
     queue.push(new SendGameStateAction(gameState));
 }
 
-void Client::sendMessage(std::string& msg) {
-   queue.push(new SendMessageAction(msg, name));
+void Client::sendMessage(std::string&& msg) {
+   queue.push(new SendMessageAction(std::move(msg), name));
 }
 
 void Client::setActionsQueue(QueueProtected &queue) {
@@ -53,12 +56,7 @@ void Client::addElement(const std::string& element) {
     this->element = element;
 }
 
-Client::Client(Client&& other) noexcept : serverReceiver(std::move(other.serverReceiver)),
-                                 serverSocket(std::move(other.serverSocket)),
-                                 sender(std::move(other.sender)),
-                                 queue(std::move(other.queue)),
-                                 player(other.player),
-                                 name(std::move(other.name)),
-                                 element(std::move(other.element)) {
-    other.player = nullptr;
+void Client::start() {
+    sender.start();
+    serverReceiver.createMatch(0, name);
 }
