@@ -10,11 +10,9 @@
 #include "GameServerReceiver.h"
 #include "GameServerSocket.h"
 
-GameServerSocket::GameServerSocket(GameServerReceiver& receiver,
-                                   Socket&& socket) : receiver(receiver),
-                                                      socket(std::move(socket)) {
-    keep_running = true;
-}
+GameServerSocket::GameServerSocket(GameServerReceiver &receiver,
+                                   Socket &&socket)
+        : receiver(receiver), socket(std::move(socket)), keep_running(true) {}
 
 void GameServerSocket::sendGameState(
         const Communication::GameState &gameState) {
@@ -23,7 +21,7 @@ void GameServerSocket::sendGameState(
     game_node["state"] = Communication::GameState::to_string(gameState.state);
 
     game_node["enemies"];
-    for (const Communication::Enemy& enemy : gameState.enemy) {
+    for (const Communication::Enemy &enemy : gameState.enemy) {
         YAML::Node enemy_node;
         enemy_node["id"] = enemy.id;
         YAML::Node position;
@@ -36,7 +34,7 @@ void GameServerSocket::sendGameState(
     }
 
     game_node["towers"];
-    for (const Communication::Tower& tower : gameState.towers) {
+    for (const Communication::Tower &tower : gameState.towers) {
         YAML::Node tower_node;
 
         tower_node["id"] = tower.id;
@@ -63,9 +61,10 @@ void GameServerSocket::sendGameState(
     }
 
     game_node["positional_powers"];
-    for (const Communication::PositionalPower& power: gameState.positionalPowers) {
+    for (const Communication::PositionalPower &power: gameState.positionalPowers) {
         YAML::Node power_node;
-        power_node["type"] = Communication::PositionalPower::to_string(power.type);
+        power_node["type"] = Communication::PositionalPower::to_string(
+                power.type);
         YAML::Node position;
         position["x"] = power.x;
         position["y"] = power.y;
@@ -75,7 +74,7 @@ void GameServerSocket::sendGameState(
     }
 
     game_node["positional_powers"];
-    for (const Communication::TargetPower& power: gameState.targetPowers) {
+    for (const Communication::TargetPower &power: gameState.targetPowers) {
         YAML::Node power_node;
         power_node["type"] = Communication::TargetPower::to_string(power.type);
         power_node["enemy_id"] = power.enemyID;
@@ -86,14 +85,14 @@ void GameServerSocket::sendGameState(
     emitter << game_node;
     std::string yaml_to_send(emitter.c_str());
 
-    socket.send("03"
-                + _toFixedLengthString(
+    socket.send(Communication::toFixedLengthString(3, OPCODE_CHARACTER_COUNT));
+    socket.send(Communication::toFixedLengthString(
             yaml_to_send.length(),
-            MESSAGE_LENGTH_CHARACTER_COUNT)
-                + yaml_to_send);
+            MESSAGE_LENGTH_CHARACTER_COUNT));
+    socket.send(yaml_to_send);
 }
 
-GameServerSocket::GameServerSocket(GameServerSocket&& other) noexcept :
+GameServerSocket::GameServerSocket(GameServerSocket &&other) noexcept :
         receiver(other.receiver), socket(std::move(other.socket)) {}
 
 void GameServerSocket::sendChatMessage(
@@ -107,14 +106,14 @@ void GameServerSocket::sendInitialData(
         const std::vector<Communication::NameAndID> &maps) {
     YAML::Node initialData;
     initialData["matches"];
-    for (auto& match : matches) {
+    for (auto &match : matches) {
         YAML::Node matchNode;
         matchNode["id"] = match.id;
         matchNode["name"] = match.name;
         initialData["matches"].push_back(matchNode);
     }
     initialData["maps"];
-    for (auto& map : maps) {
+    for (auto &map : maps) {
         YAML::Node mapNode;
         mapNode["id"] = map.id;
         mapNode["name"] = map.name;
@@ -124,10 +123,11 @@ void GameServerSocket::sendInitialData(
     emitter << initialData;
     std::string yaml_to_send(emitter.c_str());
 
-    socket.send("00"
-                + _toFixedLengthString(yaml_to_send.length(),
-                                       MESSAGE_LENGTH_CHARACTER_COUNT)
-                + yaml_to_send);
+    socket.send(Communication::toFixedLengthString(0, OPCODE_CHARACTER_COUNT));
+    socket.send(Communication::toFixedLengthString(
+            yaml_to_send.length(),
+            MESSAGE_LENGTH_CHARACTER_COUNT));
+    socket.send(yaml_to_send);
 }
 
 void GameServerSocket::sendMap(std::string &&filename) {
@@ -137,13 +137,6 @@ void GameServerSocket::sendMap(std::string &&filename) {
 }
 
 GameServerSocket::~GameServerSocket() = default;
-
-std::string GameServerSocket::_toFixedLengthString(long messageLength,
-                                                   int length) {
-    std::string numberAsString = std::to_string(messageLength);
-    std::string padding = std::string(length - numberAsString.length(), '0');
-    return padding + numberAsString;
-}
 
 void GameServerSocket::run() {
     while (keep_running) {

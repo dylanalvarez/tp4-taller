@@ -8,7 +8,6 @@
 
 #include "Tower.h"
 #include "../Vector.h"
-#include "../../common/CommunicationUtils.h"
 
 class FireTower : public Tower {
 public:

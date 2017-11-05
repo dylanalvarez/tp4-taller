@@ -4,7 +4,6 @@
 #include <string>
 #include <mutex>
 #include "GameServerReceiver.h"
-#include "CommunicationUtils.h"
 #include "Thread.h"
 
 class GameServerReceiver;
@@ -33,11 +32,9 @@ public:
 
     GameServerSocket(const GameServerSocket&) = delete;
     GameServerSocket& operator=(const GameServerSocket&) = delete;
-    GameServerSocket(GameServerSocket&&) noexcept ;
+    GameServerSocket(GameServerSocket&&) noexcept;
 
 private:
-    std::string _toFixedLengthString(long messageLength, int length);
-
     // el socket es un recurso compartido
     // lo puede acceder el cliente pidiendo que se envie un mensaje
     // y lo puede acceder el thread match enviando el estado del juego

@@ -2,7 +2,6 @@
 #define TP4_TALLER_GAME_SERVER_RECEIVER_H
 
 #include <string>
-#include "CommunicationUtils.h"
 #include "../model/TowerDefenseGame.h"
 #include "Socket.h"
 #include "../server/QueueProtected.h"

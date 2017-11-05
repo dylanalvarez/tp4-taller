@@ -2,7 +2,6 @@
 #define TP4_TALLER_GAME_CLIENT_SOCKET_H
 
 #include <string>
-#include "CommunicationUtils.h"
 #include "GameClientReceiver.h"
 #include "Socket.h"
 #include "Thread.h"
@@ -10,9 +9,9 @@
 class GameClientSocket : public Thread {
 public:
     // When it recieves a message, it will invoke a method in the receiver.
-    GameClientSocket(GameClientReceiver &receiver, Socket&& socket);
+    GameClientSocket(GameClientReceiver &receiver, Socket &&socket);
 
-	//falta un Start(). Para controlar en que hilo recibe.
+    void run() override;
 
     void chooseTeam(std::string &&nickname, int teamID);
 
@@ -36,11 +35,29 @@ public:
     void disconnect();
 
     // Will disconnect when going out of scope
-    ~GameClientSocket();
+    ~GameClientSocket() override;
+
+    GameClientSocket(const GameClientSocket &) = delete;
+
+    GameClientSocket &operator=(const GameClientSocket &) = delete;
+
+    GameClientSocket(GameClientSocket &&) noexcept;
+
 
 private:
-    GameClientReceiver& receiver;
+    void _sendNicknameAndID(std::string &&nickname, int teamID, int opcode);
+
+    void _sendNode(YAML::Node &node);
+
+    void _handleInitialData(YAML::Node &node);
+
+    void _handleGameState(YAML::Node &node);
+
+    void _handleRecievedMessage(YAML::Node &node);
+
+    GameClientReceiver &receiver;
     Socket socket;
+    bool keepRunning;
 };
 
 #endif //TP4_TALLER_GAME_CLIENT_SOCKET_H
