@@ -45,7 +45,6 @@ private:
     bool has_started;
     bool keep_running;
 
-    // en micro segundos
     const unsigned int time_step = 15000; // 15 milisegundos;
 };
 

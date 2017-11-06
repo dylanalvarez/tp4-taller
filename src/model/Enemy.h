@@ -8,6 +8,8 @@
 #include "Path.h"
 #include "../common/CommunicationUtils.h"
 
+#define base_speed 1
+
 class Enemy {
 public:
     Enemy(Path &path, int health_points, float speed,

@@ -25,6 +25,9 @@ void Match::run() {
     horde_creator.start();
 
     while(!game.isGameOver() && keep_running) {
+        time_t start_time;
+        time(&start_time);
+
         Horde horde = horde_creator.getNextHorde();
         for (int i = 0; i < horde.getQuantity(); i++) {
             game.addEnemy(horde.getType());
@@ -43,7 +46,14 @@ void Match::run() {
             client->sendGameState(gameState);
         }
 
-        usleep(time_step);
+        time_t end_time;
+        time(&end_time);
+
+        double time_to_sleep = time_step - (difftime(start_time, end_time) / 1000);
+
+        if (time_to_sleep >= 0) {
+           usleep((unsigned int)time_to_sleep);
+        }
     }
 }
 

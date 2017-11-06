@@ -12,7 +12,7 @@ Enemy::Enemy(Path &path, int health_points, float speed,
                     current_destiny(path.getNextPosition(current_pos_number++)),
                     type(type),
                     hp(health_points),
-                    speed(speed * pixels_per_unit),
+                    speed(speed * base_speed),
                     original_speed(speed),
                     can_i_fly(does_it_fly) {
     direction = (current_destiny - current_pos);

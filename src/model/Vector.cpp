@@ -6,8 +6,8 @@
 #include "Vector.h"
 
 Vector::Vector(float x, float y) {
-    this->x = x * pixels_per_unit;
-    this->y = y * pixels_per_unit;
+    this->x = x;
+    this->y = y;
 }
 
 float Vector::getX() const {

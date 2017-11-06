@@ -5,8 +5,6 @@
 #ifndef TOWERDEFENSE_POSITION_H
 #define TOWERDEFENSE_POSITION_H
 
-#define pixels_per_unit 1.0f // debe ser multiplo de 4
-
 #include <complex>
 #include <yaml-cpp/yaml.h>
 
