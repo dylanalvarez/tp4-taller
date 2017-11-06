@@ -7,32 +7,20 @@
 #include "OrdenadorDeFichas.h"
 #include "menuTorres.h"
 #include <vector>
-
-
-class GameClientReceiver {
- protected:
-    OrdenadorDeFichas& fichas;
-    MenuTorres& menues;
- public:
-    GameClientReceiver(OrdenadorDeFichas& fichas2, MenuTorres& menues2);
-    void getInitialData(const std::vector<Communication::NameAndID> &matches,
-                         const std::vector<Communication::NameAndID> &maps);
-    void getMap(std::string &&map);//aun no haec nada.
-    void getGameState(const Communication::GameState &gameState);
-    void getChatMessage(std::string &&message,
-                         std::string &&nickname);
-    ~GameClientReceiver();
-};
+#include "../common/GameClientReceiver.h"
+#include "../common/GameClientSocket.h"
 
 class Receptor{
 private:
 public:
-  Receptor(OrdenadorDeFichas& fichas2, MenuTorres& menues2);
+  Receptor(GameClientReceiver& reciver, GameClientSocket& socket);
   void iniciar();
   bool siclo();
   void terminar();
+  GameClientReceiver& getReciver();
 protected:
-  GameClientReceiver reciver;
+  GameClientReceiver& reciver;
+  GameClientSocket& socket;
   std::list<Communication::GameState> estados;
   bool seguir = true;
   bool siguiente = true;

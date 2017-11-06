@@ -93,9 +93,7 @@ void GameServerSocket::sendGameState(
 }
 
 GameServerSocket::GameServerSocket(GameServerSocket &&other) noexcept :
-        receiver(other.receiver),
-        socket(std::move(other.socket)),
-        keep_running(other.keep_running) {}
+        receiver(other.receiver), socket(std::move(other.socket)) {}
 
 void GameServerSocket::sendChatMessage(
         std::string &&message,
@@ -152,43 +150,7 @@ GameServerSocket::~GameServerSocket() = default;
 
 void GameServerSocket::run() {
     while (keep_running) {
-        std::string str_opcode = socket.receiveString(OPCODE_CHARACTER_COUNT);
-        if (str_opcode.empty()) { break; }
-        int opcode = std::stoi(str_opcode);
-        unsigned long messageLength = std::stoul(
-                socket.receiveString(MESSAGE_LENGTH_CHARACTER_COUNT));
-        std::string messageAsString = socket.receiveString(messageLength);
-        switch (opcode) {
-            case 0:
-                handleChosenMatch(messageAsString);
-                break;
-            case 1:
-                handleChosenMap(messageAsString);
-                break;
-            case 2:
-                handleChosenElement(messageAsString);
-                break;
-            case 3:
-                receiver.startMatch();
-                break;
-            case 4:
-                handleSendMessage(messageAsString);
-                break;
-            case 5:
-                handlePingTile(messageAsString);
-                break;
-            case 6:
-                handleSpell(messageAsString);
-                break;
-            case 7:
-                handleUpgrade(messageAsString);
-                break;
-            case 8:
-                handleBuildTower(messageAsString);
-                break;
-            default:
-                break;
-        }
+        // recibir opcode y llamar a receiver
     }
 }
 
@@ -198,76 +160,4 @@ void GameServerSocket::disconnect() {
 
 void GameServerSocket::sendPing(int x, int y) {
 
-}
-
-void GameServerSocket::handleChosenMap(std::string& yaml) {
-    YAML::Node chosen_map = YAML::Load(yaml);
-    auto map_id = chosen_map["id"].as<int>();
-    std::string nickname = chosen_map["nickname"].as<std::string>();
-    receiver.createMatch(map_id, nickname);
-}
-
-void GameServerSocket::handleChosenMatch(std::string &yaml) {
-    YAML::Node chosen_match = YAML::Load(yaml);
-    auto match_id = chosen_match["id"].as<int>();
-    std::string nickname = chosen_match["nickname"].as<std::string>();
-    receiver.joinMatch(match_id, nickname);
-}
-
-void GameServerSocket::handleChosenElement(std::string &yaml) {
-    YAML::Node element_node = YAML::Load(yaml);
-    std::string element = element_node["type"].as<std::string>();
-    receiver.getChosenElement(Communication::to_element(element));
-}
-
-void GameServerSocket::handleSendMessage(std::string &yaml) {
-    YAML::Node msg_node = YAML::Load(yaml);
-    std::string message = msg_node["message"].as<std::string>();
-    std::string nickname = msg_node["nickname"].as<std::string>();
-
-    receiver.getChatMessage(std::move(message), std::move(nickname));
-}
-
-void GameServerSocket::handlePingTile(std::string &yaml) {
-    YAML::Node ping_node = YAML::Load(yaml);
-    receiver.getPingedTile(ping_node["x"].as<int>(), ping_node["y"].as<int>());
-}
-
-void GameServerSocket::handleSpell(std::string &yaml) {
-    YAML::Node spell_node = YAML::Load(yaml);
-    std::string type = spell_node["type"].as<std::string>();
-    std::vector<std::string> positional_spells {"meteorite",
-                                                "terraforming",
-                                                "fissure",
-                                                "fireWall",
-                                                "blizzard",
-                                                "tornado"};
-    if (std::find(positional_spells.begin(), positional_spells.end(), type)
-        != positional_spells.end()) {
-        // is positional
-        auto x = spell_node["position"]["x"].as<int>();
-        auto y = spell_node["position"]["y"].as<int>();
-        receiver.getSpell(Communication::PositionalPower(type, x, y));
-    } else {
-        // is target
-        auto enemy_id = spell_node["enemy_id"].as<int>();
-        receiver.getSpell(Communication::TargetPower(type, enemy_id));
-    }
-}
-
-void GameServerSocket::handleUpgrade(std::string &yaml) {
-    YAML::Node upgrade_node = YAML::Load(yaml);
-
-    auto tower_id = upgrade_node["tower_id"].as<int>();
-    std::string type = upgrade_node["type"].as<std::string>();
-
-    receiver.getUpgrade(Communication::Upgrade(type, tower_id));
-}
-
-void GameServerSocket::handleBuildTower(std::string &yaml) {
-    YAML::Node build_node = YAML::Load(yaml);
-    auto x = build_node["position"]["x"].as<int>();
-    auto y = build_node["position"]["y"].as<int>();
-    std::string type = build_node["type"].as<std::string>();
-    receiver.buildTower(x, y, Communication::Tower::string_to_type(type));
 }

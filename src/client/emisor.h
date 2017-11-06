@@ -4,12 +4,15 @@
 #include <gtkmm.h>
 #include <iostream>
 #include "fListaDeDosLectores.h"
+#include "TiposDeDatosExpeciales.h"
 #include <vector>
 #include <thread>
+//#include "../common/GameClientSocket.h"
 
 class Emisor{
 private:
 public:
+  //Emisor(GameClientReceiver &receiver, Socket &&socket);
   void iniciar();
   bool siclo();
   void terminar();
@@ -23,6 +26,7 @@ public:
   void upgraTorre(Communication::Upgrade upgrade);
   void cosntruirTorre(int x, int y, Communication::Tower::Type tipo);
 protected:
+  //GameClientSocket socket;
   ColaBloqueante cola;
   bool seguir = true;
   bool siguiente = true;
