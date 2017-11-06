@@ -29,7 +29,7 @@ public:
     ~Client();
 
     void sendGameState(const Communication::GameState &gameState);
-    void sendMessage(std::string&& msg);
+    void sendMessage(std::string&& msg, std::string&& nickname);
     void sendPing(Vector position);
 
     void setModelPlayer(const Player &player);
