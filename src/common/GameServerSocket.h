@@ -43,6 +43,15 @@ private:
     GameServerReceiver& receiver;
     Socket socket;
     bool keep_running;
+
+    void handleChosenMap(std::string& yaml);
+    void handleChosenMatch(std::string& yaml);
+    void handleChosenElement(std::string& yaml);
+    void handleSendMessage(std::string& yaml);
+    void handlePingTile(std::string& yaml);
+    void handleSpell(std::string& yaml);
+    void handleUpgrade(std::string& yaml);
+    void handleBuildTower(std::string& yaml);
 };
 
 #endif //TP4_TALLER_GAME_SERVER_SOCKET_H

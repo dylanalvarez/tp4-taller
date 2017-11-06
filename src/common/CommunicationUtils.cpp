@@ -12,6 +12,13 @@ std::string Communication::Upgrade::to_string(const Upgrade::Type &type) {
     return types[type];
 }
 
+Communication::Upgrade::Upgrade(const std::string& type, int tower_id) {
+    if (type == "range") { this->type = range; }
+    else if (type == "reach") { this->type = reach; }
+    else if (type == "damage") { this->type = damage; }
+    else { this->type = slowdown; }
+    this->towerID = tower_id;
+}
 
 std::string Communication::to_string(const Communication::Element &element) {
     std::vector<std::string> elements{"desert", "volcano", "ice", "meadow"};
@@ -23,6 +30,20 @@ std::string Communication::toFixedLengthString(long messageLength, int length) {
     std::string padding = std::string(
             length - numberAsString.length(), '0');
     return padding + numberAsString;
+}
+
+Communication::Element Communication::to_element(const std::string &element) {
+    if (element == "fire") {
+        return Communication::Element::fire;
+    }
+    if (element == "water") {
+        return Communication::Element::water;
+    }
+    if (element == "air") {
+        return Communication::Element::air;
+    } else {
+        return Communication::Element::earth;
+    }
 }
 
 std::string
@@ -76,6 +97,14 @@ Communication::Tower::Tower(int id, int level, int experience,
           rangeInSquares(rangeInSquares),
           ExplosionRange(ExplosionRange), x(x), y(y), slowdown(slowdown),
           damage(damage), type(type) {}
+
+Communication::Tower::Type Communication::Tower::string_to_type(
+        const std::string &type) {
+    if (type == "earth") { return earth; }
+    else if (type == "water") { return water; }
+    else if (type == "fire") { return fire; }
+    else { return air; }
+}
 
 std::string Communication::PositionalPower::to_string(
         const Communication::PositionalPower::Type &type) {

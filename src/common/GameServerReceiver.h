@@ -23,7 +23,7 @@ public:
 
     void getChosenElement(Communication::Element element);
 
-    void getChatMessage(std::string &&message);
+    void getChatMessage(std::string &&message, std::string&& nickname);
 
     void getPingedTile(int x, int y);
 

@@ -1,1 +1,1 @@
-setting: desert # other possibilities: 'volcano', 'ice', 'meadow'
+type: water # other possibilities: 'fire', 'air', 'earth'

@@ -42,7 +42,8 @@ void GameServerReceiver::getChosenElement(Communication::Element element) {
     client.addElement(Communication::to_string(element));
 }
 
-void GameServerReceiver::getChatMessage(std::string &&message) {
+void GameServerReceiver::getChatMessage(std::string &&message,
+                                        std::string&& nickname) {
     actions_queue->push(new DistributeMessageAction(std::move(message)));
 }
 

@@ -195,10 +195,9 @@ void GameClientSocket::_handleGameState(YAML::Node &node) {
 }
 
 void GameClientSocket::_handleRecievedMessage(YAML::Node &node) {
-    receiver.getChatMessage(
-            node["message"].as<std::string>(),
-            node["nickname"].as<std::string>()
-    );
+    std::string message = node["message"].as<std::string>();
+    std::string nickname = node["nickname"].as<std::string>();
+    receiver.getChatMessage(std::move(message), std::move(nickname));
 }
 
 GameClientSocket::GameClientSocket(GameClientSocket &&other) noexcept :
