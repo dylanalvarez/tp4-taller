@@ -6,14 +6,15 @@
 
 Enemy::Enemy(Path &path, int health_points, float speed,
              bool does_it_fly, const std::string& type) :
-                                                path(path),
-                                                current_pos(path.getInitialPosition()),
-                                                current_destiny(path.getNextPosition(current_pos)),
-                                                type(type),
-                                                hp(health_points),
-                                                speed(speed * pixels_per_unit),
-                                                original_speed(speed),
-                                                can_i_fly(does_it_fly) {
+                    path(path),
+                    current_pos(path.getInitialPosition()),
+                    current_pos_number(0),
+                    current_destiny(path.getNextPosition(current_pos_number++)),
+                    type(type),
+                    hp(health_points),
+                    speed(speed * pixels_per_unit),
+                    original_speed(speed),
+                    can_i_fly(does_it_fly) {
     direction = (current_destiny - current_pos);
     direction.normalizeAndRound();
     last_speed_reduction_time = 0;
@@ -33,7 +34,7 @@ void Enemy::move(int units_to_move) {
 
         if (current_pos == current_destiny){
             // calcula nueva direccion
-            current_destiny = path.getNextPosition(current_destiny);
+            current_destiny = path.getNextPosition(current_pos_number++);
             direction = (current_destiny - current_pos);
             direction.normalizeAndRound();
         }

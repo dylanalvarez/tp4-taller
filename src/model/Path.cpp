@@ -6,13 +6,9 @@
 
 Path::Path(std::vector<Vector>&& positions) : positions(std::move(positions)) {}
 
-const Vector &Path::getNextPosition(const Vector& actual) {
-    for (unsigned int i = 0; i < positions.size() - 1; i++){
-        if (positions[i] == actual){
-            return positions[i + 1];
-        }
-    }
-    return positions.back();
+const Vector &Path::getNextPosition(unsigned long actual_index) {
+    if (actual_index >= positions.size() - 1) { return positions.back(); }
+    return positions.at(actual_index + 1);
 }
 
 const Vector &Path::getInitialPosition() const {

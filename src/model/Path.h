@@ -14,7 +14,7 @@ public:
     explicit Path(std::vector<Vector>&&);
 
     // devuelve la siguiente posicion en la direccion adecuada
-    const Vector& getNextPosition(const Vector& actual);
+    const Vector& getNextPosition(unsigned long actual_index);
 
     const Vector& getInitialPosition() const;
     const Vector& getFinalPositon() const;

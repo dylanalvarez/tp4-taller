@@ -9,6 +9,7 @@
 #include <fstream>
 #include "GameServerReceiver.h"
 #include "GameServerSocket.h"
+#include "Exception.h"
 
 GameServerSocket::GameServerSocket(GameServerReceiver &receiver,
                                    Socket &&socket)
@@ -85,11 +86,16 @@ void GameServerSocket::sendGameState(
     emitter << game_node;
     std::string yaml_to_send(emitter.c_str());
 
-    socket.send(Communication::toFixedLengthString(3, OPCODE_CHARACTER_COUNT));
-    socket.send(Communication::toFixedLengthString(
-            yaml_to_send.length(),
-            MESSAGE_LENGTH_CHARACTER_COUNT));
-    socket.send(yaml_to_send);
+    try {
+        socket.send(Communication::toFixedLengthString(3, OPCODE_CHARACTER_COUNT));
+        socket.send(Communication::toFixedLengthString(
+                yaml_to_send.length(),
+                MESSAGE_LENGTH_CHARACTER_COUNT));
+        socket.send(yaml_to_send);
+    } catch (Exception& e) {
+       //socket cerrado
+    }
+
 }
 
 GameServerSocket::GameServerSocket(GameServerSocket &&other) noexcept :
@@ -152,42 +158,47 @@ GameServerSocket::~GameServerSocket() = default;
 
 void GameServerSocket::run() {
     while (keep_running) {
-        std::string str_opcode = socket.receiveString(OPCODE_CHARACTER_COUNT);
-        if (str_opcode.empty()) { break; }
-        int opcode = std::stoi(str_opcode);
-        unsigned long messageLength = std::stoul(
-                socket.receiveString(MESSAGE_LENGTH_CHARACTER_COUNT));
-        std::string messageAsString = socket.receiveString(messageLength);
-        switch (opcode) {
-            case 0:
-                handleChosenMatch(messageAsString);
-                break;
-            case 1:
-                handleChosenMap(messageAsString);
-                break;
-            case 2:
-                handleChosenElement(messageAsString);
-                break;
-            case 3:
-                receiver.startMatch();
-                break;
-            case 4:
-                handleSendMessage(messageAsString);
-                break;
-            case 5:
-                handlePingTile(messageAsString);
-                break;
-            case 6:
-                handleSpell(messageAsString);
-                break;
-            case 7:
-                handleUpgrade(messageAsString);
-                break;
-            case 8:
-                handleBuildTower(messageAsString);
-                break;
-            default:
-                break;
+        try {
+            std::string str_opcode = socket.receiveString(OPCODE_CHARACTER_COUNT);
+            if (str_opcode.empty()) { break; }
+            int opcode = std::stoi(str_opcode);
+            unsigned long messageLength = std::stoul(
+                    socket.receiveString(MESSAGE_LENGTH_CHARACTER_COUNT));
+            std::string messageAsString = socket.receiveString(messageLength);
+            switch (opcode) {
+                case 0:
+                    handleChosenMatch(messageAsString);
+                    break;
+                case 1:
+                    handleChosenMap(messageAsString);
+                    break;
+                case 2:
+                    handleChosenElement(messageAsString);
+                    break;
+                case 3:
+                    receiver.startMatch();
+                    break;
+                case 4:
+                    handleSendMessage(messageAsString);
+                    break;
+                case 5:
+                    handlePingTile(messageAsString);
+                    break;
+                case 6:
+                    handleSpell(messageAsString);
+                    break;
+                case 7:
+                    handleUpgrade(messageAsString);
+                    break;
+                case 8:
+                    handleBuildTower(messageAsString);
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception& e) {
+            //socket cerrado
+            keep_running = false;
         }
     }
 }

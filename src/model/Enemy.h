@@ -46,6 +46,7 @@ public:
 private:
     Path& path;
     Vector current_pos;
+    unsigned long current_pos_number;
     Vector current_destiny;
     Vector direction;
 

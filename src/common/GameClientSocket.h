@@ -2,6 +2,7 @@
 #define TP4_TALLER_GAME_CLIENT_SOCKET_H
 
 #include <string>
+#include <yaml-cpp/yaml.h>
 #include "GameClientReceiver.h"
 #include "Socket.h"
 #include "Thread.h"

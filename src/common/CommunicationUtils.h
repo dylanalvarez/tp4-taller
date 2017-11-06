@@ -20,6 +20,7 @@ namespace Communication {
     };
 
     struct Upgrade {
+        Upgrade() = default;
         Upgrade(const std::string& type, int tower_id);
 
         enum Type {
