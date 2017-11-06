@@ -235,6 +235,7 @@ void FichaEnemigo::actualizar(Communication::Enemy actualzacion){
     inicioAnimiacionActual = menosY;
   x= actualzacion.x;
   y= actualzacion.y;
+  printf("x = %i, y= %i\n", x,y);
   destrulleme = false;
 }
 

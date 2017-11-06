@@ -83,9 +83,9 @@ class FichaTorre: public Ficha{
 #define Abmonible 0
 
 #define masX 36;
-#define masY 24;
+#define masY 0;
 #define menosX 12;
-#define menosY 0;
+#define menosY 24;
 
 class FichaEnemigo: public Ficha{
  private:
