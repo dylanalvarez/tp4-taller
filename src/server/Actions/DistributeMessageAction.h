@@ -10,12 +10,14 @@
 
 class DistributeMessageAction : public Action {
 public:
-    explicit DistributeMessageAction(std::string&& msg);
+    explicit DistributeMessageAction(std::string&& msg,
+                                     std::string&& nickname);
 
     void apply(Context& contex) override;
 
 private:
     std::string msg;
+    std::string nickname;
 };
 
 

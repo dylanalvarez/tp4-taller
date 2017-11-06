@@ -1,0 +1,90 @@
+name: mapa inicial
+setting: volcano
+size:
+  x: 10
+  y: 10
+firm_ground:
+  - x: 2
+    y: 3
+  - x: 3
+    y: 3
+  - x: 6
+    y: 3
+  - x: 6
+    y: 4
+  - x: 6
+    y: 5
+  - x: 7
+    y: 8
+  - x: 8
+    y: 8
+  - x: 9
+    y: 8
+paths:
+  - path_sequence:
+      - x: 44
+        y: 132
+      - x: 44
+        y: 132
+      - x: 132
+        y: 132
+      - x: 132
+        y: 132
+      - x: 220
+        y: 132
+      - x: 220
+        y: 132
+      - x: 308
+        y: 132
+      - x: 308
+        y: 132
+      - x: 396
+        y: 132
+      - x: 396
+        y: 132
+      - x: 396
+        y: 220
+      - x: 396
+        y: 308
+      - x: 396
+        y: 396
+      - x: 396
+        y: 484
+      - x: 396
+        y: 572
+      - x: 484
+        y: 572
+      - x: 484
+        y: 572
+      - x: 572
+        y: 572
+      - x: 572
+        y: 572
+      - x: 660
+        y: 572
+      - x: 660
+        y: 572
+      - x: 748
+        y: 572
+      - x: 748
+        y: 572
+      - x: 836
+        y: 572
+      - x: 836
+        y: 572
+    entry:
+      x: 0
+      y: 2
+    exit:
+      x: 11
+      y: 7
+    enemies:
+      - type: abmonible
+        quantity: 4
+        seconds_before_arrival: 10
+      - type: abmonible
+        quantity: 4
+        seconds_before_arrival: 20
+      - type: abmonible
+        quantity: 4
+        seconds_before_arrival: 30
