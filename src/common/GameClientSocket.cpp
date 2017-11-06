@@ -9,8 +9,9 @@ GameClientSocket::GameClientSocket(GameClientReceiver &receiver,
 
 void GameClientSocket::run() {
     while (keepRunning) {
-        int opcode = std::stoi(
-                socket.receiveString(OPCODE_CHARACTER_COUNT));
+        std::string str_opcode = socket.receiveString(OPCODE_CHARACTER_COUNT);
+        if (str_opcode.empty()) { break; }
+        int opcode = std::stoi(str_opcode);
         unsigned long messageLength = std::stoul(
                 socket.receiveString(MESSAGE_LENGTH_CHARACTER_COUNT));
         std::string messageAsString = socket.receiveString(messageLength);
