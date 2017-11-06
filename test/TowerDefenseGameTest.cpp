@@ -136,9 +136,9 @@ void TowerDefenseGameTest::addedPlayerCanAddTowerTest() {
 
 void TowerDefenseGameTest::cantAddMoreThanFourPlayersTest() {
     game->addPlayer("jugador1", "fire");
-    game->addPlayer("jugador2", "fire");
-    game->addPlayer("jugador3", "fire");
-    game->addPlayer("jugador4", "fire");
+    game->addPlayer("jugador2", "air");
+    game->addPlayer("jugador3", "water");
+    game->addPlayer("jugador4", "earth");
 
     CPPUNIT_ASSERT_THROW(game->addPlayer("player5", "fire"), MatchError);
 }
@@ -801,7 +801,7 @@ void TowerDefenseGameTest::cantLevelupWaterTowerWithInsuficientExpPointsTest() {
     }
 
     // cuando lo mata gana 30 de exp y para levelear el rango necesita 200
-    CPPUNIT_ASSERT_THROW(game->levelupTower(tower, "range"), TowerError);
+    CPPUNIT_ASSERT_THROW(game->levelupTower(tower, "damage", added_player), TowerError);
 }
 
 void TowerDefenseGameTest::whenEarthTowerLevelupHisExperienceIsReducedTest() {
@@ -823,7 +823,7 @@ void TowerDefenseGameTest::whenEarthTowerLevelupHisExperienceIsReducedTest() {
         game->performAttacks();
     }
 
-    game->levelupTower(tower, "damage");
+    game->levelupTower(tower, "damage", added_player);
 
     CPPUNIT_ASSERT_EQUAL(30, (int)tower.getExperience());
 }
@@ -839,7 +839,7 @@ void TowerDefenseGameTest::ifCantLevelUpHisExperienceItsNotReducedTest() {
     game->moveEnemies();
     game->performAttacks();
 
-    CPPUNIT_ASSERT_THROW(game->levelupTower(tower, "damage"), TowerError);
+    CPPUNIT_ASSERT_THROW(game->levelupTower(tower, "damage", added_player), TowerError);
     CPPUNIT_ASSERT_EQUAL(30, (int)tower.getExperience());
 }
 
@@ -860,8 +860,8 @@ void TowerDefenseGameTest::levelingTwoTimesDamageOfEarthTowerIncreaseItByTwentyT
         game->performAttacks();
     }
 
-    game->levelupTower(tower, "damage");
-    game->levelupTower(tower, "damage");
+    game->levelupTower(tower, "damage", added_player);
+    game->levelupTower(tower, "damage", added_player);
 
     // su daño base es 20. Con dos leveleos es 40
     CPPUNIT_ASSERT_EQUAL(40, (int)tower.getDamage());
@@ -891,7 +891,7 @@ void TowerDefenseGameTest::levelingImpactRangeOfFiretowerIncreasesItByOnesTest()
         }
     }
 
-    game->levelupTower(tower, "reach");
+    game->levelupTower(tower, "reach", added_player);
 
     // se agregan dos enemigos con una distancia de 2 entre ellos
     // la torre deberia pegarle al de distancia dos ya que su alcance de impacto
@@ -918,7 +918,7 @@ void TowerDefenseGameTest::levelingNotExistingAttributeThrowExceptionTest() {
     const Player &added_player = game->addPlayer("alguien", "air");
     const Tower &tower = game->addTower(added_player, "air", Vector(5, 5));
 
-    CPPUNIT_ASSERT_THROW(game->levelupTower(tower, "wolo"), TowerError);
+    CPPUNIT_ASSERT_THROW(game->levelupTower(tower, "damage", added_player), TowerError);
 }
 
 void TowerDefenseGameTest::deadEnemiesAreDestroyedTest() {
@@ -1266,4 +1266,13 @@ void TowerDefenseGameTest::whenEnemyCompletesPathTheGameIsOverTest() {
     game->moveEnemies();
 
     CPPUNIT_ASSERT(game->isGameOver());
+}
+
+void TowerDefenseGameTest::playerCantLevelupAnothersPlayerTowerTest() {
+    const Player& player1 = game->addPlayer("alguien", "air");
+    const Player& player2 = game->addPlayer("hola", "fire");
+
+    const Tower& tower = game->addTower(player1, "air", Vector(5,5));
+
+    CPPUNIT_ASSERT_THROW(game->levelupTower(tower, "range", player2), MatchError);
 }

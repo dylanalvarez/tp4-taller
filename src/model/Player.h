@@ -7,13 +7,19 @@
 
 #include <string>
 #include <vector>
+#include "Towers/Tower.h"
 
 class Player {
 public:
-    Player(const std::string& name, const std::string& element);
+    Player(std::string name, std::string element);
 
+    void addTower(const Tower& tower);
+    
     const std::string& getName() const;
     const std::vector<std::string>& getElements() const;
+    const std::vector<const Tower*> getTowers() const;
+    bool containsTower(const Tower& tower) const;
+    bool canBuildTower(const std::string& type) const;
 
     Player(const Player&) = delete;
     Player& operator=(const Player&) = delete;
@@ -23,6 +29,7 @@ public:
 private:
     std::vector<std::string> elements;
     std::string name;
+    std::vector<const Tower*> towers;
 };
 
 

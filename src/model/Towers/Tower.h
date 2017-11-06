@@ -26,6 +26,8 @@ public:
     virtual void levelupDamage() = 0;
     virtual void levelupReachOfImpact() = 0;
     virtual void levelupSlowdown() = 0;
+    
+    bool operator==(const Tower& other);
 
     // realiza un levelup en el tipo especificado
     // rango, daño, alcance, o relentizado

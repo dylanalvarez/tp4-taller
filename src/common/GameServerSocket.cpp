@@ -157,3 +157,7 @@ void GameServerSocket::run() {
 void GameServerSocket::disconnect() {
     keep_running = false;
 }
+
+void GameServerSocket::sendPing(int x, int y) {
+
+}

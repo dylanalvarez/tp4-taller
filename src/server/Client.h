@@ -30,6 +30,7 @@ public:
 
     void sendGameState(const Communication::GameState &gameState);
     void sendMessage(std::string&& msg);
+    void sendPing(Vector position);
 
     void setModelPlayer(const Player &player);
     void setName(const std::string& name);
@@ -38,6 +39,7 @@ public:
 
     const std::string& getName() const;
     const std::string& getElement() const;
+    const Player& getModelPlayer() const;
 
     Client(const Client&) = delete;
     Client& operator=(const Client&) = delete;

@@ -21,7 +21,10 @@ public:
     void run() override;
 
     void joinMatch(Client &client, int match_id);
-    void createMatch(Client &client, int map_id);
+
+    // retorna el id de la partida
+    int createMatch(Client &client, int map_id);
+
     void startMatch(int match_id);
 
     // añade un mapa al servidor

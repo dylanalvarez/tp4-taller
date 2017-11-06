@@ -7,6 +7,7 @@
 #include "Actions/SendGameStateAction.h"
 #include "Actions/SendMessageAction.h"
 #include "Actions/DisconnectAction.h"
+#include "Actions/PingAction.h"
 
 Client::Client(Socket&& socket,
                const std::vector<Communication::NameAndID> &matches,
@@ -69,4 +70,14 @@ void Client::stop() {
     sender.stop();
     serverSocket.disconnect();
     queue.push(new DisconnectAction());
+}
+
+const Player &Client::getModelPlayer() const {
+    return *player;
+}
+
+void Client::sendPing(Vector position) {
+    if (sender.isOperational()) {
+        queue.push(new PingAction(position));
+    }
 }

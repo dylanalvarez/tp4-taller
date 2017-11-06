@@ -21,10 +21,6 @@ public:
 
     void startMatch();
 
-    void getChosenTeam(std::string &&nickname, int teamID);
-
-    void getChosenMap(std::string &&nickname, int mapID);
-
     void getChosenElement(Communication::Element element);
 
     void getChatMessage(std::string &&message);

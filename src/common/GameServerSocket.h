@@ -26,6 +26,8 @@ public:
     void sendChatMessage(std::string &&message,
                          std::string &nickname);
 
+    void sendPing(int x, int y);
+
     void disconnect();
 
     ~GameServerSocket() override;

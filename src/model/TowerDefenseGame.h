@@ -13,6 +13,8 @@
 #include "Factory/TowerFactory.h"
 #include "Spells/Spell.h"
 
+#define MAX_PLAYERS 4
+
 class TowerDefenseGame {
 public:
     TowerDefenseGame(const std::string& config_file,
@@ -36,14 +38,14 @@ public:
     // levelea la torre con el id pasado
     // Pre: la torre debe tener la exp necesaria y
     // la torre debe existir
-    void levelupTower(const Tower&, const std::string& type);
+    void levelupTower(const Tower&, const std::string& type, const Player& player);
 
     /*** Players ***/
 
     // añade un jugador a la partida
     // Pre: existen menos de 4 jugadores en la partida
-    const Player& addPlayer(const std::string &name,
-                            const std::string& element);
+    const Player& addPlayer(std::string name,
+                            std::string element);
 
     /*** Spells ***/
     void throwSpell(const Player& player, const std::string &type,
@@ -90,7 +92,7 @@ private:
     int enemy_count;
     Scenario* scenario;
     std::vector<Player> players;
-
+    std::vector<std::string> available_elements;
     YAML::Node tower_properties;
 
     void loadEnemyProperties(YAML::Node&);

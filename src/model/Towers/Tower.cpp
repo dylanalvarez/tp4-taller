@@ -111,3 +111,7 @@ Communication::Tower::EnemySlowdown Tower::getslowdown() const {
 int Tower::getExplosionRange() const {
     return 0;
 }
+
+bool Tower::operator==(const Tower &other) {
+    return this->id == other.id;
+}

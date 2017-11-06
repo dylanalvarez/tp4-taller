@@ -79,6 +79,7 @@ class TowerDefenseGameTest : public CppUnit::TestCase {
         CPPUNIT_TEST(rayDealsDamageToTheTargetTest);
         CPPUNIT_TEST(addingTowerToPositionAlreadyOccupedThrowsExceptionTest);
         CPPUNIT_TEST(whenEnemyCompletesPathTheGameIsOverTest);
+        CPPUNIT_TEST(playerCantLevelupAnothersPlayerTowerTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -125,6 +126,7 @@ protected:
     void tornatoHasACooldownTest();
     void tornatoDoesNotDealDamageToNearbyEnemiesTest();
     void rayDealsDamageToTheTargetTest();
+    void playerCantLevelupAnothersPlayerTowerTest();
 
     /*** Fire Tower ***/
     void whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest();

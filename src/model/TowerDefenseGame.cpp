@@ -38,6 +38,13 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
     enemy_id = 1;
     this->enemy_count = enemy_count;
     is_game_over = false;
+
+    players.reserve(MAX_PLAYERS);
+
+    available_elements.emplace_back("air");
+    available_elements.emplace_back("water");
+    available_elements.emplace_back("fire");
+    available_elements.emplace_back("earth");
 }
 
 TowerDefenseGame::~TowerDefenseGame(){
@@ -213,21 +220,40 @@ const Tower& TowerDefenseGame::addTower(const Player &player,
     }
     Tower* tower;
     try {
-        tower = towers_factory.at(type)->create(tower_id++, position,
-                                                       tower_properties, *scenario);
-        scenario->addTower(tower);
-        return *tower;
+        tower = towers_factory.at(type)->create(tower_id, position,
+                                                tower_properties, *scenario);
+            if (player.canBuildTower(type)){
+                scenario->addTower(tower);
+                for (Player& p : players) {
+                    if (&p == &player) {
+                        p.addTower(*tower);
+                    }
+                }
+                return *tower;
+            } else {
+                throw MatchError("Error: el jugador " + player.getName()
+                                 + "no puede construir torres de tipo " + type);
+            }
     } catch (std::exception& e) {
         throw TowerError("Error: el tipo de torre " +
                                  type + " no es un tipo valido");
     }
 }
 
-const Player& TowerDefenseGame::addPlayer(const std::string &name,
-                                          const std::string& element) {
-    if (players.size() == 4) { throw MatchError("Error al añadir jugador: " +
-                                                       name + ": partida llena");}
-    players.emplace_back(name, element);
+const Player& TowerDefenseGame::addPlayer(std::string name,
+                                          std::string element) {
+    if (players.size() == MAX_PLAYERS) {
+        throw MatchError("Error al añadir jugador: " +
+                         name + ": partida llena");}
+
+    if (std::find(available_elements.begin(), available_elements.end(),
+                  element) == available_elements.end()) {
+        throw MatchError("Error al añadir jugador: " +
+                         name + ": el elemento" + element + "no esta disponible");
+    }
+    available_elements.erase(std::remove(available_elements.begin(),
+                                         available_elements.end(), element));
+    players.emplace_back(std::move(name), std::move(element));
     return players.back();
 }
 
@@ -244,7 +270,13 @@ void TowerDefenseGame::performAttacks() {
 }
 
 void TowerDefenseGame::levelupTower(const Tower& tower,
-                                    const std::string& type) {
+                                    const std::string& type,
+                                    const Player& player) {
+    if (!player.containsTower(tower)) {
+        throw MatchError("Error: el jugador" +
+                                 player.getName() +
+                                 "no puede levelear las torres de tipo");
+    }
     scenario->levelupTower(tower, type);
 }
 

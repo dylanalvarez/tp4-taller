@@ -29,6 +29,7 @@ void Server::run() {
             auto* client = new Client(std::move(new_client), matchs_id, maps, *this);
             clients.push_back(client);
             client->start();
+            //TODO clean clients
         } catch (AcceptFailedException& e) {
             // se cerro el socket
         }
@@ -69,11 +70,19 @@ void Server::addMap(const std::string& file_path) {
         return;
     }
 
+    for (auto &maps_path : maps_paths) {
+        if (maps_path.second == file_path) {
+            std::cerr << "Error: El mapa ya fue agregado\n";
+            return;
+        }
+    }
+
     maps_paths.emplace(map_id, file_path);
     Communication::NameAndID new_map;
     new_map.id = map_id++;
     new_map.name = YAML::LoadFile(file_path)["name"].as<std::string>();
     maps.push_back(std::move(new_map));
+    std::cout << "Mapa agreado con exito!\n";
 }
 
 void Server::startMatch(int match_id) {
@@ -89,7 +98,7 @@ void Server::startMatch(int match_id) {
     }
 }
 
-void Server::createMatch(Client &client, int map_id) {
+int Server::createMatch(Client &client, int map_id) {
     std::lock_guard<std::mutex> lock(mutex);
 
     try {
@@ -102,9 +111,9 @@ void Server::createMatch(Client &client, int map_id) {
         new_match_.id = match_id;
         new_match_.name = matchs.at(match_id)->getGame()->getGameName();
         matchs_id.push_back(std::move(new_match_));
-        match_id++;
     } catch (std::out_of_range& e) {
         // el mapa no existe
         // enviar error al cliente
     }
+    return match_id++;
 }

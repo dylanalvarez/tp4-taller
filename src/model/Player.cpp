@@ -2,11 +2,13 @@
 // Created by facundo on 17/10/17.
 //
 
+#include <algorithm>
+#include <utility>
 #include "Player.h"
 
-Player::Player(const std::string& name, const std::string& element) :
-        name(name) {
-    elements.push_back(element);
+Player::Player(std::string name, std::string element) :
+        name(std::move(name)) {
+    elements.emplace_back(element);
 }
 
 const std::string &Player::getName() const {
@@ -15,6 +17,7 @@ const std::string &Player::getName() const {
 
 Player::Player(Player&& other) noexcept {
     this->name = std::move(other.name);
+    this->elements = std::move(other.elements);
 }
 
 Player &Player::operator=(Player&& other) noexcept {
@@ -25,4 +28,22 @@ Player &Player::operator=(Player&& other) noexcept {
 
 const std::vector<std::string> &Player::getElements() const {
     return elements;
+}
+
+void Player::addTower(const Tower& tower) {
+    towers.push_back(&tower);
+}
+
+bool Player::containsTower(const Tower& tower) const {
+    return (std::find(towers.begin(), towers.end(), &tower) != 
+            towers.end());
+}
+
+bool Player::canBuildTower(const std::string &type) const {
+    return (std::find(elements.begin(), elements.end(), type) !=
+            elements.end());
+}
+
+const std::vector<const Tower*> Player::getTowers() const {
+    return towers;
 }
