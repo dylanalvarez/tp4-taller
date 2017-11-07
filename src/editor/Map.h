@@ -66,7 +66,7 @@ public:
 
     Setting getSetting();
 
-    std::string addHorde(Horde &horde);
+    std::string addHorde(Horde &horde, int pathNumber);
 
     void addFirmGround(int x, int y);
 

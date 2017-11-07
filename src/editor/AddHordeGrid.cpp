@@ -20,6 +20,7 @@ AddHordeGrid::AddHordeGrid(BaseObjectType *obj,
     addHordeButton->signal_clicked().connect(
             sigc::mem_fun(this, &AddHordeGrid::onAddHorde));
 
+    this->builder.get_widget("path-number", pathNumberSpinButton);
     this->builder.get_widget("horde-kind", hordeKindComboBox);
     hordeKindComboBox->append(Map::toString(Map::greenDemon));
     hordeKindComboBox->append(Map::toString(Map::goatMan));
@@ -49,7 +50,9 @@ void AddHordeGrid::onChangeTimeBefore() {
 
 void AddHordeGrid::onAddHorde() {
     try {
-        _addHordeToList(horde, map->addHorde(horde));
+        _addHordeToList(horde, map->addHorde(
+                horde,
+                pathNumberSpinButton->get_value_as_int()));
     } catch (std::exception& e) {}
 }
 

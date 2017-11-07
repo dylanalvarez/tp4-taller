@@ -38,6 +38,7 @@ private:
     Gtk::Button *addHordeButton;
     Gtk::Label *hordeList;
     Gtk::ComboBoxText *hordeKindComboBox;
+    Gtk::SpinButton *pathNumberSpinButton;
 };
 
 

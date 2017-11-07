@@ -189,10 +189,11 @@ void Map::setSetting(Setting setting) {
     this->setting = setting;
 }
 
-std::string Map::addHorde(Horde &horde) {
-    auto pathNumber = paths.size();
-    if (pathNumber == 0) { throw std::exception(); }
-    paths.back().hordes.emplace_back(horde);
+std::string Map::addHorde(Horde &horde, int pathNumber) {
+    if (pathNumber <= 0 || pathNumber > paths.size()) {
+        throw std::exception();
+    }
+    paths[pathNumber - 1].hordes.emplace_back(horde);
     return std::to_string(pathNumber);
 }
 
