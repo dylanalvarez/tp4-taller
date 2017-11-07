@@ -22,23 +22,17 @@
 
 void Map::_appendVectorOfCoordinate(
         const std::vector<Map::Coordinate> &vector,
-        YAML::Emitter &emitter,
-        const std::function<int(int)> &transformation) const {
+        YAML::Emitter &emitter) const {
     emitter << YAML::BeginSeq;
     for (Coordinate coordinate : vector) {
         emitter << YAML::BeginMap
                 << YAML::Key << "x"
-                << YAML::Value << transformation(coordinate.x)
+                << YAML::Value << coordinate.x
                 << YAML::Key << "y"
-                << YAML::Value << transformation(coordinate.y)
+                << YAML::Value << coordinate.y
                 << YAML::EndMap;
     }
     emitter << YAML::EndSeq;
-}
-
-void Map::_appendVectorOfCoordinate(const std::vector<Map::Coordinate> &vector,
-                                    YAML::Emitter &emitter) const {
-    _appendVectorOfCoordinate(vector, emitter, [](int coord) { return coord; });
 }
 
 void Map::exportToFile(const std::string &filename) const {
@@ -69,8 +63,7 @@ void Map::exportToFile(const std::string &filename) const {
         emitter << YAML::Key << "path_sequence";
         emitter << YAML::Value;
         _appendVectorOfCoordinate(path.pathSequence,
-                                  emitter,
-                                  [](int coord) { return 88 * coord - 44; });
+                                  emitter);
         emitter << YAML::Key << "entry";
         emitter << YAML::Value;
         emitter << YAML::BeginMap;
@@ -122,8 +115,8 @@ void Map::loadFromFile(std::ifstream &source) {
         this->paths.emplace_back();
         for (const YAML::Node &pathStep : path["path_sequence"]) {
             this->paths.back().pathSequence.emplace_back(
-                    (pathStep["x"].as<int>() + 44) / 88,
-                    (pathStep["y"].as<int>() + 44) / 88);
+                    pathStep["x"].as<int>(),
+                    pathStep["y"].as<int>();
         }
         this->paths.back().entry = Map::Coordinate(
                 path["entry"]["x"].as<int>(),

@@ -96,11 +96,6 @@ private:
     void _appendVectorOfCoordinate(const std::vector<Coordinate> &vector,
                                    YAML::Emitter &emitter) const;
 
-    void _appendVectorOfCoordinate(
-            const std::vector<Coordinate> &vector,
-            YAML::Emitter &emitter,
-            const std::function<int(int)> &transformation) const;
-
     std::string name;
     Setting setting;
     Coordinate size;
