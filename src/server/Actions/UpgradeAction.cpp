@@ -4,7 +4,7 @@
 
 #include "UpgradeAction.h"
 
-UpgradeAction::UpgradeAction(const Player& palyer, const Tower& tower,
+UpgradeAction::UpgradeAction(const Player& player, const Tower& tower,
                              std::string &type) :
         player(player), tower(tower), type(type) {}
 
