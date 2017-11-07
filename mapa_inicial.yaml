@@ -74,10 +74,10 @@ paths:
         y: 572
     entry:
       x: 0
-      y: 2
+      y: 132
     exit:
-      x: 11
-      y: 7
+      x: 924
+      y: 572
     enemies:
       - type: abmonible
         quantity: 4
