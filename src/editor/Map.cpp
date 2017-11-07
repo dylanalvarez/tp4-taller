@@ -116,7 +116,7 @@ void Map::loadFromFile(std::ifstream &source) {
         for (const YAML::Node &pathStep : path["path_sequence"]) {
             this->paths.back().pathSequence.emplace_back(
                     pathStep["x"].as<int>(),
-                    pathStep["y"].as<int>();
+                    pathStep["y"].as<int>());
         }
         this->paths.back().entry = Map::Coordinate(
                 path["entry"]["x"].as<int>(),
