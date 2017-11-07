@@ -82,16 +82,10 @@ void GameServerSocket::sendGameState(
 
         game_node["directed_powers"].push_back(power_node);
     }
-    YAML::Emitter emitter;
-    emitter << game_node;
-    std::string yaml_to_send(emitter.c_str());
 
     try {
         socket.send(Communication::toFixedLengthString(3, OPCODE_CHARACTER_COUNT));
-        socket.send(Communication::toFixedLengthString(
-                yaml_to_send.length(),
-                MESSAGE_LENGTH_CHARACTER_COUNT));
-        socket.send(yaml_to_send);
+        sendNode(game_node);
     } catch (Exception& e) {
        //socket cerrado
     }
@@ -106,17 +100,11 @@ GameServerSocket::GameServerSocket(GameServerSocket &&other) noexcept :
 void GameServerSocket::sendChatMessage(
         std::string &&message,
         std::string &nickname) {
-    YAML::Node initialData;
-    initialData["message"] = message;
-    initialData["nickname"] = nickname;
-    YAML::Emitter emitter;
-    emitter << initialData;
-    std::string yaml_to_send(emitter.c_str());
+    YAML::Node msg;
+    msg["message"] = message;
+    msg["nickname"] = nickname;
     socket.send(Communication::toFixedLengthString(4, OPCODE_CHARACTER_COUNT));
-    socket.send(Communication::toFixedLengthString(
-            yaml_to_send.length(),
-            MESSAGE_LENGTH_CHARACTER_COUNT));
-    socket.send(yaml_to_send);
+    sendNode(msg);
 }
 
 void GameServerSocket::sendInitialData(
@@ -137,15 +125,9 @@ void GameServerSocket::sendInitialData(
         mapNode["name"] = map.name;
         initialData["matches"].push_back(mapNode);
     }
-    YAML::Emitter emitter;
-    emitter << initialData;
-    std::string yaml_to_send(emitter.c_str());
 
     socket.send(Communication::toFixedLengthString(0, OPCODE_CHARACTER_COUNT));
-    socket.send(Communication::toFixedLengthString(
-            yaml_to_send.length(),
-            MESSAGE_LENGTH_CHARACTER_COUNT));
-    socket.send(yaml_to_send);
+    sendNode(initialData);
 }
 
 void GameServerSocket::sendMap(std::string &&filename) {
@@ -208,7 +190,11 @@ void GameServerSocket::disconnect() {
 }
 
 void GameServerSocket::sendPing(int x, int y) {
-
+    YAML::Node ping_node;
+    ping_node["x"] = x;
+    ping_node["y"] = y;
+    socket.send(Communication::toFixedLengthString(5, OPCODE_CHARACTER_COUNT));
+    sendNode(ping_node);
 }
 
 void GameServerSocket::handleChosenMap(std::string& yaml) {
@@ -281,4 +267,13 @@ void GameServerSocket::handleBuildTower(std::string &yaml) {
     auto y = build_node["position"]["y"].as<int>();
     std::string type = build_node["type"].as<std::string>();
     receiver.buildTower(x, y, Communication::Tower::string_to_type(type));
+}
+
+void GameServerSocket::sendNode(YAML::Node &node) {
+    YAML::Emitter emitter;
+    emitter << node;
+    std::string message(emitter.c_str());
+    socket.send(Communication::toFixedLengthString(
+            message.length(), MESSAGE_LENGTH_CHARACTER_COUNT));
+    socket.send(message);
 }

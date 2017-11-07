@@ -11,6 +11,7 @@
 Server::Server(const std::string& port) : accept_socket(port) {
     map_id = 0;
     match_id = 0;
+    maps.emplace_back(Communication::NameAndID("mapa_inicial.yaml", map_id));
     maps_paths.emplace(map_id++, "mapa_inicial.yaml");
 }
 
@@ -88,9 +89,8 @@ void Server::addMap(const std::string& file_path) {
 void Server::startMatch(int match_id) {
     std::lock_guard<std::mutex> lock(mutex);
 
-    if (matchs.at(match_id)->hasStarted()) { return; }
-
     try {
+        if (matchs.at(match_id)->hasStarted()) { return; }
         matchs.at(match_id)->start();
     } catch (std::exception& e) {
         // el match no existe
@@ -112,7 +112,14 @@ int Server::createMatch(Client &client, int map_id) {
         new_match_.name = matchs.at(match_id)->getGame()->getGameName();
         matchs_id.push_back(std::move(new_match_));
     } catch (std::out_of_range& e) {
+        syslog(LOG_CRIT, "Error: el mapa con id %d no existe\n", map_id);
         // el mapa no existe
+        // enviar error al cliente
+    } catch (YAML::BadFile& b) {
+        syslog(LOG_CRIT, "Error en el archivo: %s\n%s",
+               maps_paths.at(map_id).c_str(), b.what());
+        std::cerr << "Error al crear la partida con el mapa " +
+                maps_paths.at(map_id) + ", ver syslog para mas informacion";
         // enviar error al cliente
     }
     return match_id++;

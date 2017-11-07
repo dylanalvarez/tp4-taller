@@ -363,12 +363,12 @@ Communication::GameState TowerDefenseGame::getGameState() const {
     for (const Tower* tower: scenario->getTowers()) {
         gameState.towers.emplace_back(
                 tower->getID(),
-                0,
+                tower->getExperience(),
                 (int)tower->getExperience(),
                 (int)tower->getRange().getRadius(),
                 tower->getExplosionRange(),
-                0,
-                0,
+                tower->getPosition().getX(),
+                tower->getPosition().getY(),
                 tower->getslowdown(),
                 tower->getDamage_(),
                 tower->getType()

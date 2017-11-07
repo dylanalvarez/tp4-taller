@@ -9,7 +9,7 @@
 #include <exception>
 #include <string>
 
-class TowerError : std::exception {
+class TowerError : public std::exception {
 public:
     explicit TowerError(const std::string& info);
 

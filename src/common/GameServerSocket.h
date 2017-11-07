@@ -52,6 +52,7 @@ private:
     void handleSpell(std::string& yaml);
     void handleUpgrade(std::string& yaml);
     void handleBuildTower(std::string& yaml);
+    void sendNode(YAML::Node& node);
 };
 
 #endif //TP4_TALLER_GAME_SERVER_SOCKET_H
