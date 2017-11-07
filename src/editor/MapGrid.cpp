@@ -62,8 +62,14 @@ void MapGrid::setFromMap() {
         std::string pathLabel = std::to_string(pathNumber);
         grid[path.entry.x][path.entry.y]->set_label(ENTRY_DOOR_STR + pathLabel);
         grid[path.exit.x][path.exit.y]->set_label(EXIT_DOOR_STR + pathLabel);
+        int stepNumber = 1;
         for (const Map::Coordinate& pathStep : path.pathSequence) {
-            grid[pathStep.x][pathStep.y]->set_label(PATH_STR + pathLabel);
+            grid[pathStep.x][pathStep.y]->set_label(PATH_STR
+                                                    + pathLabel
+                                                    + ", "
+                                                    + std::to_string(
+                    stepNumber));
+            stepNumber++;
         }
         pathNumber++;
     }
@@ -136,28 +142,12 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
         unfinishedPath = true;
     }
     if (squareType == path) {
-        int lastX = lastPathX == -1 ? startX : lastPathX;
-        int lastY = lastPathY == -1 ? startY : lastPathY;
-        bool sharesPathOnX = x == lastX;
-        bool sharesPathOnY = y == lastY;
-        if (sharesPathOnX) {
-            bool yIsGreater = y > lastY;
-            int start = yIsGreater ? lastY + 1 : y;
-            int end = yIsGreater ? y : lastY - 1;
-            for (int currentY = start; currentY <= end; ++currentY) {
-                grid[x][currentY]->set_label(PATH_STR
-                                             + map.addPathStep(x, currentY));
-            }
-        } else if (sharesPathOnY) {
-            bool xIsGreater = x > lastX;
-            int start = xIsGreater ? lastX + 1 : x;
-            int end = xIsGreater ? x : lastX - 1;
-            for (int currentX = start; currentX <= end; ++currentX) {
-                grid[currentX][y]->set_label(PATH_STR
-                                             + map.addPathStep(currentX, y));
-                map.addPathStep(currentX, y);
-            }
-        }
+        grid[x][y]->set_label(PATH_STR
+                              + map.addPathStep(x, y)
+                              + ", "
+                              + std::to_string(
+                map.getPaths().back().pathSequence.size()));
+
         this->lastPathX = x;
         this->lastPathY = y;
     }
@@ -174,24 +164,5 @@ bool MapGrid::isNeighbourOfStart(int x, int y) const {
 bool MapGrid::isOnStraightLineFromLastOne(int x, int y) const {
     int lastX = lastPathX == -1 ? startX : lastPathX;
     int lastY = lastPathY == -1 ? startY : lastPathY;
-    bool sharesPathOnX = x == lastX;
-    bool sharesPathOnY = y == lastY;
-    if (sharesPathOnX) {
-        bool yIsGreater = y > lastY;
-        int start = yIsGreater ? lastY + 1 : y + 1;
-        int end = yIsGreater ? y - 1 : lastY - 1;
-        for (int currentY = start; currentY <= end; ++currentY) {
-            if (!grid[x][currentY]->get_label().empty()) { return false; }
-        }
-        return true;
-    } else if (sharesPathOnY) {
-        bool xIsGreater = x > lastX;
-        int start = xIsGreater ? lastX + 1 : x + 1;
-        int end = xIsGreater ? x - 1 : lastX - 1;
-        for (int currentX = start; currentX <= end; ++currentX) {
-            if (!grid[currentX][y]->get_label().empty()) { return false; }
-        }
-        return true;
-    }
-    return false;
+    return x == lastX || y == lastY;
 }
