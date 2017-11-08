@@ -28,3 +28,8 @@ void GameClientReceiver::getChatMessage(std::string &&message,
 
 GameClientReceiver::~GameClientReceiver() {
 }
+
+void GameClientReceiver::getUnavailableElement(
+        const Communication::Element &element) {
+    throw Exception("Not yet implemented");
+}

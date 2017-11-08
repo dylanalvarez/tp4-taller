@@ -32,6 +32,10 @@ void GameClientSocket::run() {
                 message = YAML::Load(messageAsString);
                 _handleRecievedMessage(message);
                 break;
+            case 5:
+                message = YAML::Load(messageAsString);
+                _handleUnavailableElement(message);
+                break;
             default:
                 break;
 
@@ -206,6 +210,11 @@ void GameClientSocket::_handleRecievedMessage(YAML::Node &node) {
     std::string message = node["message"].as<std::string>();
     std::string nickname = node["nickname"].as<std::string>();
     receiver.getChatMessage(std::move(message), std::move(nickname));
+}
+
+void GameClientSocket::_handleUnavailableElement(YAML::Node &node) {
+    std::string element = node["type"].as<std::string>();
+    receiver.getUnavailableElement(Communication::to_element(element));
 }
 
 GameClientSocket::GameClientSocket(GameClientSocket &&other) noexcept :

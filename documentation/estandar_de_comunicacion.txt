@@ -8,6 +8,7 @@ client -> server: opcode 0 (CHOOSE_TEAM): nickname y id del equipo elegido
 client -> server: opcode 1 (CHOOSE_MAP): nickname y id del mapa elegido
 
 client -> server: opcode 2 (CHOSEN_ELEMENT): elemento elegido
+server -> client: opcode 5 (CHOSEN_ELEMENT): el elemento ya no está disponible
 client -> server: opcode 3 (START_GAME): elemento elegido
 
 server -> client: opcode 2 (MAP_YAML): datos iniciales (mapa)

@@ -130,6 +130,14 @@ void GameServerSocket::sendInitialData(
     sendNode(initialData);
 }
 
+void GameServerSocket::makeElementUnavailable(Communication::Element element) {
+    YAML::Node node;
+    node["setting"] = Communication::to_string(element);
+    socket.send(Communication::toFixedLengthString(
+            5, OPCODE_CHARACTER_COUNT));
+    sendNode(node);
+}
+
 void GameServerSocket::sendMap(std::string &&filename) {
     std::ifstream file(filename);
     socket.send(std::string(std::istreambuf_iterator<char>(file),
