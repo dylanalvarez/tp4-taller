@@ -17,6 +17,6 @@ void BuildTowerAction::apply(Context& context) {
         context.getGame().addTower(player, element, position);
     } catch (std::exception& e) {
         syslog(LOG_CRIT, "Error: %s\n", e.what());
-        std::cerr << "Error al agregar torre, ver syslog para mas informacion";
+        std::cerr << "Error al agregar torre, ver syslog para mas informacion\n";
     }
 }
