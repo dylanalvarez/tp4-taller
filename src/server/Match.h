@@ -21,11 +21,15 @@ public:
 
     void run() override;
 
+    void startGame();
+
     void stop();
 
     void addPlayer(Client* client);
+    void addElementToClient(const Client& client_to_add,
+                            const std::string& element);
 
-    TowerDefenseGame* getGame();
+    const TowerDefenseGame& getGame() const;
     int getID() const;
     bool hasStarted() const;
 
@@ -35,12 +39,14 @@ public:
     Match& operator=(Match&&) = delete;
 
 private:
+    QueueProtected actions_queue;
+
     HordeCreator horde_creator;
 
     std::vector<Client*> clients;
-    QueueProtected actions_queue;
     TowerDefenseGame game;
     Context context;
+
     int id;
     bool has_started;
     bool keep_running;

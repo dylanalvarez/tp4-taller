@@ -44,8 +44,10 @@ public:
 
     // añade un jugador a la partida
     // Pre: existen menos de 4 jugadores en la partida
-    const Player& addPlayer(std::string name,
-                            std::string element);
+    const Player& addPlayer(std::string name, std::string element);
+    const Player& addPlayer(std::string name);
+
+    void addElementToPlayer(const Player& player, const std::string& element);
 
     /*** Spells ***/
     void throwSpell(const Player& player, const std::string &type,
@@ -59,17 +61,17 @@ public:
     /*** Metodos que actualizan el estado del juego ***/
 
     // mueve todos los enemigos
-    void moveEnemies();
+    void moveEnemies(int units_to_move = 1);
     // realiza los ataques (torres y hechizos)
     void performAttacks();
     // llama a moveEnemies y performe attacks ademas de limpiar
     // los enemigos muertos
-    void updateGame();
+    void updateGame(int units_to_move = 1);
 
     /*** Getters ***/
 
-    const std::string& getGameName();
-    const std::string& getGameSetting();
+    const std::string& getGameName() const;
+    const std::string& getGameSetting() const;
     const std::vector<Enemy>& getAllEnemies() const;
     Communication::GameState getGameState() const;
 

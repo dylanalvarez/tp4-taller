@@ -183,7 +183,7 @@ void Map::setSetting(Setting setting) {
 }
 
 std::string Map::addHorde(Horde &horde, int pathNumber) {
-    if (pathNumber <= 0 || pathNumber > paths.size()) {
+    if (pathNumber <= 0 || (unsigned)pathNumber > paths.size()) {
         throw std::exception();
     }
     paths[pathNumber - 1].hordes.emplace_back(horde);

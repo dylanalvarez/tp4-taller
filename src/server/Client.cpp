@@ -14,9 +14,7 @@ Client::Client(Socket&& socket,
                const std::vector<Communication::NameAndID> &maps, Server& server) :
         serverReceiver(server, *this),
         serverSocket(serverReceiver, std::move(socket)),
-        sender(serverSocket, queue) {
-    this->element = "fire";
-    this->name = "alguien";
+        sender(serverSocket, queue), is_ready(false) {
 }
 
 Client::~Client() {
@@ -52,18 +50,10 @@ const std::string &Client::getName() const {
     return name;
 }
 
-const std::string &Client::getElement() const {
-    return element;
-}
-
-void Client::addElement(const std::string& element) {
-    this->element = element;
-}
-
 void Client::start() {
     sender.start();
     serverSocket.start();
-    serverReceiver.createMatch(0, name);
+    serverReceiver.createMatch(0, "alguien");
 }
 
 void Client::stop() {
@@ -80,4 +70,12 @@ void Client::sendPing(Vector position) {
     if (sender.isOperational()) {
         queue.push(new PingAction(position));
     }
+}
+
+void Client::setReady() {
+    is_ready = true;
+}
+
+bool Client::isReady() const {
+    return is_ready;
 }

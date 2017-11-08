@@ -25,6 +25,9 @@ public:
     // retorna el id de la partida
     int createMatch(Client &client, int map_id);
 
+    void addElementToPlayer(const Client&, int match_id,
+                            const std::string& element);
+
     void startMatch(int match_id);
 
     // añade un mapa al servidor

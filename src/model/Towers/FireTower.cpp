@@ -16,7 +16,7 @@ FireTower::FireTower(int id, const Vector position, YAML::Node& tower_properties
     // basic properties
     dmg = properties["damage"].as<unsigned int>();
     dmg_to_nearby_units = properties["damage_to_nearby"].as<unsigned int>();
-    range = Range(position, properties["range"].as<int>());
+    range = Range(position, getRangeInTileSizes(properties["range"].as<int>()));
     attack_cooldown = properties["attack_rate"].as<unsigned int>();
     reach_of_impact = properties["reach"].as<unsigned int>();
 

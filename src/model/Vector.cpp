@@ -100,3 +100,8 @@ Vector &Vector::operator-=(const Vector& other) {
 Vector Vector::operator*(float num) const {
     return Vector(this->x * num, this->y * num);
 }
+
+void Vector::setCoordinatesFromTiles(int x, int y) {
+    this->x = x * 88 - 44;
+    this->y = y * 88 - 44;
+}

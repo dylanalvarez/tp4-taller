@@ -7,9 +7,9 @@
 
 Match::Match(const std::string &config_file_path,
              const std::string &map_file_path, int id) :
-                horde_creator(map_file_path),
-                game(config_file_path, map_file_path, horde_creator.getTotalAmountOfEnemies()),
-                context(game, clients), id(id)  {
+            horde_creator(map_file_path, actions_queue),
+            game(config_file_path, map_file_path, horde_creator.getTotalAmountOfEnemies()),
+            context(game, clients), id(id)  {
     has_started = false;
     keep_running = true;
 }
@@ -28,10 +28,7 @@ void Match::run() {
         time_t start_time;
         time(&start_time);
 
-        Horde horde = horde_creator.getNextHorde();
-        for (int i = 0; i < horde.getQuantity(); i++) {
-            game.addEnemy(horde.getType());
-        }
+        horde_creator.addNextEnemy();
 
         while (!actions_queue.empty()) {
             actions_queue.front().apply(context);
@@ -57,8 +54,8 @@ void Match::run() {
     }
 }
 
-TowerDefenseGame *Match::getGame() {
-    return &game;
+const TowerDefenseGame &Match::getGame() const {
+    return game;
 }
 
 int Match::getID() const {
@@ -68,7 +65,7 @@ int Match::getID() const {
 void Match::addPlayer(Client* client) {
     if (has_started) { return; }
 
-    const Player& player = game.addPlayer(client->getName(), client->getElement());
+    const Player& player = game.addPlayer(client->getName());
     client->setModelPlayer(player);
     client->setActionsQueue(actions_queue);
     clients.push_back(client);
@@ -83,4 +80,28 @@ void Match::stop() {
 
 bool Match::hasStarted() const {
     return has_started;
+}
+
+void Match::startGame() {
+    for (Client* client : clients) {
+        // hasta que no esten todos listos, no se inicia la partida
+        if (!client->isReady()) { return; }
+    }
+
+    Thread::start();
+}
+
+void Match::addElementToClient(const Client& client_to_add,
+                               const std::string& element) {
+    if (hasStarted()) { return; }
+
+    for (Client* client : clients) {
+        if (&client_to_add == client) {
+            try {
+                game.addElementToPlayer(client->getModelPlayer(), element);
+            } catch (std::exception& e) {
+                // el elemento no esta disponible
+            }
+        }
+    }
 }

@@ -11,6 +11,8 @@ Player::Player(std::string name, std::string element) :
     elements.emplace_back(element);
 }
 
+Player::Player(std::string name) : name(name) {}
+
 const std::string &Player::getName() const {
     return name;
 }
@@ -46,4 +48,8 @@ bool Player::canBuildTower(const std::string &type) const {
 
 const std::vector<const Tower*> Player::getTowers() const {
     return towers;
+}
+
+void Player::addElement(const std::string &element) {
+    elements.push_back(element);
 }

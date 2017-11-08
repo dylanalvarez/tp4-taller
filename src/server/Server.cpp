@@ -28,7 +28,10 @@ void Server::run() {
             Socket new_client = accept_socket.accept();
             // se pudo cerrar el socket en el accept
             auto* client = new Client(std::move(new_client), matchs_id, maps, *this);
+
+            //std::lock_guard<std::mutex> lock(mutex);
             clients.push_back(client);
+
             client->start();
             //TODO clean clients
         } catch (AcceptFailedException& e) {
@@ -91,6 +94,7 @@ void Server::startMatch(int match_id) {
 
     try {
         if (matchs.at(match_id)->hasStarted()) { return; }
+        // matchs.at(match_id)->startGame();
         matchs.at(match_id)->start();
     } catch (std::exception& e) {
         // el match no existe
@@ -109,7 +113,7 @@ int Server::createMatch(Client &client, int map_id) {
 
         Communication::NameAndID new_match_;
         new_match_.id = match_id;
-        new_match_.name = matchs.at(match_id)->getGame()->getGameName();
+        new_match_.name = matchs.at(match_id)->getGame().getGameName();
         matchs_id.push_back(std::move(new_match_));
     } catch (std::out_of_range& e) {
         syslog(LOG_CRIT, "Error: el mapa con id %d no existe\n", map_id);
@@ -123,4 +127,14 @@ int Server::createMatch(Client &client, int map_id) {
         // enviar error al cliente
     }
     return match_id++;
+}
+
+void Server::addElementToPlayer(const Client& client, int match_id,
+                                const std::string& element) {
+    try {
+        std::lock_guard<std::mutex> lock(mutex);
+        matchs.at(match_id)->addElementToClient(client, element);
+    } catch (std::exception& e) {
+       // match inexistente
+    }
 }

@@ -115,3 +115,7 @@ int Tower::getExplosionRange() const {
 bool Tower::operator==(const Tower &other) {
     return this->id == other.id;
 }
+
+int Tower::getRangeInTileSizes(int range) {
+    return (44 + range * 88);
+}

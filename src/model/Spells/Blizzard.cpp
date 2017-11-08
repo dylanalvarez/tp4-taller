@@ -30,7 +30,7 @@ void Blizzard::attack() {
 
     if (!is_active) { return; }
 
-    for (Enemy* enemy : scenario.getEnemiesInRange(Range(position, 0))) {
+    for (Enemy* enemy : scenario.getEnemiesInRange(Range(position, tile_size))) {
         enemy->reduceLife(dmg);
         enemy->reduceSpeed(speed_reduction, speed_reduction_duration);
     }

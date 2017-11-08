@@ -34,12 +34,14 @@ public:
 
     void setModelPlayer(const Player &player);
     void setName(const std::string& name);
+    // setea al jugador como listo para empezar la partida
+    void setReady();
     void setActionsQueue(QueueProtected& queue);
-    void addElement(const std::string& element);
 
     const std::string& getName() const;
-    const std::string& getElement() const;
     const Player& getModelPlayer() const;
+    // retorna si esta listo para comenzar la partida
+    bool isReady() const;
 
     Client(const Client&) = delete;
     Client& operator=(const Client&) = delete;
@@ -56,7 +58,7 @@ private:
 
     const Player* player;
     std::string name;
-    std::string element;
+    bool is_ready;
 };
 
 #endif //TOWERDEFENSE_CLIENT_H

@@ -5,11 +5,10 @@
 #ifndef TOWERDEFENSE_MATCHERROR_H
 #define TOWERDEFENSE_MATCHERROR_H
 
-
 #include <exception>
 #include <string>
 
-class MatchError : std::exception {
+class MatchError : public std::exception {
 public:
     explicit MatchError(const std::string& info) noexcept ;
     ~MatchError() override;

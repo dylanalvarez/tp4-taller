@@ -10,16 +10,19 @@
 class Horde {
 public:
     Horde();
-    Horde(std::string& type, int time_before_arrival, int quantity);
+    Horde(std::string& type, int time_before_arrival, int quantity,
+          unsigned int path_number);
 
     int getTimeBeforeArrival() const;
     int getQuantity() const;
+    unsigned int getPathNumber() const;
     const std::string& getType() const;
 
 private:
     std::string type;
     int time_before_arrival;
     int quantity;
+    unsigned int path_number;
 };
 
 

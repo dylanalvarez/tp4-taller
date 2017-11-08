@@ -53,7 +53,7 @@ protected:
     unsigned int cooldown;
     bool is_on_cooldown;
 
-    const int tile_size = 2; // en pixeles
+    const int tile_size = 44; // en pixeles
 };
 
 #endif //TOWERDEFENSE_SPELL_H
