@@ -144,29 +144,25 @@ void MenuTorres::selecionarTerreno(const FichaTerreno &terreno2){
 
 void MenuTorres::avisarConstruirTorreTierra(){
   auto posicion = terreno->getPosicion();
-  emisorComandos.cosntruirTorre(posicion.X, posicion.Y,
-                    Communication::Tower::Type::earth);
+  emisorComandos.cosntruirTorre(posicion.X, posicion.Y, "earth");
   //printf("Construir Torre de Tierra en:  ");
   //terreno->imprimierCordenadas();
   }
 void MenuTorres::avisarConstruirTorreAgua(){
   auto posicion = terreno->getPosicion();
-  emisorComandos.cosntruirTorre(posicion.X, posicion.Y,
-                    Communication::Tower::Type::water);
+  emisorComandos.cosntruirTorre(posicion.X, posicion.Y,"water");
   //printf("Construir Torre de Agua en:  ");
   //terreno->imprimierCordenadas();
   }
 void MenuTorres::avisarConstruirTorreFuego(){
   auto posicion = terreno->getPosicion();
-  emisorComandos.cosntruirTorre(posicion.X, posicion.Y,
-                    Communication::Tower::Type::fire);
+  emisorComandos.cosntruirTorre(posicion.X, posicion.Y,"fire");
 //  printf("Construir Torre de Fuego en:  ");
 //  terreno->imprimierCordenadas();
   }
 void MenuTorres::avisarConstruirTorreAire(){
   auto posicion = terreno->getPosicion();
-  emisorComandos.cosntruirTorre(posicion.X, posicion.Y,
-                    Communication::Tower::Type::air);
+  emisorComandos.cosntruirTorre(posicion.X, posicion.Y,"air");
 //  printf("Construir Torre de Aire en:  ");
 //  terreno->imprimierCordenadas();
   }

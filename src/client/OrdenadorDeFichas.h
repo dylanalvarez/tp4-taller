@@ -4,6 +4,7 @@
 #include <gtkmm.h>
 #include <iostream>
 #include <list>
+#include <mutex>
 #include "sprites.h"
 #include "Fichas.h"
 #include "TiposDeDatosExpeciales.h"
@@ -11,6 +12,7 @@
 
 class OrdenadorDeFichas{
 private:
+ std::mutex m;
  VectorDeSprites sprites; //para creara  las fichas.
  std::map<int,FichaTerreno> terreno;
  std::map<int,FichaTorre> torres;
@@ -19,19 +21,30 @@ private:
  std::map<int,FichaEfectos> poderes;
  std::vector<FichaPortal> portales;
 protected:
+ void imprimirPortal(const Cairo::RefPtr<Cairo::Context>& cr,
+                        DatosPantalla datosActuales);
+ void imprimirEfectos(const Cairo::RefPtr<Cairo::Context>& cr,
+                        DatosPantalla datosActuales);
+ void imprimirTorres(const Cairo::RefPtr<Cairo::Context>& cr,
+                        DatosPantalla datosActuales);
+ void imprimirTerreno(const Cairo::RefPtr<Cairo::Context>& cr,
+                       DatosPantalla datosActuales);
+ void actualizarEnemigo(Communication::Enemy actualzacion);
+ void actualizarTorre(Communication::Tower actualzacion);
 public:
  void ejecutarSicloDeAnimacion();
  void preprarParaActualizacion();
+ void imprir(const Cairo::RefPtr<Cairo::Context>& cr,
+                      DatosPantalla datosActuales);
+ void actualizar(const Communication::GameState &gameState);
+
+
 
  void agregarTerreno(FichaTerreno nuevaFicha);
- void imprimirTerreno(const Cairo::RefPtr<Cairo::Context>& cr,
-                      DatosPantalla datosActuales);
  int ObetenerTerrenoEnEstaPosicion(int x, int y);
  FichaTerreno& getTerreno(int id);
 
  void agregarTorre(FichaTorre nuevaFicha);
- void imprimirTorres(const Cairo::RefPtr<Cairo::Context>& cr,
-                       DatosPantalla datosActuales);
  int ObetenerTorreEnEstaPosicion(int x, int y);
  FichaTorre& getTorre(int id);
 
@@ -40,15 +53,10 @@ public:
                        DatosPantalla datosActuales);
  int ObetenerEnemigoEnEstaPosicion(int x, int y);
  FichaEnemigo& getEnemigo(int id);
- void actualizarEnemigo(Communication::Enemy actualzacion);
 
  void agregarEfectos(int inicio, int objetivo, int id2, VectorDeSprites &sprites);
  void agregarEfectos(FichaEfectos nuevaFicha);
- void imprimirEfectos(const Cairo::RefPtr<Cairo::Context>& cr,
-                       DatosPantalla datosActuales);
 
  void agregarPortal(FichaPortal nuevaFicha);
- void imprimirPortal(const Cairo::RefPtr<Cairo::Context>& cr,
-                       DatosPantalla datosActuales);
 };
 #endif

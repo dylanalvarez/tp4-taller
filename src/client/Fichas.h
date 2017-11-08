@@ -72,12 +72,14 @@ class FichaTorre: public Ficha{
   int spriteActualSubAnimacion;
  public:
   FichaTorre(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
+  FichaTorre(Communication::Tower actualzacion, VectorDeSprites &sprites);
   FichaTorre(const FichaTorre &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
   virtual void ejecutarSicloDeAnimacion(); //Para los gif
   int getDanio() const;
   int getRango() const;
   int getEspecial() const;
+  void actualizar(Communication::Tower actualzacion);
 };
 
 #define Abmonible 0

@@ -2,6 +2,7 @@
 #define error 0
 
 void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
+  std::unique_lock<std::mutex> lck(m);
   for (auto it = terreno.begin(); it != terreno.end(); ++it){
     it->second.ejecutarSicloDeAnimacion();
   }
@@ -28,6 +29,28 @@ void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
   for (auto it = portales.begin(); it != portales.end(); ++it){
     it->ejecutarSicloDeAnimacion();
   }
+}
+void OrdenadorDeFichas::imprir(const Cairo::RefPtr<Cairo::Context>& cr,
+                     DatosPantalla datosActuales){
+    std::unique_lock<std::mutex> lck(m);
+    imprimirTerreno(cr,datosActuales);
+    imprimirPortal(cr,datosActuales);
+    imprimirEnemigo(cr,datosActuales);
+    imprimirTorres(cr,datosActuales);
+    imprimirEfectos(cr,datosActuales);
+}
+void OrdenadorDeFichas::actualizar(const Communication::GameState &gameState){
+  std::unique_lock<std::mutex> lck(m);
+  preprarParaActualizacion();
+  for (auto it = gameState.enemies.begin() ; it != gameState.enemies.end(); ++it)
+    actualizarEnemigo(*it);
+  for (auto it = gameState.towers.begin() ; it != gameState.towers.end(); ++it)
+    actualizarTorre(*it);
+/*  for (auto it = aux.positionalPowers.begin() ; it != aux.positionalPowers.end(); ++it)
+    fichas.actualizarEnemigo(*it);
+  for (auto it = aux.targetPowers.begin() ; it != aux.targetPowers.end(); ++it)
+    fichas.actualizarEnemigo(*it);
+*/
 }
 
 void OrdenadorDeFichas::preprarParaActualizacion(){
@@ -80,6 +103,15 @@ int OrdenadorDeFichas::ObetenerTorreEnEstaPosicion(int x, int y){
 FichaTorre& OrdenadorDeFichas::getTorre(int id){
   return torres.at(id);
 }
+void OrdenadorDeFichas::actualizarTorre(Communication::Tower actualzacion){
+  printf("actualizar\n");
+  if (idEnemigo < actualzacion.id) {
+    agregarTorre(FichaTorre(actualzacion, sprites));
+  }else{
+    torres.at(actualzacion.id).actualizar(actualzacion);
+  }
+}
+
 
 //Enemigo
 void OrdenadorDeFichas::agregarEnemigo(FichaEnemigo nuevaFicha){

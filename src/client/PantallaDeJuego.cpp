@@ -120,11 +120,7 @@ bool PantallaDeJuego::on_draw(const Cairo::RefPtr<Cairo::Context>& cr){
 //  cr->scale(width2,height2);
 //  cr->save();
 
-  fichas.imprimirTerreno(cr,datosActuales);
-  fichas.imprimirPortal(cr,datosActuales);
-  fichas.imprimirEnemigo(cr,datosActuales);
-  fichas.imprimirTorres(cr,datosActuales);
-  fichas.imprimirEfectos(cr,datosActuales);
+  fichas.imprir(cr,datosActuales);
   return true; //esto es parte del formato de timer..
 }
 
