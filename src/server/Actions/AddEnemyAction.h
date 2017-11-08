@@ -10,7 +10,7 @@
 
 class AddEnemyAction : public Action {
 public:
-    AddEnemyAction(std::string& enemy_type, unsigned int path_number);
+    AddEnemyAction(const std::string& enemy_type, unsigned int path_number);
 
     void apply(Context& context) override;
 

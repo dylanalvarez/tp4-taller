@@ -15,7 +15,7 @@ AirTower::AirTower(int id, Vector p, YAML::Node &tower_properties,
     // basic properties
     dmg = properties["damage"].as<unsigned int>();
     dmg_to_flying_units = properties["damage_to_flying"].as<unsigned int>();
-    range = Range(position, properties["range"].as<int>());
+    range = Range(position, getRangeInTileSizes(properties["range"].as<int>()));
     attack_cooldown = properties["attack_rate"].as<unsigned int>();
 
     // upgrades properties

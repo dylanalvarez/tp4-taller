@@ -38,11 +38,6 @@ struct Mensaje {
   std::string elString;
   int elInt1;
   int elInt2;
-  Communication::Element elElemento;
-  Communication::PositionalPower elPoderPosicional;
-  Communication::TargetPower elPoderTargetado;
-  Communication::Upgrade laMejora;
-  Communication::Tower::Type elTypoDeTorre;
   //Mensaje();
 };
 

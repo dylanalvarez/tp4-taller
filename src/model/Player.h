@@ -12,9 +12,11 @@
 class Player {
 public:
     Player(std::string name, std::string element);
+    Player(std::string name);
 
     void addTower(const Tower& tower);
-    
+    void addElement(const std::string& element);
+
     const std::string& getName() const;
     const std::vector<std::string>& getElements() const;
     const std::vector<const Tower*> getTowers() const;

@@ -16,15 +16,15 @@
 #define teimpoActualizacionModelo 15
 
 int main(int argc, char *argv[]){
-  /*if (argc != 2) {
+  if (argc != 2) {
     return 0;
-  }*/
+  }
   //char *servicename= argv[1];
-  //Socket socket("127.0.0.1", servicename); //Algo raro pasa aca.
-  Socket socket("127.0.0.1", "7072");
-
+  Socket socket("127.0.0.1", argv[1]); //Algo raro pasa aca.
+  //Socket socket("127.0.0.1", "7072");
+  int argcF =argc -1;
   //Crea la aplicación de gtkmm (Todo esto tendria que ser un un clase)
-  auto app = Gtk::Application::create(argc, argv);
+  auto app = Gtk::Application::create(argcF, argv);
   VectorDeSprites sprites;
   OrdenadorDeFichas fichas;
 
@@ -37,18 +37,18 @@ int main(int argc, char *argv[]){
     572,572,572,572,572,572,572,572,572,572,572};
 
   int id = 0;
-  for (size_t i = 0; i < 10; i++) {
-    for (size_t j = 0; j < 10; j++) {
+  for (size_t i = 1; i < 11; i++) {
+    for (size_t j = 1; j < 11; j++) {
       id++;
       fichas.agregarTerreno(FichaTerreno(largo*i, largo*j, id, FichaPisoFondoLava, sprites));
     }
   }
   for (size_t i = 0; i < 8; i++) {
-    id = fichas.ObetenerTerrenoEnEstaPosicion((XpisosFirmos[i]-1)*88,(YpisosFirmos[i]-1)*88);
+    id = fichas.ObetenerTerrenoEnEstaPosicion((XpisosFirmos[i])*88,(YpisosFirmos[i])*88);
     fichas.getTerreno(id).cambiarTipo(FichaPisoFirme, sprites);
   }
   for (size_t i = 0; i < 24; i++) {
-    id = fichas.ObetenerTerrenoEnEstaPosicion(XpisosEnemigo[i],YpisosEnemigo[i]);
+    id = fichas.ObetenerTerrenoEnEstaPosicion(XpisosEnemigo[i]+88,YpisosEnemigo[i]+88);
     fichas.getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
   }
 
@@ -72,6 +72,7 @@ int main(int argc, char *argv[]){
   GameClientSocket clientSocket(reciver, std::move(socket));
   Receptor receptor(reciver, clientSocket);
   ControladorDeSiclos falso(receptor, emisor);
+  emisor.cargarSocket(&clientSocket);
 
 //mejorar nombres
   int TiempoEnMilesegundos = 100;

@@ -84,6 +84,7 @@ protected:
     bool isCurrentTargetOutOfRange(const std::vector<Enemy*>&) const;
     void changeTarget(const std::vector<Enemy*>&);
     void hitCurrentTarget(unsigned int dmg);
+    int getRangeInTileSizes(int range);
 };
 
 #endif //TOWERDEFENSE_TOWER_H

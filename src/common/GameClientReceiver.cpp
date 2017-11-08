@@ -18,17 +18,7 @@ void GameClientReceiver::getMap(std::string &&map) {
 }
 
 void GameClientReceiver::getGameState(const Communication::GameState &gameState){
-  fichas.preprarParaActualizacion();
-  for (auto it = gameState.enemies.begin() ; it != gameState.enemies.end(); ++it)
-    fichas.actualizarEnemigo(*it);
-/*
-  for (auto it = aux.towers.begin() ; it != aux.towers.end(); ++it)
-    fichas.actualizarEnemigo(*it);
-  for (auto it = aux.positionalPowers.begin() ; it != aux.positionalPowers.end(); ++it)
-    fichas.actualizarEnemigo(*it);
-  for (auto it = aux.targetPowers.begin() ; it != aux.targetPowers.end(); ++it)
-    fichas.actualizarEnemigo(*it);
-*/
+  fichas.actualizar(gameState);
 }
 
 void GameClientReceiver::getChatMessage(std::string &&message,

@@ -24,22 +24,27 @@ void GameServerReceiver::setActionsQueue(QueueProtected &queue) {
 
 void GameServerReceiver::joinMatch(int match_id,
                                    const std::string &player_name) {
+    client.setName(player_name);
     server.joinMatch(client, match_id);
     my_match_id = match_id;
 }
 
 void GameServerReceiver::createMatch(int map_id,
                                      const std::string &player_name) {
+    client.setName(player_name);
     my_match_id = server.createMatch(client, map_id);
+    client.setReady();
     server.startMatch(my_match_id);
 }
 
 void GameServerReceiver::startMatch() {
+    client.setReady();
     server.startMatch(my_match_id);
 }
 
 void GameServerReceiver::getChosenElement(Communication::Element element) {
-    client.addElement(Communication::to_string(element));
+    server.addElementToPlayer(client, my_match_id,
+                              Communication::to_string(element));
 }
 
 void GameServerReceiver::getChatMessage(std::string &&message,

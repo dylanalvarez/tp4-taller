@@ -16,6 +16,7 @@ public:
     float getY() const;
 
     void set_coordinates(float x, float y);
+    void setCoordinatesFromTiles(int x, int y);
 
     // sobrecarga de operadores
     Vector& operator+=(float);
@@ -52,7 +53,8 @@ namespace YAML {
             if(!node.IsMap() || node.size() != 2) {
                 return false;
             }
-            vector.set_coordinates(node["x"].as<float>(), node["y"].as<float>());
+            vector.setCoordinatesFromTiles(node["x"].as<int>(),
+                                           node["y"].as<int>());
             return true;
         }
     };

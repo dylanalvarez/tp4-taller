@@ -154,6 +154,29 @@ FichaTorre::FichaTorre(int x2, int y2, int id2, int tipo,
       break;
   }
 }
+int traducirTipTorre(Communication::Tower::Type tipo){
+  switch (tipo) {
+    case Communication::Tower::Type::earth:
+    return FichaTorreDeTierra;
+    case Communication::Tower::Type::water:
+    return FichaTorreDeAgua;
+    case Communication::Tower::Type::fire:
+    return FichaTorreDeFuego;
+    case Communication::Tower::Type::air:
+    return FichaTorreDeAire;
+  }
+  return -1;
+}
+FichaTorre::FichaTorre(Communication::Tower actualzacion,
+  VectorDeSprites &sprites): FichaTorre(actualzacion.x, actualzacion.y,
+     actualzacion.id, traducirTipTorre(actualzacion.type), sprites){
+}
+void FichaTorre::actualizar(Communication::Tower actualzacion){
+  danio = actualzacion.damage.normal;
+  rango = actualzacion.rangeInSquares;
+  especial = actualzacion.slowdown.percentage + actualzacion.ExplosionRange;
+}
+
 FichaTorre::FichaTorre(const FichaTorre &p): Ficha(p){
   spriteActualSubAnimacion = p.spriteActualSubAnimacion;
   danio = p.danio;
@@ -235,7 +258,6 @@ void FichaEnemigo::actualizar(Communication::Enemy actualzacion){
     inicioAnimiacionActual = menosY;
   x= actualzacion.x;
   y= actualzacion.y;
-  printf("x = %i, y= %i\n", x,y);
   destrulleme = false;
 }
 

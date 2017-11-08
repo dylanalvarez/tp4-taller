@@ -7,12 +7,13 @@
 #include "TiposDeDatosExpeciales.h"
 #include <vector>
 #include <thread>
-//#include "../common/GameClientSocket.h"
+class GameClientSocket;
 
 class Emisor{
 private:
 public:
   //Emisor(GameClientReceiver &receiver, Socket &&socket);
+  void cargarSocket(GameClientSocket* socket2); //esto se debe poder mejorar en algun futuro.
   void iniciar();
   bool siclo();
   void terminar();
@@ -24,9 +25,9 @@ public:
   void lansarEchizo(Communication::PositionalPower poder);
   void lansarEchizo(Communication::TargetPower poder);
   void upgraTorre(Communication::Upgrade upgrade);
-  void cosntruirTorre(int x, int y, Communication::Tower::Type tipo);
+  void cosntruirTorre(int x, int y, std::string tipo);
 protected:
-  //GameClientSocket socket;
+  GameClientSocket* socket;
   ColaBloqueante cola;
   bool seguir = true;
   bool siguiente = true;

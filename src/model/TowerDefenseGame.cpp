@@ -82,7 +82,7 @@ void TowerDefenseGame::loadScenarioProperties(YAML::Node& map) {
             road.push_back(it->as<Vector>());
         }
         road.push_back((*path)["exit"].as<Vector>());
-        paths.push_back(Path(std::move(road)));
+        paths.emplace_back(Path(std::move(road)));
     }
 
     scenario = new Scenario(std::move(paths), std::move(firm_ground_locations));
@@ -195,9 +195,9 @@ const std::vector<Enemy> &TowerDefenseGame::getAllEnemies() const {
     return scenario->getAllEnemies();
 }
 
-void TowerDefenseGame::moveEnemies() {
+void TowerDefenseGame::moveEnemies(int units_to_move) {
     for (Enemy& enemy : scenario->getAllEnemies()){
-        enemy.move();
+        enemy.move(units_to_move);
         if (enemy.reachTheEnd()) { is_game_over = true; }
     }
 }
@@ -244,7 +244,8 @@ const Player& TowerDefenseGame::addPlayer(std::string name,
                                           std::string element) {
     if (players.size() == MAX_PLAYERS) {
         throw MatchError("Error al añadir jugador: " +
-                         name + ": partida llena");}
+                         name + ": partida llena");
+    }
 
     if (std::find(available_elements.begin(), available_elements.end(),
                   element) == available_elements.end()) {
@@ -255,6 +256,32 @@ const Player& TowerDefenseGame::addPlayer(std::string name,
                                          available_elements.end(), element));
     players.emplace_back(std::move(name), std::move(element));
     return players.back();
+}
+
+const Player &TowerDefenseGame::addPlayer(std::string name) {
+    if (players.size() == MAX_PLAYERS) {
+        throw MatchError("Error al añadir jugador: " +
+                         name + ": partida llena");
+    }
+
+    players.emplace_back(std::move(name));
+    return players.back();
+}
+
+void TowerDefenseGame::addElementToPlayer(const Player &player,
+                                          const std::string &element) {
+    if (std::find(available_elements.begin(), available_elements.end(),
+                  element) == available_elements.end()) {
+        throw MatchError("Error al añadir elemento al jugador: " +
+                         player.getName() +
+                         ", el elemento" + element + "no esta disponible");
+    }
+
+    for (Player& p : players) {
+        if (&p == &player) {
+            p.addElement(element);
+        }
+    }
 }
 
 void TowerDefenseGame::performAttacks() {
@@ -280,8 +307,8 @@ void TowerDefenseGame::levelupTower(const Tower& tower,
     scenario->levelupTower(tower, type);
 }
 
-void TowerDefenseGame::updateGame() {
-    moveEnemies();
+void TowerDefenseGame::updateGame(int units_to_move) {
+    moveEnemies(units_to_move);
     performAttacks();
     enemy_count -= scenario->cleanEnemies();
 }
@@ -335,11 +362,11 @@ void TowerDefenseGame::throwSpell(const Player &player, const std::string &type,
                      " no existe");
 }
 
-const std::string &TowerDefenseGame::getGameName() {
+const std::string &TowerDefenseGame::getGameName() const {
     return name;
 }
 
-const std::string &TowerDefenseGame::getGameSetting() {
+const std::string &TowerDefenseGame::getGameSetting() const {
     return setting;
 }
 
@@ -363,7 +390,7 @@ Communication::GameState TowerDefenseGame::getGameState() const {
     for (const Tower* tower: scenario->getTowers()) {
         gameState.towers.emplace_back(
                 tower->getID(),
-                tower->getExperience(),
+                tower->getDamageLevel(),
                 (int)tower->getExperience(),
                 (int)tower->getRange().getRadius(),
                 tower->getExplosionRange(),

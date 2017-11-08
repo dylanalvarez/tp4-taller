@@ -1,45 +1,48 @@
 #include "emisor.h"
-
+#include "../common/GameClientSocket.h"
+#include "../common/CommunicationUtils.h"
 /*Emisor::Emisor(GameClientReceiver &receiver, Socket &&socket): socket(receiver, socket){
 }*/
+void Emisor::cargarSocket(GameClientSocket* socket2){
+  socket = socket2;
+}
 
 void Emisor::iniciar(){
-  /*Mensaje aux;
-  while (seguir) {
-    if (siguiente) {
-      siguiente=false;
-      cola.tomarNuevoTermino(&aux);
-      switch (aux.tipo) {
-        case Mensaje::Type::chooseTeam:
-          printf("chooseTeam\n");
-        break;
-        case Mensaje::Type::chooseMap:
-          printf("chooseMap\n");
-        break;
-        case Mensaje::Type::chooseElement:
-          printf("chooseElement\n");
-        break;
-        case Mensaje::Type::sendChatMessage:
-          printf("sendChatMessage\n");
-        break;
-        case Mensaje::Type::pingTile:
-          printf("pingTile\n");
-        break;
-        case Mensaje::Type::applySpell1:
-          printf("applySpell1\n");
-        break;
-        case Mensaje::Type::applySpell2:
-          printf("applySpell2\n");
-        break;
-        case Mensaje::Type::applyUpgrade:
-          printf("applyUpgrade\n");
-        break;
-        case Mensaje::Type::buildTower:
-          printf("buildTower\n");
-        break;
+  Mensaje aux;
+  while (seguir){
+    cola.tomarNuevoTermino(&aux);
+    switch (aux.tipo) {
+      case Mensaje::Type::chooseTeam:
+        printf("chooseTeam\n");
+      break;
+      case Mensaje::Type::chooseMap:
+        printf("chooseMap\n");
+      break;
+      case Mensaje::Type::chooseElement:
+        printf("chooseElement\n");
+      break;
+      case Mensaje::Type::sendChatMessage:
+        printf("sendChatMessage\n");
+      break;
+      case Mensaje::Type::pingTile:
+        printf("pingTile\n");
+      break;
+      case Mensaje::Type::applySpell1:
+        printf("applySpell1\n");
+      break;
+      case Mensaje::Type::applySpell2:
+        printf("applySpell2\n");
+      break;
+      case Mensaje::Type::applyUpgrade:
+        printf("applyUpgrade\n");
+      break;
+      case Mensaje::Type::buildTower:
+        printf("buildTower\n");
+        socket->buildTower(aux.elInt1, aux.elInt2,
+          Communication::Tower::string_to_type(aux.elString));
+      break;
       }
-    }
-  }*/
+  }
 }
 
 void Emisor::elegirEquipo(std::string &nickname, int teamID){
@@ -93,12 +96,13 @@ void Emisor::upgraTorre(Communication::Upgrade upgrade){
   aux.laMejora = upgrade;
   cola.agregarLinea(aux);*/
 }
-void Emisor::cosntruirTorre(int x, int y, Communication::Tower::Type tipo){
-  /*Mensaje aux;
+void Emisor::cosntruirTorre(int x, int y, std::string tipo){
+  Mensaje aux;
   aux.tipo = Mensaje::Type::buildTower;
+  aux.elString = tipo;
   aux.elInt1 = x;
   aux.elInt1 = y;
-  cola.agregarLinea(aux);*/
+  cola.agregarLinea(aux);
 }
 
 

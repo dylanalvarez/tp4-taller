@@ -4,8 +4,11 @@
 
 #include <iostream>
 #include "HordeCreator.h"
+#include "Actions/AddEnemyAction.h"
 
-HordeCreator::HordeCreator(const std::string &map_file) {
+HordeCreator::HordeCreator(const std::string &map_file,
+                           QueueProtected& queue) : queue(queue) {
+    unsigned int path_number = 1;
     total_amount_of_enemies = 0;
     YAML::Node map = YAML::LoadFile(map_file);
     YAML::Node paths = map["paths"];
@@ -16,39 +19,38 @@ HordeCreator::HordeCreator(const std::string &map_file) {
             std::string type = (*it)["type"].as<std::string>();
             Horde horde(type,
                            (*it)["seconds_before_arrival"].as<int>(),
-                           (*it)["quantity"].as<int>());
+                           (*it)["quantity"].as<int>(), path_number++);
             hordes.push(horde);
         }
     }
     last_horde_sended_time = 0;
-}
-
-Horde HordeCreator::getNextHorde() {
-    if (hordes.empty()) { return Horde(); }
-    if (difftime(time(nullptr), last_horde_sended_time) <
-            hordes.front().getTimeBeforeArrival()) { return Horde(); }
-
-    Horde horde = hordes.front();
-    hordes.pop();
-    return horde;
+    last_enemy_sended_time = 0;
 }
 
 void HordeCreator::start() {
     last_horde_sended_time = time(nullptr);
+    enemies_to_send_count = hordes.front().getQuantity();
 }
 
 int HordeCreator::getTotalAmountOfEnemies() const {
     return total_amount_of_enemies;
 }
 
-HordeCreator::HordeCreator(HordeCreator&& other) noexcept {
-    this->hordes = std::move(other.hordes);
-    this->total_amount_of_enemies = other.total_amount_of_enemies;
-}
+void HordeCreator::addNextEnemy() {
+    if (hordes.empty()) { return; }
 
-HordeCreator& HordeCreator::operator=(HordeCreator&& other) noexcept {
-    this->hordes = std::move(other.hordes);
-    this->total_amount_of_enemies = other.total_amount_of_enemies;
+    if (difftime(time(nullptr), last_horde_sended_time) <
+        hordes.front().getTimeBeforeArrival()) { return; }
 
-    return *this;
+    if (difftime(time(nullptr), last_enemy_sended_time) <
+        time_between_enemies) { return; }
+
+    if (enemies_to_send_count == 0) {
+        hordes.pop();
+        last_horde_sended_time = time(nullptr);
+    } else {
+        queue.push(new AddEnemyAction(hordes.front().getType(),
+                                      hordes.front().getPathNumber()));
+        last_enemy_sended_time = time(nullptr);
+    }
 }
