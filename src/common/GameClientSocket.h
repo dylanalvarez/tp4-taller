@@ -20,6 +20,8 @@ public:
 
     void chooseElement(Communication::Element element);
 
+    void startGame();
+
     void sendChatMessage(std::string &&message);
 
     void pingTile(int x, int y);

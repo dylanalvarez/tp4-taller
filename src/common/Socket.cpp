@@ -62,6 +62,7 @@ void Socket::send(const std::string &content) const {
 }
 
 std::vector<char> Socket::receive(size_t sizeInBytes) const {
+    if (sizeInBytes == 0) { return std::vector<char>(); }
     size_t receivedBytes = 0;
     std::vector<char> buffer(sizeInBytes);
     while (receivedBytes < sizeInBytes) {
@@ -80,6 +81,7 @@ std::vector<char> Socket::receive(size_t sizeInBytes) const {
 }
 
 std::string Socket::receiveString(size_t length) const {
+    if (length == 0) { return std::string(); }
     std::vector<char> received = receive(length);
     return std::string(received.begin(), received.end());
 }

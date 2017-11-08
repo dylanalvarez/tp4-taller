@@ -74,6 +74,13 @@ void GameClientSocket::chooseElement(Communication::Element element) {
     _sendNode(node);
 }
 
+void GameClientSocket::startGame() {
+    socket.send(Communication::toFixedLengthString(
+            3, OPCODE_CHARACTER_COUNT));
+    socket.send(Communication::toFixedLengthString(
+            0, MESSAGE_LENGTH_CHARACTER_COUNT));
+}
+
 void GameClientSocket::sendChatMessage(std::string &&chatMessage) {
     YAML::Node node;
     node["message"] = chatMessage;
@@ -97,7 +104,7 @@ void GameClientSocket::applySpell(Communication::PositionalPower power) {
     node["position"]["y"] = power.y;
     node["type"] = Communication::PositionalPower::to_string(power.type);
     socket.send(Communication::toFixedLengthString(
-            5, OPCODE_CHARACTER_COUNT));
+            6, OPCODE_CHARACTER_COUNT));
     _sendNode(node);
 }
 
