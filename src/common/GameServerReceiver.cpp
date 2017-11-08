@@ -34,6 +34,7 @@ void GameServerReceiver::createMatch(int map_id,
     client.setName(player_name);
     my_match_id = server.createMatch(client, map_id);
     client.setReady();
+    getChosenElement(Communication::Element::earth);
     server.startMatch(my_match_id);
 }
 

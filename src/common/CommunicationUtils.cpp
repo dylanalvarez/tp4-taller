@@ -21,7 +21,7 @@ Communication::Upgrade::Upgrade(const std::string& type, int tower_id) {
 }
 
 std::string Communication::to_string(const Communication::Element &element) {
-    std::vector<std::string> elements{"desert", "volcano", "ice", "meadow"};
+    std::vector<std::string> elements{"earth", "water", "fire", "air"};
     return elements[element];
 }
 
