@@ -73,7 +73,7 @@ Communication::Tower::to_string(const Communication::Tower::Type &type) {
     return states[type];
 }
 
-Communication::Tower::Tower(int id, int level, int experience,
+Communication::Tower::Tower(int id, Level level, int experience,
                             int rangeInSquares, int ExplosionRange, int x,
                             int y, Communication::Tower::EnemySlowdown slowdown,
                             Communication::Tower::Damage damage,
@@ -88,7 +88,7 @@ Communication::Tower::Tower(int id, int level, int experience,
     else if (type == "air") { this->type = air; }
 }
 
-Communication::Tower::Tower(int id, int level, int experience,
+Communication::Tower::Tower(int id, Level level, int experience,
                             int rangeInSquares, int ExplosionRange, int x,
                             int y, Communication::Tower::EnemySlowdown slowdown,
                             Communication::Tower::Damage damage,
@@ -168,3 +168,7 @@ Communication::Tower::EnemySlowdown::EnemySlowdown(int percentage, int duration)
 
 Communication::Tower::Damage::Damage(int normal, int flying, int close_by)
         : normal(normal), flying(flying), close_by(close_by) {}
+
+Communication::Tower::Level::Level(int range, int damage, int reach,
+                                   int slowdown)
+        : range(range), damage(damage), reach(reach), slowdown(slowdown) {}

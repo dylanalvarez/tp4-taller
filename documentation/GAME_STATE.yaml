@@ -12,7 +12,11 @@ towers:
   -
     id: 2
     element: 'earth'
-    lv: 2
+    lv:
+      range: 1
+      damage: 1
+      reach: 1
+      slowdown: 1
     xp: 100
     damage:
       normal: 3

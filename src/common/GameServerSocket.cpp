@@ -40,8 +40,13 @@ void GameServerSocket::sendGameState(
 
         tower_node["id"] = tower.id;
         tower_node["element"] = Communication::Tower::to_string(tower.type);
-        tower_node["lv"] = tower.level;
         tower_node["xp"] = tower.experience;
+        YAML::Node level;
+        level["range"] = tower.level.range;
+        level["damage"] = tower.level.damage;
+        level["reach"] = tower.level.reach;
+        level["slowdown"] = tower.level.slowdown;
+        tower_node["lv"] = level;
         YAML::Node damage;
         damage["normal"] = tower.damage.normal;
         damage["flying"] = tower.damage.flying;

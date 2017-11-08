@@ -72,19 +72,26 @@ namespace Communication {
             earth, water, fire, air
         };
 
+        struct Level {
+            Level(int range, int damage, int reach, int slowdown);
+
+            int range, damage, reach, slowdown;
+        };
+
         static std::string to_string(const Tower::Type &type);
         static Tower::Type string_to_type(const std::string& type);
 
-        Tower(int id, int level, int experience, int rangeInSquares,
+        Tower(int id, Level level, int experience, int rangeInSquares,
               int ExplosionRange, int x, int y, EnemySlowdown slowdown,
               Damage damage, const std::string &type);
 
-        Tower(int id, int level, int experience, int rangeInSquares,
+        Tower(int id, Level level, int experience, int rangeInSquares,
               int ExplosionRange, int x, int y, EnemySlowdown slowdown,
               Damage damage, Type type);
 
-        int id, level, experience, rangeInSquares, ExplosionRange, x, y;
+        int id, experience, rangeInSquares, ExplosionRange, x, y;
 
+        Level level;
         EnemySlowdown slowdown;
         Damage damage;
         Type type;
