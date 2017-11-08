@@ -209,7 +209,8 @@ void GameServerSocket::handleChosenMap(std::string& yaml) {
     YAML::Node chosen_map = YAML::Load(yaml);
     auto map_id = chosen_map["id"].as<int>();
     std::string nickname = chosen_map["nickname"].as<std::string>();
-    receiver.createMatch(map_id, nickname);
+    std::string mapName = chosen_map["map_name"].as<std::string>();
+    receiver.createMatch(map_id, nickname, mapName);
 }
 
 void GameServerSocket::handleChosenMatch(std::string &yaml) {

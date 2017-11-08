@@ -17,7 +17,9 @@ public:
 
     void joinMatch(int match_id, const std::string &player_name);
 
-    void createMatch(int map_id, const std::string& player_name);
+    void createMatch(int map_id,
+                     const std::string &player_name,
+                     const std::string &map_name);
 
     void startMatch();
 

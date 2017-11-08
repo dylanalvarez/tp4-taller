@@ -52,22 +52,25 @@ void GameClientSocket::_sendNode(YAML::Node& node) {
     socket.send(message);
 }
 
-void GameClientSocket::_sendNicknameAndID(
-        std::string &&nickname, int teamID, int opcode) {
+void GameClientSocket::chooseTeam(std::string &&nickname, int teamID) {
     YAML::Node node;
     node["nickname"] = nickname;
     node["id"] = teamID;
     socket.send(Communication::toFixedLengthString(
-            opcode, OPCODE_CHARACTER_COUNT));
+            0, OPCODE_CHARACTER_COUNT));
     _sendNode(node);
 }
 
-void GameClientSocket::chooseTeam(std::string &&nickname, int teamID) {
-    _sendNicknameAndID(std::move(nickname), teamID, 0);
-}
-
-void GameClientSocket::chooseMap(std::string &&nickname, int mapID) {
-    _sendNicknameAndID(std::move(nickname), mapID, 1);
+void GameClientSocket::chooseMap(std::string &&nickname,
+                                 std::string &&mapName,
+                                 int mapID) {
+    YAML::Node node;
+    node["nickname"] = nickname;
+    node["map_name"] = mapName;
+    node["id"] = mapID;
+    socket.send(Communication::toFixedLengthString(
+            1, OPCODE_CHARACTER_COUNT));
+    _sendNode(node);
 }
 
 void GameClientSocket::chooseElement(Communication::Element element) {

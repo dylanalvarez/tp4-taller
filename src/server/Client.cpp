@@ -53,7 +53,7 @@ const std::string &Client::getName() const {
 void Client::start() {
     sender.start();
     serverSocket.start();
-    serverReceiver.createMatch(0, "alguien");
+    serverReceiver.createMatch(0, "alguien", "nombre_de_mapa");
 }
 
 void Client::stop() {

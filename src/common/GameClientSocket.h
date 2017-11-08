@@ -16,7 +16,7 @@ public:
 
     void chooseTeam(std::string &&nickname, int teamID);
 
-    void chooseMap(std::string &&nickname, int mapID);
+    void chooseMap(std::string &&nickname, std::string &&mapName, int mapID);
 
     void chooseElement(Communication::Element element);
 
@@ -48,8 +48,6 @@ public:
 
 
 private:
-    void _sendNicknameAndID(std::string &&nickname, int teamID, int opcode);
-
     void _sendNode(YAML::Node &node);
 
     void _handleInitialData(YAML::Node &node);
