@@ -46,11 +46,10 @@ void OrdenadorDeFichas::actualizar(const Communication::GameState &gameState){
     actualizarEnemigo(*it);
   for (auto it = gameState.towers.begin() ; it != gameState.towers.end(); ++it)
     actualizarTorre(*it);
-/*  for (auto it = aux.positionalPowers.begin() ; it != aux.positionalPowers.end(); ++it)
-    fichas.actualizarEnemigo(*it);
-  for (auto it = aux.targetPowers.begin() ; it != aux.targetPowers.end(); ++it)
-    fichas.actualizarEnemigo(*it);
-*/
+  for (auto it = gameState.positionalPowers.begin() ; it != gameState.positionalPowers.end(); ++it)
+    actualizarEfectos(*it);
+  for (auto it = gameState.targetPowers.begin() ; it != gameState.targetPowers.end(); ++it)
+    actualizarEfectos(*it);
 }
 
 void OrdenadorDeFichas::preprarParaActualizacion(){
@@ -84,6 +83,9 @@ FichaTerreno& OrdenadorDeFichas::getTerreno(int id){
 //torres
 void OrdenadorDeFichas::agregarTorre(FichaTorre nuevaFicha){
   torres.emplace(std::make_pair(nuevaFicha.getId(),nuevaFicha));
+  if (idTorre < nuevaFicha.getId()) {
+    idTorre = nuevaFicha.getId();
+  }
 }
 void OrdenadorDeFichas::imprimirTorres(const Cairo::RefPtr<Cairo::Context>& cr,
                       DatosPantalla datosActuales){
@@ -104,8 +106,7 @@ FichaTorre& OrdenadorDeFichas::getTorre(int id){
   return torres.at(id);
 }
 void OrdenadorDeFichas::actualizarTorre(Communication::Tower actualzacion){
-  printf("actualizar\n");
-  if (idEnemigo < actualzacion.id) {
+  if (idTorre < actualzacion.id) {
     agregarTorre(FichaTorre(actualzacion, sprites));
   }else{
     torres.at(actualzacion.id).actualizar(actualzacion);
@@ -161,6 +162,42 @@ void OrdenadorDeFichas::imprimirEfectos(const Cairo::RefPtr<Cairo::Context>& cr,
    it->second.dibujar(cr,datosActuales);
  }
 }
+void OrdenadorDeFichas::actualizarEfectos(Communication::PositionalPower actualzacion){
+  idEfectos++;
+  switch (actualzacion.type){
+    case Communication::PositionalPower::Type::fissure:
+    agregarEfectos(FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
+       FichaGrieta, sprites));
+    break;
+    case Communication::PositionalPower::Type::terraforming:
+    printf("terraforameando\n");
+      getTerreno(ObetenerTerrenoEnEstaPosicion(actualzacion.x, actualzacion.y)
+    ).cambiarTipo(FichaPisoFirme, sprites);
+    break;
+    case Communication::PositionalPower::Type::meteorite:
+    agregarEfectos(FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
+       FichaMetorito, sprites));
+    break;
+    case Communication::PositionalPower::Type::fireWall:
+    agregarEfectos(FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
+       FichafireWall, sprites));
+    break;
+    case Communication::PositionalPower::Type::blizzard:
+    agregarEfectos(FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
+       FichaVentisca, sprites));
+    break;
+    case Communication::PositionalPower::Type::tornado:
+    agregarEfectos(FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
+       FichaTornado, sprites));
+    break;
+  }
+}
+
+void OrdenadorDeFichas::actualizarEfectos(Communication::TargetPower actualzacion){
+  idEfectos++;
+}
+
+
 
 //Portal
 void OrdenadorDeFichas::agregarPortal(FichaPortal nuevaFicha){

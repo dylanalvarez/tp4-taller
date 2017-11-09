@@ -36,6 +36,7 @@ struct Mensaje {
   };
   Type tipo;
   std::string elString;
+  std::string elString2;  
   int elInt1;
   int elInt2;
   //Mensaje();

@@ -55,8 +55,21 @@ MenuTorres::MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2, Emisor& emisor):
       sigc::mem_fun(this, &MenuTorres::prepararTerraforming));
     Grieta->signal_toggled().connect(
       sigc::mem_fun(this, &MenuTorres::prepararGrieta));
+    Congelacion->signal_toggled().connect(
+      sigc::mem_fun(this, &MenuTorres::prepararCongelacion));
+    Ventisca->signal_toggled().connect(
+      sigc::mem_fun(this, &MenuTorres::prepararVentisca));
+    Meteorito->signal_toggled().connect(
+      sigc::mem_fun(this, &MenuTorres::prepararMeteorito));
+    Tornado->signal_toggled().connect(
+      sigc::mem_fun(this, &MenuTorres::prepararTornado));
+    MuroDeFuego->signal_toggled().connect(
+      sigc::mem_fun(this, &MenuTorres::prepararMuroDeFuego));
+    Rayos->signal_toggled().connect(
+      sigc::mem_fun(this, &MenuTorres::prepararRayos));
   }
 
+//seleccionar
 void MenuTorres::selecionarTorre (const FichaTorre &torre2){
   decelecionar();
 
@@ -73,6 +86,7 @@ void MenuTorres::selecionarTorre (const FichaTorre &torre2){
   sAux = sAux + std::to_string(torre->getDanio());
   danio->set_text(sAux.c_str());
   sAux.assign ("Rango ");
+  printf("%i\n", torre->getRango());
   sAux = sAux + std::to_string(torre->getRango());
   rango->set_text(sAux.c_str());
 
@@ -97,7 +111,7 @@ void MenuTorres::selecionarTorre (const FichaTorre &torre2){
       titulo->set_text("Torre De Aire");
       especial->show ();
       sAux.assign ("Daño aéreo ");
-      sAux = sAux + std::to_string(torre->getEspecial());
+      sAux = sAux + std::to_string(torre->getDanio()*5);
       especial->set_text(sAux.c_str());
       break;
     case FichaTorreDeAgua:
@@ -112,7 +126,6 @@ void MenuTorres::selecionarTorre (const FichaTorre &torre2){
       break;
   }
 }
-
 void MenuTorres::decelecionar(){
   titulo->set_text(" ");
   rango->hide();
@@ -123,7 +136,6 @@ void MenuTorres::decelecionar(){
   upgradeEspecial->hide();
   menuTerreno->hide();
   }
-
 void MenuTorres::selecionarTerreno(const FichaTerreno &terreno2){
     terreno =  &terreno2;
     decelecionar();
@@ -142,6 +154,7 @@ void MenuTorres::selecionarTerreno(const FichaTerreno &terreno2){
       }
 }
 
+//torres
 void MenuTorres::avisarConstruirTorreTierra(){
   auto posicion = terreno->getPosicion();
   emisorComandos.cosntruirTorre(posicion.X, posicion.Y, "earth");
@@ -157,47 +170,38 @@ void MenuTorres::avisarConstruirTorreAgua(){
 void MenuTorres::avisarConstruirTorreFuego(){
   auto posicion = terreno->getPosicion();
   emisorComandos.cosntruirTorre(posicion.X, posicion.Y,"fire");
-//  printf("Construir Torre de Fuego en:  ");
-//  terreno->imprimierCordenadas();
+ //  printf("Construir Torre de Fuego en:  ");
+ //  terreno->imprimierCordenadas();
   }
 void MenuTorres::avisarConstruirTorreAire(){
   auto posicion = terreno->getPosicion();
   emisorComandos.cosntruirTorre(posicion.X, posicion.Y,"air");
-//  printf("Construir Torre de Aire en:  ");
-//  terreno->imprimierCordenadas();
+ //  printf("Construir Torre de Aire en:  ");
+ //  terreno->imprimierCordenadas();
   }
 
-//estas son las vericones "betas"
+//Upgreads
 void MenuTorres::avisarUpgradeDanio(){
-  Communication::Upgrade aux;
-  aux.type = Communication::Upgrade::Type::range;
-  aux.towerID = torre->getId();
-  emisorComandos.upgraTorre(aux);
+  emisorComandos.upgraTorre(torre->getId(), "range");
   //printf("Upgrade Daño de %i\n", torre->getId());
   }
 void MenuTorres::avisarUpgradeRango(){
-  Communication::Upgrade aux;
-  aux.type = Communication::Upgrade::Type::damage;
-  aux.towerID = torre->getId();
-  emisorComandos.upgraTorre(aux);
+  emisorComandos.upgraTorre(torre->getId(), "damage");
   //printf("Upgrade Rango de %i\n", torre->getId());
   }
 void MenuTorres::avisarUpgradeEspecial(){
-  Communication::Upgrade aux;
   if (torre->getTipo()==FichaTorreDeFuego)
-    aux.type = Communication::Upgrade::Type::reach;
+    emisorComandos.upgraTorre(torre->getId(), "reach");
   else
-    aux.type = Communication::Upgrade::Type::slowdown;
-  aux.towerID = torre->getId();
-  emisorComandos.upgraTorre(aux);
+    emisorComandos.upgraTorre(torre->getId(), "slowdown");
   //printf("Upgrade Especial de %i\n", torre->getId());
   }
 
+//elegirElemento
 void MenuTorres::agregarElemento(Elementos elemento){
     elementos.push_back(elemento);
     MostrarBotones(elemento);
   }
-
 void MenuTorres::MostrarBotones(Elementos elemento){
     switch (elemento) {
       case fuego:
@@ -208,10 +212,12 @@ void MenuTorres::MostrarBotones(Elementos elemento){
       case agua:
         Congelacion->show();
         Ventisca->show();
+        botonAgua->show();
       break;
       case aire:
         Tornado->show();
         Rayos->show();
+        botonAire->show();
       break;
       case tierra:
         Terraforming->show();
@@ -222,36 +228,58 @@ void MenuTorres::MostrarBotones(Elementos elemento){
   }
 
 //los preparar no son Eficientes. Pero estan pensados para ser visuales.
-void MenuTorres::prepararTerraforming(){
-  if (!(Terraforming->get_active())){
+void MenuTorres::prepararHechizo(Gtk::ToggleButton* botonHechizo, std::string nombreHechizo,
+                      Hechizo hechizoActual2){
+  if (!(botonHechizo->get_active())){
     casteando = false;
     titulo->hide();
     return; //si estamos desactivando. Da igual.
   }
-  hechizoActual = Hechizo::Terraforming;
+  hechizoActual = hechizoActual2;
   deselecionarHechizos();
   decelecionar();
   casteando = true;
-  titulo->set_text("Terraforming");
+  titulo->set_text(nombreHechizo.c_str());
   titulo->show();
+}
+void MenuTorres::prepararTerraforming(){
+  prepararHechizo(Terraforming,"Terraforming", Hechizo::Terraforming);
 }
 void MenuTorres::prepararGrieta(){
-  if (!(Grieta->get_active())){
-    casteando = false;
-    titulo->hide();
-    return; //si estamos desactivando. Da igual.
-  }
-  hechizoActual = Hechizo::Grieta;
-  decelecionar();
-  deselecionarHechizos();
-  casteando = true;
-  titulo->set_text("Grieta");
-  titulo->show();
-
+  prepararHechizo(Grieta,"Grieta", Hechizo::Grieta);
 }
-
+void MenuTorres::prepararCongelacion(){
+  prepararHechizo(Congelacion,"Congelacion", Hechizo::Congelacion);
+}
+void MenuTorres::prepararVentisca(){
+  prepararHechizo(Ventisca,"Ventisca", Hechizo::Ventisca);
+}
+void MenuTorres::prepararMeteorito(){
+  prepararHechizo(Meteorito,"Meteorito", Hechizo::Meteorito);
+}
+void MenuTorres::prepararTornado(){
+  prepararHechizo(Tornado,"Tornado", Hechizo::Tornado);
+}
+void MenuTorres::prepararMuroDeFuego(){
+  prepararHechizo(MuroDeFuego,"MuroDeFuego", Hechizo::MuroDeFuego);
+}
+void MenuTorres::prepararRayos(){
+  prepararHechizo(Rayos,"Rayos", Hechizo::Rayos);
+}
 void MenuTorres::deselecionarHechizos(){
   //es horriblo..
+  if (hechizoActual != Hechizo::Congelacion)
+    Congelacion->set_active(false);
+  if (hechizoActual != Hechizo::Ventisca)
+    Ventisca->set_active(false);
+  if (hechizoActual != Hechizo::Meteorito)
+    Meteorito->set_active(false);
+  if (hechizoActual != Hechizo::Tornado)
+    Tornado->set_active(false);
+  if (hechizoActual != Hechizo::MuroDeFuego)
+    MuroDeFuego->set_active(false);
+  if (hechizoActual != Hechizo::Rayos)
+    Rayos->set_active(false);
   if (hechizoActual != Hechizo::Grieta)
     Grieta->set_active(false);
   if (hechizoActual != Hechizo::Terraforming)
@@ -266,37 +294,130 @@ void MenuTorres::lanzarHechizo(int x, int y, int objetivo){
       if(terreno == NoColicion)
         return; //agregar algo mas de logica.. preguntar esto.
       printf("Terraforming en %i, %i\n", x,y);
-      /*Communication::PositionalPower aux;
-      auto
-      aux.type = Communication::PositionalPower::Type::terraforming
-      aux.x
-      aux.y*/
-      //emisorComandos.lansarEchizo(aux);
-      Terraforming->set_sensitive(false);
-    break;
+      emisorComandos.lansarEchizo(x,y,"terraforming");
+     break;
     case Hechizo::Grieta:
       if(terreno == NoColicion)
         return; //agregar algo mas de logica.. preguntar esto.
       printf("Grieta en %i, %i\n", x,y);
-      Grieta->set_sensitive(false);
-    break;
-    default:
-      //falta que aca salte un error.
+      emisorComandos.lansarEchizo(x,y,"fissure");
+     break;
+    case Hechizo::Congelacion:
+      if(objetivo == NoColicion)
+        return; //agregar algo mas de logica.. preguntar esto.
+      printf("Congelacion en enemigo %i\n", objetivo);
+      emisorComandos.lansarEchizo(objetivo,"freezing");
+     break;
+    case Hechizo::Ventisca:
+      if(terreno == NoColicion)
+        return; //agregar algo mas de logica.. preguntar esto.
+      printf("Ventisca en %i, %i\n", x,y);
+      emisorComandos.lansarEchizo(x,y,"blizzard");
+     break;
+    case Hechizo::Meteorito:
+      if(terreno == NoColicion)
+        return; //agregar algo mas de logica.. preguntar esto.
+      printf("Meteorito en %i, %i\n", x,y);
+      emisorComandos.lansarEchizo(x,y,"meteorite");
+     break;
+    case Hechizo::Tornado:
+      if(terreno == NoColicion)
+        return; //agregar algo mas de logica.. preguntar esto.
+      printf("Tornado en %i, %i\n", x,y);
+      emisorComandos.lansarEchizo(x,y,"tornado");
+     break;
+    case Hechizo::MuroDeFuego:
+      if(terreno == NoColicion)
+        return; //agregar algo mas de logica.. preguntar esto.
+      printf("MuroDeFuego en %i, %i\n", x,y);
+      emisorComandos.lansarEchizo(x,y,"fireWall");
+     break;
+    case Hechizo::Rayos:
+      if(terreno == NoColicion)
+        return; //agregar algo mas de logica.. preguntar esto.
+      printf("Rayos en %i, %i\n", x,y);
+      emisorComandos.lansarEchizo(x,y,"ray");
     break;
   }
   casteando = false;
 }
 
-void MenuTorres::reActivarHechizo(Gtk::ToggleButton& hechizo){
-  hechizo.set_sensitive(true);
-  hechizo.set_active(false);
+void MenuTorres::reActivarHechizo(Gtk::ToggleButton* hechizo){
+  hechizo->set_sensitive(true);
+  hechizo->set_active(false);
+}
+void MenuTorres::desectivarHechizo(Gtk::ToggleButton* hechizo){
+  hechizo->set_active(true);
+  hechizo->set_sensitive(false);
+}
+void MenuTorres::reActivarHechizo(Communication::PositionalPower::Type hechizo){
+  switch (hechizo) {
+    case Communication::PositionalPower::Type::fissure:
+      reActivarHechizo(Grieta);
+    break;
+    case Communication::PositionalPower::Type::terraforming:
+      reActivarHechizo(Terraforming);
+    break;
+    case Communication::PositionalPower::Type::meteorite:
+      reActivarHechizo(Meteorito);
+    break;
+    case Communication::PositionalPower::Type::fireWall:
+      reActivarHechizo(MuroDeFuego);
+    break;
+    case Communication::PositionalPower::Type::blizzard:
+      reActivarHechizo(Ventisca);
+    break;
+    case Communication::PositionalPower::Type::tornado:
+      reActivarHechizo(Tornado);
+    break;
+  }
+}
+void MenuTorres::desectivarHechizo(Communication::PositionalPower::Type hechizo){
+  switch (hechizo) {
+    case Communication::PositionalPower::Type::fissure:
+      desectivarHechizo(Grieta);
+    break;
+    case Communication::PositionalPower::Type::terraforming:
+      desectivarHechizo(Terraforming);
+    break;
+    case Communication::PositionalPower::Type::meteorite:
+      desectivarHechizo(Meteorito);
+    break;
+    case Communication::PositionalPower::Type::fireWall:
+      desectivarHechizo(MuroDeFuego);
+    break;
+    case Communication::PositionalPower::Type::blizzard:
+      desectivarHechizo(Ventisca);
+    break;
+    case Communication::PositionalPower::Type::tornado:
+      desectivarHechizo(Tornado);
+    break;
+  }
+}
+void MenuTorres::desectivarHechizo(Communication::TargetPower::Type hechizo){
+  switch (hechizo) {
+    case Communication::TargetPower::Type::freezing:
+      desectivarHechizo(Ventisca);
+    break;
+    case Communication::TargetPower::Type::ray:
+      desectivarHechizo(Rayos);
+    break;
+  }
+}
+void MenuTorres::actualizarPoderes(const Communication::GameState &gameState){
+  for (auto it = gameState.positionalPowers.begin() ; it != gameState.positionalPowers.end(); ++it)
+    desectivarHechizo(it->type);
+  for (auto it = gameState.targetPowers.begin() ; it != gameState.targetPowers.end(); ++it)
+    desectivarHechizo(it->type);
 }
 
+
+
+//Chat
 void MenuTorres::enviarMensajeChat(){
-  recivirMensajeChat(mensajeEntrada->get_text().c_str());
+  emisorComandos.enviarMensajeDeChat(mensajeEntrada->get_text().c_str());
   mensajeEntrada->set_text(" ");
 }
-
 void MenuTorres::recivirMensajeChat(std::string entrada){
   auto aux = chat->get_buffer ();
   auto c = mensajeEntrada->get_text(); //esto es lo que hay que cambiar.

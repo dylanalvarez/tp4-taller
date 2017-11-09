@@ -134,7 +134,7 @@ FichaTorre::FichaTorre(int x2, int y2, int id2, int tipo,
     case FichaTorreDeAgua:
       danio = 4;
       rango = 3;
-      especial = 25; //%
+      especial = 25; //% (cambiar por tiempo)
       sprites.push_back(Sprite(x-CPTW, y-CPTW, vectorDeSprites.obtener(SpriteTorreDeAgua)));
       sprites.push_back(Sprite(x-CPEW, y-CPEW, vectorDeSprites.obtener(SpriteAgua1)));
       sprites.push_back(Sprite(x-CPEW, y-CPEW, vectorDeSprites.obtener(SpriteAgua2)));
@@ -143,7 +143,7 @@ FichaTorre::FichaTorre(int x2, int y2, int id2, int tipo,
     case FichaTorreDeAire:
       danio = 2;
       rango = 5;
-      especial = 10; //Daño contra areo.
+      especial = 0;
       sprites.push_back(Sprite(x-CPTA, y-CPTA, vectorDeSprites.obtener(SpriteTorreDeAire)));
       sprites.push_back(Sprite(x-CPEA, y-CPEA, vectorDeSprites.obtener(SpriteAire1)));
       sprites.push_back(Sprite(x-CPEA, y-CPEA, vectorDeSprites.obtener(SpriteAire2)));

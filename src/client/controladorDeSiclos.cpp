@@ -22,9 +22,3 @@ void ControladorDeSiclos::terminar(){
 ControladorDeSiclos::ControladorDeSiclos(Receptor &receptor2, Emisor &emisor2):
             receptor(receptor2), emisor(emisor2){
 }
-
-bool ControladorDeSiclos::continuar(){
-  receptor.siclo();
-  emisor.siclo();
-  return true;
-}

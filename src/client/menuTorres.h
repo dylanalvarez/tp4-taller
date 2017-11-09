@@ -53,6 +53,10 @@ private:
 
 	void MostrarBotones(Elementos elemento);
 	void deselecionarHechizos();
+	void desectivarHechizo(Gtk::ToggleButton* hechizo);
+	void reActivarHechizo(Gtk::ToggleButton* hechizo);
+	void prepararHechizo(Gtk::ToggleButton* botonHechizo, std::string nombreHechizo,
+												Hechizo hechizoActual2);	
 protected:
 public:
 	void avisarConstruirTorreTierra();
@@ -62,9 +66,22 @@ public:
 
 	void prepararTerraforming();
 	void prepararGrieta();
+	void prepararCongelacion();
+	void prepararVentisca();
+	void prepararMeteorito();
+	void prepararTornado();
+	void prepararMuroDeFuego();
+	void prepararRayos();
+
+
 	void lanzarHechizo(int x, int y, int objetivo); //mejorar cuando sea el momento.
 	bool estamosCasteando();
-	void reActivarHechizo(Gtk::ToggleButton& hechizo);
+
+  void actualizarPoderes(const Communication::GameState &gameState);
+	void desectivarHechizo(Communication::PositionalPower::Type hechizo);
+	void reActivarHechizo(Communication::PositionalPower::Type hechizo);
+	void desectivarHechizo(Communication::TargetPower::Type hechizo);
+	void reActivarHechizo(Communication::TargetPower::Type hechizo);
 
 	void avisarUpgradeDanio();
 	void avisarUpgradeRango();

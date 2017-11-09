@@ -19,6 +19,7 @@ void GameClientReceiver::getMap(std::string &&map) {
 
 void GameClientReceiver::getGameState(const Communication::GameState &gameState){
   fichas.actualizar(gameState);
+  menues.actualizarPoderes(gameState);
 }
 
 void GameClientReceiver::getChatMessage(std::string &&message,

@@ -31,24 +31,22 @@ int main(int argc, char *argv[]){
 //mapa Hercodado.
   int XpisosFirmos[] = {2,3,6,6,6,7,8,9};
   int YpisosFirmos[] = {3,3,3,4,5,8,8,8};
-  int XpisosEnemigo[] = {44,44,132,132,220,220,308,308,396,396,396,396,396,396,
-    396,484,484,572,572,660,660,748,748,836,836};
-  int YpisosEnemigo[] = {132,132,132,132,132,132,132,132,132,132,220,308,396,484,
-    572,572,572,572,572,572,572,572,572,572,572};
+  int XpisosEnemigo[] = {1,2,3,4,4,4,4,4,4,5,6,7,8,9,10};
+  int YpisosEnemigo[] = {1,1,1,1,2,3,4,5,6,6,6,6,6,6,6};
 
   int id = 0;
   for (size_t i = 1; i < 11; i++) {
     for (size_t j = 1; j < 11; j++) {
       id++;
-      fichas.agregarTerreno(FichaTerreno(largo*i, largo*j, id, FichaPisoFondoLava, sprites));
+      fichas.agregarTerreno(FichaTerreno(largo*i-44, largo*j-44, id, FichaPisoFondoLava, sprites));
     }
   }
   for (size_t i = 0; i < 8; i++) {
-    id = fichas.ObetenerTerrenoEnEstaPosicion((XpisosFirmos[i])*88,(YpisosFirmos[i])*88);
+    id = fichas.ObetenerTerrenoEnEstaPosicion((XpisosFirmos[i])*88-44,(YpisosFirmos[i])*88-44);
     fichas.getTerreno(id).cambiarTipo(FichaPisoFirme, sprites);
   }
-  for (size_t i = 0; i < 24; i++) {
-    id = fichas.ObetenerTerrenoEnEstaPosicion(XpisosEnemigo[i]+88,YpisosEnemigo[i]+88);
+  for (size_t i = 0; i < 15; i++) {
+    id = fichas.ObetenerTerrenoEnEstaPosicion((XpisosEnemigo[i])*88-44,(YpisosEnemigo[i])*88-44);
     fichas.getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
   }
 
@@ -64,7 +62,7 @@ int main(int argc, char *argv[]){
 
 	refBuilder->get_widget("cajaJuego", Box);
   Box->pack_start(area);
-	refBuilder->get_widget("applicationwindow1", window);
+	refBuilder->get_widget("Juego", window);
   window->show_all();
 
 

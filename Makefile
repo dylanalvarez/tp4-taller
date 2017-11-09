@@ -91,6 +91,7 @@ endif
 
 # Linkea con threads de ser necesario. Permite el uso de pthread en C y C++. Permite el uso de built-in threads en C++.
 ifdef threads
+LDFLAGS += -lyaml-cpp
 LDFLAGS += -pthread
 endif
 
@@ -111,7 +112,7 @@ LD = $(CXX)
 endif
 
 # Si no especifica archivos, tomo todos.
-fuentes ?= $(wildcard *.$(extension))
+fuentes ?= $(wildcard *.$(extension)) $(wildcard ../common/CommunicationUtils*.$(extension)) $(wildcard ../common/Exception*.$(extension)) $(wildcard ../common/Socket*.$(extension)) $(wildcard ../common/Thread*.$(extension)) $(wildcard ../common/GameClientSocket*.$(extension)) $(wildcard ../common/GameClientReceiver*.$(extension))
 directorios = $(shell find . -type d -regex '.*\w+')
 
 occ := $(CC)
@@ -148,4 +149,3 @@ $(target): $(o_files)
 
 clean:
 	$(RM) $(o_files) $(target)
-

@@ -19,7 +19,6 @@ public:
   ControladorDeSiclos(Receptor &receptor2, Emisor &emisor2); //falso
   void iniciar();
   void terminar();
-  bool continuar();
   Communication::GameState estadoActual();
 protected:
   Receptor &receptor;

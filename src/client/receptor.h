@@ -15,7 +15,6 @@ private:
 public:
   Receptor(GameClientReceiver& reciver, GameClientSocket& socket);
   void iniciar();
-  bool siclo();
   void terminar();
   GameClientReceiver& getReciver();
 protected:
@@ -23,7 +22,6 @@ protected:
   GameClientSocket& socket;
   std::list<Communication::GameState> estados;
   bool seguir = true;
-  bool siguiente = true;
 };
 
 #endif

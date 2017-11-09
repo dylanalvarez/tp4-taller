@@ -121,6 +121,10 @@ class FichaPortal: public Ficha{
 };
 
 #define FichaGrieta 4
+#define FichaMetorito 5
+#define FichaTornado 6
+#define FichaVentisca 7
+#define FichafireWall 8
 //valas. Poderes estatico y poderes a objetivos
 class FichaEfectos: public Ficha{
  private:

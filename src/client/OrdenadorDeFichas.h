@@ -18,6 +18,8 @@ private:
  std::map<int,FichaTorre> torres;
  std::map<int,FichaEnemigo> enemigos;
  int idEnemigo = 0;
+ int idTorre = 0;
+ int idEfectos = 0; 
  std::map<int,FichaEfectos> poderes;
  std::vector<FichaPortal> portales;
 protected:
@@ -31,6 +33,8 @@ protected:
                        DatosPantalla datosActuales);
  void actualizarEnemigo(Communication::Enemy actualzacion);
  void actualizarTorre(Communication::Tower actualzacion);
+ void actualizarEfectos(Communication::PositionalPower actualzacion);
+ void actualizarEfectos(Communication::TargetPower actualzacion);
 public:
  void ejecutarSicloDeAnimacion();
  void preprarParaActualizacion();

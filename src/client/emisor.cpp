@@ -14,30 +14,40 @@ void Emisor::iniciar(){
     switch (aux.tipo) {
       case Mensaje::Type::chooseTeam:
         printf("chooseTeam\n");
+        //socket->chooseTeam(aux.elString,aux.elInt1);
       break;
       case Mensaje::Type::chooseMap:
         printf("chooseMap\n");
+      //  socket->chooseMap(aux.elString2,aux.elString,aux.elInt1);
       break;
       case Mensaje::Type::chooseElement:
         printf("chooseElement\n");
+        socket->chooseElement(Communication::to_element(aux.elString));
       break;
       case Mensaje::Type::sendChatMessage:
         printf("sendChatMessage\n");
+        socket->sendChatMessage(std::move(aux.elString));
       break;
       case Mensaje::Type::pingTile:
         printf("pingTile\n");
+        socket->pingTile(aux.elInt1,aux.elInt2);
       break;
       case Mensaje::Type::applySpell1:
         printf("applySpell1\n");
+        socket->applySpell(Communication::PositionalPower(aux.elString,
+          aux.elInt1,aux.elInt2));
       break;
       case Mensaje::Type::applySpell2:
         printf("applySpell2\n");
+        socket->applySpell(Communication::TargetPower(aux.elString, aux.elInt1));
       break;
       case Mensaje::Type::applyUpgrade:
         printf("applyUpgrade\n");
+        socket->applyUpgrade(Communication::Upgrade(aux.elString,aux.elInt1));
       break;
       case Mensaje::Type::buildTower:
         printf("buildTower\n");
+        printf("%i, %i\n", aux.elInt1, aux.elInt2);
         socket->buildTower(aux.elInt1, aux.elInt2,
           Communication::Tower::string_to_type(aux.elString));
       break;
@@ -46,62 +56,66 @@ void Emisor::iniciar(){
 }
 
 void Emisor::elegirEquipo(std::string &nickname, int teamID){
-  /*Mensaje aux;
+  Mensaje aux;
   aux.tipo = Mensaje::Type::chooseTeam;
   aux.elString = nickname;
   aux.elInt1 = teamID;
-  cola.agregarLinea(aux);*/
+  cola.agregarLinea(aux);
 }
 void Emisor::elegirMapa(std::string &nickname, int mapID){
-  /*Mensaje aux;
+  Mensaje aux;
   aux.tipo = Mensaje::Type::chooseMap;
   aux.elString = nickname;
   aux.elInt1 = mapID;
-  cola.agregarLinea(aux);*/
+  cola.agregarLinea(aux);
 }
-void Emisor::elegirElemento(Communication::Element elemento){
-  /*Mensaje aux;
+void Emisor::elegirElemento(std::string tipo){
+  Mensaje aux;
   aux.tipo = Mensaje::Type::chooseElement;
-  aux.elElemento = elemento;
-  cola.agregarLinea(aux);*/
+  aux.elString = tipo;
+  cola.agregarLinea(aux);
 }
-void Emisor::enviarMensajeDeChat(std::string &mensaje){
-  /*Mensaje aux;
+void Emisor::enviarMensajeDeChat(std::string mensaje){
+  Mensaje aux;
   aux.tipo = Mensaje::Type::chooseElement;
   aux.elString =  mensaje;
-  cola.agregarLinea(aux);*/
+  cola.agregarLinea(aux);
 }
 void Emisor::pingear(int x, int y){
-  /*Mensaje aux;
+  Mensaje aux;
   aux.tipo = Mensaje::Type::pingTile;
   aux.elInt1 = x;
   aux.elInt1 = y;
-  cola.agregarLinea(aux);*/
+  cola.agregarLinea(aux);
 }
-void Emisor::lansarEchizo(Communication::PositionalPower poder){
-  /*Mensaje aux;
+void Emisor::lansarEchizo(int x, int y, std::string tipo){
+  Mensaje aux;
   aux.tipo = Mensaje::Type::applySpell1;
-  aux.elPoderPosicional = poder;
-  cola.agregarLinea(aux);*/
+  aux.elString = tipo;
+  aux.elInt1 = x;
+  aux.elInt2 = y;
+  cola.agregarLinea(aux);
 }
-void Emisor::lansarEchizo(Communication::TargetPower poder){
-  /*Mensaje aux;
+void Emisor::lansarEchizo(int id, std::string tipo){
+  Mensaje aux;
   aux.tipo = Mensaje::Type::applySpell2;
-  aux.elPoderTargetado = poder;
-  cola.agregarLinea(aux);*/
+  aux.elString = tipo;
+  aux.elInt1 = id;
+  cola.agregarLinea(aux);
 }
-void Emisor::upgraTorre(Communication::Upgrade upgrade){
-  /*Mensaje aux;
+void Emisor::upgraTorre(int id, std::string tipo){
+  Mensaje aux;
   aux.tipo = Mensaje::Type::applyUpgrade;
-  aux.laMejora = upgrade;
-  cola.agregarLinea(aux);*/
+  aux.elInt1 = id;
+  aux.elString = tipo;
+  cola.agregarLinea(aux);
 }
 void Emisor::cosntruirTorre(int x, int y, std::string tipo){
   Mensaje aux;
   aux.tipo = Mensaje::Type::buildTower;
   aux.elString = tipo;
   aux.elInt1 = x;
-  aux.elInt1 = y;
+  aux.elInt2 = y;
   cola.agregarLinea(aux);
 }
 
