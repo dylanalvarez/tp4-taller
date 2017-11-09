@@ -34,7 +34,8 @@ private:
   Gtk::Button* botonTierra;
   Gtk::Button* botonAgua;
   Gtk::Button* botonAire;
-//  Gtk::Button* botonPing; //falta el codigo de esto.
+	
+  Gtk::Button* botonPing; //falta el codigo de esto.
 
 	//poderes
   Gtk::ToggleButton* Terraforming;
@@ -56,13 +57,14 @@ private:
 	void desectivarHechizo(Gtk::ToggleButton* hechizo);
 	void reActivarHechizo(Gtk::ToggleButton* hechizo);
 	void prepararHechizo(Gtk::ToggleButton* botonHechizo, std::string nombreHechizo,
-												Hechizo hechizoActual2);	
+												Hechizo hechizoActual2);
 protected:
 public:
 	void avisarConstruirTorreTierra();
 	void avisarConstruirTorreFuego();
 	void avisarConstruirTorreAgua();
 	void avisarConstruirTorreAire();
+	void avisarPing();
 
 	void prepararTerraforming();
 	void prepararGrieta();

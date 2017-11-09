@@ -30,6 +30,7 @@ MenuTorres::MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2, Emisor& emisor):
     ventana->get_widget("Enviar", botonEnviar);
     ventana->get_widget("mensaje", mensajeEntrada);
     ventana->get_widget("charla del Chat", chat);
+    ventana->get_widget("Ping",botonPing);
 
     upgradeRango->signal_clicked().connect(
       sigc::mem_fun(this, &MenuTorres::avisarUpgradeRango));
@@ -37,6 +38,9 @@ MenuTorres::MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2, Emisor& emisor):
       sigc::mem_fun(this, &MenuTorres::avisarUpgradeRango));
     upgradeEspecial->signal_clicked().connect(
       sigc::mem_fun(this, &MenuTorres::avisarUpgradeEspecial));
+
+    botonPing->signal_clicked().connect(
+      sigc::mem_fun(this, &MenuTorres::avisarPing));
 
     botonFuego->signal_clicked().connect(
       sigc::mem_fun(this, &MenuTorres::avisarConstruirTorreFuego));
@@ -69,10 +73,16 @@ MenuTorres::MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2, Emisor& emisor):
       sigc::mem_fun(this, &MenuTorres::prepararRayos));
   }
 
+void MenuTorres::avisarPing(){
+  auto posicion = terreno->getPosicion();
+  emisorComandos.pingear(posicion.X, posicion.Y);
+  }
+
 //seleccionar
 void MenuTorres::selecionarTorre (const FichaTorre &torre2){
   decelecionar();
 
+  botonPing->show();
   rango->show();
   upgradeRango->show();
   danio->show();
@@ -135,10 +145,12 @@ void MenuTorres::decelecionar(){
   especial->hide();
   upgradeEspecial->hide();
   menuTerreno->hide();
+  botonPing->hide();
   }
 void MenuTorres::selecionarTerreno(const FichaTerreno &terreno2){
     terreno =  &terreno2;
     decelecionar();
+    botonPing->show();  
     titulo->set_text(" ");
     switch (terreno->getTipo()){
       case FichaPisoFirme:
