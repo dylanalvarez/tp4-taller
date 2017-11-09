@@ -9,20 +9,15 @@ void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
   for (auto it = torres.begin(); it != torres.end(); ++it){
     it->second.ejecutarSicloDeAnimacion();
   }
-  for (auto it = enemigos.begin(); it != enemigos.end(); ++it){
-    if (it->second.siguesVivo()) {
-      enemigos.erase (it);
-    }
+  for (auto it = enemigos.cbegin(); it != enemigos.cend();) {
+    if (it->second.siguesVivo()) { enemigos.erase(it++); } else { ++it; }
   }
   for (auto it = enemigos.begin(); it != enemigos.end(); ++it){
     it->second.ejecutarSicloDeAnimacion();
   }
-  //primero vorra los efectos viejos
-  for (auto it = poderes.begin(); it != poderes.end(); ++it){
-    if (it->second.siguesVivo()) {
-      poderes.erase (it);
-    }
-  } //ahora sigo
+  for (auto it = poderes.cbegin(); it != poderes.cend();) {
+    if (it->second.siguesVivo()) { poderes.erase(it++); } else { ++it; }
+  }
   for (auto it = poderes.begin(); it != poderes.end(); ++it){
     it->second.ejecutarSicloDeAnimacion();
   }
