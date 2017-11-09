@@ -177,13 +177,13 @@ void GameClientSocket::_handleGameState(YAML::Node &node) {
     for (const auto& tower : node["towers"]) {
         state.towers.emplace_back(
                 tower["id"].as<int>(),
-                tower["lv"].as<int>(),
                 Communication::Tower::Level(
-                    tower["xp"]["range"].as<int>(),
-                    tower["xp"]["damage"].as<int>(),
-                    tower["xp"]["reach"].as<int>(),
-                    tower["xp"]["slowdown"].as<int>()
+                    tower["lv"]["range"].as<int>(),
+                    tower["lv"]["damage"].as<int>(),
+                    tower["lv"]["reach"].as<int>(),
+                    tower["lv"]["slowdown"].as<int>()
                 ),
+                tower["xp"].as<int>(),
                 tower["range_in_squares"].as<int>(),
                 tower["explosion_range"].as<int>(),
                 tower["position"]["x"].as<int>(),

@@ -38,8 +38,13 @@ public:
     const Vector& getPosition() const;
     const Range& getRange() const;
     unsigned int getDamage() const;
+
     int getRangeLevel() const;
     int getDamageLevel() const;
+
+    virtual int getSlowDownLevel() const = 0;
+    virtual int getReachLevel() const = 0;
+
     int getID() const;
 
     virtual Communication::Tower::Damage getDamage_() const = 0;

@@ -23,7 +23,7 @@ public:
     void joinMatch(Client &client, int match_id);
 
     // retorna el id de la partida
-    int createMatch(Client &client, int map_id);
+    int createMatch(Client &client, int map_id, const std::string& match_name);
 
     void addElementToPlayer(const Client&, int match_id,
                             const std::string& element);

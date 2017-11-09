@@ -113,3 +113,11 @@ Communication::Tower::Damage AirTower::getDamage_() const {
 Communication::Tower::Type AirTower::getType() const {
     return Communication::Tower::Type::air;
 }
+
+int AirTower::getSlowDownLevel() const {
+    return 0;
+}
+
+int AirTower::getReachLevel() const {
+    return 0;
+}

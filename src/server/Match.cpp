@@ -54,10 +54,6 @@ void Match::run() {
     }
 }
 
-const TowerDefenseGame &Match::getGame() const {
-    return game;
-}
-
 int Match::getID() const {
     return id;
 }

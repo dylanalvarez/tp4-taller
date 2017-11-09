@@ -78,10 +78,9 @@ Communication::Tower::Tower(int id, Level level, int experience,
                             int y, Communication::Tower::EnemySlowdown slowdown,
                             Communication::Tower::Damage damage,
                             const std::string &type)
-        : id(id), level(level), experience(experience),
-          rangeInSquares(rangeInSquares),
-          ExplosionRange(ExplosionRange), x(x), y(y), slowdown(slowdown),
-          damage(damage) {
+        : id(id), experience(experience), rangeInSquares(rangeInSquares),
+          ExplosionRange(ExplosionRange), x(x), y(y), level(level),
+          slowdown(slowdown), damage(damage) {
     if (type == "earth") { this->type = earth; }
     else if (type == "water") { this->type = water; }
     else if (type == "fire") { this->type = fire; }
@@ -93,10 +92,9 @@ Communication::Tower::Tower(int id, Level level, int experience,
                             int y, Communication::Tower::EnemySlowdown slowdown,
                             Communication::Tower::Damage damage,
                             Communication::Tower::Type type)
-        : id(id), level(level), experience(experience),
-          rangeInSquares(rangeInSquares),
-          ExplosionRange(ExplosionRange), x(x), y(y), slowdown(slowdown),
-          damage(damage), type(type) {}
+        : id(id), experience(experience), rangeInSquares(rangeInSquares),
+          ExplosionRange(ExplosionRange), x(x), y(y), level(level),
+          slowdown(slowdown), damage(damage), type(type) {}
 
 Communication::Tower::Type Communication::Tower::string_to_type(
         const std::string &type) {

@@ -126,3 +126,11 @@ Communication::Tower::Damage EarthTower::getDamage_() const {
 Communication::Tower::Type EarthTower::getType() const {
     return Communication::Tower::Type::earth;
 }
+
+int EarthTower::getSlowDownLevel() const {
+    return 0;
+}
+
+int EarthTower::getReachLevel() const {
+    return 0;
+}

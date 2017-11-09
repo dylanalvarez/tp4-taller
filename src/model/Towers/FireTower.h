@@ -23,6 +23,9 @@ public:
     void levelupReachOfImpact() override;
     void levelupSlowdown() override;
 
+    int getSlowDownLevel() const override;
+    int getReachLevel() const override;
+
     Communication::Tower::Damage getDamage_() const override;
     Communication::Tower::Type getType() const override;
     int getExplosionRange() const override;

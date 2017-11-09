@@ -102,7 +102,8 @@ void Server::startMatch(int match_id) {
     }
 }
 
-int Server::createMatch(Client &client, int map_id) {
+int Server::createMatch(Client &client, int map_id,
+                        const std::string& match_name) {
     std::lock_guard<std::mutex> lock(mutex);
 
     try {
@@ -113,7 +114,7 @@ int Server::createMatch(Client &client, int map_id) {
 
         Communication::NameAndID new_match_;
         new_match_.id = match_id;
-        new_match_.name = matchs.at(match_id)->getGame().getGameName();
+        new_match_.name = match_name;
         matchs_id.push_back(std::move(new_match_));
     } catch (std::out_of_range& e) {
         syslog(LOG_CRIT, "Error: el mapa con id %d no existe\n", map_id);

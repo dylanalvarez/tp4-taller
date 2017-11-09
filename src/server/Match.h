@@ -28,8 +28,6 @@ public:
     void addPlayer(Client* client);
     void addElementToClient(const Client& client_to_add,
                             const std::string& element);
-
-    const TowerDefenseGame& getGame() const;
     int getID() const;
     bool hasStarted() const;
 

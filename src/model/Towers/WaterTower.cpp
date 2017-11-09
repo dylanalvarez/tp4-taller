@@ -139,3 +139,11 @@ Communication::Tower::EnemySlowdown WaterTower::getslowdown() const {
     return Communication::Tower::EnemySlowdown
             {(int)speed_reduction, (int)speed_reduction_duration};
 }
+
+int WaterTower::getSlowDownLevel() const {
+    return slowdown_level;
+}
+
+int WaterTower::getReachLevel() const {
+    return 0;
+}
