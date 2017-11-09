@@ -19,9 +19,10 @@ HordeCreator::HordeCreator(const std::string &map_file,
             std::string type = (*it)["type"].as<std::string>();
             Horde horde(type,
                            (*it)["seconds_before_arrival"].as<int>(),
-                           (*it)["quantity"].as<int>(), path_number++);
+                           (*it)["quantity"].as<int>(), path_number);
             hordes.push(horde);
         }
+        path_number++;
     }
     last_horde_sended_time = 0;
     last_enemy_sended_time = 0;
@@ -48,9 +49,11 @@ void HordeCreator::addNextEnemy() {
     if (enemies_to_send_count == 0) {
         hordes.pop();
         last_horde_sended_time = time(nullptr);
+        enemies_to_send_count = hordes.front().getQuantity();
     } else {
         queue.push(new AddEnemyAction(hordes.front().getType(),
                                       hordes.front().getPathNumber()));
+        enemies_to_send_count--;
         last_enemy_sended_time = time(nullptr);
     }
 }

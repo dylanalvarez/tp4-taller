@@ -28,8 +28,7 @@ public:
     void addFirmGround(const Vector& position);
 
     // levelea la torre con el id pasado
-    // Pre: la torre debe tener la exp necesaria y
-    // la torre debe existir
+    // Pre: la torre debe tener la exp necesaria y debe existir
     void levelupTower(const Tower&, const std::string& type);
 
     // remueve los enemigos muertos

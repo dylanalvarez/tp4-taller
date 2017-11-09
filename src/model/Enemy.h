@@ -35,9 +35,8 @@ public:
 
     bool isDead() const;
 
-    Communication::Enemy::Type getType() const;
-
     // getters
+    Communication::Enemy::Type getType() const;
     const Vector& getCurrentPosition() const;
     int getID() const;
     int getHealthPoints() const;
@@ -60,6 +59,7 @@ private:
     bool can_i_fly;
     // si llego al final del path
     bool i_reach_the_end;
+    // ultimo tiempo que le aplicaron reduccion de movimiento
     time_t last_speed_reduction_time;
     unsigned int speed_reduction_time;
 };

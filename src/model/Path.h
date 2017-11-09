@@ -13,12 +13,14 @@ public:
     // recibe una lista de posiciones que indican el centro de un tile
     explicit Path(std::vector<Vector>&&);
 
-    // devuelve la siguiente posicion en la direccion adecuada
+    // devuelve la siguiente posicion
     const Vector& getNextPosition(unsigned long actual_index);
 
     const Vector& getInitialPosition() const;
     const Vector& getFinalPositon() const;
 
+    // las posiciones son centro de tiles
+    // retorna true si position esta en el camino de un tile a otro
     bool containsPosition(const Vector& position);
 
     Path(const Path&) = delete;

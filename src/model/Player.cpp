@@ -11,7 +11,7 @@ Player::Player(std::string name, std::string element) :
     elements.emplace_back(element);
 }
 
-Player::Player(std::string name) : name(name) {}
+Player::Player(std::string name) : name(std::move(name)) {}
 
 const std::string &Player::getName() const {
     return name;
@@ -20,11 +20,13 @@ const std::string &Player::getName() const {
 Player::Player(Player&& other) noexcept {
     this->name = std::move(other.name);
     this->elements = std::move(other.elements);
+    this->towers = std::move(other.towers);
 }
 
 Player &Player::operator=(Player&& other) noexcept {
     this->name = std::move(other.name);
     this->elements = std::move(other.elements);
+    this->towers = std::move(other.towers);
     return *this;
 }
 

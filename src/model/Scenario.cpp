@@ -6,8 +6,6 @@
 #include "Exceptions/TowerError.h"
 #include "Exceptions/MatchError.h"
 
-// TODO chequeo de size del mapa
-
 Scenario::Scenario(Path&& path, std::vector<Vector>&& firm_ground_locations) :
         firm_ground_locations(std::move(firm_ground_locations)) {
     paths.push_back(std::move(path));
@@ -31,7 +29,8 @@ std::vector<Enemy*> Scenario::getEnemiesInRange(const Range &range,
         if (range.isInRange(enemy.getCurrentPosition())) {
             closest_enemies.push_back(&enemy);
             if (count != -1 && (int)closest_enemies.size() == count) {
-                // si es -1 -> devolver todos los que esten en rango
+                // si no se deben devolver todos y se llego a la
+                // cantidad a devolver salir
                 break;
             }
         }
@@ -44,13 +43,15 @@ void Scenario::addEnemy(Enemy& enemy) {
     enemies.push_back(enemy);
 }
 
-Scenario::Scenario(Scenario&& other) noexcept : paths(std::move(other.paths)) {
+Scenario::Scenario(Scenario&& other) noexcept {
+    this->paths = std::move(other.paths);
     this->enemies = std::move(other.enemies);
     this->towers = std::move(other.towers);
     this->firm_ground_locations = std::move(other.firm_ground_locations);
 }
 
 Scenario& Scenario::operator=(Scenario&& other) noexcept {
+    this->paths = std::move(other.paths);
     this->enemies = std::move(other.enemies);
     this->towers = std::move(other.towers);
     this->firm_ground_locations = std::move(other.firm_ground_locations);
@@ -71,28 +72,24 @@ Path &Scenario::getPath(unsigned int number) {
 }
 
 void Scenario::addTower(Tower* tower) {
-    bool can_be_added = false;
-    for (Vector& firm_ground : firm_ground_locations){
+    for (Vector& firm_ground : firm_ground_locations) {
         if (tower->getPosition() == firm_ground) {
-            can_be_added = true;
-            break;
+            towers.push_back(tower);
+            // como ya se ocupa, se saca de las tierras firmes disponibles
+            firm_ground_locations.erase(std::remove(firm_ground_locations.begin(),
+                                                    firm_ground_locations.end(),
+                                                    tower->getPosition()));
+            return;
         }
     }
 
-    if (can_be_added){
-        towers.push_back(tower);
-        // como ya se ocupa, se saca de las tierras firmes disponibles
-        std::remove(firm_ground_locations.begin(), firm_ground_locations.end(),
-                    tower->getPosition());
-    } else {
-        throw TowerError("Error al agregar torre en la posicion: " +
+    throw TowerError("Error al agregar torre en la posicion: " +
                                  tower->getPosition().to_string() +
                                  ". La posicion ya fue ocupada o no es terreno firme");
-    }
 }
 
 void Scenario::levelupTower(const Tower& tower_to_lvl, const std::string& type) {
-    for (Tower* tower : towers){
+    for (Tower* tower : towers) {
         if (tower == &tower_to_lvl) {
             tower->levelup(type);
         }
@@ -128,7 +125,7 @@ void Scenario::addFirmGround(const Vector &position) {
         if (vector == position) {
             throw MatchError("Error al agregar terreno firme: la posicion" +
                              position.to_string() +
-                             " esta ocupada por torre");
+                             " esta ocupada por terreno firme");
         }
     }
 

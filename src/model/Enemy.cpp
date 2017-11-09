@@ -32,14 +32,14 @@ void Enemy::move(int units_to_move) {
     for (int i = 0; i < getSpeed() * units_to_move; i++){
         current_pos += direction;
 
-        if (current_pos == current_destiny){
+        if (current_pos == current_destiny) {
             // calcula nueva direccion
             current_destiny = path.getNextPosition(current_pos_number++);
             direction = (current_destiny - current_pos);
             direction.normalizeAndRound();
         }
     }
-    if (current_pos == path.getFinalPositon()) { i_reach_the_end = true; }
+    i_reach_the_end = (current_pos == path.getFinalPositon());
 }
 
 const Vector &Enemy::getCurrentPosition() const {
