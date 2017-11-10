@@ -220,7 +220,7 @@ const Tower& TowerDefenseGame::addTower(const Player &player,
     }
     Tower* tower;
     try {
-        tower = towers_factory.at(type)->create(tower_id, position,
+        tower = towers_factory.at(type)->create(tower_id++, position,
                                                 tower_properties, *scenario);
             if (player.canBuildTower(type)){
                 scenario->addTower(tower);
