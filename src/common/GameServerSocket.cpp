@@ -277,10 +277,10 @@ void GameServerSocket::handleUpgrade(std::string &yaml) {
 
 void GameServerSocket::handleBuildTower(std::string &yaml) {
     YAML::Node build_node = YAML::Load(yaml);
-    //auto x = build_node["position"]["x"].as<int>();
-    //auto y = build_node["position"]["y"].as<int>();
+    auto x = build_node["position"]["x"].as<int>();
+    auto y = build_node["position"]["y"].as<int>();
     std::string type = build_node["type"].as<std::string>();
-    receiver.buildTower(132, 220, Communication::Tower::string_to_type(type));
+    receiver.buildTower(x, y, Communication::Tower::string_to_type(type));
 }
 
 void GameServerSocket::sendNode(YAML::Node &node) {
