@@ -3,7 +3,7 @@ towers:
     damage: 6
     damage_to_nearby: 3
     range: 3  
-    attack_rate: 0 # 1 lanzamiento cada 3 segundos
+    attack_rate: 3 # 1 lanzamiento cada 3 segundos
     reach: 1 # alcance de impacto
     range_upgrade: 1
     damage_upgrade: 6
@@ -19,7 +19,7 @@ towers:
   earth_tower:
     damage: 20
     range: 2
-    attack_rate: 0
+    attack_rate: 5
     damage_upgrade: 10
     range_upgrade: 1
     range_base: 500
@@ -32,7 +32,7 @@ towers:
     range: 3
     speed_reduction: 25
     speed_reduction_duration: 2
-    attack_rate: 0
+    attack_rate: 3
     damage_upgrade: 4
     range_upgrade: 1
     speed_reduction_upgrade: 25
@@ -48,7 +48,7 @@ towers:
     damage: 2
     damage_to_flying: 10
     range: 5
-    attack_rate: 0
+    attack_rate: 5
     range_upgrade: 1
     damage_upgrade: 2
     damage_to_flying_upgrade: 10
