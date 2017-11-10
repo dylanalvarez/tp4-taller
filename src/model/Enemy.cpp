@@ -30,7 +30,7 @@ Enemy::Enemy(int id, Path &path, int health_points, float speed,
 
 void Enemy::move(int units_to_move) {
     for (int i = 0; i < getSpeed() * units_to_move; i++){
-        current_pos += direction;
+        current_pos += direction * 0.5f;
 
         if (current_pos == current_destiny) {
             // calcula nueva direccion

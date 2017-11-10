@@ -49,14 +49,13 @@ AirTower::~AirTower() = default;
 void AirTower::attack() {
     // si todavia no paso el cooldown desde el ultimo ataque, salir
     if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
-    { return; }
+    { is_attacking = false; return; }
 
     std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
     if (enemies.empty()) { return; }
 
     changeTarget(enemies);
 
-    // TODO sacar este if con clase Damage
     if (current_target->canIFlight()){
         hitCurrentTarget(dmg_to_flying_units);
     } else {
@@ -67,6 +66,7 @@ void AirTower::attack() {
     current_target->moveBack();
 
     last_attack_time = time(nullptr);
+    is_attacking = true;
 }
 
 AirTower::AirTower(AirTower&& other) noexcept : Tower(std::move(other)) {}

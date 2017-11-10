@@ -30,12 +30,12 @@ void Match::run() {
 
         horde_creator.addNextEnemy();
 
+        game.updateGame();
+
         while (!actions_queue.empty()) {
             actions_queue.front().apply(context);
             actions_queue.pop();
         }
-
-        game.updateGame();
 
         /** enviar el estado del juego */
         Communication::GameState gameState = game.getGameState();

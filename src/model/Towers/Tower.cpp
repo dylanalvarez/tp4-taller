@@ -9,7 +9,9 @@ Tower::Tower(int id, Vector position, Scenario& scenario) :
                                                     id(id),
                                                     experience(0),
                                                     position(position),
-                                                    scenario(scenario) {}
+                                                    scenario(scenario) {
+    is_attacking = false;
+}
 
 Tower::~Tower() {
     for (auto levelup_type : levelup_types){
@@ -118,4 +120,8 @@ bool Tower::operator==(const Tower &other) {
 
 int Tower::getRangeInTileSizes(int range) {
     return (44 + range * 88);
+}
+
+bool Tower::isAttacking() const {
+    return is_attacking;
 }

@@ -39,6 +39,8 @@ public:
     const Range& getRange() const;
     unsigned int getDamage() const;
 
+    bool isAttacking() const;
+
     int getRangeLevel() const;
     int getDamageLevel() const;
 
@@ -62,6 +64,7 @@ protected:
     int id;
     double experience;
     Vector position;
+    bool is_attacking;
 
     // archivo de configuracion
     Scenario& scenario;

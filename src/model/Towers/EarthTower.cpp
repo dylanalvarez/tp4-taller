@@ -46,7 +46,7 @@ EarthTower::~EarthTower() = default;
 void EarthTower::attack() {
     // si todavia no paso el cooldown desde el ultimo ataque, salir
     if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
-    { return; }
+    { is_attacking = false; return; }
 
     std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
     if (enemies.empty()) { return; }
@@ -68,6 +68,7 @@ void EarthTower::attack() {
     hitCurrentTarget(dmg);
 
     last_attack_time = time(nullptr);
+    is_attacking = true;
 }
 
 EarthTower::EarthTower(EarthTower&& other) noexcept :

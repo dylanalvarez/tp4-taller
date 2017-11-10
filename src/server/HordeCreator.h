@@ -11,7 +11,7 @@
 #include "Horde.h"
 #include "QueueProtected.h"
 
-#define time_between_enemies 2 // segundos
+#define time_between_enemies 3 // segundos
 
 class HordeCreator {
 public:

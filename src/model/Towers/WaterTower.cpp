@@ -60,7 +60,7 @@ WaterTower::~WaterTower() = default;
 void WaterTower::attack() {
     // si todavia no paso el cooldown desde el ultimo ataque, salir
     if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
-    { return; }
+    { is_attacking = false; return; }
 
     std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
     if (enemies.empty()) { return; }
@@ -70,6 +70,7 @@ void WaterTower::attack() {
     current_target->reduceSpeed(speed_reduction, speed_reduction_duration);
 
     last_attack_time = time(nullptr);
+    is_attacking = true;
 }
 
 WaterTower::WaterTower(WaterTower&& other) noexcept : Tower(std::move(other)) {}
