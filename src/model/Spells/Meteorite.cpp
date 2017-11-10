@@ -33,7 +33,7 @@ bool Meteorite::canBeThrownBy(const std::string &element) {
     return element == "fire";
 }
 
-void Meteorite::attack() {}
+void Meteorite::update() {}
 
 void Meteorite::applyEffect(const Vector &position) {}
 

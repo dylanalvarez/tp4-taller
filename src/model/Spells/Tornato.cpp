@@ -23,7 +23,7 @@ bool Tornato::canBeThrownBy(const std::string &element) {
     return element == "air";
 }
 
-void Tornato::attack() {
+void Tornato::update() {
     checkIfIsActive(duration);
 
     if (!is_active) { return; }

@@ -38,7 +38,6 @@ void GameClientSocket::run() {
                 break;
             default:
                 break;
-
         }
     }
 }
@@ -75,7 +74,7 @@ void GameClientSocket::chooseMap(std::string &&nickname,
 
 void GameClientSocket::chooseElement(Communication::Element element) {
     YAML::Node node;
-    node["setting"] = Communication::to_string(element);
+    node["type"] = Communication::to_string(element);
     socket.send(Communication::toFixedLengthString(
             2, OPCODE_CHARACTER_COUNT));
     _sendNode(node);

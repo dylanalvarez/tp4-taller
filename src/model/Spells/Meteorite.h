@@ -22,7 +22,7 @@ public:
 
     bool canBeThrownBy(const std::string& element) override;
 
-    void attack() override;
+    void update() override;
 
     bool isActive() const override;
 

@@ -25,7 +25,7 @@ bool Blizzard::canBeThrownBy(const std::string &element) {
     return element == "water";
 }
 
-void Blizzard::attack() {
+void Blizzard::update() {
     checkIfIsActive(duration);
 
     if (!is_active) { return; }

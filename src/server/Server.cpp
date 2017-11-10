@@ -11,8 +11,6 @@
 Server::Server(const std::string& port) : accept_socket(port) {
     map_id = 0;
     match_id = 0;
-    maps.emplace_back(Communication::NameAndID("mapa_inicial.yaml", map_id));
-    maps_paths.emplace(map_id++, "mapa_inicial.yaml");
 }
 
 Server::~Server() {
@@ -76,7 +74,6 @@ void Server::addMap(const std::string& file_path) {
 
     for (auto &maps_path : maps_paths) {
         if (maps_path.second == file_path) {
-            std::cerr << "Error: El mapa ya fue agregado\n";
             return;
         }
     }
@@ -86,7 +83,6 @@ void Server::addMap(const std::string& file_path) {
     new_map.id = map_id++;
     new_map.name = YAML::LoadFile(file_path)["name"].as<std::string>();
     maps.push_back(std::move(new_map));
-    std::cout << "Mapa agreado con exito!\n";
 }
 
 void Server::startMatch(int match_id) {

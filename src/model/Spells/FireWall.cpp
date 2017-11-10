@@ -21,7 +21,7 @@ bool FireWall::canBeThrownBy(const std::string &element) {
     return element == "fire";
 }
 
-void FireWall::attack() {
+void FireWall::update() {
     checkIfIsActive(duration);
 
     if (!is_active) { return; }

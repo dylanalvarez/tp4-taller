@@ -24,7 +24,8 @@ public:
     virtual bool canBeThrownBy(const std::string& element) = 0;
 
     // realiza el ataque del hechizo si se activo con activate
-    virtual void attack() = 0;
+    // o lo desactiva si es un hechizo instantaneo
+    virtual void update() = 0;
 
     virtual bool isActive() const = 0;
 

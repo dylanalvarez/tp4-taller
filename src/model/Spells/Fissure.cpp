@@ -16,7 +16,7 @@ bool Fissure::canBeThrownBy(const std::string &element) {
     return element == "earth";
 }
 
-void Fissure::attack() {
+void Fissure::update() {
     checkIfIsActive(duration);
 
     if (!is_active) { return; }

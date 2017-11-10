@@ -23,7 +23,7 @@ bool Freezing::canBeThrownBy(const std::string &element) {
     return element == "water";
 }
 
-void Freezing::attack() {}
+void Freezing::update() {}
 
 bool Freezing::isActive() const {
     return is_active;

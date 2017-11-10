@@ -33,7 +33,7 @@ bool Ray::canBeThrownBy(const std::string &element) {
     return element == "air";
 }
 
-void Ray::attack() {}
+void Ray::update() {}
 
 bool Ray::isActive() const {
     return is_active;

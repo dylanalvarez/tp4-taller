@@ -287,7 +287,7 @@ void TowerDefenseGame::addElementToPlayer(const Player &player,
 void TowerDefenseGame::performAttacks() {
     for (auto& spell : spells) {
         if (spell.second->isActive()) {
-            spell.second->attack();
+            spell.second->update();
         }
     }
 

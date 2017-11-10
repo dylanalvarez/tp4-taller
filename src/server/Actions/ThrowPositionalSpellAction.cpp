@@ -2,7 +2,10 @@
 // Created by facundo on 31/10/17.
 //
 
+#include <iostream>
+#include <syslog.h>
 #include "ThrowPositionalSpellAction.h"
+#include "../../model/Exceptions/MatchError.h"
 
 ThrowPositionalSpellAction::ThrowPositionalSpellAction(std::string &spell,
                                    const Player& player,
@@ -11,5 +14,11 @@ ThrowPositionalSpellAction::ThrowPositionalSpellAction(std::string &spell,
                                                      position(vector) {}
 
 void ThrowPositionalSpellAction::apply(Context& context) {
-    context.getGame().throwSpell(player, spell, position);
+    try {
+        context.getGame().throwSpell(player, spell, position);
+    } catch (MatchError& e) {
+        std::cerr << "Error al aplicar hechizo en la posicion: " +
+                position.to_string() + ", ver syslog para mas informacion\n";
+        syslog(LOG_CRIT, "Error: %s\n", e.what());
+    }
 }
