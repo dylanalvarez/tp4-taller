@@ -79,7 +79,8 @@ bool Client::isReady() const {
     return is_ready;
 }
 
-void Client::sendElementUnavailable(const std::string& element) {
+void Client::sendElementUnavailable(const std::string& element,
+                                    const std::string& nickname) {
     serverSocket.makeElementUnavailable(
             Communication::to_element(element));
 }
