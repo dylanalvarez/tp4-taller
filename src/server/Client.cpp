@@ -8,6 +8,7 @@
 #include "Actions/SendMessageAction.h"
 #include "Actions/DisconnectAction.h"
 #include "Actions/PingAction.h"
+#include "../common/Exception.h"
 
 Client::Client(Socket&& socket, Server& server) :
         serverReceiver(server, *this),
@@ -80,6 +81,7 @@ bool Client::isReady() const {
 }
 
 void Client::sendElementUnavailable(const std::string& element) {
-    serverSocket.makeElementUnavailable(
-            Communication::to_element(element));
+//    serverSocket.makeElementUnavailable(
+//            Communication::to_element(element));
+    throw Exception("Not yet implemented");
 }
