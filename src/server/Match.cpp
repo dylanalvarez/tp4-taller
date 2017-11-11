@@ -9,7 +9,7 @@ Match::Match(const std::string &config_file_path,
              const std::string &map_file_path, int id) :
             horde_creator(map_file_path, actions_queue),
             game(config_file_path, map_file_path, horde_creator.getTotalAmountOfEnemies()),
-            context(game, clients), id(id)  {
+            context(game, clients), id(id), map(map_file_path)  {
     has_started = false;
     keep_running = true;
 }
@@ -64,6 +64,7 @@ void Match::addPlayer(Client* client) {
     const Player& player = game.addPlayer(client->getName());
     client->setModelPlayer(player);
     client->setActionsQueue(actions_queue);
+    client->sendMap(map);
     clients.push_back(client);
 }
 

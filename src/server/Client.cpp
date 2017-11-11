@@ -85,3 +85,7 @@ void Client::sendElementUnavailable(const std::string& element,
     serverSocket.makeElementUnavailable(
             Communication::to_element(element), nickname);
 }
+
+void Client::sendMap(const std::string &map) {
+    serverSocket.sendMap(map);
+}

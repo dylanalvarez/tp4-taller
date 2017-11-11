@@ -22,7 +22,7 @@ public:
                                 const std::string &username);
 
     // Filename relative to executable
-    void sendMap(std::string &&filename);
+    void sendMap(const std::string &filename);
 
     void sendGameState(const Communication::GameState &gameState);
 

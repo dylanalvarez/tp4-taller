@@ -145,7 +145,7 @@ void GameServerSocket::makeElementUnavailable(Communication::Element element,
     sendNode(node);
 }
 
-void GameServerSocket::sendMap(std::string &&filename) {
+void GameServerSocket::sendMap(const std::string &filename) {
     std::ifstream file(filename);
     std::string content(static_cast<std::stringstream const&>(
                                 std::stringstream() << file.rdbuf()).str());

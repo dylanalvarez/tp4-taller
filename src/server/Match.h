@@ -49,6 +49,8 @@ private:
     bool has_started;
     bool keep_running;
 
+    const std::string& map;
+
     const unsigned int time_step = 15000; // 15 milisegundos;
 };
 

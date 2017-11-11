@@ -31,6 +31,7 @@ public:
     void sendPing(Vector position);
     void sendElementUnavailable(const std::string& element,
                                 const std::string& nickname);
+    void sendMap(const std::string& map);
 
     void setModelPlayer(const Player &player);
     void setName(const std::string& name);
