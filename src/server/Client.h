@@ -29,7 +29,8 @@ public:
     void sendGameState(const Communication::GameState &gameState);
     void sendMessage(std::string&& msg, std::string&& nickname);
     void sendPing(Vector position);
-    void sendElementUnavailable(const std::string& element);
+    void sendElementUnavailable(const std::string& element,
+                                const std::string& nickname);
 
     void setModelPlayer(const Player &player);
     void setName(const std::string& name);

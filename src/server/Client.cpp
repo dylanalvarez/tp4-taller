@@ -80,8 +80,8 @@ bool Client::isReady() const {
     return is_ready;
 }
 
-void Client::sendElementUnavailable(const std::string& element) {
-//    serverSocket.makeElementUnavailable(
-//            Communication::to_element(element));
-    throw Exception("Not yet implemented");
+void Client::sendElementUnavailable(const std::string& element,
+                                    const std::string& nickname) {
+    serverSocket.makeElementUnavailable(
+            Communication::to_element(element), nickname);
 }

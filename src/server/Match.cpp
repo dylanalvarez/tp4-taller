@@ -96,8 +96,10 @@ void Match::addElementToClient(const Client& client_to_add,
             try {
                 game.addElementToPlayer(client->getModelPlayer(), element);
             } catch (std::exception& e) {
-                client->sendElementUnavailable(element);
+                client->sendElementUnavailable(element, client->getName());
             }
+        } else {
+            client->sendElementUnavailable(element, client->getName());
         }
     }
 }

@@ -91,10 +91,10 @@ Communication::Tower::Tower(int id, Level level, int experience,
                             int rangeInSquares, int ExplosionRange, int x,
                             int y, Communication::Tower::EnemySlowdown slowdown,
                             Communication::Tower::Damage damage,
-                            Communication::Tower::Type type)
+                            Communication::Tower::Type type, bool is_attacking)
         : id(id), experience(experience), rangeInSquares(rangeInSquares),
           ExplosionRange(ExplosionRange), x(x), y(y), level(level),
-          slowdown(slowdown), damage(damage), type(type) {}
+          slowdown(slowdown), damage(damage), type(type), is_attacking(is_attacking) {}
 
 Communication::Tower::Type Communication::Tower::string_to_type(
         const std::string &type) {
