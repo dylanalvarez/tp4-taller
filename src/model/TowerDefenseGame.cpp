@@ -402,7 +402,8 @@ Communication::GameState TowerDefenseGame::getGameState() const {
                 tower->getPosition().getY(),
                 tower->getslowdown(),
                 tower->getDamage_(),
-                tower->getType()
+                tower->getType(),
+                tower->isAttacking()
         );
     }
 

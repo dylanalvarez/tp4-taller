@@ -12,6 +12,7 @@ void Terraforming::applyEffect(const Vector &position) {
     if (isOnCooldown()) { return; }
 
     is_active = true;
+    this->position = position;
     scenario.addFirmGround(position);
     last_activation_time = time(nullptr);
 }

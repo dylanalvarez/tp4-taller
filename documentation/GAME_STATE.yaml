@@ -30,6 +30,7 @@ towers:
     position:
       x: 1
       y: 2
+    is_attacking: true
 
 positional_powers:
   -
