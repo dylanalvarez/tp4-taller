@@ -34,6 +34,10 @@ void GameClientSocket::run() {
                 break;
             case 5:
                 message = YAML::Load(messageAsString);
+                _handlePing(message);
+                break;
+            case 6:
+                message = YAML::Load(messageAsString);
                 _handleUnavailableElement(message);
                 break;
             default:
@@ -221,10 +225,18 @@ void GameClientSocket::_handleRecievedMessage(YAML::Node &node) {
 
 void GameClientSocket::_handleUnavailableElement(YAML::Node &node) {
     std::string element = node["type"].as<std::string>();
-    receiver.getUnavailableElement(Communication::to_element(element));
+    std::string username = node["username"].as<std::string>();
+    receiver.getUnavailableElement(Communication::to_element(element),
+                                   std::move(username));
 }
 
 GameClientSocket::GameClientSocket(GameClientSocket &&other) noexcept :
         receiver(other.receiver), socket(std::move(other.socket)) {}
+
+void GameClientSocket::_handlePing(YAML::Node &node) {
+    int x = node["x"].as<int>();
+    int y = node["y"].as<int>();
+    receiver.getPing(x, y);
+}
 
 GameClientSocket::~GameClientSocket() = default;

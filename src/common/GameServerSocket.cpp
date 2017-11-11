@@ -135,18 +135,24 @@ void GameServerSocket::sendInitialData(
     sendNode(initialData);
 }
 
-void GameServerSocket::makeElementUnavailable(Communication::Element element) {
+void GameServerSocket::makeElementUnavailable(Communication::Element element,
+                                              std::string &&username) {
     YAML::Node node;
     node["type"] = Communication::to_string(element);
+    node["username"] = username;
     socket.send(Communication::toFixedLengthString(
-            5, OPCODE_CHARACTER_COUNT));
+            6, OPCODE_CHARACTER_COUNT));
     sendNode(node);
 }
 
 void GameServerSocket::sendMap(std::string &&filename) {
     std::ifstream file(filename);
-    socket.send(std::string(std::istreambuf_iterator<char>(file),
-                            std::istreambuf_iterator<char>()));
+    std::string content(static_cast<std::stringstream const&>(
+                                std::stringstream() << file.rdbuf()).str());
+    socket.send(Communication::toFixedLengthString(2, OPCODE_CHARACTER_COUNT));
+    socket.send(Communication::toFixedLengthString(
+            content.length(), MESSAGE_LENGTH_CHARACTER_COUNT));
+    socket.send(content);
 }
 
 GameServerSocket::~GameServerSocket() = default;

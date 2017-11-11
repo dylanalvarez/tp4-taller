@@ -58,6 +58,8 @@ private:
 
     void _handleUnavailableElement(YAML::Node &node);
 
+    void _handlePing(YAML::Node &node);
+
     GameClientReceiver &receiver;
     Socket socket;
     bool keepRunning;

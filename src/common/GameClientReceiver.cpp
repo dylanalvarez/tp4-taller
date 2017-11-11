@@ -27,10 +27,13 @@ void GameClientReceiver::getChatMessage(std::string &&message,
     menues.recivirMensajeChat(nickname + message);
 }
 
-GameClientReceiver::~GameClientReceiver() {
-}
+GameClientReceiver::~GameClientReceiver() = default;
 
 void GameClientReceiver::getUnavailableElement(
-        const Communication::Element &element) {
+        const Communication::Element &element, std::string &&username) {
+    throw Exception("Not yet implemented");
+}
+
+void GameClientReceiver::getPing(int x, int y) {
     throw Exception("Not yet implemented");
 }

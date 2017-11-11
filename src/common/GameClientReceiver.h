@@ -22,10 +22,13 @@ public:
 
     void getGameState(const Communication::GameState &gameState);
 
+    void getPing(int x, int y);
+
     void getChatMessage(std::string &&message,
                         std::string &&nickname);
 
-    void getUnavailableElement(const Communication::Element &element);
+    void getUnavailableElement(const Communication::Element &element,
+                               std::string &&username);
 
     ~GameClientReceiver();
 };

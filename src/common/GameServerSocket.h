@@ -18,7 +18,8 @@ public:
     void sendInitialData(const std::vector<Communication::NameAndID> &matches,
                          const std::vector<Communication::NameAndID> &maps);
 
-    void makeElementUnavailable(Communication::Element element);
+    void makeElementUnavailable(Communication::Element element,
+                                std::string &&username);
 
     // Filename relative to executable
     void sendMap(std::string &&filename);
