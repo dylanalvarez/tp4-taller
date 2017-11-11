@@ -9,9 +9,7 @@
 #include "Actions/DisconnectAction.h"
 #include "Actions/PingAction.h"
 
-Client::Client(Socket&& socket,
-               const std::vector<Communication::NameAndID> &matches,
-               const std::vector<Communication::NameAndID> &maps, Server& server) :
+Client::Client(Socket&& socket, Server& server) :
         serverReceiver(server, *this),
         serverSocket(serverReceiver, std::move(socket)),
         sender(serverSocket, queue), is_ready(false) {
@@ -50,10 +48,11 @@ const std::string &Client::getName() const {
     return name;
 }
 
-void Client::start() {
+void Client::start(const std::vector<Communication::NameAndID> &matches,
+                   const std::vector<Communication::NameAndID> &maps) {
     sender.start();
     serverSocket.start();
-    serverReceiver.createMatch(0, "alguien", "nombre_de_mapa");
+    serverSocket.sendInitialData(matches, maps);
 }
 
 void Client::stop() {

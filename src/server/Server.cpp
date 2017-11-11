@@ -25,12 +25,12 @@ void Server::run() {
         try {
             Socket new_client = accept_socket.accept();
             // se pudo cerrar el socket en el accept
-            auto* client = new Client(std::move(new_client), matchs_id, maps, *this);
+            auto* client = new Client(std::move(new_client), *this);
 
             //std::lock_guard<std::mutex> lock(mutex);
             clients.push_back(client);
 
-            client->start();
+            client->start(matchs_id, maps);
             //TODO clean clients
         } catch (AcceptFailedException& e) {
             // se cerro el socket

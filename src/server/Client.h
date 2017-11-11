@@ -18,12 +18,10 @@ class Server;
 
 class Client {
 public:
-    Client(Socket&& socket,
-           const std::vector<Communication::NameAndID> &matches,
-           const std::vector<Communication::NameAndID> &maps,
-           Server& server);
+    Client(Socket&& socket, Server& server);
 
-    void start();
+    void start(const std::vector<Communication::NameAndID> &matches,
+               const std::vector<Communication::NameAndID> &maps);
     void stop();
 
     ~Client();

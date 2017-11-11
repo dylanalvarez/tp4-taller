@@ -35,9 +35,6 @@ void GameServerReceiver::createMatch(int map_id,
                                      const std::string &map_name) {
     client.setName(player_name);
     my_match_id = server.createMatch(client, map_id, map_name);
-    client.setReady();
-    getChosenElement(Communication::Element::earth);
-    server.startMatch(my_match_id);
 }
 
 void GameServerReceiver::startMatch() {
