@@ -19,7 +19,7 @@ public:
                          const std::vector<Communication::NameAndID> &maps);
 
     void makeElementUnavailable(Communication::Element element,
-                                std::string &&username);
+                                const std::string &username);
 
     // Filename relative to executable
     void sendMap(std::string &&filename);

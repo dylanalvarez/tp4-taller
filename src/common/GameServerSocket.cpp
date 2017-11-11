@@ -136,7 +136,7 @@ void GameServerSocket::sendInitialData(
 }
 
 void GameServerSocket::makeElementUnavailable(Communication::Element element,
-                                              std::string &&username) {
+                                              const std::string &username) {
     YAML::Node node;
     node["type"] = Communication::to_string(element);
     node["username"] = username;
