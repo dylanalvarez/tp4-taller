@@ -17,9 +17,10 @@ public:
   void iniciar();
   bool siclo();
   void terminar();
-  void elegirEquipo(std::string &nickname, int teamID);
-  void elegirMapa(std::string &nickname, int mapID);
+  void elegirEquipo(std::string nickname, int teamID);
+  void elegirMapa(std::string nickname, std::string mapName, int mapID);
   void elegirElemento(std::string tipo);
+  void empesarJuego();  
   void enviarMensajeDeChat(std::string mensaje);
   void pingear(int x, int y);
   void lansarEchizo(int x, int y, std::string tipo);

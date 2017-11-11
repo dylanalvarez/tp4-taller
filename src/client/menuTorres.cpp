@@ -150,7 +150,7 @@ void MenuTorres::decelecionar(){
 void MenuTorres::selecionarTerreno(const FichaTerreno &terreno2){
     terreno =  &terreno2;
     decelecionar();
-    botonPing->show();  
+    botonPing->show();
     titulo->set_text(" ");
     switch (terreno->getTipo()){
       case FichaPisoFirme:
@@ -170,26 +170,18 @@ void MenuTorres::selecionarTerreno(const FichaTerreno &terreno2){
 void MenuTorres::avisarConstruirTorreTierra(){
   auto posicion = terreno->getPosicion();
   emisorComandos.cosntruirTorre(posicion.X, posicion.Y, "earth");
-  //printf("Construir Torre de Tierra en:  ");
-  //terreno->imprimierCordenadas();
   }
 void MenuTorres::avisarConstruirTorreAgua(){
   auto posicion = terreno->getPosicion();
   emisorComandos.cosntruirTorre(posicion.X, posicion.Y,"water");
-  //printf("Construir Torre de Agua en:  ");
-  //terreno->imprimierCordenadas();
   }
 void MenuTorres::avisarConstruirTorreFuego(){
   auto posicion = terreno->getPosicion();
   emisorComandos.cosntruirTorre(posicion.X, posicion.Y,"fire");
- //  printf("Construir Torre de Fuego en:  ");
- //  terreno->imprimierCordenadas();
   }
 void MenuTorres::avisarConstruirTorreAire(){
   auto posicion = terreno->getPosicion();
   emisorComandos.cosntruirTorre(posicion.X, posicion.Y,"air");
- //  printf("Construir Torre de Aire en:  ");
- //  terreno->imprimierCordenadas();
   }
 
 //Upgreads
@@ -417,10 +409,10 @@ void MenuTorres::desectivarHechizo(Communication::TargetPower::Type hechizo){
   }
 }
 void MenuTorres::actualizarPoderes(const Communication::GameState &gameState){
-  for (auto it = gameState.positionalPowers.begin() ; it != gameState.positionalPowers.end(); ++it)
+  /*for (auto it = gameState.positionalPowers.begin() ; it != gameState.positionalPowers.end(); ++it)
     desectivarHechizo(it->type);
   for (auto it = gameState.targetPowers.begin() ; it != gameState.targetPowers.end(); ++it)
-    desectivarHechizo(it->type);
+    desectivarHechizo(it->type);*/
 }
 
 

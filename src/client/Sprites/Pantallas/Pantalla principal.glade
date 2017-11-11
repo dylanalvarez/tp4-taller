@@ -89,7 +89,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkButton" id="Listo">
+              <object class="GtkButton" id="listo">
                 <property name="label" translatable="yes">listo</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -182,14 +182,34 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="NombreTorre">
-                    <property name="width_request">180</property>
-                    <property name="height_request">40</property>
+                  <object class="GtkBox" id="box18">
+                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="opacity">0.98999999999999999</property>
-                    <property name="label" translatable="yes">Torre
-</property>
-                    <property name="ellipsize">end</property>
+                    <child>
+                      <object class="GtkLabel" id="label2">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Construir torre de:</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="Ping">
+                        <property name="label" translatable="yes">Ping</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -337,16 +357,7 @@
                         <property name="no_show_all">True</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkLabel" id="label2">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Construir torre de:</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
+                          <placeholder/>
                         </child>
                         <child>
                           <object class="GtkBox" id="Menu terreno2">
@@ -404,19 +415,6 @@
                                 <property name="position">3</property>
                               </packing>
                             </child>
-                            <child>
-                              <object class="GtkButton" id="Ping">
-                                <property name="label" translatable="yes">Ping</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">4</property>
-                              </packing>
-                            </child>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -432,7 +430,20 @@
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkLabel" id="NombreTorre">
+                        <property name="width_request">180</property>
+                        <property name="height_request">40</property>
+                        <property name="can_focus">False</property>
+                        <property name="opacity">0.98999999999999999</property>
+                        <property name="label" translatable="yes">Torre
+</property>
+                        <property name="ellipsize">end</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
                     </child>
                   </object>
                   <packing>
@@ -751,7 +762,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkComboBox" id="equipos">
+                  <object class="GtkComboBoxText" id="equipos">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                   </object>
@@ -767,7 +778,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="relief">none</property>
+                    <property name="relief">half</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -828,7 +839,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="Mapas">
+                      <object class="GtkComboBoxText" id="Mapas">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                       </object>

@@ -9,6 +9,10 @@
 #include "controladorDeSiclos.h"
 #include "menuTorres.h"
 #include "TiposDeDatosExpeciales.h"
+#include "GestionadorDeVentanas.h"
+#include "GestionadorDeVentanas.h"
+#include "PantallaDeInicio.h"
+#include "PantallaDeElementos.h"
 #include "../common/Socket.h"
 //esta clase es solo para dirigir el movimiento en este caso.
 
@@ -24,7 +28,7 @@ int main(int argc, char *argv[]){
   //Socket socket("127.0.0.1", "7072");
   int argcF =argc -1;
   //Crea la aplicación de gtkmm (Todo esto tendria que ser un un clase)
-  auto app = Gtk::Application::create(argcF, argv);
+  Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argcF, argv);
   VectorDeSprites sprites;
   OrdenadorDeFichas fichas;
 
@@ -50,7 +54,6 @@ int main(int argc, char *argv[]){
     fichas.getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
   }
 
-	Gtk::Window* window;
   Gtk::Box* Box;
 
 	Glib::RefPtr<Gtk::Builder> refBuilder = Gtk::Builder::create();
@@ -62,11 +65,12 @@ int main(int argc, char *argv[]){
 
 	refBuilder->get_widget("cajaJuego", Box);
   Box->pack_start(area);
-	refBuilder->get_widget("Juego", window);
-  window->show_all();
+  GestionadorDeVentanas ventanas(refBuilder, app);
 
-
-  GameClientReceiver reciver(fichas, area.getMenuTorres());
+  PantallaDeInicio pantallaInicial(refBuilder, emisor);
+  PantallaDeElementos pantallaDeElementos(refBuilder, emisor);
+  GameClientReceiver reciver(fichas, area.getMenuTorres(),
+   ventanas, pantallaInicial,pantallaDeElementos);
   GameClientSocket clientSocket(reciver, std::move(socket));
   Receptor receptor(reciver, clientSocket);
   ControladorDeSiclos falso(receptor, emisor);
@@ -80,12 +84,11 @@ int main(int argc, char *argv[]){
   sigc::slot<bool> my_slot2 = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDesplasamientos);
   sigc::connection conn2 = Glib::signal_timeout().connect(my_slot2,TiempoEnMilesegundos);
 
-  /*TiempoEnMilesegundos = teimpoActualizacionModelo;
-  sigc::slot<bool> my_slot3 = sigc::mem_fun(falso, &ControladorDeSiclos::continuar);
-  sigc::connection conn3 = Glib::signal_timeout().connect(my_slot3,TiempoEnMilesegundos);
-*/
+
   falso.iniciar();
-  app->run(*window);
+  ventanas.arrancarPantallaDeInicio();
+  ventanas.arrancarPantallaDeElementos();
+  ventanas.arrancarJuego();
   falso.terminar();
 
   return 0;

@@ -165,7 +165,7 @@ void OrdenadorDeFichas::actualizarEfectos(Communication::PositionalPower actualz
        FichaGrieta, sprites));
     break;
     case Communication::PositionalPower::Type::terraforming:
-    printf("terraforameando\n");
+    printf("terraforameando, %i, %i\n", actualzacion.x, actualzacion.y);
       getTerreno(ObetenerTerrenoEnEstaPosicion(actualzacion.x, actualzacion.y)
     ).cambiarTipo(FichaPisoFirme, sprites);
     break;

@@ -11,6 +11,8 @@
 enum Elementos{
   fuego,agua,aire,tierra  };
 
+Elementos toElemento(Communication::Element element);
+
 enum Hechizo{
   Terraforming, Congelacion, Grieta, Ventisca, Meteorito, Tornado,
   MuroDeFuego, Rayos};
@@ -32,11 +34,11 @@ struct Posicion{
 struct Mensaje {
   enum Type {
     chooseTeam, chooseMap, chooseElement, sendChatMessage, pingTile, applySpell1,
-     applySpell2, applyUpgrade, buildTower
+     applySpell2, applyUpgrade, buildTower, startGame
   };
   Type tipo;
   std::string elString;
-  std::string elString2;  
+  std::string elString2;
   int elInt1;
   int elInt2;
   //Mensaje();

@@ -87,7 +87,7 @@ namespace Communication {
 
         Tower(int id, Level level, int experience, int rangeInSquares,
               int ExplosionRange, int x, int y, EnemySlowdown slowdown,
-              Damage damage, Type type, bool is_attacking = false);
+              Damage damage, Type type);
 
         int id, experience, rangeInSquares, ExplosionRange, x, y;
 
@@ -95,7 +95,6 @@ namespace Communication {
         EnemySlowdown slowdown;
         Damage damage;
         Type type;
-        bool is_attacking;
     };
 
     struct PositionalPower {

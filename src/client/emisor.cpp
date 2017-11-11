@@ -14,11 +14,11 @@ void Emisor::iniciar(){
     switch (aux.tipo) {
       case Mensaje::Type::chooseTeam:
         printf("chooseTeam\n");
-        //socket->chooseTeam(aux.elString,aux.elInt1);
+        socket->chooseTeam(std::move(aux.elString),aux.elInt1);
       break;
       case Mensaje::Type::chooseMap:
         printf("chooseMap\n");
-      //  socket->chooseMap(aux.elString2,aux.elString,aux.elInt1);
+        socket->chooseMap(std::move(aux.elString2),std::move(aux.elString),aux.elInt1);
       break;
       case Mensaje::Type::chooseElement:
         printf("chooseElement\n");
@@ -47,25 +47,29 @@ void Emisor::iniciar(){
       break;
       case Mensaje::Type::buildTower:
         printf("buildTower\n");
-        printf("%i, %i\n", aux.elInt1, aux.elInt2);
         socket->buildTower(aux.elInt1, aux.elInt2,
           Communication::Tower::string_to_type(aux.elString));
+      break;
+      case Mensaje::Type::startGame:
+        printf("startGame\n");
+        socket->startGame();
       break;
       }
   }
 }
 
-void Emisor::elegirEquipo(std::string &nickname, int teamID){
+void Emisor::elegirEquipo(std::string nickname, int teamID){
   Mensaje aux;
   aux.tipo = Mensaje::Type::chooseTeam;
   aux.elString = nickname;
   aux.elInt1 = teamID;
   cola.agregarLinea(aux);
 }
-void Emisor::elegirMapa(std::string &nickname, int mapID){
+void Emisor::elegirMapa(std::string nickname, std::string mapName, int mapID){
   Mensaje aux;
   aux.tipo = Mensaje::Type::chooseMap;
   aux.elString = nickname;
+  aux.elString2 = mapName;
   aux.elInt1 = mapID;
   cola.agregarLinea(aux);
 }
@@ -73,6 +77,11 @@ void Emisor::elegirElemento(std::string tipo){
   Mensaje aux;
   aux.tipo = Mensaje::Type::chooseElement;
   aux.elString = tipo;
+  cola.agregarLinea(aux);
+}
+void Emisor::empesarJuego(){
+  Mensaje aux;
+  aux.tipo = Mensaje::Type::startGame;
   cola.agregarLinea(aux);
 }
 void Emisor::enviarMensajeDeChat(std::string mensaje){
