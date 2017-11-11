@@ -128,7 +128,7 @@ void GameServerSocket::sendInitialData(
         YAML::Node mapNode;
         mapNode["id"] = map.id;
         mapNode["name"] = map.name;
-        initialData["matches"].push_back(mapNode);
+        initialData["maps"].push_back(mapNode);
     }
 
     socket.send(Communication::toFixedLengthString(0, OPCODE_CHARACTER_COUNT));
