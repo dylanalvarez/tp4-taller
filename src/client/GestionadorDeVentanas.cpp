@@ -31,6 +31,8 @@ void GestionadorDeVentanas::actualizar(
 }
 
 void GestionadorDeVentanas::arrancarPantallaDeElementos(){
+  if (!iniciado) 
+    return
   pantallaDeElementos->show_all();
   app = Gtk::Application::create();
   app->run(*pantallaDeElementos);
@@ -48,4 +50,5 @@ void GestionadorDeVentanas::arrancarPantallaDeInicio(){
 
 void GestionadorDeVentanas::TerminarPantallaDeInicio(){
   pantallaDeInicio->hide();
+  iniciado = true;
 }

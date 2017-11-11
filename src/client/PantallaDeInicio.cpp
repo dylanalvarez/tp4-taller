@@ -23,7 +23,7 @@ void PantallaDeInicio::unirsePartida(){
   }
 void PantallaDeInicio::crearPartida(){
   emisorComandos.elegirMapa(nick->get_text().c_str(),
-                    nickEquipo->get_text().c_str(), mapas->get_id_column());
+                    nickEquipo->get_text().c_str(), mapas->get_id_column()-1);
   }
 
 void PantallaDeInicio::cargarDatos(
@@ -35,6 +35,7 @@ void PantallaDeInicio::cargarDatos(
   }
   mapas->remove_all();
   for (auto it = maps.begin(); it != maps.end(); ++it){
-    mapas->insert(it->id,it->name.c_str());
+
+    mapas->insert(it->id+1,it->name.c_str());
   }
 }

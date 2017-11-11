@@ -10,7 +10,6 @@
 #include "menuTorres.h"
 #include "TiposDeDatosExpeciales.h"
 #include "GestionadorDeVentanas.h"
-#include "GestionadorDeVentanas.h"
 #include "PantallaDeInicio.h"
 #include "PantallaDeElementos.h"
 #include "../common/Socket.h"

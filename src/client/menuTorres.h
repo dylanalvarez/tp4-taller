@@ -13,7 +13,7 @@ class MenuTorres{
 private:
 	Emisor& emisorComandos;
 	std::vector<Elementos> elementos;
-	bool casteando;
+	bool casteando = false;
 	Hechizo hechizoActual;
 	Glib::RefPtr<Gtk::Builder> ventana; //ams facil pasar esto que pasar todos los subs.
   const FichaTorre *torre;
@@ -34,7 +34,7 @@ private:
   Gtk::Button* botonTierra;
   Gtk::Button* botonAgua;
   Gtk::Button* botonAire;
-	
+
   Gtk::Button* botonPing; //falta el codigo de esto.
 
 	//poderes
