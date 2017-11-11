@@ -1,4 +1,4 @@
-#include "SoundPlayer.h"
+#include "Sound.h"
 #include "Exception.h"
 
 void ::Sound::playWAV(const std::string &filename) {

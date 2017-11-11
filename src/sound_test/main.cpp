@@ -1,4 +1,4 @@
-#include "../common/SoundPlayer.h"
+#include "../common/Sound.h"
 
 // Move these .wav files beside executable
 int main(int argc, char **argv) {
