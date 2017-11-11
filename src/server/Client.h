@@ -43,6 +43,8 @@ public:
     const Player& getModelPlayer() const;
     // retorna si esta listo para comenzar la partida
     bool isReady() const;
+    // retorna si pertence a una partida
+    bool isOnMatch() const;
 
     Client(const Client&) = delete;
     Client& operator=(const Client&) = delete;
