@@ -211,7 +211,7 @@ void MenuTorres::agregarElemento(Elementos elemento){
     MostrarBotones(elemento);
   }
 void MenuTorres::agregarElemento(Elementos elemento, std::string &nick){
-  if (nick.compare(this->nick)) {
+  if (nick == this->nick) {
       elementos.push_back(elemento);
       MostrarBotones(elemento);
     }
