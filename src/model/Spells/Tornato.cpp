@@ -26,7 +26,10 @@ bool Tornato::canBeThrownBy(const std::string &element) {
 void Tornato::update() {
     checkIfIsActive(duration);
 
-    if (!is_active) { return; }
+    if (!is_active) { 
+        enemies_already_affected.clear();
+        return; 
+    }
 
     // sera usada para obtener un "seed" para el engine generador de numeros
     std::random_device rd;
@@ -36,7 +39,11 @@ void Tornato::update() {
     std::uniform_int_distribution<> distribution(min_dmg, max_dmg);
 
     for (Enemy* enemy : scenario.getEnemiesInRange(Range(position, tile_size))) {
-        enemy->reduceLife((unsigned)distribution(gen));
+        if (std::find(enemies_already_affected.begin(), 
+                      enemies_already_affected.end(), enemy) == enemies_already_affected.end()) {
+            enemy->reduceLife((unsigned)distribution(gen));
+            enemies_already_affected.push_back(enemy);
+        }
     }
 }
 

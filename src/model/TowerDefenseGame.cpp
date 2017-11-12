@@ -119,7 +119,7 @@ void TowerDefenseGame::loadSpellsProperties(YAML::Node& spells_node) {
                                             blizzard["slowdown"].as<unsigned int>(),
                                             blizzard["slowdown_duration"].as<unsigned int>()));
     YAML::Node tornado = spells_node["tornado"];
-    spells.emplace("tornato", new Tornato(*scenario,
+    spells.emplace("tornado", new Tornato(*scenario,
                                           tornado["cooldown"].as<unsigned int>(),
                                           tornado["min_damage"].as<unsigned int>(),
                                           tornado["max_damage"].as<unsigned int>(),

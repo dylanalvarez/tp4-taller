@@ -4,6 +4,8 @@
   <requires lib="gtk+" version="3.12"/>
   <object class="GtkWindow" id="ElegirElementos">
     <property name="can_focus">False</property>
+    <property name="window_position">center</property>
+    <property name="icon">Tower-Defense.png</property>
     <child>
       <object class="GtkBox" id="box15">
         <property name="visible">True</property>
@@ -13,7 +15,7 @@
           <object class="GtkLabel" id="label7">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Eligan sus Elementos</property>
+            <property name="label" translatable="yes">Seleccion de elemento</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -25,12 +27,20 @@
           <object class="GtkBox" id="box16">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="margin_top">46</property>
+            <property name="homogeneous">True</property>
             <child>
               <object class="GtkToggleButton" id="fuego2">
-                <property name="label" translatable="yes">fuego</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <child>
+                  <object class="GtkImage" id="image2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="pixbuf">fire.png</property>
+                  </object>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -40,10 +50,16 @@
             </child>
             <child>
               <object class="GtkToggleButton" id="agua2">
-                <property name="label" translatable="yes">agua</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <child>
+                  <object class="GtkImage" id="image5">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="pixbuf">water.png</property>
+                  </object>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -53,10 +69,16 @@
             </child>
             <child>
               <object class="GtkToggleButton" id="tierra2">
-                <property name="label" translatable="yes">tierra</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <child>
+                  <object class="GtkImage" id="image6">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="pixbuf">earth.png</property>
+                  </object>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -66,10 +88,16 @@
             </child>
             <child>
               <object class="GtkToggleButton" id="aire2">
-                <property name="label" translatable="yes">aire</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <child>
+                  <object class="GtkImage" id="image7">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="pixbuf">air.png</property>
+                  </object>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -88,12 +116,22 @@
           <object class="GtkBox" id="box17">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="halign">baseline</property>
+            <property name="margin_top">68</property>
+            <property name="spacing">72</property>
+            <property name="homogeneous">True</property>
             <child>
-              <object class="GtkButton" id="listo">
-                <property name="label" translatable="yes">listo</property>
+              <object class="GtkButton" id="elegir">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <child>
+                  <object class="GtkImage" id="image3">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="stock">gtk-apply</property>
+                  </object>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -102,13 +140,19 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="elegir">
-                <property name="label" translatable="yes">elegir</property>
+              <object class="GtkButton" id="listo">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="xalign">0.55000001192092896</property>
                 <property name="yalign">0.55000001192092896</property>
+                <child>
+                  <object class="GtkImage" id="image4">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="stock">gtk-go-forward</property>
+                  </object>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -149,8 +193,10 @@
   </object>
   <object class="GtkApplicationWindow" id="Juego">
     <property name="can_focus">False</property>
+    <property name="window_position">center</property>
     <property name="default_width">1000</property>
     <property name="default_height">500</property>
+    <property name="icon">Tower-Defense.png</property>
     <property name="show_menubar">False</property>
     <child>
       <object class="GtkBox" id="box1">
@@ -248,7 +294,7 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="Upgred1">
-                                <property name="label" translatable="yes">Upgred</property>
+                                <property name="label" translatable="yes">Level up</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="no_show_all">True</property>
@@ -286,7 +332,7 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="Upgred2">
-                                <property name="label" translatable="yes">Upgred</property>
+                                <property name="label" translatable="yes">Level up</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="no_show_all">True</property>
@@ -324,7 +370,7 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="Upgred3">
-                                <property name="label" translatable="yes">Upgred</property>
+                                <property name="label" translatable="yes">Level up</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="no_show_all">True</property>
@@ -688,16 +734,19 @@
   </object>
   <object class="GtkWindow" id="creaccion">
     <property name="can_focus">False</property>
+    <property name="window_position">center</property>
+    <property name="icon">Tower-Defense.png</property>
     <child>
       <object class="GtkBox" id="box8">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
         <child>
-          <object class="GtkLabel" id="label3">
+          <object class="GtkImage" id="image1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Titulos</property>
+            <property name="pixbuf">Tower-Defense.png</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -711,21 +760,11 @@
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkLabel" id="label4">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Nick</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkEntry" id="Nick">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="caps_lock_warning">False</property>
+                <property name="placeholder_text" translatable="yes">Introcude tu nick</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -746,21 +785,10 @@
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkLabel" id="label5">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Unirse Equipo</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkBox" id="box11">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkComboBoxText" id="equipos">
                     <property name="visible">True</property>
@@ -806,22 +834,10 @@
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkLabel" id="label6">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">NuevoEquipo
-</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkBox" id="box13">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkBox" id="box14">
                     <property name="visible">True</property>
@@ -831,6 +847,7 @@
                       <object class="GtkEntry" id="NombreEquipo">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="placeholder_text" translatable="yes">Nombre de la partida</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -887,6 +904,7 @@
           <object class="GtkLabel" id="Errores">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="margin_top">6</property>
           </object>
           <packing>
             <property name="expand">False</property>

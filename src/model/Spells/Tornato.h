@@ -34,6 +34,7 @@ private:
     unsigned int duration;
     unsigned int min_dmg;
     unsigned int max_dmg;
+    std::vector<Enemy*> enemies_already_affected;
 };
 
 
