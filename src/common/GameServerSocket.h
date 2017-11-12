@@ -32,6 +32,8 @@ public:
     void sendPing(int x, int y);
 
     void disconnect();
+    
+    bool isOperational() const;
 
     ~GameServerSocket() override;
 

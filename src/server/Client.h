@@ -20,8 +20,7 @@ class Client {
 public:
     Client(Socket&& socket, Server& server);
 
-    void start(const std::vector<Communication::NameAndID> &matches,
-               const std::vector<Communication::NameAndID> &maps);
+    void start();
     void stop();
 
     ~Client();
@@ -31,6 +30,8 @@ public:
     void sendPing(Vector position);
     void sendElementUnavailable(const std::string& element,
                                 const std::string& nickname);
+    void sendInitialData(const std::vector<Communication::NameAndID> &matches,
+                         const std::vector<Communication::NameAndID> &maps);
     void sendMap(const std::string& map);
 
     void setModelPlayer(const Player &player);

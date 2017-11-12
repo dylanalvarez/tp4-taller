@@ -29,9 +29,10 @@ void Server::run() {
             auto* client = new Client(std::move(new_client), *this);
 
             //std::lock_guard<std::mutex> lock(mutex);
-            clients.push_back(client);
+            clients_waiting_for_match.push_back(client);
 
-            client->start(matchs_id, maps);
+            client->start();
+            client->sendInitialData(matchs_id, maps);
         } catch (AcceptFailedException& e) {
             // se cerro el socket
         }
@@ -43,7 +44,7 @@ void Server::stop() {
     for (auto &match : matchs) {
         match.second->stop();
     }
-    for (Client* client : clients) {
+    for (Client* client : clients_waiting_for_match) {
         // clientes que no estan en una partida
         client->stop();
         delete client;
@@ -56,7 +57,7 @@ void Server::joinMatch(Client& client, int id) {
     try {
         Match* match = matchs.at(id);
         match->addPlayer(&client);
-        clients.erase(std::remove(clients.begin(), clients.end(), &client));
+        clients_waiting_for_match.erase(std::remove(clients_waiting_for_match.begin(), clients_waiting_for_match.end(), &client));
     } catch (std::exception& e) {
         // la partida no existe
         // enviar error al cliente
@@ -105,12 +106,14 @@ int Server::createMatch(Client &client, int map_id,
         auto* match = new Match(config_file_path, maps_paths.at(map_id), match_id);
         matchs.emplace(match_id, match);
         matchs.at(match_id)->addPlayer(&client);
-        clients.erase(std::remove(clients.begin(), clients.end(), &client));
+        clients_waiting_for_match.erase(std::remove(clients_waiting_for_match.begin(),
+                                                    clients_waiting_for_match.end(), &client));
 
         Communication::NameAndID new_match_;
         new_match_.id = match_id;
         new_match_.name = match_name;
         matchs_id.push_back(std::move(new_match_));
+        //reSeanInitialData();
     } catch (std::out_of_range& e) {
         syslog(LOG_CRIT, "Error: el mapa con id %d no existe\n", map_id);
         // el mapa no existe
@@ -146,11 +149,17 @@ void Server::cleanMatchs() {
                 }
             }
             match.second->stop();
-            match.second->join();
+            if (match.second->hasStarted()) { match.second->join(); }
             delete match.second;
         } else {
             running_matchs.insert(match);
         }
     }
     std::swap(matchs, running_matchs);
+}
+
+void Server::reSeanInitialData() {
+    for (Client* client: clients_waiting_for_match) {
+        client->sendInitialData(matchs_id, maps);
+    }
 }

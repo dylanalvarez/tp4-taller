@@ -50,11 +50,9 @@ const std::string &Client::getName() const {
     return name;
 }
 
-void Client::start(const std::vector<Communication::NameAndID> &matches,
-                   const std::vector<Communication::NameAndID> &maps) {
+void Client::start() {
     sender.start();
     serverSocket.start();
-    serverSocket.sendInitialData(matches, maps);
 }
 
 void Client::stop() {
@@ -96,5 +94,10 @@ bool Client::isOnMatch() const {
 }
 
 bool Client::isOperatinal() const {
-    return sender.isOperational();
+    return serverSocket.isOperational();
+}
+
+void Client::sendInitialData(const std::vector<Communication::NameAndID> &matches,
+                             const std::vector<Communication::NameAndID> &maps) {
+    serverSocket.sendInitialData(matches, maps);
 }

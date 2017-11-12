@@ -46,7 +46,7 @@ private:
     std::mutex mutex;
     ServerSocket accept_socket;
     std::map<int, Match*> matchs;
-    std::vector<Client*> clients;
+    std::vector<Client*> clients_waiting_for_match;
 
     std::vector<Communication::NameAndID> matchs_id;
     std::vector<Communication::NameAndID> maps;
@@ -58,6 +58,9 @@ private:
     const std::string config_file_path = "config.yaml";
     
     void cleanMatchs();
+    // vuelve a enviar los mapas y partidas
+    // disponibles a los clientes sin partida
+    void reSeanInitialData();
 };
 
 

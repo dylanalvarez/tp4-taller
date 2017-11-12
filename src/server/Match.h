@@ -30,7 +30,7 @@ public:
                             const std::string& element);
     int getID() const;
     bool hasStarted() const;
-    bool isRunning() const;
+    bool isRunning();
 
     Match(const Match&) = delete;
     Match(Match&&) = delete ;

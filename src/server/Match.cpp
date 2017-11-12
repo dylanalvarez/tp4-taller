@@ -11,7 +11,7 @@ Match::Match(const std::string &config_file_path,
             game(config_file_path, map_file_path, horde_creator.getTotalAmountOfEnemies()),
             context(game, clients), id(id), map(map_file_path)  {
     has_started = false;
-    keep_running = true;
+    keep_running = false;
 }
 
 Match::~Match() {
@@ -87,7 +87,7 @@ void Match::startGame() {
         // hasta que no esten todos listos, no se inicia la partida
         if (!client->isReady()) { return; }
     }
-    
+    keep_running = true;
     Thread::start();
 }
 
@@ -107,8 +107,9 @@ void Match::addElementToClient(const Client& client_to_add,
     }
 }
 
-bool Match::isRunning() const {
-    return keep_running;
+bool Match::isRunning() {
+    cleanClients();
+    return (keep_running || !has_started) && !clients.empty();
 }
 
 bool isNotOperational(const Client* client) { return !client->isOperatinal(); }

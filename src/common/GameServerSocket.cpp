@@ -161,7 +161,7 @@ void GameServerSocket::run() {
     while (keep_running) {
         try {
             std::string str_opcode = socket.receiveString(OPCODE_CHARACTER_COUNT);
-            if (str_opcode.empty()) { break; }
+            if (str_opcode.empty()) { keep_running = false; break; }
             int opcode = std::stoi(str_opcode);
             unsigned long messageLength = std::stoul(
                     socket.receiveString(MESSAGE_LENGTH_CHARACTER_COUNT));
@@ -295,4 +295,8 @@ void GameServerSocket::sendNode(YAML::Node &node) {
     socket.send(Communication::toFixedLengthString(
             message.length(), MESSAGE_LENGTH_CHARACTER_COUNT));
     socket.send(message);
+}
+
+bool GameServerSocket::isOperational() const {
+    return keep_running;
 }
