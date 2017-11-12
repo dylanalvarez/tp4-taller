@@ -101,16 +101,20 @@ void Map::exportToFile(const std::string &filename) const {
 
 void Map::loadFromFile(std::ifstream &source) {
     YAML::Node file = YAML::Load(source);
-    name = file["name"].as<std::string>();
-    setting = settingFromString(file["setting"].as<std::string>());
-    size = Coordinate(file["size"]["x"].as<int>(), file["size"]["y"].as<int>());
+    loadFromNode(file);
+}
+
+void Map::loadFromNode(YAML::Node& source) {
+    name = source["name"].as<std::string>();
+    setting = settingFromString(source["setting"].as<std::string>());
+    size = Coordinate(source["size"]["x"].as<int>(), source["size"]["y"].as<int>());
     this->firmGround.clear();
-    for (const YAML::Node &firmGround: file["firm_ground"]) {
+    for (const YAML::Node &firmGround: source["firm_ground"]) {
         this->firmGround.emplace_back(firmGround["x"].as<int>(),
                                       firmGround["y"].as<int>());
     }
     this->paths.clear();
-    YAML::Node paths = file["paths"];
+    YAML::Node paths = source["paths"];
     for (const YAML::Node &path : paths) {
         this->paths.emplace_back();
         for (const YAML::Node &pathStep : path["path_sequence"]) {

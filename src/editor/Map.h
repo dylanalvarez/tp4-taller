@@ -80,6 +80,8 @@ public:
 
     void loadFromFile(std::ifstream& source);
 
+    void loadFromNode(YAML::Node& source);
+
     static std::string toString(HordeType hordeType);
 
     static HordeType hordeTypeFromString(const std::string &hordeType);
