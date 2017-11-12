@@ -31,7 +31,19 @@
 
 #define SpriteAbominableInicial 23
 #define SpriteAbominableTotal 47
- //van a ser 44... cargarlos de a uno ya no tiene sentido.
+
+#define SpriteDecierto1 71
+#define SpriteDecierto2 72
+#define SpriteDecierto3 73
+#define SpriteDecierto4 74
+#define SpritePradera1 75
+#define SpritePradera2 76
+#define SpritePradera3 77
+#define SpritePradera4 78
+#define SueloGelido1 79
+#define SueloGelido2 80
+#define SueloGelido3 81
+#define SueloGelido4 82
 
 class VectorDeSprites{
 protected:

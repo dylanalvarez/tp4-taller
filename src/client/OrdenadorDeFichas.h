@@ -60,6 +60,7 @@ public:
 
  void agregarEfectos(int inicio, int objetivo, int id2, VectorDeSprites &sprites);
  void agregarEfectos(FichaEfectos nuevaFicha);
+ void agregarPing(int x, int y);
 
  void agregarPortal(FichaPortal nuevaFicha);
 

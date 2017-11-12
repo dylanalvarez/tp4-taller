@@ -1,8 +1,7 @@
 #include "GestionadorDeVentanas.h"
 
 GestionadorDeVentanas::GestionadorDeVentanas(
-  Glib::RefPtr<Gtk::Builder> &ventana2,
-    Glib::RefPtr<Gtk::Application> app2):app(app2){
+  Glib::RefPtr<Gtk::Builder> &ventana2){
     ventana2->get_widget("Juego", juego);
     ventana2->get_widget("ElegirElementos", pantallaDeElementos);
     ventana2->get_widget("creaccion", pantallaDeInicio);
@@ -10,11 +9,11 @@ GestionadorDeVentanas::GestionadorDeVentanas(
 
 
 void GestionadorDeVentanas::arrancarJuego(){
-  //if (!elementosElegidos)
-    //return
-  juego->show_all();
-  app = Gtk::Application::create();
-  app->run(*juego);
+  if (elementosElegidos){
+    juego->show_all();
+    app = Gtk::Application::create();
+    app->run(*juego);
+  }  
 }
 
 void GestionadorDeVentanas::TerminarJuego(){
@@ -33,11 +32,11 @@ void GestionadorDeVentanas::actualizar(
 }
 
 void GestionadorDeVentanas::arrancarPantallaDeElementos(){
-  if (!iniciado)
-    return
-  pantallaDeElementos->show_all();
-  app = Gtk::Application::create();
-  app->run(*pantallaDeElementos);
+  if (iniciado){
+    pantallaDeElementos->show_all();
+    app = Gtk::Application::create();
+    app->run(*pantallaDeElementos);
+  }
 }
 
 void GestionadorDeVentanas::TerminarPantallaDeElementos(){

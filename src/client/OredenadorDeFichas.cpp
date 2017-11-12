@@ -49,6 +49,8 @@ void OrdenadorDeFichas::actualizar(const Communication::GameState &gameState){
     actualizarEfectos(*it);
   for (auto it = gameState.targetPowers.begin() ; it != gameState.targetPowers.end(); ++it)
     actualizarEfectos(*it);
+  for (auto it = poderes.begin(); it != poderes.end(); ++it)
+      it->second.ejecutarSicloDeActualizacion();
 }
 
 void OrdenadorDeFichas::preprarParaActualizacion(){
@@ -169,7 +171,7 @@ void OrdenadorDeFichas::actualizarEfectos(Communication::PositionalPower actualz
        FichaGrieta, sprites));
     break;
     case Communication::PositionalPower::Type::terraforming:
-    printf("terraforameando, %i, %i\n", actualzacion.x, actualzacion.y);
+    //printf("terraforameando, %i, %i\n", actualzacion.x, actualzacion.y);
       getTerreno(ObetenerTerrenoEnEstaPosicion(actualzacion.x, actualzacion.y)
     ).cambiarTipo(FichaPisoFirme, sprites);
     break;
@@ -194,8 +196,21 @@ void OrdenadorDeFichas::actualizarEfectos(Communication::PositionalPower actualz
 
 void OrdenadorDeFichas::actualizarEfectos(Communication::TargetPower actualzacion){
   idEfectos++;
+  switch (actualzacion.type){
+    case Communication::TargetPower::Type::freezing:
+    agregarEfectos(FichaEfectos(idEfectos, FichaCongelacion, sprites,
+       getEnemigo(actualzacion.enemyID)));
+    break;
+    case Communication::TargetPower::Type::ray:
+    agregarEfectos(FichaEfectos(idEfectos, FichaRayos, sprites,
+       getEnemigo(actualzacion.enemyID)));
+    break;
+  }
 }
-
+void OrdenadorDeFichas::agregarPing(int x, int y){
+  idEfectos++;
+  agregarEfectos(FichaEfectos(x, y, idEfectos, FichaPing, sprites));
+}
 
 
 //Portal

@@ -22,37 +22,33 @@ int main(int argc, char *argv[]){
   if (argc != 2) {
     return 0;
   }
-  //char *servicename= argv[1];
   Socket socket("127.0.0.1", argv[1]); //Algo raro pasa aca.
-  //Socket socket("127.0.0.1", "7072");
+
+  //esto.. no estamos de todo seguro.
   int argcF =argc -1;
-  //Crea la aplicación de gtkmm (Todo esto tendria que ser un un clase)
   Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argcF, argv);
-  VectorDeSprites sprites;
+
+
   OrdenadorDeFichas fichas;
-
   Gtk::Box* Box;
-
 	Glib::RefPtr<Gtk::Builder> refBuilder = Gtk::Builder::create();
 	refBuilder->add_from_file("Sprites/Pantallas/Pantalla principal.glade");
-  //creo pantalla
+  //creo objetos
   Emisor emisor;
   PantallaDeJuego area (fichas, refBuilder, emisor);
-
 	refBuilder->get_widget("cajaJuego", Box);
   Box->pack_start(area);
-  GestionadorDeVentanas ventanas(refBuilder, app);
-
+  GestionadorDeVentanas ventanas(refBuilder);
   PantallaDeInicio pantallaInicial(refBuilder, emisor, area.getMenuTorres());
   PantallaDeElementos pantallaDeElementos(refBuilder, emisor);
   GameClientReceiver reciver(fichas, area.getMenuTorres(),
    ventanas, pantallaInicial,pantallaDeElementos);
   GameClientSocket clientSocket(reciver, std::move(socket));
   Receptor receptor(reciver, clientSocket);
-  ControladorDeSiclos falso(receptor, emisor);
+  ControladorDeSiclos controladorDeSiclos(receptor, emisor);
   emisor.cargarSocket(&clientSocket);
 
-//mejorar nombres
+//pongo Timers
   int TiempoEnMilesegundos = 100;
   sigc::slot<bool> my_slot = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDeAnimacion);
   sigc::connection conn = Glib::signal_timeout().connect(my_slot,TiempoEnMilesegundos);
@@ -60,12 +56,13 @@ int main(int argc, char *argv[]){
   sigc::slot<bool> my_slot2 = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDesplasamientos);
   sigc::connection conn2 = Glib::signal_timeout().connect(my_slot2,TiempoEnMilesegundos);
 
+  //arranco
 
-  falso.iniciar();
+  controladorDeSiclos.iniciar();
   ventanas.arrancarPantallaDeInicio();
   ventanas.arrancarPantallaDeElementos();
   ventanas.arrancarJuego();
-  falso.terminar();
+  controladorDeSiclos.terminar();
 
   return 0;
 }

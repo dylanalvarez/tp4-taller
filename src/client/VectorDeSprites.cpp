@@ -84,6 +84,18 @@ VectorDeSprites::VectorDeSprites(){
   cargarSprite("Sprites/AbmonibleCaminarAdelante46.png");
   cargarSprite("Sprites/AbmonibleCaminarAdelante47.png");
   cargarSprite("Sprites/AbmonibleCaminarAdelante48.png");
+  cargarSprite("Sprites/Decierto1.png");
+  cargarSprite("Sprites/Decierto2.png");
+  cargarSprite("Sprites/Decierto3.png");
+  cargarSprite("Sprites/Decierto4.png");
+  cargarSprite("Sprites/Pradera1.png");
+  cargarSprite("Sprites/Pradera2.png");
+  cargarSprite("Sprites/Pradera3.png");
+  cargarSprite("Sprites/Pradera4.png");
+  cargarSprite("Sprites/SueloGelido1.png");
+  cargarSprite("Sprites/SueloGelido2.png");
+  cargarSprite("Sprites/SueloGelido3.png");
+  cargarSprite("Sprites/SueloGelido4.png");
 
 }
 Glib::RefPtr<Gdk::Pixbuf>& VectorDeSprites::obtener (int n){

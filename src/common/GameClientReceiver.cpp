@@ -39,5 +39,5 @@ void GameClientReceiver::getUnavailableElement(
 }
 
 void GameClientReceiver::getPing(int x, int y) {
-    //throw Exception("Not yet implemented");
+    fichas.agregarPing(x,y);
 }

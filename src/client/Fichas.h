@@ -43,11 +43,9 @@ class Ficha{
 #define FichaPisoFirme 0
 #define FichaPisoEnemigos 1
 #define FichaPisoFondoLava 2
-//Terminar de Programar a futuro
-#define FichaPisoFondoPradera 2
-#define FichaPisoFondoGelido 2
-#define FichaPisoFondoDesierto 2
-
+#define FichaPisoFondoPradera 3
+#define FichaPisoFondoGelido 4
+#define FichaPisoFondoDesierto 5
 
 class FichaTerreno: public Ficha{
  private:
@@ -83,6 +81,11 @@ class FichaTorre: public Ficha{
 };
 
 #define Abmonible 0
+#define DemonioVerde 1
+#define HalconSangriento 2
+#define Espectro 3
+#define HombreCabra 4
+#define NoMuerto 5
 
 #define masX 36;
 #define masY 0;
@@ -120,12 +123,23 @@ class FichaPortal: public Ficha{
   virtual void ejecutarSicloDeAnimacion(); //Para los gif
 };
 
-#define FichaGrieta 4
-#define FichaMetorito 5
-#define FichaTornado 6
-#define FichaVentisca 7
-#define FichafireWall 8
+
+#define FichaAtaqueTierra 0
+#define FichaAtaqueFuego 1
+#define FichaAtaqueAire 2
+#define FichaAtaqueAgua 3
+//las primeras 4 tienen que ser igual a las torres.
+#define FichaCongelacion 4
+#define FichaRayos 5
+//de 0 a 5 es tarjetado
+#define FichaGrieta 6
+#define FichaMetorito 7
+#define FichaTornado 8
+#define FichaVentisca 9
+#define FichafireWall 10
+#define FichaPing 11
 //valas. Poderes estatico y poderes a objetivos
+
 class FichaEfectos: public Ficha{
  private:
  protected:
@@ -134,11 +148,14 @@ class FichaEfectos: public Ficha{
  public:
   FichaEfectos(FichaTorre &inicio, int id2, VectorDeSprites &sprites,
      FichaEnemigo &objetivo2);
+  FichaEfectos(int id2, int tipo, VectorDeSprites &sprites,
+     FichaEnemigo &objetivo2);
   FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
   //FichaEfectos(int id2, int tipo, VectorDeSprites &sprites, FichaEnemigo *objetivo2);
   FichaEfectos(const FichaEfectos &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
   virtual void ejecutarSicloDeAnimacion(); //Para los gif
+  void ejecutarSicloDeActualizacion();
 };
 
 #endif

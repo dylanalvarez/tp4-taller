@@ -2,8 +2,7 @@
 #include <stdlib.h>
 
 //esta funcion puede ser mejorada a futuro.
-Ficha::Ficha(){
-}
+Ficha::Ficha(){}
 Ficha::Ficha(int x2, int y2, int id2, int tipo2): x(x2), y(y2), id(id2), tipo(tipo2){
  spriteActual = 0;
  medioLargoX = 44;
@@ -36,14 +35,13 @@ Posicion Ficha::getPosicion() const{
   retorno.Y = y;
   return retorno;
 }
-Ficha::~Ficha(){
-}
+Ficha::~Ficha(){}
 bool Ficha::colisionaConmigo(int x2, int y2){
   return ((x-medioLargoX)<=x2)&&((x+medioLargoX)>=x2)&&
           ((y-medioAltoY)<=y2)&&((y+medioAltoY)>=y2);
 }
 
-//echa para revisar nada mas. Quitar despues.
+//echa para revisar nada mas.
 void Ficha::imprimierCordenadas() const{
   printf("x: %i, y: %i\n", x, y);
 }
@@ -72,13 +70,24 @@ FichaTerreno::FichaTerreno(int x2, int y2, int id2, int tipo,
       Por lo que el random te hace de ir de uno a ottros
       La otra opcion es un switch dentro de un switch*/
       break;
+    case FichaPisoFondoPradera:
+      random = rand() % 3;
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpritePradera1 + random)));
+     break;
+    case FichaPisoFondoGelido:
+      random = rand() % 3;
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SueloGelido1 + random)));
+      break;
+    case FichaPisoFondoDesierto:
+      random = rand() % 3;
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteDecierto1 + random)));
+      break;
     default:
     //falta que aca salte un error.
       break;
   }
 }
-FichaTerreno::FichaTerreno(const FichaTerreno &p): Ficha(p){
-}
+FichaTerreno::FichaTerreno(const FichaTerreno &p): Ficha(p){}
 void FichaTerreno::cambiarTipo(int tipo, VectorDeSprites &vectorDeSprites){
   sprites.clear();
   this->tipo = tipo;
@@ -93,13 +102,22 @@ void FichaTerreno::cambiarTipo(int tipo, VectorDeSprites &vectorDeSprites){
     case FichaPisoFondoLava:
       random = rand() % 3;
       sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteSueloLava1 + random)));
-      /*los suelos de lava van son en verdad int de 2 a 5.
-      Por lo que el random te hace de ir de uno a ottros
-      La otra opcion es un switch dentro de un switch*/
+      break;
+    case FichaPisoFondoPradera:
+      random = rand() % 3;
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpritePradera1 + random)));
+     break;
+    case FichaPisoFondoGelido:
+      random = rand() % 3;
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SueloGelido1 + random)));
+      break;
+    case FichaPisoFondoDesierto:
+      random = rand() % 3;
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteDecierto1 + random)));
       break;
     default:
     //falta que aca salte un error.
-    break;
+      break;
   }
 }
 
@@ -334,11 +352,39 @@ FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &s
       case FichaGrieta:
           this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
           tiempoImpacto = 10;
-      break;
+       break;
       default:
-      //falta que aca salte un error.
-      break;
+        this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
+        tiempoImpacto = 10;
+       break;
     }
+}
+FichaEfectos::FichaEfectos(int id2, int tipo, VectorDeSprites &sprites,
+   FichaEnemigo &objetivo2): objetivo(&objetivo2){
+  spriteActual = 0;
+  medioLargoX = 0;
+  medioAltoY = 0;
+  id = id2;
+  destrulleme = false;
+  Posicion posicionInicial;
+  posicionInicial = objetivo->getPosicion();
+  this->tipo = tipo;
+  switch (tipo) {
+    case FichaCongelacion:
+      x = posicionInicial.X;
+      y = posicionInicial.Y;
+      this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
+      tiempoImpacto = 20;
+      break;
+    case FichaRayos:
+      x = posicionInicial.X;
+      y = posicionInicial.Y;
+      this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
+      tiempoImpacto = 20;
+     break;
+    default:
+     break;
+  }
 }
 FichaEfectos::FichaEfectos(const FichaEfectos &p): Ficha(p){
   tiempoImpacto = p.tiempoImpacto;
@@ -347,27 +393,34 @@ FichaEfectos::FichaEfectos(const FichaEfectos &p): Ficha(p){
 }
 
 void FichaEfectos::ejecutarSicloDeAnimacion(){
+  /* Esto.. hacer luego de tener sprites
+  spriteActualSubAnimacion++;
+  if (spriteActualSubAnimacion == 4) {
+     spriteActualSubAnimacion = 1;
+  }*/
+}
+
+void FichaEfectos::ejecutarSicloDeActualizacion(){
  if (tiempoImpacto == 0) {
    destrulleme = true;
    return;
  }
  int x2;
  int y2;
- switch (tipo) {
-   case FichaTorreDeTierra:
-      Posicion posicionFinal;
-      posicionFinal = objetivo->getPosicion();
-      x2 = posicionFinal.X;
-      y2 = posicionFinal.Y;
-      x = x - (x-x2)/tiempoImpacto;
-      y = y - (y-y2)/tiempoImpacto;
-   break;
-   default:
-   //
-   break;
+ if (tipo < 6) {
+   Posicion posicionFinal;
+   posicionFinal = objetivo->getPosicion();
+   x2 = posicionFinal.X;
+   y2 = posicionFinal.Y;
+   x = x - (x-x2)/tiempoImpacto;
+   y = y - (y-y2)/tiempoImpacto;
+   if (objetivo->siguesVivo())
+     destrulleme = true;
+     //si el objetivo se va a destruir en el siguiente siclo. tambien esto
  }
  tiempoImpacto--;
 }
+
 
 void FichaEfectos::dibujar(const Cairo::RefPtr<Cairo::Context>& cr,
   DatosPantalla datosActuales){

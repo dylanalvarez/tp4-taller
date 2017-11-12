@@ -17,8 +17,7 @@ class GestionadorDeVentanas{
  protected:
  public:
    //los arrancar se ejecutan en el Hilo principal. y el terminar en otro hilo
-   GestionadorDeVentanas(Glib::RefPtr<Gtk::Builder> &ventana2,
-     Glib::RefPtr<Gtk::Application> app2);
+   GestionadorDeVentanas(Glib::RefPtr<Gtk::Builder> &ventana2);
    void arrancar();
    void arrancarJuego();
    void TerminarJuego();
