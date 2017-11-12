@@ -103,7 +103,7 @@ void TowerDefenseGame::loadSpellsProperties(YAML::Node& spells_node) {
                                           meteorite["damage"].as<unsigned int>(),
                                           meteorite["damage_to_nearby_units"].as<unsigned int>()));
     YAML::Node fire_wall = spells_node["fire_wall"];
-    spells.emplace("fire_wall", new FireWall(*scenario,
+    spells.emplace("fireWall", new FireWall(*scenario,
                                          fire_wall["cooldown"].as<unsigned int>(),
                                          fire_wall["damage"].as<unsigned int>(),
                                          fire_wall["duration"].as<unsigned int>()));
