@@ -30,6 +30,7 @@ public:
                             const std::string& element);
     int getID() const;
     bool hasStarted() const;
+    bool isRunning() const;
 
     Match(const Match&) = delete;
     Match(Match&&) = delete ;
@@ -51,6 +52,8 @@ private:
 
     const std::string& map;
 
+    void cleanClients();
+    
     const unsigned int time_step = 15000; // 15 milisegundos;
 };
 

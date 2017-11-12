@@ -25,13 +25,13 @@ void Server::run() {
         try {
             Socket new_client = accept_socket.accept();
             // se pudo cerrar el socket en el accept
+            cleanMatchs();
             auto* client = new Client(std::move(new_client), *this);
 
             //std::lock_guard<std::mutex> lock(mutex);
             clients.push_back(client);
 
             client->start(matchs_id, maps);
-            //TODO clean clients
         } catch (AcceptFailedException& e) {
             // se cerro el socket
         }
@@ -90,8 +90,7 @@ void Server::startMatch(int match_id) {
 
     try {
         if (matchs.at(match_id)->hasStarted()) { return; }
-        // matchs.at(match_id)->startGame();
-        matchs.at(match_id)->start();
+        matchs.at(match_id)->startGame();
     } catch (std::exception& e) {
         // el match no existe
         // enviar error al cliente
@@ -134,4 +133,24 @@ void Server::addElementToPlayer(const Client& client, int match_id,
     } catch (std::exception& e) {
        // match inexistente
     }
+}
+
+void Server::cleanMatchs() {
+    std::map<int, Match*> running_matchs;
+    for (auto& match : matchs) {
+        if (!match.second->isRunning()) {
+            for (auto it = matchs_id.begin(); it != matchs_id.end(); ++it) {
+                if (it->id == match.second->getID()) {
+                    matchs_id.erase(it);
+                    break;
+                }
+            }
+            match.second->stop();
+            match.second->join();
+            delete match.second;
+        } else {
+            running_matchs.insert(match);
+        }
+    }
+    std::swap(matchs, running_matchs);
 }

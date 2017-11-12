@@ -92,7 +92,7 @@ void GameServerSocket::sendGameState(
         socket.send(Communication::toFixedLengthString(3, OPCODE_CHARACTER_COUNT));
         sendNode(game_node);
     } catch (Exception& e) {
-       //socket cerrado
+       throw e;
     }
 
 }
@@ -116,14 +116,14 @@ void GameServerSocket::sendInitialData(
         const std::vector<Communication::NameAndID> &matches,
         const std::vector<Communication::NameAndID> &maps) {
     YAML::Node initialData;
-    initialData["matches"];
+    initialData["matches"] = YAML::Load("[ ]");
     for (auto &match : matches) {
         YAML::Node matchNode;
         matchNode["id"] = match.id;
         matchNode["name"] = match.name;
-        initialData["matches"].push_back(matchNode);
+        initialData["matchs"].push_back(matchNode);
     }
-    initialData["maps"];
+    initialData["maps"] = YAML::Load("[ ]");
     for (auto &map : maps) {
         YAML::Node mapNode;
         mapNode["id"] = map.id;

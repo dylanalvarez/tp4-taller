@@ -56,6 +56,8 @@ private:
     std::map<int, const std::string> maps_paths;
 
     const std::string config_file_path = "config.yaml";
+    
+    void cleanMatchs();
 };
 
 

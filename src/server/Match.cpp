@@ -24,7 +24,7 @@ void Match::run() {
     has_started = true;
     horde_creator.start();
 
-    while(!game.isGameOver() && keep_running) {
+    while(!game.isGameOver() && keep_running && !clients.empty()) {
         time_t start_time;
         time(&start_time);
 
@@ -43,6 +43,8 @@ void Match::run() {
             client->sendGameState(gameState);
         }
 
+        cleanClients();
+
         time_t end_time;
         time(&end_time);
 
@@ -52,6 +54,7 @@ void Match::run() {
            usleep((unsigned int)time_to_sleep);
         }
     }
+    keep_running = false;
 }
 
 int Match::getID() const {
@@ -84,7 +87,7 @@ void Match::startGame() {
         // hasta que no esten todos listos, no se inicia la partida
         if (!client->isReady()) { return; }
     }
-
+    
     Thread::start();
 }
 
@@ -102,4 +105,17 @@ void Match::addElementToClient(const Client& client_to_add,
         }
         client->sendElementUnavailable(element, client->getName());
     }
+}
+
+bool Match::isRunning() const {
+    return keep_running;
+}
+
+bool isNotOperational(const Client* client) { return !client->isOperatinal(); }
+
+void Match::cleanClients() {
+    clients.erase(std::remove_if(clients.begin(),
+                                 clients.end(),
+                                 isNotOperational), 
+                  clients.end());
 }

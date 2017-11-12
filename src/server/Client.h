@@ -45,6 +45,8 @@ public:
     bool isReady() const;
     // retorna si pertence a una partida
     bool isOnMatch() const;
+    
+    bool isOperatinal() const;
 
     Client(const Client&) = delete;
     Client& operator=(const Client&) = delete;

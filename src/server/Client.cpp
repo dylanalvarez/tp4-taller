@@ -94,3 +94,7 @@ void Client::sendMap(const std::string &map) {
 bool Client::isOnMatch() const {
     return player != nullptr;
 }
+
+bool Client::isOperatinal() const {
+    return sender.isOperational();
+}

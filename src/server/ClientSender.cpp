@@ -3,6 +3,7 @@
 //
 
 #include "ClientSender.h"
+#include "../common/Exception.h"
 
 ClientSender::ClientSender(GameServerSocket &socket, BlockingQueue &queue) :
         queue(queue), context(socket) {
@@ -16,7 +17,7 @@ void ClientSender::run() {
         try {
             queue.front().apply(context);
             queue.pop();
-        } catch (std::exception& e) {
+        } catch (Exception& e) {
             keep_running = false;
         }
     }
