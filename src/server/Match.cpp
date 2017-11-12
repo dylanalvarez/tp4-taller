@@ -99,8 +99,7 @@ void Match::addElementToClient(const Client& client_to_add,
             } catch (std::exception& e) {
                 client->sendElementUnavailable(element, client->getName());
             }
-        } else {
-            client->sendElementUnavailable(element, client->getName());
         }
+        client->sendElementUnavailable(element, client->getName());
     }
 }
