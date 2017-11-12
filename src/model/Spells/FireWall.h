@@ -32,6 +32,7 @@ public:
 private:
     unsigned int duration;
     unsigned int dmg;
+    std::vector<Enemy*> enemies_already_affected;
 };
 
 

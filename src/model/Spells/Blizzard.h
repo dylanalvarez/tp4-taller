@@ -37,6 +37,7 @@ private:
     unsigned int duration;
     unsigned int speed_reduction;
     unsigned int speed_reduction_duration;
+    std::vector<Enemy*> enemies_already_affected;
 };
 
 

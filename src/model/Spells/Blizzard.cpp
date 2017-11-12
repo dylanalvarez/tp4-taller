@@ -28,11 +28,18 @@ bool Blizzard::canBeThrownBy(const std::string &element) {
 void Blizzard::update() {
     checkIfIsActive(duration);
 
-    if (!is_active) { return; }
+    if (!is_active) {
+        enemies_already_affected.clear();
+        return;
+    }
 
     for (Enemy* enemy : scenario.getEnemiesInRange(Range(position, tile_size))) {
-        enemy->reduceLife(dmg);
-        enemy->reduceSpeed(speed_reduction, speed_reduction_duration);
+        if (std::find(enemies_already_affected.begin(),
+                      enemies_already_affected.end(), enemy) == enemies_already_affected.end()) {
+            enemy->reduceLife(dmg);
+            enemy->reduceSpeed(speed_reduction, speed_reduction_duration);
+            enemies_already_affected.push_back(enemy);
+        }
     }
 }
 

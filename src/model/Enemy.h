@@ -8,7 +8,7 @@
 #include "Path.h"
 #include "../common/CommunicationUtils.h"
 
-#define base_speed 1
+#define base_speed 4.0f
 
 class Enemy {
 public:
@@ -40,7 +40,7 @@ public:
     const Vector& getCurrentPosition() const;
     int getID() const;
     int getHealthPoints() const;
-    float getSpeed() const;
+    float getSpeed();
     bool canIFlight() const;
     bool reachTheEnd() const;
 

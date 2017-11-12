@@ -24,10 +24,17 @@ bool FireWall::canBeThrownBy(const std::string &element) {
 void FireWall::update() {
     checkIfIsActive(duration);
 
-    if (!is_active) { return; }
+    if (!is_active) {
+        enemies_already_affected.clear();
+        return;
+    }
 
     for (Enemy* enemy : scenario.getEnemiesInRange(Range(position, tile_size))) {
-        enemy->reduceLife(dmg);
+        if (std::find(enemies_already_affected.begin(),
+                      enemies_already_affected.end(), enemy) == enemies_already_affected.end()) {
+            enemy->reduceLife(dmg);
+            enemies_already_affected.push_back(enemy);
+        }
     }
 }
 

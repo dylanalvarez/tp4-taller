@@ -13,7 +13,7 @@ Enemy::Enemy(Path &path, int health_points, float speed,
                     type(type),
                     hp(health_points),
                     speed(speed * base_speed),
-                    original_speed(speed),
+                    original_speed(speed * base_speed),
                     can_i_fly(does_it_fly) {
     direction = (current_destiny - current_pos);
     direction.normalizeAndRound();
@@ -30,7 +30,7 @@ Enemy::Enemy(int id, Path &path, int health_points, float speed,
 
 void Enemy::move(int units_to_move) {
     for (int i = 0; i < getSpeed() * units_to_move; i++){
-        current_pos += direction * 0.5f;
+        current_pos += direction * 0.125f;
 
         if (current_pos == current_destiny) {
             // calcula nueva direccion
@@ -51,11 +51,11 @@ int Enemy::getID() const {
 }
 
 
-float Enemy::getSpeed() const {
-    if (difftime(time(nullptr), last_speed_reduction_time) <
-        speed_reduction_time) { return speed; }
+float Enemy::getSpeed() {
+    if (difftime(time(nullptr), last_speed_reduction_time) >=
+        speed_reduction_time) { speed = original_speed; }
 
-    return original_speed;
+    return speed;
 }
 
 bool Enemy::canIFlight() const {
