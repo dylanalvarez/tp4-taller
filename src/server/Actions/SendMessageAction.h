@@ -10,7 +10,7 @@
 
 class SendMessageAction : public Action {
 public:
-    explicit SendMessageAction(std::string&& msg, std::string&& nickname);
+    explicit SendMessageAction(std::string&& msg, const std::string& nickname);
 
     void apply(Context& context) override;
 
@@ -19,7 +19,7 @@ public:
 
 private:
     std::string msg;
-    std::string name;
+    const std::string& name;
 };
 
 

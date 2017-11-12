@@ -51,10 +51,9 @@ void GameServerReceiver::getChosenElement(Communication::Element element) {
                               Communication::to_string(element));
 }
 
-void GameServerReceiver::getChatMessage(std::string &&message,
-                                        std::string&& nickname) {
+void GameServerReceiver::getChatMessage(std::string &&message) {
     actions_queue->push(new DistributeMessageAction(std::move(message),
-                                                    std::move(nickname)));
+                                                    client.getName()));
 }
 
 void GameServerReceiver::getSpell(Communication::PositionalPower power) {

@@ -18,7 +18,7 @@ void Emisor::iniciar(){
       break;
       case Mensaje::Type::chooseMap:
         printf("chooseMap\n");
-        socket->chooseMap(std::move(aux.elString2),std::move(aux.elString),aux.elInt1);
+        socket->chooseMap(std::move(aux.elString),std::move(aux.elString2),aux.elInt1);
       break;
       case Mensaje::Type::chooseElement:
         printf("chooseElement\n");
@@ -86,7 +86,7 @@ void Emisor::empesarJuego(){
 }
 void Emisor::enviarMensajeDeChat(std::string mensaje){
   Mensaje aux;
-  aux.tipo = Mensaje::Type::chooseElement;
+  aux.tipo = Mensaje::Type::sendChatMessage;
   aux.elString =  mensaje;
   cola.agregarLinea(aux);
 }

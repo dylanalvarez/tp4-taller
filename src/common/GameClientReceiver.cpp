@@ -27,7 +27,7 @@ void GameClientReceiver::getGameState(const Communication::GameState &gameState)
 
 void GameClientReceiver::getChatMessage(std::string &&message,
                      std::string &&nickname){
-    menues.recivirMensajeChat(nickname + message);
+    menues.recivirMensajeChat(nickname + ": " + message);
 }
 
 GameClientReceiver::~GameClientReceiver() = default;

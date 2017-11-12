@@ -104,7 +104,7 @@ GameServerSocket::GameServerSocket(GameServerSocket &&other) noexcept :
 
 void GameServerSocket::sendChatMessage(
         std::string &&message,
-        std::string &nickname) {
+        const std::string &nickname) {
     YAML::Node msg;
     msg["message"] = message;
     msg["nickname"] = nickname;
@@ -240,9 +240,8 @@ void GameServerSocket::handleChosenElement(std::string &yaml) {
 void GameServerSocket::handleSendMessage(std::string &yaml) {
     YAML::Node msg_node = YAML::Load(yaml);
     std::string message = msg_node["message"].as<std::string>();
-    std::string nickname = msg_node["nickname"].as<std::string>();
 
-    receiver.getChatMessage(std::move(message), std::move(nickname));
+    receiver.getChatMessage(std::move(message));
 }
 
 void GameServerSocket::handlePingTile(std::string &yaml) {

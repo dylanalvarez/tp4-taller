@@ -6,8 +6,8 @@
 #include "../Client.h"
 
 SendMessageAction::SendMessageAction(std::string&& msg,
-                                     std::string&& nickname) :
-        msg(std::move(msg)), name(std::move(nickname)) {}
+                                     const std::string& nickname) :
+        msg(std::move(msg)), name(nickname) {}
 
 void SendMessageAction::apply(Context& context) {
     context.getSocket().sendChatMessage(std::move(msg), name);
