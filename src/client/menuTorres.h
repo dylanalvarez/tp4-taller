@@ -11,6 +11,7 @@
 //nombre a cambiar A Menu
 class MenuTorres{
 private:
+	std::string nick;
 	Emisor& emisorComandos;
 	std::vector<Elementos> elementos;
 	bool casteando = false;
@@ -60,6 +61,8 @@ private:
 												Hechizo hechizoActual2);
 protected:
 public:
+	void setNick(std::string nickNuevo);
+
 	void avisarConstruirTorreTierra();
 	void avisarConstruirTorreFuego();
 	void avisarConstruirTorreAgua();
@@ -96,6 +99,7 @@ public:
   void selecionarTorre(const FichaTorre &torre2);
   void selecionarTerreno(const FichaTerreno &terreno2);
 	void agregarElemento(Elementos elemento);
+	void agregarElemento(Elementos elemento, std::string &nick);
   void decelecionar();
 };
 #endif

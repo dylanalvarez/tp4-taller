@@ -19,7 +19,7 @@ private:
  std::map<int,FichaEnemigo> enemigos;
  int idEnemigo = 0;
  int idTorre = 0;
- int idEfectos = 0; 
+ int idEfectos = 0;
  std::map<int,FichaEfectos> poderes;
  std::vector<FichaPortal> portales;
 protected:
@@ -62,5 +62,7 @@ public:
  void agregarEfectos(FichaEfectos nuevaFicha);
 
  void agregarPortal(FichaPortal nuevaFicha);
+
+ void cargarMapa(std::string &mapa);
 };
 #endif

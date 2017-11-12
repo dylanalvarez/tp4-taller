@@ -1,8 +1,8 @@
 #include "PantallaDeInicio.h"
 
 
-PantallaDeInicio::PantallaDeInicio (Glib::RefPtr<Gtk::Builder> &ventana, Emisor& emisor):
-                  emisorComandos(emisor){
+PantallaDeInicio::PantallaDeInicio(Glib::RefPtr<Gtk::Builder> &ventana,
+   Emisor& emisor, MenuTorres& menu2): emisorComandos(emisor), menu(menu2){
   	ventana->get_widget("Unirse", unirse);
   	ventana->get_widget("Crear", crear);
   	ventana->get_widget("Nick", nick);
@@ -20,10 +20,12 @@ PantallaDeInicio::PantallaDeInicio (Glib::RefPtr<Gtk::Builder> &ventana, Emisor&
 void PantallaDeInicio::unirsePartida(){
   emisorComandos.elegirEquipo(nick->get_text().c_str(),
                             equipos->get_id_column());
+  menu.setNick(nick->get_text().c_str());
   }
 void PantallaDeInicio::crearPartida(){
   emisorComandos.elegirMapa(nick->get_text().c_str(),
                     nickEquipo->get_text().c_str(), mapas->get_id_column()-1);
+  menu.setNick(nick->get_text().c_str());
   }
 
 void PantallaDeInicio::cargarDatos(

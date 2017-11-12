@@ -31,28 +31,6 @@ int main(int argc, char *argv[]){
   VectorDeSprites sprites;
   OrdenadorDeFichas fichas;
 
-//mapa Hercodado.
-  int XpisosFirmos[] = {2,3,6,6,6,7,8,9};
-  int YpisosFirmos[] = {3,3,3,4,5,8,8,8};
-  int XpisosEnemigo[] = {1,2,3,4,4,4,4,4,4,5,6,7,8,9,10};
-  int YpisosEnemigo[] = {1,1,1,1,2,3,4,5,6,6,6,6,6,6,6};
-
-  int id = 0;
-  for (size_t i = 1; i < 11; i++) {
-    for (size_t j = 1; j < 11; j++) {
-      id++;
-      fichas.agregarTerreno(FichaTerreno(largo*i-44, largo*j-44, id, FichaPisoFondoLava, sprites));
-    }
-  }
-  for (size_t i = 0; i < 8; i++) {
-    id = fichas.ObetenerTerrenoEnEstaPosicion((XpisosFirmos[i])*88-44,(YpisosFirmos[i])*88-44);
-    fichas.getTerreno(id).cambiarTipo(FichaPisoFirme, sprites);
-  }
-  for (size_t i = 0; i < 15; i++) {
-    id = fichas.ObetenerTerrenoEnEstaPosicion((XpisosEnemigo[i])*88-44,(YpisosEnemigo[i])*88-44);
-    fichas.getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
-  }
-
   Gtk::Box* Box;
 
 	Glib::RefPtr<Gtk::Builder> refBuilder = Gtk::Builder::create();
@@ -60,13 +38,12 @@ int main(int argc, char *argv[]){
   //creo pantalla
   Emisor emisor;
   PantallaDeJuego area (fichas, refBuilder, emisor);
-  area.agregarElemento(tierra);
 
 	refBuilder->get_widget("cajaJuego", Box);
   Box->pack_start(area);
   GestionadorDeVentanas ventanas(refBuilder, app);
 
-  PantallaDeInicio pantallaInicial(refBuilder, emisor);
+  PantallaDeInicio pantallaInicial(refBuilder, emisor, area.getMenuTorres());
   PantallaDeElementos pantallaDeElementos(refBuilder, emisor);
   GameClientReceiver reciver(fichas, area.getMenuTorres(),
    ventanas, pantallaInicial,pantallaDeElementos);

@@ -10,6 +10,8 @@ GestionadorDeVentanas::GestionadorDeVentanas(
 
 
 void GestionadorDeVentanas::arrancarJuego(){
+  //if (!elementosElegidos)
+    //return
   juego->show_all();
   app = Gtk::Application::create();
   app->run(*juego);
@@ -21,17 +23,17 @@ void GestionadorDeVentanas::TerminarJuego(){
 
 void GestionadorDeVentanas::actualizar(
   const Communication::GameState &gameState){
-  /*if (!elementosElegidos) {
+  if (!elementosElegidos) {
     elementosElegidos = true;
-    TerminarPantallaDeElementos
-  }*/
+    TerminarPantallaDeElementos();
+  }
   if (gameState.state !=Communication::GameState::State::ongoing) {
     TerminarJuego();
   }
 }
 
 void GestionadorDeVentanas::arrancarPantallaDeElementos(){
-  if (!iniciado) 
+  if (!iniciado)
     return
   pantallaDeElementos->show_all();
   app = Gtk::Application::create();

@@ -73,10 +73,14 @@ MenuTorres::MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2, Emisor& emisor):
       sigc::mem_fun(this, &MenuTorres::prepararRayos));
   }
 
+void MenuTorres::setNick(std::string nickNuevo){
+  nick = nickNuevo;
+}
+
 void MenuTorres::avisarPing(){
   auto posicion = terreno->getPosicion();
   emisorComandos.pingear(posicion.X, posicion.Y);
-  }
+}
 
 //seleccionar
 void MenuTorres::selecionarTorre (const FichaTorre &torre2){
@@ -205,6 +209,12 @@ void MenuTorres::avisarUpgradeEspecial(){
 void MenuTorres::agregarElemento(Elementos elemento){
     elementos.push_back(elemento);
     MostrarBotones(elemento);
+  }
+void MenuTorres::agregarElemento(Elementos elemento, std::string &nick){
+  if (nick.compare(this->nick)) {
+      elementos.push_back(elemento);
+      MostrarBotones(elemento);
+    }
   }
 void MenuTorres::MostrarBotones(Elementos elemento){
     switch (elemento) {

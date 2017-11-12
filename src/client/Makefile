@@ -112,8 +112,9 @@ LD = $(CXX)
 endif
 
 # Si no especifica archivos, tomo todos.
-fuentes ?= $(wildcard *.$(extension)) $(wildcard ../common/CommunicationUtils*.$(extension)) $(wildcard ../common/Exception*.$(extension)) $(wildcard ../common/Socket*.$(extension)) $(wildcard ../common/Thread*.$(extension)) $(wildcard ../common/GameClientSocket*.$(extension)) $(wildcard ../common/GameClientReceiver*.$(extension))
+fuentes ?= $(wildcard *.$(extension)) $(wildcard ../editor/Map*.$(extension)) $(wildcard ../common/CommunicationUtils*.$(extension)) $(wildcard ../common/Exception*.$(extension)) $(wildcard ../common/Socket*.$(extension)) $(wildcard ../common/Thread*.$(extension)) $(wildcard ../common/GameClientSocket*.$(extension)) $(wildcard ../common/GameClientReceiver*.$(extension))
 directorios = $(shell find . -type d -regex '.*\w+')
+
 
 occ := $(CC)
 ocxx := $(CXX)

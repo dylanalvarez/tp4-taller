@@ -15,9 +15,8 @@ void GameClientReceiver::getInitialData(
 }
 
 void GameClientReceiver::getMap(std::string &&map) {
-  //  throw Exception("Not yet implemented");
-              printf("Nombre Mapa\n");
   ventanas.TerminarPantallaDeInicio();
+  fichas.cargarMapa(map);
 }
 
 void GameClientReceiver::getGameState(const Communication::GameState &gameState){
@@ -35,7 +34,8 @@ GameClientReceiver::~GameClientReceiver() = default;
 
 void GameClientReceiver::getUnavailableElement(
         const Communication::Element &element, std::string &&username) {
-    //throw Exception("Not yet implemented");
+    elemento.elementoSeleccionado(toElemento(element));
+    menues.agregarElemento(toElemento(element), username);
 }
 
 void GameClientReceiver::getPing(int x, int y) {

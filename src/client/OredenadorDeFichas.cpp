@@ -1,4 +1,8 @@
 #include "OrdenadorDeFichas.h"
+#include "../editor/Map.h"
+#include <fstream>
+#include <iostream>
+#include <fstream>
 #define error 0
 
 void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
@@ -202,5 +206,53 @@ void OrdenadorDeFichas::imprimirPortal(const Cairo::RefPtr<Cairo::Context>& cr,
                       DatosPantalla datosActuales){
   for (auto it = portales.begin(); it != portales.end(); ++it){
     it->dibujar(cr,datosActuales);
+  }
+}
+
+
+#define largo 88
+void OrdenadorDeFichas::cargarMapa(std::string &mapa){
+  Map mapaCargado;
+  auto aux = YAML::Load(mapa);
+  mapaCargado.loadFromNode(aux);
+  int tematica;
+  switch (mapaCargado.getSetting()) {
+    case Map::Setting::desert:
+      tematica = FichaPisoFondoDesierto;
+      break;
+    case Map::Setting::volcano:
+      tematica = FichaPisoFondoLava;
+      break;
+    case Map::Setting::ice:
+      tematica = FichaPisoFondoGelido;
+      break;
+    case Map::Setting::meadow:
+      tematica = FichaPisoFondoPradera;
+      break;
+  }
+  int x = mapaCargado.getHeight();
+  int y = mapaCargado.getWidth();
+  int id = 0;
+
+  for (int i = 1; i < x; i++) {
+    for (int j = 1; j < y; j++) {
+      id++;
+      agregarTerreno(FichaTerreno(largo*i-44, largo*j-44, id, tematica, sprites));
+    }
+  }
+
+  auto pisosFirmes = mapaCargado.getFirmGround();
+  for (auto it = pisosFirmes.begin() ; it != pisosFirmes.end(); ++it){
+    id = ObetenerTerrenoEnEstaPosicion((it->x)*88-44,(it->y)*88-44);
+    getTerreno(id).cambiarTipo(FichaPisoFirme, sprites);
+  }
+
+  auto pathEnemigos = mapaCargado.getPaths();
+  for (auto it = pathEnemigos.begin() ; it != pathEnemigos.end(); ++it){
+    for (auto it2 = it->pathSequence.begin(); it2 != it->pathSequence.end(); ++it2){
+      id = ObetenerTerrenoEnEstaPosicion((it2->x)*88-44,(it2->y)*88-44);
+      if (id != 0)
+        getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
+    }
   }
 }
