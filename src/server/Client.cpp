@@ -14,6 +14,7 @@ Client::Client(Socket&& socket, Server& server) :
         serverReceiver(server, *this),
         serverSocket(serverReceiver, std::move(socket)),
         sender(serverSocket, queue), is_ready(false) {
+    this->player = nullptr;
 }
 
 Client::~Client() {
@@ -88,4 +89,8 @@ void Client::sendElementUnavailable(const std::string& element,
 
 void Client::sendMap(const std::string &map) {
     serverSocket.sendMap(map);
+}
+
+bool Client::isOnMatch() const {
+    return player != nullptr;
 }

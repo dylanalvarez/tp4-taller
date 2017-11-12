@@ -25,6 +25,8 @@ void GameServerReceiver::setActionsQueue(QueueProtected &queue) {
 
 void GameServerReceiver::joinMatch(int match_id,
                                    const std::string &player_name) {
+    if (client.isOnMatch()) { return; }
+
     client.setName(player_name);
     server.joinMatch(client, match_id);
     my_match_id = match_id;
@@ -33,6 +35,8 @@ void GameServerReceiver::joinMatch(int match_id,
 void GameServerReceiver::createMatch(int map_id,
                                      const std::string &player_name,
                                      const std::string &map_name) {
+    if (client.isOnMatch()) { return; }
+
     client.setName(player_name);
     my_match_id = server.createMatch(client, map_id, map_name);
 }
