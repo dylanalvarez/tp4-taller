@@ -9,6 +9,7 @@
 #include "../common/CommunicationUtils.h"
 
 #define base_speed 4.0f
+#define base_speed_reduction 0.125f
 
 class Enemy {
 public:
@@ -33,6 +34,9 @@ public:
     // durante el tiempo especificado por time
     void reduceSpeed(unsigned int percentage, unsigned int time);
 
+    // chequea si ya paso el tiempo de reduccion de movimieto aplicado
+    void updateSpeedReduction();
+
     bool isDead() const;
 
     // getters
@@ -40,7 +44,7 @@ public:
     const Vector& getCurrentPosition() const;
     int getID() const;
     int getHealthPoints() const;
-    float getSpeed();
+    float getSpeed() const;
     bool canIFlight() const;
     bool reachTheEnd() const;
 

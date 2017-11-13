@@ -29,8 +29,9 @@ Enemy::Enemy(int id, Path &path, int health_points, float speed,
 }
 
 void Enemy::move(int units_to_move) {
+    updateSpeedReduction();
     for (int i = 0; i < getSpeed() * units_to_move; i++){
-        current_pos += direction * 0.125f;
+        current_pos += direction * base_speed_reduction;
 
         if (current_pos == current_destiny) {
             // calcula nueva direccion
@@ -51,10 +52,7 @@ int Enemy::getID() const {
 }
 
 
-float Enemy::getSpeed() {
-    if (difftime(time(nullptr), last_speed_reduction_time) >=
-        speed_reduction_time) { speed = original_speed; }
-
+float Enemy::getSpeed() const {
     return speed;
 }
 
@@ -104,4 +102,9 @@ Communication::Enemy::Type Enemy::getType() const {
     if (type == "bloody_hawk") { return enemyType::bloodyHawk; }
     if (type == "spectrum") { return enemyType::spectre; }
     return enemyType::goatMan;
+}
+
+void Enemy::updateSpeedReduction() {
+    if (difftime(time(nullptr), last_speed_reduction_time) >=
+        speed_reduction_time) { speed = original_speed; }
 }
