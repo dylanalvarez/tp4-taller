@@ -19,7 +19,7 @@ PantallaDeInicio::PantallaDeInicio(Glib::RefPtr<Gtk::Builder> &ventana,
 
 void PantallaDeInicio::unirsePartida(){
   emisorComandos.elegirEquipo(nick->get_text().c_str(),
-                            equipos->get_id_column());
+                            equipos->get_id_column() - 1);
   menu.setNick(nick->get_text().c_str());
   }
 void PantallaDeInicio::crearPartida(){

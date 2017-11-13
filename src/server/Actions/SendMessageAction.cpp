@@ -5,10 +5,10 @@
 #include "SendMessageAction.h"
 #include "../Client.h"
 
-SendMessageAction::SendMessageAction(std::string&& msg,
+SendMessageAction::SendMessageAction(const std::string& msg,
                                      const std::string& nickname) :
-        msg(std::move(msg)), name(nickname) {}
+        msg(msg), name(nickname) {}
 
 void SendMessageAction::apply(Context& context) {
-    context.getSocket().sendChatMessage(std::move(msg), name);
+    context.getSocket().sendChatMessage(msg, name);
 }

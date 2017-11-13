@@ -28,9 +28,9 @@ void Client::sendGameState(const Communication::GameState &gameState) {
     }
 }
 
-void Client::sendMessage(std::string&& msg, const std::string& nickname) {
+void Client::sendMessage(const std::string& msg, const std::string& nickname) {
     if (sender.isOperational()) {
-        queue.push(new SendMessageAction(std::move(msg), nickname));
+        queue.push(new SendMessageAction(msg, nickname));
     }
 }
 

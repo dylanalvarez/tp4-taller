@@ -11,6 +11,6 @@ DistributeMessageAction::DistributeMessageAction(std::string &&msg,
 
 void DistributeMessageAction::apply(Context &contex) {
     for (Client* client : contex.getClients()) {
-        client->sendMessage(std::move(msg), nickname);
+        client->sendMessage(msg, nickname);
     }
 }

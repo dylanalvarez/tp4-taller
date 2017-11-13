@@ -26,7 +26,7 @@ public:
 
     void sendGameState(const Communication::GameState &gameState);
 
-    void sendChatMessage(std::string &&message,
+    void sendChatMessage(const std::string &message,
                          const std::string &nickname);
 
     void sendPing(int x, int y);

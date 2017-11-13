@@ -103,7 +103,7 @@ GameServerSocket::GameServerSocket(GameServerSocket &&other) noexcept :
         keep_running(other.keep_running) {}
 
 void GameServerSocket::sendChatMessage(
-        std::string &&message,
+        const std::string &message,
         const std::string &nickname) {
     YAML::Node msg;
     msg["message"] = message;
