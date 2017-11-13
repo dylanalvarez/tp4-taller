@@ -87,10 +87,10 @@ class FichaTorre: public Ficha{
 #define HombreCabra 4
 #define NoMuerto 5
 
-#define masX 36;
+#define masX 3;
 #define masY 0;
-#define menosX 12;
-#define menosY 24;
+#define menosX 1;
+#define menosY 2;
 
 class FichaEnemigo: public Ficha{
  private:
@@ -99,6 +99,7 @@ class FichaEnemigo: public Ficha{
   int correccionX;
   int correccionY;
   int inicioAnimiacionActual;
+  int largoAnimiacionActual;
  public:
   //todo se puede intentar mejorar. Con una correccion de la posicion.
   FichaEnemigo(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
@@ -145,6 +146,7 @@ class FichaEfectos: public Ficha{
  protected:
   int tiempoImpacto;
   FichaEnemigo *objetivo;
+  int largoAnimiacionActual;
  public:
   FichaEfectos(FichaTorre &inicio, int id2, VectorDeSprites &sprites,
      FichaEnemigo &objetivo2);

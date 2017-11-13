@@ -76,7 +76,7 @@ FichaTerreno::FichaTerreno(int x2, int y2, int id2, int tipo,
      break;
     case FichaPisoFondoGelido:
       random = rand() % 3;
-      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SueloGelido1 + random)));
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteSueloGelido1 + random)));
       break;
     case FichaPisoFondoDesierto:
       random = rand() % 3;
@@ -109,7 +109,7 @@ void FichaTerreno::cambiarTipo(int tipo, VectorDeSprites &vectorDeSprites){
      break;
     case FichaPisoFondoGelido:
       random = rand() % 3;
-      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SueloGelido1 + random)));
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteSueloGelido1 + random)));
       break;
     case FichaPisoFondoDesierto:
       random = rand() % 3;
@@ -238,13 +238,68 @@ FichaEnemigo::FichaEnemigo(int x2, int y2, int id2, int tipo,
       }
       medioLargoX = sprites[0].obtenerAlto()/2;
       medioAltoY = sprites[0].obtenerHancho()/2;
-      break;
+      largoAnimiacionActual = ((SpriteAbominableTotal+1)/4);
+    break;
+    case DemonioVerde:
+      for (i = 0; i < SpriteDemonioVerdeTotal; i++) {
+          sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteDemonioVerde + i)));
+      }
+      medioLargoX = sprites[0].obtenerAlto()/2;
+      medioAltoY = sprites[0].obtenerHancho()/2;
+      largoAnimiacionActual = ((SpriteDemonioVerdeTotal+1)/4);
+    break;
+    case HalconSangriento:
+      for (i = 0; i < SpriteAguilaTotal; i++) {
+          sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteAguila + i)));
+      }
+      medioLargoX = sprites[0].obtenerAlto()/2;
+      medioAltoY = sprites[0].obtenerHancho()/2;
+      largoAnimiacionActual = ((SpriteAguilaTotal+1)/4);
+    break;
+    case Espectro:
+      for (i = 0; i < SpriteEspectroTotal; i++) {
+          sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteEspectro + i)));
+      }
+      medioLargoX = sprites[0].obtenerAlto()/2;
+      medioAltoY = sprites[0].obtenerHancho()/2;
+      largoAnimiacionActual = ((SpriteEspectroTotal+1)/4);
+    break;
+    case HombreCabra:
+      for (i = 0; i < SpriteCabraTotal; i++) {
+          sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteCabra + i)));
+      }
+      medioLargoX = sprites[0].obtenerAlto()/2;
+      medioAltoY = sprites[0].obtenerHancho()/2;
+      largoAnimiacionActual = ((SpriteCabraTotal+1)/4);
+    break;
+    case NoMuerto:
+      for (i = 0; i < SpriteEsqueletoTotal; i++) {
+          sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(SpriteEsqueleto + i)));
+      }
+      medioLargoX = sprites[0].obtenerAlto()/2;
+      medioAltoY = sprites[0].obtenerHancho()/2;
+      largoAnimiacionActual = ((SpriteEsqueletoTotal+1)/4);
+    break;
     default:
     //falta que aca salte un error.
       break;
   }
 }
 int traducirTipEnemigo(Communication::Enemy::Type tipo){
+  switch (tipo) {
+    case Communication::Enemy::Type::abmonible:
+      return Abmonible;
+    case Communication::Enemy::Type::greenDemon:
+      return DemonioVerde;
+    case Communication::Enemy::Type::goatMan:
+      return HombreCabra;
+    case Communication::Enemy::Type::undead:
+      return NoMuerto;
+    case Communication::Enemy::Type::spectre:
+      return Espectro;
+    case Communication::Enemy::Type::bloodyHawk:
+      return HalconSangriento;
+  }
   return Abmonible;
 }
 FichaEnemigo::FichaEnemigo(Communication::Enemy actualzacion,
@@ -253,6 +308,7 @@ FichaEnemigo::FichaEnemigo(Communication::Enemy actualzacion,
 }
 FichaEnemigo::FichaEnemigo(const FichaEnemigo &p): Ficha(p){
   inicioAnimiacionActual = p.inicioAnimiacionActual;
+  largoAnimiacionActual = p.largoAnimiacionActual;
 }
 void FichaEnemigo::dibujar(const Cairo::RefPtr<Cairo::Context>& cr,
    DatosPantalla datosActuales){
@@ -261,19 +317,19 @@ void FichaEnemigo::dibujar(const Cairo::RefPtr<Cairo::Context>& cr,
   }
 void FichaEnemigo::ejecutarSicloDeAnimacion(){
   spriteActual++;
-  if (spriteActual == 11) {
+  if (spriteActual == largoAnimiacionActual-1) {
      spriteActual = 0;
   }
 }
 void FichaEnemigo::actualizar(Communication::Enemy actualzacion){
   if ( x< actualzacion.x)
-    inicioAnimiacionActual = masX;
+    inicioAnimiacionActual = largoAnimiacionActual*masX;
   if ( x> actualzacion.x)
-    inicioAnimiacionActual = menosX;
+    inicioAnimiacionActual = largoAnimiacionActual*menosX;
   if ( y< actualzacion.y)
-    inicioAnimiacionActual = masY;
+    inicioAnimiacionActual = largoAnimiacionActual*masY;
   if ( y> actualzacion.y)
-    inicioAnimiacionActual = menosY;
+    inicioAnimiacionActual = largoAnimiacionActual*menosY;
   x= actualzacion.x;
   y= actualzacion.y;
   destrulleme = false;
@@ -348,14 +404,42 @@ FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &s
                             Ficha(x2, y2, id2, tipo){
     objetivo = NULL;
     destrulleme = false;
+    int i;
     switch (tipo) {
       case FichaGrieta:
-          this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
-          tiempoImpacto = 10;
-       break;
+        for (i = 0; i < SpriteGrietaTotal; i++) {
+            this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteGrieta + i)));
+        }
+        largoAnimiacionActual = SpriteGrietaTotal;
+        tiempoImpacto = SpriteGrietaTotal;
+      break;
+      case FichaMetorito:
+        for (i = 0; i < SpriteMeteoroTotal; i++) {
+            this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteMeteoro + i)));
+        }
+        largoAnimiacionActual = SpriteMeteoroTotal;
+        tiempoImpacto = SpriteMeteoroTotal;
+      break;
+      case FichafireWall:
+        for (i = 0; i < SpriteMdeFuegoTotal; i++) {
+            this->sprites.push_back(Sprite(x-60, y-60, sprites.obtener(SpriteMdeFuego + i)));
+        }
+        largoAnimiacionActual = SpriteMdeFuegoTotal;
+        tiempoImpacto = SpriteMdeFuegoTotal;
+      break;
+      case FichaTornado:
+        for (i = 0; i < SpriteTornadoTotal; i++) {
+            this->sprites.push_back(Sprite(x - 100, y - 100, sprites.obtener(SpriteTornado + i)));
+        }
+        largoAnimiacionActual = SpriteTornadoTotal;
+        tiempoImpacto = SpriteTornadoTotal;
+      break;
       default:
-        this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
-        tiempoImpacto = 10;
+        for (i = 0; i < SpriteGrietaTotal; i++) {
+            this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteGrieta + i)));
+        }
+        largoAnimiacionActual = SpriteGrietaTotal;
+        tiempoImpacto = SpriteGrietaTotal;
        break;
     }
 }
@@ -369,6 +453,7 @@ FichaEfectos::FichaEfectos(int id2, int tipo, VectorDeSprites &sprites,
   Posicion posicionInicial;
   posicionInicial = objetivo->getPosicion();
   this->tipo = tipo;
+  int i;
   switch (tipo) {
     case FichaCongelacion:
       x = posicionInicial.X;
@@ -379,8 +464,14 @@ FichaEfectos::FichaEfectos(int id2, int tipo, VectorDeSprites &sprites,
     case FichaRayos:
       x = posicionInicial.X;
       y = posicionInicial.Y;
-      this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
-      tiempoImpacto = 20;
+      case FichaTornado:
+        for (i = 0; i < SpriteRalloTotal; i++) {
+            this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteRallo + i)));
+        }
+        largoAnimiacionActual = SpriteRalloTotal;
+        tiempoImpacto = SpriteRalloTotal;
+        printf("rallo\n");
+      break;
      break;
     default:
      break;
@@ -390,16 +481,16 @@ FichaEfectos::FichaEfectos(const FichaEfectos &p): Ficha(p){
   tiempoImpacto = p.tiempoImpacto;
   objetivo = p.objetivo;
   destrulleme = p.destrulleme;
+  largoAnimiacionActual = p.destrulleme;
+
 }
 
 void FichaEfectos::ejecutarSicloDeAnimacion(){
-  /* Esto.. hacer luego de tener sprites
-  spriteActualSubAnimacion++;
-  if (spriteActualSubAnimacion == 4) {
-     spriteActualSubAnimacion = 1;
-  }*/
+  spriteActual++;
+  if (spriteActual == largoAnimiacionActual-1) {
+     spriteActual = 0;
+  }
 }
-
 void FichaEfectos::ejecutarSicloDeActualizacion(){
  if (tiempoImpacto == 0) {
    destrulleme = true;
@@ -420,10 +511,10 @@ void FichaEfectos::ejecutarSicloDeActualizacion(){
  }
  tiempoImpacto--;
 }
-
-
 void FichaEfectos::dibujar(const Cairo::RefPtr<Cairo::Context>& cr,
   DatosPantalla datosActuales){
-   sprites[spriteActual].cambiarPosicion(x,y);
+    if (tipo < 6) {
+      sprites[spriteActual].cambiarPosicion(x,y);
+    }
    sprites[spriteActual].dibujarIsometrico(cr,datosActuales);
  }

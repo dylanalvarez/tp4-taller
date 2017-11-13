@@ -248,9 +248,8 @@ void OrdenadorDeFichas::cargarMapa(std::string &mapa){
   int x = mapaCargado.getHeight();
   int y = mapaCargado.getWidth();
   int id = 0;
-
-  for (int i = 1; i < x; i++) {
-    for (int j = 1; j < y; j++) {
+  for (int i = 1; i < y; i++) {
+    for (int j = 1; j < x; j++) {
       id++;
       agregarTerreno(FichaTerreno(largo*i-44, largo*j-44, id, tematica, sprites));
     }
@@ -259,7 +258,9 @@ void OrdenadorDeFichas::cargarMapa(std::string &mapa){
   auto pisosFirmes = mapaCargado.getFirmGround();
   for (auto it = pisosFirmes.begin() ; it != pisosFirmes.end(); ++it){
     id = ObetenerTerrenoEnEstaPosicion((it->x)*88-44,(it->y)*88-44);
-    getTerreno(id).cambiarTipo(FichaPisoFirme, sprites);
+    if (id != 0) {
+      getTerreno(id).cambiarTipo(FichaPisoFirme, sprites);
+    }
   }
 
   auto pathEnemigos = mapaCargado.getPaths();

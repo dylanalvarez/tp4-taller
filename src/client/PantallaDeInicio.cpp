@@ -19,12 +19,12 @@ PantallaDeInicio::PantallaDeInicio(Glib::RefPtr<Gtk::Builder> &ventana,
 
 void PantallaDeInicio::unirsePartida(){
   emisorComandos.elegirEquipo(nick->get_text().c_str(),
-                            equipos->get_id_column() - 1);
+                            equipos->get_id_column());
   menu.setNick(nick->get_text().c_str());
   }
 void PantallaDeInicio::crearPartida(){
   emisorComandos.elegirMapa(nick->get_text().c_str(),
-                    nickEquipo->get_text().c_str(), mapas->get_id_column()-1);
+                    nickEquipo->get_text().c_str(), mapas->get_active_row_number());
   menu.setNick(nick->get_text().c_str());
   }
 
@@ -37,7 +37,6 @@ void PantallaDeInicio::cargarDatos(
   }
   mapas->remove_all();
   for (auto it = maps.begin(); it != maps.end(); ++it){
-
     mapas->insert(it->id+1,it->name.c_str());
   }
 }

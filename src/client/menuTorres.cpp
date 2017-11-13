@@ -84,6 +84,7 @@ void MenuTorres::avisarPing(){
 
 //seleccionar
 void MenuTorres::selecionarTorre (const FichaTorre &torre2){
+  deselecionarHechizosTotal();
   decelecionar();
 
   botonPing->show();
@@ -152,6 +153,7 @@ void MenuTorres::decelecionar(){
   botonPing->hide();
   }
 void MenuTorres::selecionarTerreno(const FichaTerreno &terreno2){
+    deselecionarHechizosTotal();
     terreno =  &terreno2;
     decelecionar();
     botonPing->show();
@@ -253,6 +255,7 @@ void MenuTorres::prepararHechizo(Gtk::ToggleButton* botonHechizo, std::string no
   deselecionarHechizos();
   decelecionar();
   casteando = true;
+  printf("listo\n");
   titulo->set_text(nombreHechizo.c_str());
   titulo->show();
 }
@@ -281,7 +284,6 @@ void MenuTorres::prepararRayos(){
   prepararHechizo(Rayos,"Rayos", Hechizo::Rayos);
 }
 void MenuTorres::deselecionarHechizos(){
-  //es horriblo..
   if (hechizoActual != Hechizo::Congelacion)
     Congelacion->set_active(false);
   if (hechizoActual != Hechizo::Ventisca)
@@ -297,6 +299,16 @@ void MenuTorres::deselecionarHechizos(){
   if (hechizoActual != Hechizo::Grieta)
     Grieta->set_active(false);
   if (hechizoActual != Hechizo::Terraforming)
+    Terraforming->set_active(false);
+}
+void MenuTorres::deselecionarHechizosTotal(){
+    Congelacion->set_active(false);
+    Ventisca->set_active(false);
+    Meteorito->set_active(false);
+    Tornado->set_active(false);
+    MuroDeFuego->set_active(false);
+    Rayos->set_active(false);
+    Grieta->set_active(false);
     Terraforming->set_active(false);
 }
 bool MenuTorres::estamosCasteando(){
@@ -349,10 +361,11 @@ void MenuTorres::lanzarHechizo(int x, int y, int objetivo){
     case Hechizo::Rayos:
       if(terreno == NoColicion)
         return; //agregar algo mas de logica.. preguntar esto.
-      printf("Rayos en %i, %i\n", x,y);
-      emisorComandos.lansarEchizo(x,y,"ray");
+      printf("Rayos en enemigo %i\n", objetivo);
+      emisorComandos.lansarEchizo(objetivo,"ray");
     break;
   }
+  deselecionarHechizosTotal();
   casteando = false;
 }
 

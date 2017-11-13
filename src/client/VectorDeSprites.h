@@ -40,10 +40,41 @@
 #define SpritePradera2 76
 #define SpritePradera3 77
 #define SpritePradera4 78
-#define SueloGelido1 79
-#define SueloGelido2 80
-#define SueloGelido3 81
-#define SueloGelido4 82
+#define SpriteSueloGelido1 79
+#define SpriteSueloGelido2 80
+#define SpriteSueloGelido3 81
+#define SpriteSueloGelido4 82
+
+#define SpriteAtaqueAgua 83
+#define SpriteAtaqueAguaTotal 15
+#define SpriteAtaqueAire 99
+#define SpriteAtaqueAireTotal 15
+#define SpriteAtaqueFuego 115
+#define SpriteAtaqueFuegoTotal 15
+#define SpriteAtaqueTierra 131
+#define SpriteAtaqueTierraTotal 15
+
+#define SpriteAguila 147
+#define SpriteAguilaTotal 31
+#define SpriteCabra 179
+#define SpriteCabraTotal 31
+#define SpriteDemonioVerde 212
+#define SpriteDemonioVerdeTotal 39
+#define SpriteEspectro 251
+#define SpriteEspectroTotal 39
+#define SpriteEsqueleto 291
+#define SpriteEsqueletoTotal 23
+
+#define SpriteGrieta 315
+#define SpriteGrietaTotal 7
+#define SpriteMeteoro 323
+#define SpriteMeteoroTotal 13
+#define SpriteMdeFuego 337
+#define SpriteMdeFuegoTotal 12
+#define SpriteRallo 350
+#define SpriteRalloTotal 16
+#define SpriteTornado 367
+#define SpriteTornadoTotal 15
 
 class VectorDeSprites{
 protected:
