@@ -63,7 +63,7 @@ void AirTower::attack() {
     }
 
     // la torre de aire hace retroceder al enemigo
-    current_target->moveBack();
+    current_target->moveBack(4);
 
     last_attack_time = time(nullptr);
     is_attacking = true;

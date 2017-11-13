@@ -24,7 +24,7 @@ public:
     void move(int units_to_move = 1);
 
     // mueve el enemigo en la direccion opuesta a la que venia
-    void moveBack();
+    void moveBack(int units_to_move = 1);
 
     // reduce la vida en la cantidad indicada por dmg_points;
     // retorna los puntos de daño realizados

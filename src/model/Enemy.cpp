@@ -81,8 +81,11 @@ void Enemy::reduceSpeed(unsigned int percentage, unsigned int reduction_time) {
     last_speed_reduction_time = time(nullptr);
 }
 
-void Enemy::moveBack() {
-    current_pos -= direction;
+void Enemy::moveBack(int units_to_move) {
+    updateSpeedReduction();
+    for (int i = 0; i < getSpeed() * units_to_move; i++) {
+        current_pos -= direction;
+    }
 }
 
 bool Enemy::isDead() const {
