@@ -166,7 +166,7 @@ void TowerDefenseGame::loadEnemyProperties(YAML::Node& enemies_node) {
     EnemyProperties s_properties(spectrum_node["health"].as<unsigned int>(),
                                  spectrum_node["speed"].as<unsigned int>(),
                                  spectrum_node["fly"].as<bool>());
-    enemies_properties.emplace("spectrum", s_properties);
+    enemies_properties.emplace("spectre", s_properties);
 }
 
 void TowerDefenseGame::loadTowerProperties(YAML::Node& properties) {

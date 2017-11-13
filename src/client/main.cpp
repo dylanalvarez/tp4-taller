@@ -13,6 +13,7 @@
 #include "PantallaDeInicio.h"
 #include "PantallaDeElementos.h"
 #include "../common/Socket.h"
+#include "PantallaResultado.h"
 //esta clase es solo para dirigir el movimiento en este caso.
 
 #define largo 88
@@ -39,6 +40,8 @@ int main(int argc, char *argv[]){
 	refBuilder->get_widget("cajaJuego", Box);
   Box->pack_start(area);
   GestionadorDeVentanas ventanas(refBuilder);
+  PantallaResultado victoria(refBuilder, "victory");
+  PantallaResultado derrota(refBuilder, "defeat");
   PantallaDeInicio pantallaInicial(refBuilder, emisor, area.getMenuTorres());
   PantallaDeElementos pantallaDeElementos(refBuilder, emisor);
   GameClientReceiver reciver(fichas, area.getMenuTorres(),
