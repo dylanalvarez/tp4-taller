@@ -381,8 +381,8 @@ Communication::GameState TowerDefenseGame::getGameState() const {
         gameState.enemies.emplace_back(
                 enemy.getType(),
                 enemy.getID(),
-                (int)enemy.getCurrentPosition().getX(),
-                (int)enemy.getCurrentPosition().getY()
+                (int)enemy.getCurrentPosition().getX() - 44,
+                (int)enemy.getCurrentPosition().getY() - 44
         );
     }
 
