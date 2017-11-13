@@ -53,12 +53,15 @@ void PantallaDeElementos::elementoSeleccionado(Elementos elemento){
     case tierra:
       botonTierra->set_active(false);
       botonTierra->set_sensitive(false);
+      break;
     case agua:
       botonAgua->set_active(false);
       botonAgua->set_sensitive(false);
+      break;
     case fuego:
       botonFuego->set_active(false);
       botonFuego->set_sensitive(false);
+      break;
     case aire:
       botonAire->set_active(false);
       botonAire->set_sensitive(false);
