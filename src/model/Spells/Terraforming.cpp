@@ -10,10 +10,10 @@ Terraforming::Terraforming(Scenario &scenario, unsigned int cooldown) :
 
 void Terraforming::applyEffect(const Vector &position) {
     if (isOnCooldown()) { return; }
-
+    
+    scenario.addFirmGround(position);
     is_active = true;
     this->position = position;
-    scenario.addFirmGround(position);
     last_activation_time = time(nullptr);
 }
 
