@@ -222,23 +222,23 @@ const Tower& TowerDefenseGame::addTower(const Player &player,
     try {
         tower = towers_factory.at(type)->create(tower_id++, position,
                                                 tower_properties, *scenario);
-            if (player.canBuildTower(type)) {
-                scenario->addTower(tower);
-                for (Player& p : players) {
-                    if (&p == &player) {
-                        p.addTower(*tower);
-                    }
-                }
-                return *tower;
-            } else {
-                delete tower;
-                throw MatchError("Error: el jugador " + player.getName()
-                                 + "no puede construir torres de tipo " + type);
-            }
     } catch (std::exception& e) {
+            throw TowerError("Error: el tipo de torre " +
+                             type + " no es un tipo valido");
+    }
+
+    if (player.canBuildTower(type)) {
+        scenario->addTower(tower);
+        for (Player& p : players) {
+            if (&p == &player) {
+                p.addTower(*tower);
+            }
+        }
+        return *tower;
+    } else {
         delete tower;
-        throw TowerError("Error: el tipo de torre " +
-                                 type + " no es un tipo valido");
+        throw MatchError("Error: el jugador " + player.getName()
+                         + "no puede construir torres de tipo " + type);
     }
 }
 
