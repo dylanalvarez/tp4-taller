@@ -31,6 +31,7 @@ towers:
       x: 1
       y: 2
     is_attacking: true
+    current_target: 1 # id
 
 positional_powers:
   -
