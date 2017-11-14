@@ -10,7 +10,8 @@ MapGrid::MapGrid(Map &map,
                  SaveButton *saveButton) :
         builder(builder), squareType(start), width(width), height(height),
         lastPathX(-1), lastPathY(-1), startX(-1), startY(-1),
-        unfinishedPath(false), map(map), saveButton(saveButton) {
+        unfinishedPath(false), justStartedPath(false), map(map),
+        saveButton(saveButton) {
     for (int x = 0; x <= width + 1; x++) {
         grid.emplace_back();
         for (int y = 0; y <= height + 1; y++) {
@@ -121,6 +122,7 @@ bool MapGrid::shouldBeDisabled(int x, int y) const {
              lastPathStepWasOnItsSide) ||
             (squareType == path &&
              !isOnTheEdge &&
+             (isNeighbourOfStart(x, y) || !justStartedPath) &&
              isOnStraightLineFromLastOne(x, y)) ||
             (squareType == firmGround &&
              !isOnTheEdge &&
@@ -140,6 +142,7 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
         startY = y;
         pathButton->clicked();
         unfinishedPath = true;
+        justStartedPath = true;
     }
     if (squareType == path) {
         grid[x][y]->set_label(PATH_STR
@@ -150,15 +153,16 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
 
         this->lastPathX = x;
         this->lastPathY = y;
+        justStartedPath = false;
     }
     this->updateDisabledButtons();
 }
 
 bool MapGrid::isNeighbourOfStart(int x, int y) const {
-    return grid[x - 1][y]->get_label() == ENTRY_DOOR_STR ||
-           grid[x][y - 1]->get_label() == ENTRY_DOOR_STR ||
-           grid[x + 1][y]->get_label() == ENTRY_DOOR_STR ||
-           grid[x][y + 1]->get_label() == ENTRY_DOOR_STR;
+    return grid[x - 1][y]->get_label().substr(0, 1) == ENTRY_DOOR_STR ||
+           grid[x][y - 1]->get_label().substr(0, 1) == ENTRY_DOOR_STR ||
+           grid[x + 1][y]->get_label().substr(0, 1) == ENTRY_DOOR_STR ||
+           grid[x][y + 1]->get_label().substr(0, 1) == ENTRY_DOOR_STR;
 }
 
 bool MapGrid::isOnStraightLineFromLastOne(int x, int y) const {

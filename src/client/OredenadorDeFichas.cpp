@@ -264,11 +264,29 @@ void OrdenadorDeFichas::cargarMapa(std::string &mapa){
   }
 
   auto pathEnemigos = mapaCargado.getPaths();
-  for (auto it = pathEnemigos.begin() ; it != pathEnemigos.end(); ++it){
-    for (auto it2 = it->pathSequence.begin(); it2 != it->pathSequence.end(); ++it2){
-      id = ObetenerTerrenoEnEstaPosicion((it2->x)*88-44,(it2->y)*88-44);
-      if (id != 0)
-        getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
+  for (auto &pathEnemigo : pathEnemigos) {
+    for (auto it2 = pathEnemigo.pathSequence.begin();
+         it2 != pathEnemigo.pathSequence.end(); ++it2){
+      if (it2 == pathEnemigo.pathSequence.end() - 1) { return; }
+      if (it2->x == (it2 + 1)->x) {
+        int start = it2->y < (it2 + 1)->y ? it2->y : (it2 + 1)->y;
+        int end = it2->y < (it2 + 1)->y ? (it2 + 1)->y : it2->y;
+        for (int yy = start; yy <= end; ++yy) {
+          id = ObetenerTerrenoEnEstaPosicion((it2->x) * 88 - 44,
+                                             yy * 88 - 44);
+          if (id != 0)
+            getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
+        }
+      } else {
+        int start = it2->x < (it2 + 1)->x ? it2->x : (it2 + 1)->x;
+        int end = it2->x < (it2 + 1)->x ? (it2 + 1)->x : it2->x;
+        for (int xx = start; xx <= end; ++xx) {
+          id = ObetenerTerrenoEnEstaPosicion(xx * 88 - 44,
+                                             (it2->y) * 88 - 44);
+          if (id != 0)
+            getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
+        }
+      }
     }
   }
 }

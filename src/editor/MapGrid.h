@@ -51,6 +51,7 @@ private:
     int startX;
     int startY;
     bool unfinishedPath;
+    bool justStartedPath;
     Map &map;
     Gtk::RadioButton *startButton;
     Gtk::RadioButton *endButton;
