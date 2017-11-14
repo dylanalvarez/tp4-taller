@@ -15,6 +15,8 @@ class GestionadorDeVentanas{
   Gtk::Window* pantalla_victoria;
   bool iniciado = false;
   bool elementosElegidos = false;
+  bool juegoTerminado = false;
+  bool gano = false;  
   //Gtk::Window* pantallaFinal;
  protected:
  public:
@@ -29,6 +31,7 @@ class GestionadorDeVentanas{
    void TerminarPantallaDeElementos();
    void arrancarPantallaDeInicio();
    void TerminarPantallaDeInicio();
+   void arrancarPantallaResultado(); 
 };
 
 

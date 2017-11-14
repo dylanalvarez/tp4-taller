@@ -65,6 +65,7 @@ int main(int argc, char *argv[]){
   ventanas.arrancarPantallaDeInicio();
   ventanas.arrancarPantallaDeElementos();
   ventanas.arrancarJuego();
+  ventanas.arrancarPantallaResultado();
   controladorDeSiclos.terminar();
 
   return 0;

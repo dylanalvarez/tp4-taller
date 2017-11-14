@@ -21,9 +21,6 @@ void GestionadorDeVentanas::arrancarJuego(){
 
 void GestionadorDeVentanas::TerminarJuego(){
   juego->hide();
-  pantalla_derrota->show_all();
-  app = Gtk::Application::create();
-  app->run(*pantalla_derrota);
 }
 
 void GestionadorDeVentanas::actualizar(
@@ -34,8 +31,12 @@ void GestionadorDeVentanas::actualizar(
   }
   if (gameState.state == Communication::GameState::State::lost) {
     TerminarJuego();
+    juegoTerminado = true;
+    gano = false;
   } else if (gameState.state == Communication::GameState::State::won) {
-      GanarJuego();
+    TerminarJuego();
+    juegoTerminado = true;
+    gano = true;
   }
 }
 
@@ -64,7 +65,18 @@ void GestionadorDeVentanas::TerminarPantallaDeInicio(){
 
 void GestionadorDeVentanas::GanarJuego() {
   juego->hide();
-  pantalla_victoria->show_all();
-  app = Gtk::Application::create();
-  app->run(*pantalla_victoria);
+}
+
+void GestionadorDeVentanas::arrancarPantallaResultado(){
+  if(juegoTerminado){
+    if(gano){
+      pantalla_victoria->show_all();
+      app = Gtk::Application::create();
+      app->run(*pantalla_victoria);
+    } else {
+      pantalla_derrota->show_all();
+      app = Gtk::Application::create();
+      app->run(*pantalla_derrota);
+    }
+  }
 }
