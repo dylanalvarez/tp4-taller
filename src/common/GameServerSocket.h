@@ -42,9 +42,6 @@ public:
     GameServerSocket(GameServerSocket&&) noexcept;
 
 private:
-    // el socket es un recurso compartido
-    // lo puede acceder el cliente pidiendo que se envie un mensaje
-    // y lo puede acceder el thread match enviando el estado del juego
     GameServerReceiver& receiver;
     Socket socket;
     bool keep_running;

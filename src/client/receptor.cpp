@@ -5,10 +5,11 @@ Receptor::Receptor(GameClientReceiver& reciver, GameClientSocket& socket):
       reciver(reciver), socket(socket){
 }
 void Receptor::iniciar(){
-  socket.run();
+  socket.start();
 }
 void Receptor::terminar(){
   socket.disconnect();
+  socket.join();
   seguir = false;
 }
 GameClientReceiver& Receptor::getReciver(){

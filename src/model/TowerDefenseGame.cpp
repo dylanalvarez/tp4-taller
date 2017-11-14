@@ -204,7 +204,7 @@ void TowerDefenseGame::moveEnemies(int units_to_move) {
 
 bool TowerDefenseGame::doesPlayerExist(const Player &player) {
     for (Player& p : players) {
-        if (&p == &player){
+        if (&p == &player) {
             return true;
         }
     }
@@ -218,11 +218,11 @@ const Tower& TowerDefenseGame::addTower(const Player &player,
                          ", el jugador " + player.getName() +
                          "no pertence a la partida");
     }
-    Tower* tower;
+    Tower* tower = nullptr;
     try {
         tower = towers_factory.at(type)->create(tower_id++, position,
                                                 tower_properties, *scenario);
-            if (player.canBuildTower(type)){
+            if (player.canBuildTower(type)) {
                 scenario->addTower(tower);
                 for (Player& p : players) {
                     if (&p == &player) {
@@ -231,10 +231,12 @@ const Tower& TowerDefenseGame::addTower(const Player &player,
                 }
                 return *tower;
             } else {
+                delete tower;
                 throw MatchError("Error: el jugador " + player.getName()
                                  + "no puede construir torres de tipo " + type);
             }
     } catch (std::exception& e) {
+        delete tower;
         throw TowerError("Error: el tipo de torre " +
                                  type + " no es un tipo valido");
     }

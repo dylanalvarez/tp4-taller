@@ -17,10 +17,7 @@ Client::Client(Socket&& socket, Server& server) :
     this->player = nullptr;
 }
 
-Client::~Client() {
-    sender.join();
-    serverSocket.join();
-}
+Client::~Client() = default;
 
 void Client::sendGameState(const Communication::GameState &gameState) {
     if (sender.isOperational()) {
@@ -59,6 +56,8 @@ void Client::stop() {
     sender.stop();
     serverSocket.disconnect();
     queue.push(new DisconnectAction());
+    sender.join();
+    serverSocket.join();
 }
 
 const Player &Client::getModelPlayer() const {

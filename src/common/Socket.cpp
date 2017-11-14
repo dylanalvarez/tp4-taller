@@ -87,9 +87,10 @@ std::string Socket::receiveString(size_t length) const {
 }
 
 Socket::~Socket() {
-    if (fileDescriptor == -1) { return; }
-    shutdown(this->fileDescriptor, SHUT_RDWR);
-    close(this->fileDescriptor);
+    if (fileDescriptor != -1) {
+        shutdown(this->fileDescriptor, SHUT_RDWR);
+        close(this->fileDescriptor);
+    }
 }
 
 Socket::Socket(int fileDescriptor) :
