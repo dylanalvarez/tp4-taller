@@ -6,5 +6,5 @@
 Para compilar:       
 #### `sudo apt-get install libgtkmm-3.0-dev libyaml-cpp-dev libsdl2-dev libsdl2-mixer-dev`
 #### `cmake . && make`
-Es necesaria una carpeta /maps junto al ejecutable Server, y los .wav de ejemplo (en src/sound_test) junto al ejecutable SoundTest     
+Es necesaria una carpeta /maps junto al ejecutable Server, los .wav de ejemplo (en src/sound_test) junto al ejecutable SoundTest, y las carpetas editor/assets y client/sprites junto a los ejecutables respectivos.     
 Client y Server solo toman un argumento por línea de comandos: el puerto.
