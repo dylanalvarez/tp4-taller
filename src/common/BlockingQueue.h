@@ -30,7 +30,7 @@ public:
     // si la cola esta vacia bloquea el thread invocante con wait
      Action& front();
 
-    // remueve el primer elemento
+    // remueve el primer elemento y libera sus recursos
     void pop();
 
     bool empty();

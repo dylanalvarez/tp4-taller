@@ -7,12 +7,7 @@
 
 BlockingQueue::BlockingQueue() = default;
 
-BlockingQueue::~BlockingQueue() {
-    while (!queue.empty()) {
-        delete queue.front();
-        queue.pop();
-    }
-}
+BlockingQueue::~BlockingQueue() = default;
 
 void BlockingQueue::push(Action* action){
     std::unique_lock<std::mutex> lock(mutex);

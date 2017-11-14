@@ -17,7 +17,11 @@ Client::Client(Socket&& socket, Server& server) :
     this->player = nullptr;
 }
 
-Client::~Client() = default;
+Client::~Client() {
+    while (!queue.empty()) {
+        queue.pop();
+    }
+}
 
 void Client::sendGameState(const Communication::GameState &gameState) {
     if (sender.isOperational()) {

@@ -10,7 +10,11 @@ ClientSender::ClientSender(GameServerSocket &socket, BlockingQueue &queue) :
     keep_running = true;
 }
 
-ClientSender::~ClientSender() = default;
+ClientSender::~ClientSender() {
+    while (!queue.empty()) {
+        queue.pop();
+    }
+}
 
 void ClientSender::run() {
     while (keep_running) {

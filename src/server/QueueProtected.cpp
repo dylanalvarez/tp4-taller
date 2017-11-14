@@ -6,12 +6,7 @@
 
 QueueProtected::QueueProtected() = default;
 
-QueueProtected::~QueueProtected() {
-    while (!actions.empty()) {
-        delete actions.front();
-        actions.pop();
-    }
-}
+QueueProtected::~QueueProtected() = default;
 
 void QueueProtected::push(Action* action) {
     std::lock_guard<std::mutex> lock(mutex);
@@ -25,7 +20,6 @@ void QueueProtected::pop() {
 }
 
 Action &QueueProtected::front() {
-
     return *actions.front();
 }
 

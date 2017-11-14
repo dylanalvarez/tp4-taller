@@ -14,11 +14,7 @@ Match::Match(const std::string &config_file_path,
     keep_running = false;
 }
 
-Match::~Match() {
-    for (Client* client : clients) {
-        delete client;
-    }
-}
+Match::~Match() = default;
 
 void Match::run() {
     has_started = true;
@@ -75,6 +71,7 @@ void Match::stop() {
     keep_running = false;
     for (Client* client : clients) {
         client->stop();
+        delete client;
     }
 }
 
@@ -112,11 +109,15 @@ bool Match::isRunning() {
     return (keep_running || !has_started) && !clients.empty();
 }
 
-bool isNotOperational(const Client* client) { return !client->isOperatinal(); }
-
 void Match::cleanClients() {
-    clients.erase(std::remove_if(clients.begin(),
-                                 clients.end(),
-                                 isNotOperational), 
-                  clients.end());
+    std::vector<Client*> online_clients;
+    for (Client* client : clients) {
+        if (!client->isOperatinal()) {
+            client->stop();
+            delete client;
+        } else {
+            online_clients.push_back(client);
+        }
+    }
+    std::swap(clients, online_clients);
 }

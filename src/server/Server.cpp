@@ -18,6 +18,9 @@ Server::~Server() {
         if (match.second->hasStarted()) { match.second->join(); }
         delete match.second;
     }
+    for (Client* client : clients_waiting_for_match) {
+        delete client;
+    }
 }
 
 void Server::run() {
@@ -47,7 +50,6 @@ void Server::stop() {
     for (Client* client : clients_waiting_for_match) {
         // clientes que no estan en una partida
         client->stop();
-        delete client;
     }
 }
 
