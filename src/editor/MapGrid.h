@@ -41,6 +41,8 @@ private:
 
     bool isOnStraightLineFromLastOne(int x, int y) const;
 
+    bool isOnTheWayOfAPath(int x, int y) const;
+
     std::vector<std::vector<Gtk::Button *>> grid;
     Builder &builder;
     SquareType squareType;

@@ -55,16 +55,16 @@ MapGrid::MapGrid(Map &map,
 }
 
 void MapGrid::setFromMap() {
-    for (const Map::Coordinate& firmGround : map.getFirmGround()){
+    for (const Map::Coordinate &firmGround : map.getFirmGround()) {
         grid[firmGround.x][firmGround.y]->set_label(FIRM_GROUND_STR);
     }
     int pathNumber = 1;
-    for (const Map::Path& path : map.getPaths()){
+    for (const Map::Path &path : map.getPaths()) {
         std::string pathLabel = std::to_string(pathNumber);
         grid[path.entry.x][path.entry.y]->set_label(ENTRY_DOOR_STR + pathLabel);
         grid[path.exit.x][path.exit.y]->set_label(EXIT_DOOR_STR + pathLabel);
         int stepNumber = 1;
-        for (const Map::Coordinate& pathStep : path.pathSequence) {
+        for (const Map::Coordinate &pathStep : path.pathSequence) {
             grid[pathStep.x][pathStep.y]->set_label(PATH_STR
                                                     + pathLabel
                                                     + ", "
@@ -126,7 +126,8 @@ bool MapGrid::shouldBeDisabled(int x, int y) const {
              isOnStraightLineFromLastOne(x, y)) ||
             (squareType == firmGround &&
              !isOnTheEdge &&
-             !isNeighbourOfStart(x, y));
+             !isNeighbourOfStart(x, y) &&
+             !isOnTheWayOfAPath(x, y));
 
     return isCorner || !makesSenseForCurrentSquareType;
 }
@@ -169,4 +170,27 @@ bool MapGrid::isOnStraightLineFromLastOne(int x, int y) const {
     int lastX = lastPathX == -1 ? startX : lastPathX;
     int lastY = lastPathY == -1 ? startY : lastPathY;
     return x == lastX || y == lastY;
+}
+
+bool MapGrid::isOnTheWayOfAPath(int x, int y) const {
+    for (auto &mapPath : map.getPaths()) {
+        auto lastStep = mapPath.entry;
+        for (auto& step : mapPath.pathSequence) {
+            if (lastStep.x == step.x){
+                int start = lastStep.y < step.y ? lastStep.y : step.y;
+                int end = lastStep.y < step.y ? step.y : lastStep.y;
+                for (int currentY = start; currentY<= end; currentY++) {
+                    if(y == currentY && x == step.x) { return true; }
+                }
+            } else {
+                int start = lastStep.x < step.x ? lastStep.x : step.x;
+                int end = lastStep.x < step.x ? step.x : lastStep.x;
+                for (int currentX = start; currentX<= end; currentX++) {
+                    if(x == currentX && y == step.y) { return true; }
+                }
+            }
+            lastStep = step;
+        }
+    }
+    return false;
 }
