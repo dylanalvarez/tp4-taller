@@ -24,7 +24,7 @@ void LoadFileGrid::init(Map &map, SaveButton *saveButton,
 }
 
 void LoadFileGrid::loadFile() {
-    std::ifstream source(fileNameEntry->get_text() + ".yaml");
+    std::ifstream source(MAPS_DIRECTORY + fileNameEntry->get_text() + ".yaml");
     if (!source.is_open()) { return; }
     map->loadFromFile(source);
 

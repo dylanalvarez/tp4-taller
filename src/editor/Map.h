@@ -8,6 +8,8 @@
 #define DEFAULT_SIZE_X 10
 #define DEFAULT_SIZE_Y 10
 
+#define MAPS_DIRECTORY "maps/"
+
 #include <yaml-cpp/yaml.h>
 
 class Map {
