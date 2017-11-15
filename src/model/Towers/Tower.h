@@ -43,6 +43,7 @@ public:
 
     int getRangeLevel() const;
     int getDamageLevel() const;
+    int getCurrentTargetID() const;
 
     virtual int getSlowDownLevel() const = 0;
     virtual int getReachLevel() const = 0;

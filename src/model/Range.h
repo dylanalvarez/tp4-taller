@@ -17,6 +17,8 @@ public:
     bool isInRange(Vector vector) const;
 
     float getRadius() const;
+    // retorna el radio teorico, sin ajustar a los tiles
+    int getNormalRadius() const;
     Vector getCenter() const;
 
 private:

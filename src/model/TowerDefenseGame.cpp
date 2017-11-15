@@ -77,11 +77,9 @@ void TowerDefenseGame::loadScenarioProperties(YAML::Node& map) {
         YAML::Node path_secuence = (*path)["path_sequence"];
 
         std::vector<Vector> road;
-        road.push_back((*path)["entry"].as<Vector>());
         for (auto it = path_secuence.begin(); it != path_secuence.end(); ++it) {
             road.push_back(it->as<Vector>());
         }
-        road.push_back((*path)["exit"].as<Vector>());
         paths.emplace_back(Path(std::move(road)));
     }
 
@@ -398,14 +396,15 @@ Communication::GameState TowerDefenseGame::getGameState() const {
                 tower->getID(),
                 level,
                 (int)tower->getExperience(),
-                (int)tower->getRange().getRadius(),
+                tower->getRange().getNormalRadius(),
                 tower->getExplosionRange(),
                 tower->getPosition().getX(),
                 tower->getPosition().getY(),
                 tower->getslowdown(),
                 tower->getDamage_(),
                 tower->getType(),
-                tower->isAttacking()
+                tower->isAttacking(),
+                tower->getCurrentTargetID()
         );
     }
 

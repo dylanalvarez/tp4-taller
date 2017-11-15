@@ -17,3 +17,7 @@ float Range::getRadius() const {
 Vector Range::getCenter() const {
     return center;
 }
+
+int Range::getNormalRadius() const {
+    return (int)(radius / 88) + 44;
+}

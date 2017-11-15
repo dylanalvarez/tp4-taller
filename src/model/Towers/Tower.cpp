@@ -125,3 +125,11 @@ int Tower::getRangeInTileSizes(int range) {
 bool Tower::isAttacking() const {
     return is_attacking;
 }
+
+int Tower::getCurrentTargetID() const {
+    if (current_target) {
+        return current_target->getID();
+    }
+    
+    return -1;
+}
