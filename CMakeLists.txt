@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5.1)
 project(TowerDefense)
 
+set(EXECUTABLE_OUTPUT_PATH "cmake-build-debug")
 set(CMAKE_CXX_STANDARD 11)
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 set(CMAKE_CXX_FLAGS  "-std=c++11 -Werror -Wno-error=unused-command-line-argument  -Wno-c++14-extensions -Wall -pthread")
