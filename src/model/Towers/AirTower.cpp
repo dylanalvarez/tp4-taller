@@ -15,7 +15,7 @@ AirTower::AirTower(int id, Vector p, YAML::Node &tower_properties,
     // basic properties
     dmg = properties["damage"].as<unsigned int>();
     dmg_to_flying_units = properties["damage_to_flying"].as<unsigned int>();
-    range = Range(position, getRangeInTileSizes(properties["range"].as<int>()));
+    range = Range(position, getRangeInTileSizes(properties["range"].as<float>()));
     attack_cooldown = properties["attack_rate"].as<unsigned int>();
 
     // upgrades properties
@@ -63,7 +63,7 @@ void AirTower::attack() {
     }
 
     // la torre de aire hace retroceder al enemigo
-    current_target->moveBack(4);
+    current_target->moveBack(units_to_move_back);
 
     last_attack_time = time(nullptr);
     is_attacking = true;

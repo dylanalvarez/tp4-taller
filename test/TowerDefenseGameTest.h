@@ -11,12 +11,6 @@
 
 class TowerDefenseGameTest : public CppUnit::TestCase {
     CPPUNIT_TEST_SUITE(TowerDefenseGameTest);
-        CPPUNIT_TEST(addingGreenDemonAddsGreenDemonEnemyWithHisPropertiesTest);
-        CPPUNIT_TEST(addingAbmonibleAddsAbmonibleEnemyWithHisPropertiesTest);
-        CPPUNIT_TEST(addingBloodyHawkAddsBloodyHawkEnemyWithHisPropertiesTest);
-        CPPUNIT_TEST(addingSpectrumAddsSpectrumEnemyWithHisPropertiesTest);
-        CPPUNIT_TEST(addingGoatManAddsGoatManEnemyWithHisPropertiesTest);
-        CPPUNIT_TEST(addingUndeadAddsUndeadEnemyWithHisPropertiesTest);
         CPPUNIT_TEST(addingNonExistingEnemyTypeThrowExceptionTest);
         CPPUNIT_TEST(movingEnemiesOverPathTest);
         CPPUNIT_TEST(movingEnemiesOverPathWithDistanceBetweenThemTest);
@@ -40,7 +34,6 @@ class TowerDefenseGameTest : public CppUnit::TestCase {
         CPPUNIT_TEST(earthTowerDoesNotChangeObjetiveIfItsAliveTest);
         CPPUNIT_TEST(whenEnemyIsInRangeOfAirTowerItAttacksHimTest);
         //CPPUNIT_TEST(airTowerAttacksOneTimeEveryFiveSecondsTest);
-        CPPUNIT_TEST(airTowerDoesNotChangeObjetiveIfItsAliveTest);
         CPPUNIT_TEST(airTowerMovesBackEnemyWhenHitHimTest);
         CPPUNIT_TEST(airTowerHitsFlyingEnemiesHarderTest);
         CPPUNIT_TEST(whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest);
@@ -75,7 +68,6 @@ class TowerDefenseGameTest : public CppUnit::TestCase {
         CPPUNIT_TEST(blizzardHasACooldownTest);
         CPPUNIT_TEST(tornatoDealsDamageToAllEnemiesInTheAreaTest);
         CPPUNIT_TEST(tornatoHasACooldownTest);
-        CPPUNIT_TEST(tornatoDoesNotDealDamageToNearbyEnemiesTest);
         CPPUNIT_TEST(rayDealsDamageToTheTargetTest);
         CPPUNIT_TEST(addingTowerToPositionAlreadyOccupedThrowsExceptionTest);
         CPPUNIT_TEST(whenEnemyCompletesPathTheGameIsOverTest);

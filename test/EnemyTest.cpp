@@ -13,7 +13,10 @@ void EnemyTest::moveEnemyMovesItOneCoordinateInTheDirectionOfNextPositionTest() 
     Path path(std::move(positions));
 
     // hp = 10, speed = 1, cant flight
-    enemy = new Enemy(path, 10, 1, false);
+    // se multiplica la velocidad por una base_speed de 4 y
+    // una base_speed_reduction de 0.125 por motivos de ajuste grafico
+    // entonces 2 * 4 * 0.125 = 1
+    enemy = new Enemy(path, 10, 2, false);
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
@@ -35,7 +38,10 @@ void EnemyTest::enemyStartsOnInitialPositionOfPathTest() {
     Path path(std::move(positions));
 
     // hp = 10, speed = 1, cant flight
-    enemy = new Enemy(path, 10, 1, false);
+    // se multiplica la velocidad por una base_speed de 4 y
+    // una base_speed_reduction de 0.125 por motivos de ajuste grafico
+    // entonces 2 * 4 * 0.125 = 1
+    enemy = new Enemy(path, 10, 2, false);
 
     CPPUNIT_ASSERT(enemy->getCurrentPosition().getX() == 1 &&
                            enemy->getCurrentPosition().getY() == 1);
@@ -51,7 +57,10 @@ void EnemyTest::movementInTwoDirectionsTest() {
     Path path(std::move(positions));
 
     // hp = 10, speed = 1, cant flight
-    enemy = new Enemy(path, 10, 1, false);
+    // se multiplica la velocidad por una base_speed de 4 y
+    // una base_speed_reduction de 0.125 por motivos de ajuste grafico
+    // entonces 2 * 4 * 0.125 = 1
+    enemy = new Enemy(path, 10, 2, false);
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
@@ -76,7 +85,10 @@ void EnemyTest::diagonalMovementTest() {
     Path path(std::move(positions));
 
     // hp = 10, speed = 1, cant flight
-    enemy = new Enemy(path, 10, 1, false);
+    // se multiplica la velocidad por una base_speed de 4 y
+    // una base_speed_reduction de 0.125 por motivos de ajuste grafico
+    // entonces 2 * 4 * 0.125 = 1
+    enemy = new Enemy(path, 10, 2, false);
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
@@ -95,7 +107,10 @@ void EnemyTest::speedIncrementTheNumberOfCoordinatesThanEnemyMovesTest() {
     Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
-    enemy = new Enemy(path, 10, 2, false);
+    // se multiplica la velocidad por una base_speed de 4 y
+    // una base_speed_reduction de 0.125 por motivos de ajuste grafico
+    // entonces 4 * 4 * 0.125 = 2
+    enemy = new Enemy(path, 10, 4, false);
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
@@ -114,7 +129,10 @@ void EnemyTest::ifSpeedIsTwoAndOnlyOneCoordinateRemainsEnemyMovesOneCoordinateTe
     Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
-    enemy = new Enemy(path, 10, 2, false);
+    // se multiplica la velocidad por una base_speed de 4 y
+    // una base_speed_reduction de 0.125 por motivos de ajuste grafico
+    // entonces 4 * 4 * 0.125 = 2
+    enemy = new Enemy(path, 10, 4, false);
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
@@ -139,7 +157,10 @@ void EnemyTest::movementOverCompletePathTest() {
     Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
-    enemy = new Enemy(path, 10, 2, false);
+    // se multiplica la velocidad por una base_speed de 4 y
+    // una base_speed_reduction de 0.125 por motivos de ajuste grafico
+    // entonces 4 * 4 * 0.125 = 2
+    enemy = new Enemy(path, 10, 4, false);
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
@@ -170,8 +191,11 @@ void EnemyTest::movementWhenInitialPositionIsCloseToEndingPositonTest() {
                                      pos5, pos6, pos7, pos8};
     Path path(std::move(positions));
 
-    // hp = 10, speed = 2, cant flight
-    enemy = new Enemy(path, 10, 3, false);
+    // hp = 10, speed = 3, cant flight
+    // se multiplica la velocidad por una base_speed de 4 y
+    // una base_speed_reduction de 0.125 por motivos de ajuste grafico
+    // entonces 6 * 4 * 0.125 = 3
+    enemy = new Enemy(path, 10, 6, false);
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
@@ -207,7 +231,10 @@ void EnemyTest::movementWhenInitialPositionIsEqualToEndingPositonTest() {
     Path path(std::move(positions));
 
     // hp = 10, speed = 2, cant flight
-    enemy = new Enemy(path, 10, 2, false);
+    // se multiplica la velocidad por una base_speed de 4 y
+    // una base_speed_reduction de 0.125 por motivos de ajuste grafico
+    // entonces 4 * 4 * 0.125 = 2
+    enemy = new Enemy(path, 10, 4, false);
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();
@@ -243,8 +270,11 @@ void EnemyTest::whenPathConsistOnlyOfOnePointEnemyDoesNotMoveTest() {
     std::vector<Vector> positions = {pos1};
     Path path(std::move(positions));
 
-    // hp = 10, speed = 2, cant flight
-    enemy = new Enemy(path, 10, 3, false);
+    // hp = 10, speed = 3, cant flight
+    // se multiplica la velocidad por una base_speed de 4 y
+    // una base_speed_reduction de 0.125 por motivos de ajuste grafico
+    // entonces 6 * 4 * 0.125 = 3
+    enemy = new Enemy(path, 10, 6, false);
 
     enemy->move();
     const Vector& current_pos = enemy->getCurrentPosition();

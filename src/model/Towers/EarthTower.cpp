@@ -13,7 +13,7 @@ EarthTower::EarthTower(int id, Vector p, YAML::Node &tower_properties,
     YAML::Node properties = tower_properties["earth_tower"];
     // basic properties
     dmg = properties["damage"].as<unsigned int>();
-    range = Range(position, getRangeInTileSizes(properties["range"].as<int>()));
+    range = Range(position, getRangeInTileSizes(properties["range"].as<float>()));
     attack_cooldown = properties["attack_rate"].as<unsigned int>();
 
     // upgrades properties

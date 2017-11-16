@@ -15,7 +15,7 @@ WaterTower::WaterTower(int id, Vector position,
     // basic properties
     dmg = properties["damage"].as<unsigned int>();
     speed_reduction = properties["speed_reduction"].as<unsigned int>();
-    range = Range(position, getRangeInTileSizes(properties["range"].as<int>()));
+    range = Range(position, getRangeInTileSizes(properties["range"].as<float>()));
     attack_cooldown = properties["attack_rate"].as<unsigned int>();
     speed_reduction_duration =
             properties["speed_reduction_duration"].as<unsigned int>();

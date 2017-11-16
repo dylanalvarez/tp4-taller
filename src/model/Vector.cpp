@@ -101,7 +101,12 @@ Vector Vector::operator*(float num) const {
     return Vector(this->x * num, this->y * num);
 }
 
-void Vector::setCoordinatesFromTiles(int x, int y) {
-    this->x = x * 88 - 44;
-    this->y = y * 88 - 44;
+void Vector::setCoordinatesFromTiles(float x, float y) {
+    if (x == 0) { this->x = 0; }
+    else { this->x = x * 88 - 44; }
+    if (y == 0) { this->y = 0; }
+    else { this->y = y * 88 - 44; }
+
+    this->x = std::roundf(this->x);
+    this->y = std::roundf(this->y);
 }

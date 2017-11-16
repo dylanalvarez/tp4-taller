@@ -32,8 +32,8 @@ void ScenarioTest::getEnemyInRangeTest() {
 void ScenarioTest::getEnemyInRangeReturnsTheEnemyClosestToTheLimitTest() {
     int id_1 = 1;
     int id_2 = 2;
-    Enemy enemy1(id_1, scenario->getPath(), 100, 1, false);
-    Enemy enemy2(id_2, scenario->getPath(), 100, 1, false);
+    Enemy enemy1(id_1, scenario->getPath(), 100, 1.0f/4.0f, false);
+    Enemy enemy2(id_2, scenario->getPath(), 100, 1.0f/4.0f, false);
 
     scenario->addEnemy(enemy2);
     // se mueve el primer enemigo
@@ -51,8 +51,8 @@ void ScenarioTest::getEnemyInRangeReturnsTheEnemyClosestToTheLimitTest() {
 void ScenarioTest::whenTwoEnemiesAreAtTheSameDistanceOfRangeReturnsTheFirtsAddedTest() {
     int id_1 = 1;
     int id_2 = 2;
-    Enemy enemy1(id_1, scenario->getPath(), 100, 1, false);
-    Enemy enemy2(id_2, scenario->getPath(), 100, 1, false);
+    Enemy enemy1(id_1, scenario->getPath(), 100, 1.0f/4.0f, false);
+    Enemy enemy2(id_2, scenario->getPath(), 100, 1.0f/4.0f, false);
 
     scenario->addEnemy(enemy2);
     scenario->addEnemy(enemy1);
@@ -70,8 +70,8 @@ void ScenarioTest::whenTwoEnemiesAreAtTheSameDistanceOfRangeReturnsTheFirtsAdded
 void ScenarioTest::getEnemyInRangeWhenNoOneIsRetunsAnEmpyListTest() {
     int id_1 = 1;
     int id_2 = 2;
-    Enemy enemy1(id_1, scenario->getPath(), 100, 1, false);
-    Enemy enemy2(id_2, scenario->getPath(), 100, 1, false);
+    Enemy enemy1(id_1, scenario->getPath(), 100, 1.0f/4.0f, false);
+    Enemy enemy2(id_2, scenario->getPath(), 100, 1.0f/4.0f, false);
 
     scenario->addEnemy(enemy2);
     scenario->addEnemy(enemy1);

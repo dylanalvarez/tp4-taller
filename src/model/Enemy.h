@@ -8,7 +8,10 @@
 #include "Path.h"
 #include "../common/CommunicationUtils.h"
 
+// siempre debe ser multiplo de 4
 #define base_speed 4.0f
+
+// Dividir este numero por dos, si los enemigos son muy rapidos
 #define base_speed_reduction 0.125f
 
 class Enemy {

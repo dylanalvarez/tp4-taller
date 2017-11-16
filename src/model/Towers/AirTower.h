@@ -8,6 +8,8 @@
 
 #include "Tower.h"
 
+#define units_to_move_back 4
+
 class AirTower : public Tower {
 public:
     AirTower(int id, Vector p, YAML::Node& properties,

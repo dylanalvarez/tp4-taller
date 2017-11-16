@@ -132,37 +132,37 @@ void TowerDefenseGame::loadSpellsProperties(YAML::Node& spells_node) {
 void TowerDefenseGame::loadEnemyProperties(YAML::Node& enemies_node) {
     YAML::Node green_demon_node = enemies_node["green_demon"];
     EnemyProperties gd_properties(green_demon_node["health"].as<unsigned int>(),
-                               green_demon_node["speed"].as<unsigned int>(),
+                               green_demon_node["speed"].as<float>(),
                                green_demon_node["fly"].as<bool>());
     enemies_properties.emplace("green_demon", gd_properties);
 
     YAML::Node abmonible_node = enemies_node["abmonible"];
     EnemyProperties ab_properties(abmonible_node["health"].as<unsigned int>(),
-                               abmonible_node["speed"].as<unsigned int>(),
+                               abmonible_node["speed"].as<float>(),
                                abmonible_node["fly"].as<bool>());
     enemies_properties.emplace("abmonible", ab_properties);
 
     YAML::Node goat_man_node = enemies_node["goat_man"];
     EnemyProperties gm_properties(goat_man_node["health"].as<unsigned int>(),
-                                  goat_man_node["speed"].as<unsigned int>(),
+                                  goat_man_node["speed"].as<float>(),
                                   goat_man_node["fly"].as<bool>());
     enemies_properties.emplace("goat_man", gm_properties);
 
     YAML::Node undead_node = enemies_node["undead"];
     EnemyProperties u_properties(undead_node["health"].as<unsigned int>(),
-                                 undead_node["speed"].as<unsigned int>(),
+                                 undead_node["speed"].as<float>(),
                                  undead_node["fly"].as<bool>());
     enemies_properties.emplace("undead", u_properties);
 
     YAML::Node bloody_hawk_node = enemies_node["bloody_hawk"];
     EnemyProperties bh_properties(bloody_hawk_node["health"].as<unsigned int>(),
-                                  bloody_hawk_node["speed"].as<unsigned int>(),
+                                  bloody_hawk_node["speed"].as<float>(),
                                   bloody_hawk_node["fly"].as<bool>());
     enemies_properties.emplace("bloody_hawk", bh_properties);
 
     YAML::Node spectrum_node = enemies_node["spectrum"];
     EnemyProperties s_properties(spectrum_node["health"].as<unsigned int>(),
-                                 spectrum_node["speed"].as<unsigned int>(),
+                                 spectrum_node["speed"].as<float>(),
                                  spectrum_node["fly"].as<bool>());
     enemies_properties.emplace("spectre", s_properties);
 }
@@ -220,7 +220,7 @@ const Tower& TowerDefenseGame::addTower(const Player &player,
     try {
         tower = towers_factory.at(type)->create(tower_id++, position,
                                                 tower_properties, *scenario);
-    } catch (std::exception& e) {
+    } catch (std::out_of_range& e) {
             throw TowerError("Error: el tipo de torre " +
                              type + " no es un tipo valido");
     }

@@ -11,71 +11,11 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(TowerDefenseGameTest);
 
 void TowerDefenseGameTest::setUp(){
-    game = new TowerDefenseGame("config.yaml", "map.yaml");
+    game = new TowerDefenseGame("test_config.yaml", "test_map.yaml");
 }
 
 void TowerDefenseGameTest::tearDown() {
     delete game;
-}
-
-void TowerDefenseGameTest::addingGreenDemonAddsGreenDemonEnemyWithHisPropertiesTest() {
-    game->addEnemy("green_demon");
-
-    const Enemy& green_demon = game->getAllEnemies()[0];
-
-    CPPUNIT_ASSERT_EQUAL(300, green_demon.getHealthPoints());
-    CPPUNIT_ASSERT_EQUAL(1, (int)green_demon.getSpeed());
-    CPPUNIT_ASSERT(!green_demon.canIFlight());
-}
-
-void TowerDefenseGameTest::addingAbmonibleAddsAbmonibleEnemyWithHisPropertiesTest() {
-    game->addEnemy("abmonible");
-
-    const Enemy& abmonible = game->getAllEnemies()[0];
-
-    CPPUNIT_ASSERT_EQUAL(200, abmonible.getHealthPoints());
-    CPPUNIT_ASSERT_EQUAL(1, (int)abmonible.getSpeed());
-    CPPUNIT_ASSERT(!abmonible.canIFlight());
-}
-
-void TowerDefenseGameTest::addingBloodyHawkAddsBloodyHawkEnemyWithHisPropertiesTest() {
-    game->addEnemy("bloody_hawk");
-
-    const Enemy& bloody_hawk = game->getAllEnemies()[0];
-
-    CPPUNIT_ASSERT_EQUAL(100, bloody_hawk.getHealthPoints());
-    CPPUNIT_ASSERT_EQUAL(4, (int)bloody_hawk.getSpeed());
-    CPPUNIT_ASSERT(bloody_hawk.canIFlight());
-}
-
-void TowerDefenseGameTest::addingSpectrumAddsSpectrumEnemyWithHisPropertiesTest() {
-    game->addEnemy("spectrum");
-
-    const Enemy& spectrum = game->getAllEnemies()[0];
-
-    CPPUNIT_ASSERT_EQUAL(100, spectrum.getHealthPoints());
-    CPPUNIT_ASSERT_EQUAL(6, (int)spectrum.getSpeed());
-    CPPUNIT_ASSERT(spectrum.canIFlight());
-}
-
-void TowerDefenseGameTest::addingGoatManAddsGoatManEnemyWithHisPropertiesTest() {
-    game->addEnemy("goat_man");
-
-    const Enemy& goat_man = game->getAllEnemies()[0];
-
-    CPPUNIT_ASSERT_EQUAL(100, goat_man.getHealthPoints());
-    CPPUNIT_ASSERT_EQUAL(2, (int)goat_man.getSpeed());
-    CPPUNIT_ASSERT(!goat_man.canIFlight());
-}
-
-void TowerDefenseGameTest::addingUndeadAddsUndeadEnemyWithHisPropertiesTest() {
-    game->addEnemy("undead");
-
-    const Enemy& undead = game->getAllEnemies()[0];
-
-    CPPUNIT_ASSERT_EQUAL(20, undead.getHealthPoints());
-    CPPUNIT_ASSERT_EQUAL(10, (int)undead.getSpeed());
-    CPPUNIT_ASSERT(!undead.canIFlight());
 }
 
 void TowerDefenseGameTest::addingNonExistingEnemyTypeThrowExceptionTest() {
@@ -144,7 +84,7 @@ void TowerDefenseGameTest::cantAddMoreThanFourPlayersTest() {
 }
 
 void TowerDefenseGameTest::whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest() {
-    // segun el archivo map.yaml, el path es { (0,0), (0,5), (3,5), (3,2), (-1,2) }
+    // segun el archivo test_map.yaml, el path es { (0,0), (0,5), (3,5), (3,2), (-1,2) }
     // y hay terreno firme en (5,5)
 
     const Player& added_player = game->addPlayer("alguien", "fire");
@@ -167,7 +107,7 @@ void TowerDefenseGameTest::whenEnemyIsInRangeOfTowerTheTowerAttacksHimTest() {
 }
 
 void TowerDefenseGameTest::fireTowerAttacksAllnearbyEnemiesWithLessDamageTest() {
-    // segun el archivo map.yaml, el path es { (0,0), (0,5), (3,5), (3,2), (-1,2) }
+    // segun el archivo test_map.yaml, el path es { (0,0), (0,5), (3,5), (3,2), (-1,2) }
     // y hay terreno firme en (5,5)
 
     const Player& added_player = game->addPlayer("alguien", "fire");
@@ -456,6 +396,9 @@ void TowerDefenseGameTest::waterTowerReduceEnemySpeedDuringTwoSecondsTest() {
 
     sleep(2);
 
+    // actualiza la reduccion de movimiento
+    game->moveEnemies();
+
     CPPUNIT_ASSERT(initial_enemy_speed == game->getAllEnemies()[0].getSpeed());
 }
 
@@ -622,6 +565,10 @@ void TowerDefenseGameTest::airTowerDoesNotChangeObjetiveIfItsAliveTest() {
 
     game->performAttacks();
 
+    for (int i = 0; i < 4; i++) {
+        game->moveEnemies();
+    }
+    
     CPPUNIT_ASSERT(initial_life2 > enemy2.getHealthPoints());
     CPPUNIT_ASSERT(initial_life1 == enemy.getHealthPoints());
 
@@ -630,6 +577,10 @@ void TowerDefenseGameTest::airTowerDoesNotChangeObjetiveIfItsAliveTest() {
     game->moveEnemies();
 
     game->performAttacks();
+
+    for (int i = 0; i < 4; i++) {
+        game->moveEnemies();
+    }
 
     CPPUNIT_ASSERT(initial_life2 > enemy2.getHealthPoints());
     CPPUNIT_ASSERT(initial_life1 == enemy.getHealthPoints());
@@ -654,8 +605,8 @@ void TowerDefenseGameTest::airTowerMovesBackEnemyWhenHitHimTest() {
 
     game->performAttacks();
 
-    // cuando le pega el enemigo esta en (3,5) y pasa a (2,5)
-    CPPUNIT_ASSERT_EQUAL(1, (int)(enemy_last_position - enemy.getCurrentPosition()).getX());
+    // cuando le pega el enemigo esta en (3,5) y pasa a (-1,5)
+    CPPUNIT_ASSERT_EQUAL(32, (int)(enemy_last_position - enemy.getCurrentPosition()).getX());
 }
 
 void TowerDefenseGameTest::airTowerHitsFlyingEnemiesHarderTest() {
@@ -685,22 +636,22 @@ void TowerDefenseGameTest::airTowerHitsFlyingEnemiesHarderTest() {
         game->moveEnemies();
     }
 
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
 
     // se mete en rango de la torre el espectro
     // tiene velocidad 6
     game->moveEnemies();
 
-    const Enemy& spectrum = game->getAllEnemies()[1];
+    const Enemy& spectre = game->getAllEnemies()[1];
 
-    int initial_spectrum_health = spectrum.getHealthPoints();
+    int initial_spectre_health = spectre.getHealthPoints();
 
     game->performAttacks();
 
-    int dmg_dealed_to_spectrum = initial_spectrum_health
-                                          - spectrum.getHealthPoints();
+    int dmg_dealed_to_spectre = initial_spectre_health
+                                          - spectre.getHealthPoints();
 
-    CPPUNIT_ASSERT(dmg_dealed_to_spectrum > dmg_dealed_to_green_demon);
+    CPPUNIT_ASSERT(dmg_dealed_to_spectre > dmg_dealed_to_green_demon);
 }
 
 void TowerDefenseGameTest::whenEnemyIsOutOfRangeFireTowerDoesNotAttackHimTest() {
@@ -735,7 +686,7 @@ void TowerDefenseGameTest::earthTowerCantAttackFlyingUnitsTest() {
     const Player& added_player = game->addPlayer("alguien", "earth");
     game->addTower(added_player, "earth", Vector(2,4));
 
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
 
     // el enemigo se situa en rango de la torre
     game->moveEnemies();
@@ -1007,7 +958,7 @@ void TowerDefenseGameTest::fissureDoesNotAffectFlyingEnemiesTest() {
     const Player &added_player = game->addPlayer("alguien", "earth");
 
     // comienza en (0,0)
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
 
     game->throwSpell(added_player, "fissure", Vector(0,0));
 
@@ -1020,7 +971,7 @@ void TowerDefenseGameTest::meteoriteDealsDamageToEnemyHittedTest() {
     const Player &added_player = game->addPlayer("alguien", "fire");
 
     // comienza en (0,0)
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
     int enemy_id = game->getAllEnemies()[0].getID();
     int initial_hp = game->getAllEnemies()[0].getHealthPoints();
 
@@ -1038,7 +989,7 @@ void TowerDefenseGameTest::throwMeteoriteToNotExistingIdThrowsExceptionTest() {
 void TowerDefenseGameTest::meteoriteHasACooldownTest() {
     const Player &added_player = game->addPlayer("alguien", "fire");
 
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
     int enemy_id = game->getAllEnemies()[0].getID();
 
     game->throwSpell(added_player, "meteorite", enemy_id);
@@ -1054,13 +1005,13 @@ void TowerDefenseGameTest::fireWallDealDamageToEnemiesInTheAreaTest() {
     const Player &added_player = game->addPlayer("alguien", "fire");
 
     // comienzan en (0,0)
-    game->addEnemy("spectrum");
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
+    game->addEnemy("spectre");
 
     int first_enemy_hp = game->getAllEnemies()[0].getHealthPoints();
     int second_enemy_hp = game->getAllEnemies()[1].getHealthPoints();
 
-    game->throwSpell(added_player, "fire_wall", Vector(0,0));
+    game->throwSpell(added_player, "fireWall", Vector(0,0));
 
     game->performAttacks();
 
@@ -1071,11 +1022,11 @@ void TowerDefenseGameTest::fireWallDealDamageToEnemiesInTheAreaTest() {
 void TowerDefenseGameTest::fireWallOnlyLastFiveSecondsTest() {
     const Player &added_player = game->addPlayer("alguien", "fire");
 
-    game->throwSpell(added_player, "fire_wall", Vector(0,0));
+    game->throwSpell(added_player, "fireWall", Vector(0,0));
 
     sleep(5);
 
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
     int second_enemy_hp = game->getAllEnemies()[0].getHealthPoints();
 
     game->performAttacks();
@@ -1086,7 +1037,7 @@ void TowerDefenseGameTest::fireWallOnlyLastFiveSecondsTest() {
 void TowerDefenseGameTest::freezingStopsTheEnemyHittedTest() {
     const Player &added_player = game->addPlayer("alguien", "water");
 
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
     int enemy_id = game->getAllEnemies()[0].getID();
 
     game->throwSpell(added_player, "freezing", enemy_id);
@@ -1097,7 +1048,7 @@ void TowerDefenseGameTest::freezingStopsTheEnemyHittedTest() {
 void TowerDefenseGameTest::freezingOnlyLastFiveSecondsTets() {
     const Player &added_player = game->addPlayer("alguien", "water");
 
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
     int enemy_id = game->getAllEnemies()[0].getID();
 
     Vector initial_position = game->getAllEnemies()[0].getCurrentPosition();
@@ -1117,7 +1068,7 @@ void TowerDefenseGameTest::freezingOnlyLastFiveSecondsTets() {
 void TowerDefenseGameTest::freezingHasACooldownTest() {
     const Player &added_player = game->addPlayer("alguien", "water");
 
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
     int enemy_id = game->getAllEnemies()[0].getID();
 
     Vector initial_position = game->getAllEnemies()[0].getCurrentPosition();
@@ -1136,26 +1087,26 @@ void TowerDefenseGameTest::blizzardDealsDamageAndSlowDownEnemiesOnAreaTest() {
     const Player &added_player = game->addPlayer("alguien", "water");
 
     // esta en la posicion (0,0)
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
     game->addEnemy("undead");
-    const Enemy& spectrum = game->getAllEnemies()[0];
+    const Enemy& spectre = game->getAllEnemies()[0];
     const Enemy& undead = game->getAllEnemies()[1];
 
-    float spectrum_initial_speed = spectrum.getSpeed();
-    int spectrum_initial_hp = spectrum.getHealthPoints();
+    float spectre_initial_speed = spectre.getSpeed();
+    int spectre_initial_hp = spectre.getHealthPoints();
     float undead_initial_speed = undead.getSpeed();
     int undead_initial_hp = undead.getHealthPoints();
 
     game->throwSpell(added_player, "blizzard", Vector(0,0));
     game->performAttacks();
 
-    float spectrum_reduced_speed = spectrum.getSpeed();
-    int spectrum_reduced_hp = spectrum.getHealthPoints();
+    float spectre_reduced_speed = spectre.getSpeed();
+    int spectre_reduced_hp = spectre.getHealthPoints();
     float undead_reduced_speed = undead.getSpeed();
     int undead_reduced_hp = undead.getHealthPoints();
 
-    CPPUNIT_ASSERT(spectrum_initial_speed > spectrum_reduced_speed);
-    CPPUNIT_ASSERT(spectrum_initial_hp > spectrum_reduced_hp);
+    CPPUNIT_ASSERT(spectre_initial_speed > spectre_reduced_speed);
+    CPPUNIT_ASSERT(spectre_initial_hp > spectre_reduced_hp);
     CPPUNIT_ASSERT(undead_initial_speed > undead_reduced_speed);
     CPPUNIT_ASSERT(undead_initial_hp > undead_reduced_hp);
 }
@@ -1164,19 +1115,19 @@ void TowerDefenseGameTest::blizzardHasACooldownTest() {
     const Player &added_player = game->addPlayer("alguien", "water");
 
     // esta en la posicion (0,0)
-    game->addEnemy("spectrum");
-    const Enemy& spectrum = game->getAllEnemies()[0];
+    game->addEnemy("spectre");
+    const Enemy& spectre = game->getAllEnemies()[0];
 
     game->throwSpell(added_player, "blizzard", Vector(0,0));
     game->performAttacks();
 
-    int actual_hp = spectrum.getHealthPoints();
+    int actual_hp = spectre.getHealthPoints();
 
     sleep(5);
     game->throwSpell(added_player, "blizzard", Vector(0,0));
     game->performAttacks();
 
-    int reduced_hp = spectrum.getHealthPoints();
+    int reduced_hp = spectre.getHealthPoints();
 
     CPPUNIT_ASSERT(actual_hp == reduced_hp);
 }
@@ -1185,13 +1136,13 @@ void TowerDefenseGameTest::tornatoDealsDamageToAllEnemiesInTheAreaTest() {
     const Player &added_player = game->addPlayer("alguien", "air");
 
     // comienzan en (0,0)
-    game->addEnemy("spectrum");
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
+    game->addEnemy("spectre");
 
     int first_enemy_hp = game->getAllEnemies()[0].getHealthPoints();
     int second_enemy_hp = game->getAllEnemies()[1].getHealthPoints();
 
-    game->throwSpell(added_player, "tornato", Vector(0,0));
+    game->throwSpell(added_player, "tornado", Vector(0,0));
 
     game->performAttacks();
 
@@ -1203,19 +1154,19 @@ void TowerDefenseGameTest::tornatoHasACooldownTest() {
     const Player &added_player = game->addPlayer("alguien", "air");
 
     // esta en la posicion (0,0)
-    game->addEnemy("spectrum");
-    const Enemy& spectrum = game->getAllEnemies()[0];
+    game->addEnemy("spectre");
+    const Enemy& spectre = game->getAllEnemies()[0];
 
-    game->throwSpell(added_player, "tornato", Vector(0,0));
+    game->throwSpell(added_player, "tornado", Vector(0,0));
     game->performAttacks();
 
-    int actual_hp = spectrum.getHealthPoints();
+    int actual_hp = spectre.getHealthPoints();
 
     sleep(10); // duracion del tornado
-    game->throwSpell(added_player, "tornato", Vector(0,0));
+    game->throwSpell(added_player, "tornado", Vector(0,0));
     game->performAttacks();
 
-    int reduced_hp = spectrum.getHealthPoints();
+    int reduced_hp = spectre.getHealthPoints();
 
     CPPUNIT_ASSERT(actual_hp == reduced_hp);
 }
@@ -1224,11 +1175,13 @@ void TowerDefenseGameTest::tornatoDoesNotDealDamageToNearbyEnemiesTest() {
     const Player &added_player = game->addPlayer("alguien", "air");
 
     // comienzan en (0,0)
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
     game->updateGame();
+
+
     int first_enemy_hp = game->getAllEnemies()[0].getHealthPoints();
 
-    game->throwSpell(added_player, "tornato", Vector(0,0));
+    game->throwSpell(added_player, "tornado", Vector(0,0));
     game->updateGame();
 
     CPPUNIT_ASSERT(first_enemy_hp == game->getAllEnemies()[0].getHealthPoints());
@@ -1238,7 +1191,7 @@ void TowerDefenseGameTest::rayDealsDamageToTheTargetTest() {
     const Player &added_player = game->addPlayer("alguien", "air");
 
     // comienza en (0,0)
-    game->addEnemy("spectrum");
+    game->addEnemy("spectre");
     int enemy_id = game->getAllEnemies()[0].getID();
     int initial_hp = game->getAllEnemies()[0].getHealthPoints();
 
