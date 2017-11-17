@@ -1,0 +1,38 @@
+name: mapa_inicial
+setting: desert
+size:
+  x: 10
+  y: 10
+firm_ground:
+      - x: 0.5568
+        y: 0.5568
+      - x: 0.5227
+        y: 0.5455
+paths:
+  - path_sequence:
+      - x: 0
+        y: 0
+      - x: 0
+        y: 0.5568
+      - x: 0.534
+        y: 0.5568
+      - x: 0.534
+        y: 0.5227
+      - x: 0.4886
+        y: 0.5227
+    entry:
+      x: 0
+      y: 0
+    exit:
+      x: -1
+      y: 2
+    enemies:
+      - type: abmonible
+        quantity: 2
+        seconds_before_arrival: 5
+      - type: abmonible
+        quantity: 4
+        seconds_before_arrival: 20
+      - type: abmonible
+        quantity: 4
+        seconds_before_arrival: 15
