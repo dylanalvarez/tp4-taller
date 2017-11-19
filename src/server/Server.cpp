@@ -59,7 +59,8 @@ void Server::joinMatch(Client& client, int id) {
     try {
         Match* match = matchs.at(id);
         match->addPlayer(&client);
-        clients_waiting_for_match.erase(std::remove(clients_waiting_for_match.begin(), clients_waiting_for_match.end(), &client));
+        clients_waiting_for_match.erase(std::remove(
+                clients_waiting_for_match.begin(), clients_waiting_for_match.end(), &client));
     } catch (std::exception& e) {
         // la partida no existe
         // enviar error al cliente
@@ -94,6 +95,12 @@ void Server::startMatch(int match_id) {
     try {
         if (matchs.at(match_id)->hasStarted()) { return; }
         matchs.at(match_id)->startGame();
+
+        Communication::NameAndID started_match("", match_id);
+        matchs_id.erase(std::remove_if(matchs_id.begin(), matchs_id.end(),
+                       [&started_match](const Communication::NameAndID match) {
+                          return match.id == started_match.id;
+                       }));
     } catch (std::exception& e) {
         // el match no existe
         // enviar error al cliente
