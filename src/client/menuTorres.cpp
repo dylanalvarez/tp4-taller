@@ -87,7 +87,6 @@ void MenuTorres::selecionarTorre (const FichaTorre &torre2){
   deselecionarHechizosTotal();
   decelecionar();
 
-  botonPing->show();
   rango->show();
   upgradeRango->show();
   danio->show();
@@ -150,13 +149,11 @@ void MenuTorres::decelecionar(){
   especial->hide();
   upgradeEspecial->hide();
   menuTerreno->hide();
-  botonPing->hide();
   }
 void MenuTorres::selecionarTerreno(const FichaTerreno &terreno2){
     deselecionarHechizosTotal();
     terreno =  &terreno2;
     decelecionar();
-    botonPing->show();
     titulo->set_text(" ");
     switch (terreno->getTipo()){
       case FichaPisoFirme:
