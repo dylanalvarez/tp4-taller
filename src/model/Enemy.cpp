@@ -111,3 +111,19 @@ void Enemy::updateSpeedReduction() {
     if (difftime(time(nullptr), last_speed_reduction_time) >=
         speed_reduction_time) { speed = original_speed; }
 }
+
+Enemy::Enemy(Enemy&& other) noexcept : path(other.path),
+                                       type(other.type) {
+    this->current_pos = other.current_pos;
+    this->current_pos_number = other.current_pos_number;
+    this->current_destiny = other.current_destiny;
+    this->direction = other.direction;
+    this->id = other.id;
+    this->hp = other.hp;
+    this->speed = other.speed;
+    this->original_speed = other.original_speed;
+    this->can_i_fly = other.can_i_fly;
+    this->i_reach_the_end = other.i_reach_the_end;
+    this->last_speed_reduction_time = other.last_speed_reduction_time;
+    this->speed_reduction_time = other.speed_reduction_time;
+}

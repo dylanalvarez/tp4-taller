@@ -40,7 +40,7 @@ std::vector<Enemy*> Scenario::getEnemiesInRange(const Range &range,
 }
 
 void Scenario::addEnemy(Enemy& enemy) {
-    enemies.push_back(enemy);
+    enemies.push_back(std::move(enemy));
 }
 
 Scenario::Scenario(Scenario&& other) noexcept {
@@ -101,7 +101,7 @@ int Scenario::cleanEnemies() {
     int deads_count = 0;
     for (Enemy& enemy: enemies){
         if (!enemy.isDead()){
-            not_dead_enemies.push_back(enemy);
+            not_dead_enemies.push_back(std::move(enemy));
         } else { deads_count++; }
     }
 

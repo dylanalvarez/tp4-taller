@@ -51,6 +51,10 @@ public:
     bool canIFlight() const;
     bool reachTheEnd() const;
 
+    Enemy(const Enemy&) = delete;
+    Enemy& operator=(const Enemy&) = delete;
+    Enemy(Enemy&&) noexcept;
+
 private:
     Path& path;
     Vector current_pos;

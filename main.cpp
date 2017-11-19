@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
     try{
         Server server(argv[1]);
 
-        std::cout << "Cargando archivos...\n";
+        std::cout << "Cargando mapas...\n";
 
         DIR *dir;
         struct dirent *ent = nullptr;

@@ -226,7 +226,12 @@ const Tower& TowerDefenseGame::addTower(const Player &player,
     }
 
     if (player.canBuildTower(type)) {
-        scenario->addTower(tower);
+        try {
+            scenario->addTower(tower);
+        } catch (TowerError& e) {
+            delete tower;
+            throw e;
+        }
         for (Player& p : players) {
             if (&p == &player) {
                 p.addTower(*tower);

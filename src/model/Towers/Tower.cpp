@@ -38,7 +38,7 @@ bool Tower::isCurrentTargetOutOfRange(const std::vector<Enemy*>& enemies) const 
 
 void Tower::changeTarget(const std::vector<Enemy*>& enemies) {
     if (current_target) {
-        if (current_target->getHealthPoints() == 0
+        if (current_target->isDead()
             || isCurrentTargetOutOfRange(enemies)) {
             // si hay target pero esta muerto
             // o si se fue de rango
