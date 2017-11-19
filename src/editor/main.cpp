@@ -2,8 +2,7 @@
 #include "AmbianceGrid.h"
 #include "AddHordeGrid.h"
 #include "ChooseSizeGrid.h"
-#include "LoadFileGrid.h"
-#include <gtkmm/window.h>
+#include "FileChooser.h"
 
 int main(int argc, char **argv) {
     Glib::RefPtr<Gtk::Application> app =
@@ -17,11 +16,7 @@ int main(int argc, char **argv) {
     builder.get_widget("main-window", mainWindow);
 
     SaveButton *saveButton;
-    builder.get_widget_derived("save", saveButton, map);
-
-    ChooseSizeGrid *chooseSizeGrid;
-    builder.get_widget_derived("choose-size-grid", chooseSizeGrid, map,
-                               saveButton);
+    builder.get_widget_derived("save", saveButton, map, mainWindow);
 
     AmbianceGrid *ambianceGrid;
     builder.get_widget_derived("ambiance", ambianceGrid, map);
@@ -29,9 +24,18 @@ int main(int argc, char **argv) {
     AddHordeGrid *addHordeGrid;
     builder.get_widget_derived("add-horde-grid", addHordeGrid, map);
 
-    LoadFileGrid *loadFileGrid;
-    builder.get_widget_derived("load-file-grid", loadFileGrid, map, saveButton,
-                               ambianceGrid, addHordeGrid);
+    NameEntry *nameEntry;
+    builder.get_widget_derived("name", nameEntry, map);
+
+    ChooseSizeGrid *chooseSizeGrid;
+    builder.get_widget_derived("choose-size-grid", chooseSizeGrid, map,
+                               saveButton, ambianceGrid, addHordeGrid,
+                               nameEntry);
+
+    FileChooser *fileChooserButton;
+    builder.get_widget_derived("filechooserbutton1", fileChooserButton, map,
+                               saveButton, ambianceGrid, addHordeGrid,
+                               nameEntry);
 
     auto returnCode = app->run(*mainWindow);
     delete mainWindow;

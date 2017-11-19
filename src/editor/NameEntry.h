@@ -12,7 +12,11 @@ public:
     NameEntry(BaseObjectType *obj,
               const Glib::RefPtr<Gtk::Builder> &builder);
 
-    void init(Map &map, MapGrid *mapGrid);
+    void init(Map &map);
+
+    void addMapGridReference(MapGrid *mapGrid);
+
+    void setFromMap();
 
 private:
     bool onKeyRelease(GdkEventKey *event);

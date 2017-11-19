@@ -12,12 +12,13 @@ public:
     SaveButton(BaseObjectType *obj,
                const Glib::RefPtr<Gtk::Builder> &builder);
 
-    void init(Map &map);
+    void init(Map &map, Gtk::Window *mainWindow);
 
 private:
     void onClick();
 
     Map *map = nullptr;
+    Gtk::Window *mainWindow;
 };
 
 

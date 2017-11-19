@@ -9,13 +9,17 @@
 #include "Map.h"
 #include "Builder.h"
 #include "SaveButton.h"
+#include "AddHordeGrid.h"
+#include "AmbianceGrid.h"
+#include "NameEntry.h"
 
 class ChooseSizeGrid : public Gtk::Grid {
 public:
     ChooseSizeGrid(BaseObjectType *obj,
                    Glib::RefPtr<Gtk::Builder> &builder);
 
-    void init(Map &map, SaveButton *saveButton);
+    void init(Map &map, SaveButton* saveButton, AmbianceGrid *ambianceGrid,
+              AddHordeGrid *addHordeGrid, NameEntry *nameEntry);
 
 private:
     void chooseSize();
@@ -26,6 +30,9 @@ private:
     Gtk::SpinButton *setHeight;
     Gtk::Button *okButton;
     SaveButton *saveButton;
+    AmbianceGrid *ambianceGrid;
+    AddHordeGrid *addHordeGrid;
+    NameEntry *nameEntry;
 };
 
 

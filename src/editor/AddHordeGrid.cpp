@@ -68,6 +68,7 @@ void AddHordeGrid::onHordeKindChange() {
 
 void AddHordeGrid::setFromMap() {
     int pathNumber = 0;
+    hordeList->set_text("");
     for (const Map::Path& path : map->getPaths()) {
         pathNumber++;
         for (const Map::Horde& horde: path.hordes) {

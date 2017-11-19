@@ -18,34 +18,30 @@ ChooseSizeGrid::ChooseSizeGrid(BaseObjectType *obj,
 void ChooseSizeGrid::chooseSize() {
     int width = setWidth->get_value_as_int();
     int height = setHeight->get_value_as_int();
-    map->setSize(width, height);
-
-    Gtk::Grid *initialGrid;
-    builder.get_widget("initial-grid", initialGrid);
-    initialGrid->hide();
-
-    Gtk::Grid *mainGrid;
-    builder.get_widget("main-grid", mainGrid);
-    mainGrid->show();
 
     Gtk::ScrolledWindow *mapScrolledWindow;
     builder.get_widget("map", mapScrolledWindow);
+    delete mapScrolledWindow->get_child();
+    map->reset(width, height);
+
     MapGrid *mapGrid = Gtk::manage(
             new MapGrid(*map, builder, width, height, saveButton));
     mapScrolledWindow->add(*mapGrid);
+    nameEntry->addMapGridReference(mapGrid);
 
-#ifdef __APPLE__ // natural scrolling on macOS
-    mapScrolledWindow->set_policy(
-            Gtk::PolicyType::POLICY_EXTERNAL, Gtk::PolicyType::POLICY_EXTERNAL);
-#endif
-
-    NameEntry *nameEntry;
-    builder.get_widget_derived("name", nameEntry, *map, mapGrid);
+    mapGrid->setFromMap();
+    ambianceGrid->setFromMap();
+    addHordeGrid->setFromMap();
 
     mapGrid->show();
 }
 
-void ChooseSizeGrid::init(Map &map, SaveButton *saveButton) {
+void ChooseSizeGrid::init(Map &map, SaveButton *saveButton,
+                          AmbianceGrid *ambianceGrid,
+                          AddHordeGrid *addHordeGrid, NameEntry *nameEntry) {
     this->map = &map;
     this->saveButton = saveButton;
+    this->ambianceGrid = ambianceGrid;
+    this->addHordeGrid = addHordeGrid;
+    this->nameEntry = nameEntry;
 }

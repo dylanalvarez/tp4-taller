@@ -8,8 +8,6 @@
 #define DEFAULT_SIZE_X 10
 #define DEFAULT_SIZE_Y 10
 
-#define MAPS_DIRECTORY "maps/"
-
 #include <yaml-cpp/yaml.h>
 
 class Map {
@@ -56,8 +54,6 @@ public:
 
     void setSetting(Map::Setting setting);
 
-    void setSize(int width, int height);
-
     int getHeight();
 
     int getWidth();
@@ -87,6 +83,8 @@ public:
     static std::string toString(HordeType hordeType);
 
     static HordeType hordeTypeFromString(const std::string &hordeType);
+
+    void reset(int width, int height);
 
 private:
     static Setting settingFromString(const std::string &setting);

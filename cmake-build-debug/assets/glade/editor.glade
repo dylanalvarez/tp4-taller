@@ -46,7 +46,46 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkFileChooserDialog" id="filechooserdialog1">
+    <property name="can_focus">False</property>
+    <property name="type_hint">dialog</property>
+    <child internal-child="vbox">
+      <object class="GtkBox" id="filechooserdialog-vbox1">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="filechooserdialog-action_area1">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="xpad">6</property>
+    <property name="stock">gtk-floppy</property>
+  </object>
   <object class="GtkWindow" id="main-window">
+    <property name="width_request">1300</property>
+    <property name="height_request">700</property>
     <property name="can_focus">False</property>
     <child>
       <object class="GtkBox" id="box1">
@@ -162,34 +201,32 @@
               </packing>
             </child>
             <child>
-              <object class="GtkGrid" id="load-file-grid">
+              <object class="GtkGrid" id="grid4">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="margin_top">5</property>
                 <child>
-                  <object class="GtkButton" id="load">
-                    <property name="label" translatable="yes">Cargar</property>
-                    <property name="width_request">200</property>
+                  <object class="GtkLabel" id="label7">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="margin_left">5</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_right">5</property>
+                    <property name="margin_top">10</property>
+                    <property name="label" translatable="yes">Importar de archivo: </property>
                   </object>
                   <packing>
-                    <property name="left_attach">1</property>
+                    <property name="left_attach">0</property>
                     <property name="top_attach">0</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="file-name">
+                  <object class="GtkFileChooserButton" id="filechooserbutton1">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="margin_right">10</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">10</property>
                     <property name="hexpand">True</property>
-                    <property name="placeholder_text" translatable="yes">Nombre de archivo (sin extensión .yaml)</property>
+                    <property name="dialog">filechooserdialog1</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
+                    <property name="left_attach">1</property>
                     <property name="top_attach">0</property>
                   </packing>
                 </child>
@@ -197,6 +234,35 @@
               <packing>
                 <property name="left_attach">0</property>
                 <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="save">
+                <property name="label" translatable="yes">Guardar</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">image1</property>
+                <property name="always_show_image">True</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">0</property>
+                <property name="height">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparator" id="separator3">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">15</property>
+                <property name="margin_right">15</property>
+                <property name="orientation">vertical</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">0</property>
+                <property name="height">2</property>
               </packing>
             </child>
           </object>
@@ -207,7 +273,19 @@
           </packing>
         </child>
         <child>
+          <object class="GtkSeparator" id="separator2">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkGrid" id="main-grid">
+            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_left">10</property>
             <property name="margin_right">10</property>
@@ -440,6 +518,8 @@
                                   <object class="GtkSpinButton" id="path-number">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
+                                    <property name="margin_left">5</property>
+                                    <property name="margin_bottom">5</property>
                                     <property name="adjustment">adjustment7</property>
                                   </object>
                                   <packing>
@@ -467,11 +547,24 @@
                             <property name="hexpand">True</property>
                             <property name="vexpand">True</property>
                             <child>
-                              <object class="GtkLabel" id="applied-hordes">
+                              <object class="GtkScrolledWindow" id="scrolledwindow1">
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can_focus">True</property>
                                 <property name="hexpand">True</property>
                                 <property name="vexpand">True</property>
+                                <property name="shadow_type">in</property>
+                                <child>
+                                  <object class="GtkViewport" id="viewport1">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <child>
+                                      <object class="GtkLabel" id="applied-hordes">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -499,7 +592,7 @@
                 <child>
                   <object class="GtkScrolledWindow" id="map">
                     <property name="width_request">600</property>
-                    <property name="height_request">600</property>
+                    <property name="height_request">400</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hexpand">True</property>
@@ -529,20 +622,6 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_bottom">10</property>
-                <child>
-                  <object class="GtkButton" id="save">
-                    <property name="label" translatable="yes">Guardar</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="margin_left">10</property>
-                    <property name="always_show_image">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">0</property>
-                  </packing>
-                </child>
                 <child>
                   <object class="GtkGrid" id="ambiance">
                     <property name="visible">True</property>
@@ -620,7 +699,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hexpand">True</property>
-                    <property name="placeholder_text" translatable="yes">Nombre de archivo (sin extensión .yaml)</property>
+                    <property name="placeholder_text" translatable="yes">Nombre</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -637,7 +716,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>

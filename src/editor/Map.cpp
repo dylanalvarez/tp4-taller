@@ -1,4 +1,5 @@
 #include <fstream>
+#include <sys/stat.h>
 #include "Map.h"
 
 #define GREEN_DEMON_STR "Demonio(s) verde(s)"
@@ -246,10 +247,6 @@ Map::Setting Map::settingFromString(const std::string &hordeType) {
     return associations[hordeType];
 }
 
-void Map::setSize(int width, int height) {
-    size = Coordinate(width, height);
-}
-
 void Map::addFirmGround(int x, int y) {
     firmGround.emplace_back(x, y);
 }
@@ -288,6 +285,14 @@ const std::vector<Map::Coordinate> &Map::getFirmGround() {
 
 const std::vector<Map::Path> &Map::getPaths() {
     return paths;
+}
+
+void Map::reset(int width, int height) {
+    name = "";
+    setting = DEFAULT_SETTING;
+    size = Coordinate(DEFAULT_SIZE_X, DEFAULT_SIZE_Y);
+    firmGround.clear();
+    paths.clear();
 }
 
 std::string Map::Horde::toString(const std::string &pathName) {
