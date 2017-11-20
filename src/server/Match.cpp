@@ -4,12 +4,13 @@
 
 #include <iostream>
 #include "Match.h"
+#include "Server.h"
 
 Match::Match(const std::string &config_file_path,
-             const std::string &map_file_path, int id) :
+             const std::string &map_file_path, int id, Server& server) :
             horde_creator(map_file_path, actions_queue),
             game(config_file_path, map_file_path, horde_creator.getTotalAmountOfEnemies()),
-            context(game, clients), id(id), map(map_file_path)  {
+            context(game, clients), id(id), map(map_file_path), server(server)  {
     has_started = false;
     keep_running = false;
 }
@@ -51,6 +52,7 @@ void Match::run() {
         }
     }
     keep_running = false;
+    server.addClientsToWaitingList(clients);
 }
 
 int Match::getID() const {

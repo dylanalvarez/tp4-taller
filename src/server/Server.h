@@ -34,7 +34,11 @@ public:
     // Pre: el server no esta corriendo
     // para añadir un mapa se debe detener el server
     void addMap(const std::string& file_path);
-
+    
+    // añade todos los clientes del vector a la lista 
+    // de espera "clients_waiting_for_match"
+    void addClientsToWaitingList(std::vector<Client*>& clients);
+    
     void stop();
 
     Server(const Server&) = delete;

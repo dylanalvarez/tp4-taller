@@ -39,6 +39,8 @@ public:
     // setea al jugador como listo para empezar la partida
     void setReady();
     void setActionsQueue(QueueProtected& queue);
+    // resetea todos los parametros para volver a comenzar una partida
+    void reset();
 
     const std::string& getName() const;
     const Player& getModelPlayer() const;
@@ -52,7 +54,7 @@ public:
     Client(const Client&) = delete;
     Client& operator=(const Client&) = delete;
     Client& operator=(Client&&) = delete;
-    Client(Client&&) = delete ;
+    Client(Client&&) = delete;
 
 private:
     BlockingQueue queue;

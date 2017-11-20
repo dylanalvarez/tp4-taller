@@ -104,3 +104,11 @@ void Client::sendInitialData(const std::vector<Communication::NameAndID> &matche
                              const std::vector<Communication::NameAndID> &maps) {
     serverSocket.sendInitialData(matches, maps);
 }
+
+void Client::reset() {
+    player = nullptr;
+    is_ready = false;
+    while (!queue.empty()) {
+        queue.pop();
+    }
+}

@@ -31,7 +31,7 @@ void Server::run() {
             cleanMatchs();
             auto* client = new Client(std::move(new_client), *this);
 
-            //std::lock_guard<std::mutex> lock(mutex);
+            std::lock_guard<std::mutex> lock(mutex);
             clients_waiting_for_match.push_back(client);
 
             client->start();
@@ -112,7 +112,8 @@ int Server::createMatch(Client &client, int map_id,
     std::lock_guard<std::mutex> lock(mutex);
 
     try {
-        auto* match = new Match(config_file_path, maps_paths.at(map_id), match_id);
+        auto* match = new Match(config_file_path, maps_paths.at(map_id),
+                                match_id, *this);
         matchs.emplace(match_id, match);
         matchs.at(match_id)->addPlayer(&client);
         clients_waiting_for_match.erase(std::remove(clients_waiting_for_match.begin(),
@@ -170,5 +171,15 @@ void Server::cleanMatchs() {
 void Server::reSeanInitialData() {
     for (Client* client: clients_waiting_for_match) {
         client->sendInitialData(matchs_id, maps);
+    }
+}
+
+void Server::addClientsToWaitingList(std::vector<Client*>& clients) {
+    std::lock_guard<std::mutex> lock(mutex);
+    
+    for (Client* client : clients) {
+        client->reset();
+        client->sendInitialData(matchs_id, maps);
+        clients_waiting_for_match.push_back(client);
     }
 }

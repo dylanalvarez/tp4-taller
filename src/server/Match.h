@@ -15,7 +15,7 @@
 class Match : public Thread {
 public:
     Match(const std::string& config_file_path,
-          const std::string& map_file_path, int id);
+          const std::string& map_file_path, int id, Server& server);
 
     ~Match() override;
 
@@ -55,6 +55,8 @@ private:
     void cleanClients();
     
     const unsigned int time_step = 15000; // 15 milisegundos;
+    
+    Server& server;
 };
 
 
