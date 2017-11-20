@@ -17,7 +17,7 @@ MapGrid::MapGrid(Map &map,
         for (int y = 0; y <= height + 1; y++) {
             auto square = Gtk::manage(new MapButton("", x, y, *this, map));
             attach(*square, x, y, 1, 1);
-            square->set_size_request(30, 30);
+            square->get_child()->set_size_request(25, 25);
             square->show();
             grid[x].push_back((Gtk::Button *) square);
         }
@@ -61,12 +61,11 @@ void MapGrid::setFromMap() {
     int pathNumber = 1;
     for (const Map::Path &path : map.getPaths()) {
         std::string pathLabel = std::to_string(pathNumber);
-        grid[path.entry.x][path.entry.y]->set_label(ENTRY_DOOR_STR + pathLabel);
-        grid[path.exit.x][path.exit.y]->set_label(EXIT_DOOR_STR + pathLabel);
+        grid[path.entry.x][path.entry.y]->set_label(ENTRY_DOOR_STR + " " + pathLabel);
+        grid[path.exit.x][path.exit.y]->set_label(EXIT_DOOR_STR + " " + pathLabel);
         int stepNumber = 1;
         for (const Map::Coordinate &pathStep : path.pathSequence) {
-            grid[pathStep.x][pathStep.y]->set_label(PATH_STR
-                                                    + pathLabel
+            grid[pathStep.x][pathStep.y]->set_label(pathLabel
                                                     + ", "
                                                     + std::to_string(
                     stepNumber));
@@ -146,8 +145,7 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
         justStartedPath = true;
     }
     if (squareType == path) {
-        grid[x][y]->set_label(PATH_STR
-                              + map.addPathStep(x, y)
+        grid[x][y]->set_label(map.addPathStep(x, y)
                               + ", "
                               + std::to_string(
                 map.getPaths().back().pathSequence.size()));

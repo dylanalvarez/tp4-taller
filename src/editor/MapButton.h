@@ -4,7 +4,6 @@
 #define FIRM_GROUND_STR std::string("T")
 #define ENTRY_DOOR_STR std::string("E")
 #define EXIT_DOOR_STR std::string("S")
-#define PATH_STR std::string("C")
 
 #include <gtkmm/button.h>
 #include "Map.h"
