@@ -4,7 +4,14 @@ size:
   x: 10
   y: 10
 firm_ground:
-  []
+  - x: 8
+    y: 3
+  - x: 5
+    y: 7
+  - x: 10
+    y: 6
+  - x: 7
+    y: 9
 paths:
   - path_sequence:
       - x: 3
