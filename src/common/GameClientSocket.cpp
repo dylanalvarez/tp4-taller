@@ -26,7 +26,7 @@ void GameClientSocket::run() {
                 break;
             case 3:
                 message = YAML::Load(messageAsString);
-                keepRunning = !_handleGameState(message);
+                _handleGameState(message);
                 break;
             case 4:
                 message = YAML::Load(messageAsString);
@@ -44,6 +44,10 @@ void GameClientSocket::run() {
                 break;
         }
     }
+}
+
+void GameClientSocket::disconnect() {
+    keepRunning = false;
 }
 
 void GameClientSocket::_sendNode(YAML::Node& node) {
@@ -163,7 +167,7 @@ void GameClientSocket::_handleInitialData(YAML::Node &node) {
     receiver.getInitialData(matches, maps);
 }
 
-bool GameClientSocket::_handleGameState(YAML::Node &node) {
+void GameClientSocket::_handleGameState(YAML::Node &node) {
     Communication::GameState state;
     state.setState(node["state"].as<std::string>());
     for (const auto& enemy : node["enemies"]) {
@@ -213,7 +217,6 @@ bool GameClientSocket::_handleGameState(YAML::Node &node) {
         );
     }
     receiver.getGameState(state);
-    return state.state != Communication::GameState::ongoing;
 }
 
 void GameClientSocket::_handleRecievedMessage(YAML::Node &node) {

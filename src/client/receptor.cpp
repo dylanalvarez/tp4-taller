@@ -8,6 +8,7 @@ void Receptor::iniciar(){
   socket.start();
 }
 void Receptor::terminar(){
+  socket.disconnect();
   socket.join();
   seguir = false;
 }
