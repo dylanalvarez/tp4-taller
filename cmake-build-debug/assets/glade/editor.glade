@@ -83,6 +83,26 @@
     <property name="xpad">6</property>
     <property name="stock">gtk-floppy</property>
   </object>
+  <object class="GtkImage" id="image2">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">../images/desert.png</property>
+  </object>
+  <object class="GtkImage" id="image3">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">../images/volcano.png</property>
+  </object>
+  <object class="GtkImage" id="image4">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">../images/ice.png</property>
+  </object>
+  <object class="GtkImage" id="image5">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">../images/meadow.png</property>
+  </object>
   <object class="GtkWindow" id="main-window">
     <property name="width_request">1300</property>
     <property name="height_request">700</property>
@@ -634,7 +654,10 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
+                        <property name="image">image2</property>
                         <property name="xalign">0.5</property>
+                        <property name="image_position">top</property>
+                        <property name="always_show_image">True</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">False</property>
                       </object>
@@ -649,7 +672,10 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
+                        <property name="image">image3</property>
                         <property name="xalign">0.5</property>
+                        <property name="image_position">top</property>
+                        <property name="always_show_image">True</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">False</property>
                       </object>
@@ -664,7 +690,10 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
+                        <property name="image">image4</property>
                         <property name="xalign">0.5</property>
+                        <property name="image_position">top</property>
+                        <property name="always_show_image">True</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">False</property>
                       </object>
@@ -679,7 +708,10 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
+                        <property name="image">image5</property>
                         <property name="xalign">0.5</property>
+                        <property name="image_position">top</property>
+                        <property name="always_show_image">True</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">False</property>
                       </object>
