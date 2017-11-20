@@ -14,22 +14,19 @@
 #include "PantallaDeElementos.h"
 #include "../common/Socket.h"
 #include "PantallaResultado.h"
+#include "../common/Exception.h"
 //esta clase es solo para dirigir el movimiento en este caso.
 
 #define largo 88
 #define teimpoActualizacionModelo 15
 
 int main(int argc, char *argv[]){
-  if (argc != 2) {
-    return 0;
-  }
-  Socket socket("127.0.0.1", argv[1]); //Algo raro pasa aca.
-
-  //esto.. no estamos de todo seguro.
-  int argcF =argc -1;
-  Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argcF, argv);
-
-
+  if (argc < 2) { throw Exception("Invalid arguments (port needed)"); }
+  Socket socket(argc == 2 ? "127.0.0.1" : argv[1],
+                argv[argc == 2 ? 1 : 2]);
+  
+  Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
+  
   OrdenadorDeFichas fichas;
   Gtk::Box* Box;
 	Glib::RefPtr<Gtk::Builder> refBuilder = Gtk::Builder::create();
@@ -52,7 +49,7 @@ int main(int argc, char *argv[]){
   emisor.cargarSocket(&clientSocket);
 
 //pongo Timers
-  int TiempoEnMilesegundos = 100;
+  unsigned int TiempoEnMilesegundos = 100;
   sigc::slot<bool> my_slot = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDeAnimacion);
   sigc::connection conn = Glib::signal_timeout().connect(my_slot,TiempoEnMilesegundos);
   TiempoEnMilesegundos = 50;
