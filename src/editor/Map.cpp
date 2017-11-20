@@ -290,7 +290,7 @@ const std::vector<Map::Path> &Map::getPaths() {
 void Map::reset(int width, int height) {
     name = "";
     setting = DEFAULT_SETTING;
-    size = Coordinate(DEFAULT_SIZE_X, DEFAULT_SIZE_Y);
+    size = Coordinate(width, height);
     firmGround.clear();
     paths.clear();
 }
