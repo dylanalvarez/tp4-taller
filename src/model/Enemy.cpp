@@ -40,7 +40,7 @@ void Enemy::move(int units_to_move) {
             direction.normalizeAndRound();
         }
     }
-    i_reach_the_end = (current_pos == path.getFinalPositon());
+    i_reach_the_end = ((current_pos_number - 1) >= path.getFinalPositionIndex());
 }
 
 const Vector &Enemy::getCurrentPosition() const {

@@ -17,7 +17,8 @@ public:
     const Vector& getNextPosition(unsigned long actual_index);
 
     const Vector& getInitialPosition() const;
-    const Vector& getFinalPositon() const;
+    const Vector& getFinalPosition() const;
+    unsigned long getFinalPositionIndex() const;
 
     // las posiciones son centro de tiles
     // retorna true si position esta en el camino de un tile a otro
