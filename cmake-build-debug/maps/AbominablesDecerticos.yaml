@@ -1,0 +1,61 @@
+name: AbominablesDecerticos
+setting: desert
+size:
+  x: 10
+  y: 10
+firm_ground:
+  - x: 2
+    y: 8
+  - x: 2
+    y: 2
+  - x: 4
+    y: 2
+  - x: 4
+    y: 9
+  - x: 4
+    y: 10
+  - x: 3
+    y: 10
+  - x: 2
+    y: 10
+  - x: 2
+    y: 3
+  - x: 2
+    y: 4
+  - x: 2
+    y: 5
+  - x: 4
+    y: 8
+  - x: 4
+    y: 7
+  - x: 4
+    y: 6
+  - x: 4
+    y: 5
+paths:
+  - path_sequence:
+      - x: 1
+        y: 1
+      - x: 1
+        y: 9
+      - x: 3
+        y: 9
+      - x: 3
+        y: 1
+      - x: 5
+        y: 1
+      - x: 5
+        y: 10
+    entry:
+      x: 1
+      y: 0
+    exit:
+      x: 5
+      y: 11
+    enemies:
+      - type: abmonible
+        quantity: 2
+        seconds_before_arrival: 10
+      - type: abmonible
+        quantity: 2
+        seconds_before_arrival: 18
