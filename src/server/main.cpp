@@ -2,7 +2,7 @@
 #include <syslog.h>
 #include <dirent.h>
 #include <cstring>
-#include "src/server/Server.h"
+#include "Server.h"
 
 int main(int argc, char *argv[]) {
     try{
