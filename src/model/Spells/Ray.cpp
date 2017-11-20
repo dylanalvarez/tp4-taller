@@ -27,13 +27,14 @@ void Ray::applyEffect(Enemy &enemy) {
 
     last_activation_time = time(nullptr);
     target_id = enemy.getID();
+    is_active = true;
 }
 
 bool Ray::canBeThrownBy(const std::string &element) {
     return element == "air";
 }
 
-void Ray::update() {}
+void Ray::update() { is_active = false; }
 
 bool Ray::isActive() const {
     return is_active;

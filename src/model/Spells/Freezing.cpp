@@ -15,6 +15,7 @@ void Freezing::applyEffect(Enemy &enemy) {
     if (isOnCooldown()) { return; }
 
     enemy.reduceSpeed(100, duration);
+    is_active = true;
     last_activation_time = time(nullptr);
     target_id = enemy.getID();
 }
@@ -23,7 +24,7 @@ bool Freezing::canBeThrownBy(const std::string &element) {
     return element == "water";
 }
 
-void Freezing::update() {}
+void Freezing::update() { is_active = false; }
 
 bool Freezing::isActive() const {
     return is_active;

@@ -198,7 +198,9 @@ void GameClientSocket::_handleGameState(YAML::Node &node) {
                         tower["damage"]["normal"].as<int>(),
                         tower["damage"]["flying"].as<int>(),
                         tower["damage"]["close_by"].as<int>()),
-                tower["element"].as<std::string>()
+                tower["element"].as<std::string>(),
+                tower["is_attacking"].as<bool>(),
+                tower["current_target"].as<int>()
         );
     }
     for (const auto& positionalPower : node["positional_powers"]) {

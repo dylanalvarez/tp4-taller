@@ -26,6 +26,7 @@ void Meteorite::applyEffect(Enemy &enemy) {
         target->reduceLife(dmg_to_nearby_enemies);
     }
 
+    is_active = true;
     last_activation_time = time(nullptr);
 }
 
@@ -33,7 +34,7 @@ bool Meteorite::canBeThrownBy(const std::string &element) {
     return element == "fire";
 }
 
-void Meteorite::update() {}
+void Meteorite::update() { is_active = false; }
 
 void Meteorite::applyEffect(const Vector &position) {}
 

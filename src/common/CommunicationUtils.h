@@ -83,7 +83,8 @@ namespace Communication {
 
         Tower(int id, Level level, int experience, int rangeInSquares,
               int ExplosionRange, int x, int y, EnemySlowdown slowdown,
-              Damage damage, const std::string &type);
+              Damage damage, const std::string &type, bool is_attacking = false,
+              int current_target_id = 0);
 
         Tower(int id, Level level, int experience, int rangeInSquares,
               int ExplosionRange, int x, int y, EnemySlowdown slowdown,

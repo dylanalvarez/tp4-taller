@@ -77,10 +77,12 @@ Communication::Tower::Tower(int id, Level level, int experience,
                             int rangeInSquares, int ExplosionRange, int x,
                             int y, Communication::Tower::EnemySlowdown slowdown,
                             Communication::Tower::Damage damage,
-                            const std::string &type)
+                            const std::string &type, bool is_attacking,
+                            int current_target_id)
         : id(id), experience(experience), rangeInSquares(rangeInSquares),
           ExplosionRange(ExplosionRange), x(x), y(y), level(level),
-          slowdown(slowdown), damage(damage) {
+          slowdown(slowdown), damage(damage), is_attacking(is_attacking),
+          current_target_id(current_target_id) {
     if (type == "earth") { this->type = earth; }
     else if (type == "water") { this->type = water; }
     else if (type == "fire") { this->type = fire; }

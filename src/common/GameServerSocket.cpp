@@ -62,7 +62,9 @@ void GameServerSocket::sendGameState(
         position["x"] = tower.x;
         position["y"] = tower.y;
         tower_node["position"] = position;
-
+        tower_node["is_attacking"] = tower.is_attacking;
+        tower_node["current_target"] = tower.current_target_id;
+        
         game_node["towers"].push_back(tower_node);
     }
 
