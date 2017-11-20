@@ -37,6 +37,10 @@ bool Path::containsPosition(const Vector &position) {
     return false;
 }
 
-const Vector &Path::getFinalPositon() const {
+const Vector &Path::getFinalPosition() const {
     return positions.back();
+}
+
+unsigned long Path::getFinalPositionIndex() const {
+    return positions.size() - 1;
 }
