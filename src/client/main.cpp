@@ -24,9 +24,9 @@ int main(int argc, char *argv[]){
   if (argc < 2) { throw Exception("Invalid arguments (port needed)"); }
   Socket socket(argc == 2 ? "127.0.0.1" : argv[1],
                 argv[argc == 2 ? 1 : 2]);
-  
+
   Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
-  
+
   OrdenadorDeFichas fichas;
   Gtk::Box* Box;
 	Glib::RefPtr<Gtk::Builder> refBuilder = Gtk::Builder::create();
@@ -37,8 +37,8 @@ int main(int argc, char *argv[]){
 	refBuilder->get_widget("cajaJuego", Box);
   Box->pack_start(area);
   GestionadorDeVentanas ventanas(refBuilder);
-  PantallaResultado victoria(refBuilder, "victory");
-  PantallaResultado derrota(refBuilder, "defeat");
+  PantallaResultado victoria(refBuilder, "victory", ventanas);
+  PantallaResultado derrota(refBuilder, "defeat", ventanas);
   PantallaDeInicio pantallaInicial(refBuilder, emisor, area.getMenuTorres());
   PantallaDeElementos pantallaDeElementos(refBuilder, emisor);
   GameClientReceiver reciver(fichas, area.getMenuTorres(),
@@ -59,10 +59,7 @@ int main(int argc, char *argv[]){
   //arranco
 
   controladorDeSiclos.iniciar();
-  ventanas.arrancarPantallaDeInicio();
-  ventanas.arrancarPantallaDeElementos();
-  ventanas.arrancarJuego();
-  ventanas.arrancarPantallaResultado();
+  ventanas.arrancar();
   controladorDeSiclos.terminar();
 
   return 0;

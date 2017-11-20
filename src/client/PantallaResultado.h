@@ -13,12 +13,13 @@
 class PantallaResultado {
 public:
     PantallaResultado(Glib::RefPtr<Gtk::Builder> &ventana,
-                      const std::string& window_name);
+                      const std::string& window_name,
+                      GestionadorDeVentanas& Ventanas2);
 
 private:
     Gtk::Button* btn_ok;
     Gtk::Window* this_window;
-
+    GestionadorDeVentanas& ventanas;
     void on_ok_clicked();
 };
 
