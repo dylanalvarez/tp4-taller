@@ -94,7 +94,7 @@ void Emisor::pingear(int x, int y){
   Mensaje aux;
   aux.tipo = Mensaje::Type::pingTile;
   aux.elInt1 = x;
-  aux.elInt1 = y;
+  aux.elInt2 = y;
   cola.agregarLinea(aux);
 }
 void Emisor::lansarEchizo(int x, int y, std::string tipo){
