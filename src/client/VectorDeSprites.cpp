@@ -393,7 +393,51 @@ VectorDeSprites::VectorDeSprites(){
   cargarSprite("Sprites/Tornado_12.png");
   cargarSprite("Sprites/Tornado_13.png");
   cargarSprite("Sprites/Tornado_14.png");
-  cargarSprite("Sprites/Tornado_15.png");              
+  cargarSprite("Sprites/Tornado_15.png");
+
+  cargarSprite("Sprites/PoertalAzul2_01.png");
+  cargarSprite("Sprites/PoertalAzul2_02.png");
+  cargarSprite("Sprites/PoertalAzul2_03.png");
+  cargarSprite("Sprites/PoertalAzul2_04.png");
+  cargarSprite("Sprites/PoertalAzul2_05.png");
+  cargarSprite("Sprites/PoertalAzul2_06.png");
+  cargarSprite("Sprites/PoertalAzul2_07.png");
+  cargarSprite("Sprites/PoertalAzul2_08.png");
+  cargarSprite("Sprites/PoertalAzul2_09.png");
+  cargarSprite("Sprites/PoertalAzul2_10.png");
+  cargarSprite("Sprites/PoertalRojo2.png");
+  cargarSprite("Sprites/PoertalRojo2_01.png");
+  cargarSprite("Sprites/PoertalRojo2_02.png");
+  cargarSprite("Sprites/PoertalRojo2_03.png");
+  cargarSprite("Sprites/PoertalRojo2_04.png");
+  cargarSprite("Sprites/PoertalRojo2_05.png");
+  cargarSprite("Sprites/PoertalRojo2_06.png");
+  cargarSprite("Sprites/PoertalRojo2_07.png");
+  cargarSprite("Sprites/PoertalRojo2_08.png");
+  cargarSprite("Sprites/PoertalRojo2_09.png");
+  cargarSprite("Sprites/PoertalRojo2_10.png");
+
+  cargarSprite("Sprites/PortaAzul1_01.png");
+  cargarSprite("Sprites/PortaAzul1_02.png");
+  cargarSprite("Sprites/PortaAzul1_03.png");
+  cargarSprite("Sprites/PortaAzul1_04.png");
+  cargarSprite("Sprites/PortaAzul1_05.png");
+  cargarSprite("Sprites/PortaAzul1_06.png");
+  cargarSprite("Sprites/PortaAzul1_07.png");
+  cargarSprite("Sprites/PortaAzul1_08.png");
+  cargarSprite("Sprites/PortaAzul1_09.png");
+  cargarSprite("Sprites/PortaAzul1_10.png");
+  cargarSprite("Sprites/PortaRojo1.png");
+  cargarSprite("Sprites/PortaRojo1_01.png");
+  cargarSprite("Sprites/PortaRojo1_02.png");
+  cargarSprite("Sprites/PortaRojo1_03.png");
+  cargarSprite("Sprites/PortaRojo1_04.png");
+  cargarSprite("Sprites/PortaRojo1_05.png");
+  cargarSprite("Sprites/PortaRojo1_06.png");
+  cargarSprite("Sprites/PortaRojo1_07.png");
+  cargarSprite("Sprites/PortaRojo1_08.png");
+  cargarSprite("Sprites/PortaRojo1_09.png");
+  cargarSprite("Sprites/PortaRojo1_10.png");
 }
 Glib::RefPtr<Gdk::Pixbuf>& VectorDeSprites::obtener (int n){
   return (sprites[n]);

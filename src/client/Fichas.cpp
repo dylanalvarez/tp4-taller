@@ -344,18 +344,37 @@ FichaPortal::FichaPortal(int x2, int y2, int id2, int tipo,
                         VectorDeSprites &vectorDeSprites):
                          Ficha(x2, y2, id2, tipo){
   spriteActualSubAnimacion = 1;
+  int largo = 0;
+  int inicio = 0;
   switch (tipo) {
-    case FichaPortalAzul:
-      y = y - 44;
-      sprites.push_back(Sprite(x-DSP, y-DSP, vectorDeSprites.obtener(SpritePortalAzul)));
-      sprites.push_back(Sprite(x-DSEPX, y-DSEPY, vectorDeSprites.obtener(SpritePortalAzul1)));
-      sprites.push_back(Sprite(x-DSEPX, y-DSEPY, vectorDeSprites.obtener(SpritePortalAzul2)));
-      sprites.push_back(Sprite(x-DSEPX, y-DSEPY, vectorDeSprites.obtener(SpritePortalAzul3)));
-      break;
+    case FichaPortalAzul1:
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(arco01)));
+      largo = SpritePortalAzul01Total;
+      inicio = SpritePortalAzul01;
+    break;
+    case FichaPortalRojo1:
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(arco01)));
+      largo = SpritePortaRojo01Total;
+      inicio = SpritePortaRojo01;
+    break;
+    case FichaPortalAzul2:
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(arco02)));
+      largo = SpritePortalAzul02Total;
+      inicio = SpritePortalAzul02;
+    break;
+    case FichaPortalRojo2:
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(arco02)));
+      largo = SpritePortaRojo02Total;
+      inicio = SpritePortaRojo02;
+    break;
     default:
     //falta que aca salte un error.
-      break;
+    break;
   }
+  for (int i = 0; i < largo; i++) {
+      sprites.push_back(Sprite(x, y, vectorDeSprites.obtener(inicio + i)));
+  }
+  largoAnimiacionActual = largo;
 }
 //aunque esto puede que no tenga razon de ser.
 FichaPortal::FichaPortal(const FichaPortal &p): Ficha(p){
@@ -364,11 +383,11 @@ FichaPortal::FichaPortal(const FichaPortal &p): Ficha(p){
 void FichaPortal::dibujar(const Cairo::RefPtr<Cairo::Context>& cr,
    DatosPantalla datosActuales){
     sprites[spriteActualSubAnimacion].dibujarIsometrico(cr,datosActuales);
-    sprites[spriteActual].dibujarIsometrico(cr,datosActuales);
+    sprites[0].dibujarIsometrico(cr,datosActuales);
    }
 void FichaPortal::ejecutarSicloDeAnimacion(){
   spriteActualSubAnimacion++;
-  if (spriteActualSubAnimacion == 4) {
+  if (spriteActualSubAnimacion == 10) {
      spriteActualSubAnimacion = 1;
   }
 }
@@ -385,6 +404,7 @@ FichaEfectos::FichaEfectos(FichaTorre &inicio, int id2,
   Posicion posicionInicial;
   posicionInicial = inicio.getPosicion();
   tipo = inicio.getTipo();
+  //int i;
   switch (tipo) {
     case FichaTorreDeTierra:
       x = posicionInicial.X - 100;
@@ -397,6 +417,11 @@ FichaEfectos::FichaEfectos(FichaTorre &inicio, int id2,
       y = posicionInicial.Y - 100;
       this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
       tiempoImpacto = 20;
+      /*for (i = 0; i < SpriteAtaqueAguaTotal; i++) {
+          this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteAtaqueAgua + i)));
+      }
+      largoAnimiacionActual = SpriteAtaqueAguaTotal;
+      tiempoImpacto = SpriteAtaqueAguaTotal;*/
       break;
   }
 }
@@ -434,6 +459,13 @@ FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &s
         largoAnimiacionActual = SpriteTornadoTotal;
         tiempoImpacto = SpriteTornadoTotal;
       break;
+      case FichaPing:
+        for (i = 0; i < SpriteGrietaTotal; i++) {
+            this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteGrieta + i)));
+        }
+        largoAnimiacionActual = SpriteGrietaTotal;
+        tiempoImpacto = SpriteGrietaTotal;
+      break;
       default:
         for (i = 0; i < SpriteGrietaTotal; i++) {
             this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteGrieta + i)));
@@ -470,7 +502,6 @@ FichaEfectos::FichaEfectos(int id2, int tipo, VectorDeSprites &sprites,
         }
         largoAnimiacionActual = SpriteRalloTotal;
         tiempoImpacto = SpriteRalloTotal;
-        printf("rallo\n");
       break;
      break;
     default:

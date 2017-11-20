@@ -76,6 +76,18 @@
 #define SpriteTornado 367
 #define SpriteTornadoTotal 15
 
+#define SpritePortalAzul02 382
+#define SpritePortalAzul02Total 9
+#define arco02 391
+#define SpritePortaRojo02 393
+#define SpritePortaRojo02Total 9
+
+#define SpritePortalAzul01 403
+#define SpritePortalAzul01Total 9
+#define arco01 412
+#define SpritePortaRojo01 413
+#define SpritePortaRojo01Total 9
+
 class VectorDeSprites{
 protected:
   std::vector<Glib::RefPtr<Gdk::Pixbuf>> sprites;

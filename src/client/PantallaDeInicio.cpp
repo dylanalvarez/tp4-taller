@@ -19,24 +19,28 @@ PantallaDeInicio::PantallaDeInicio(Glib::RefPtr<Gtk::Builder> &ventana,
 
 void PantallaDeInicio::unirsePartida(){
   emisorComandos.elegirEquipo(nick->get_text().c_str(),
-                            equipos->get_id_column() - 1);
+                            ids[equipos->get_active_text ().c_str()]);
   menu.setNick(nick->get_text().c_str());
   }
 void PantallaDeInicio::crearPartida(){
   emisorComandos.elegirMapa(nick->get_text().c_str(),
-                    nickEquipo->get_text().c_str(), mapas->get_active_row_number());
+                    nickEquipo->get_text().c_str(),
+                    ids[mapas->get_active_text ().c_str()]);
   menu.setNick(nick->get_text().c_str());
   }
 
 void PantallaDeInicio::cargarDatos(
           const std::vector<Communication::NameAndID> &matches,
           const std::vector<Communication::NameAndID> &maps){
+  ids.clear();
   equipos->remove_all();
   for (auto it = matches.begin(); it != matches.end(); ++it){
       equipos->insert(it->id,it->name.c_str());
+      ids.emplace(std::make_pair(it->name.c_str(),it->id));
   }
   mapas->remove_all();
   for (auto it = maps.begin(); it != maps.end(); ++it){
     mapas->insert(it->id+1,it->name.c_str());
+    ids.emplace(std::make_pair(it->name.c_str(),it->id));
   }
 }

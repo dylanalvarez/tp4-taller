@@ -112,6 +112,14 @@ void OrdenadorDeFichas::actualizarTorre(Communication::Tower actualzacion){
   }else{
     torres.at(actualzacion.id).actualizar(actualzacion);
   }
+  if(actualzacion.is_attacking){
+    auto it = enemigos.find(actualzacion.current_target_id);
+    if (it != enemigos.end()){
+      printf("ataque\n");
+      agregarEfectos(actualzacion.id, actualzacion.current_target_id, idEfectos, sprites);
+      idEfectos++;
+    }
+  }
 }
 
 
@@ -202,6 +210,7 @@ void OrdenadorDeFichas::actualizarEfectos(Communication::TargetPower actualzacio
        getEnemigo(actualzacion.enemyID)));
     break;
     case Communication::TargetPower::Type::ray:
+    printf("rayo\n");
     agregarEfectos(FichaEfectos(idEfectos, FichaRayos, sprites,
        getEnemigo(actualzacion.enemyID)));
     break;
@@ -247,6 +256,7 @@ void OrdenadorDeFichas::cargarMapa(std::string &mapa){
   }
   int x = mapaCargado.getHeight();
   int y = mapaCargado.getWidth();
+printf("%i,%i\n", x,y);
   int id = 0;
   for (int i = 1; i < y; i++) {
     for (int j = 1; j < x; j++) {
@@ -265,6 +275,32 @@ void OrdenadorDeFichas::cargarMapa(std::string &mapa){
 
   auto pathEnemigos = mapaCargado.getPaths();
   for (auto &pathEnemigo : pathEnemigos) {
+
+    //??
+    y = mapaCargado.getHeight();
+    x = mapaCargado.getWidth();
+    //??
+
+    if (pathEnemigo.entry.x==0)
+      agregarPortal(FichaPortal(-44,(pathEnemigo.entry.y-1)*largo,1, FichaPortalAzul2 ,sprites));
+    if (pathEnemigo.entry.x==x+1) //testear
+      agregarPortal(FichaPortal((pathEnemigo.exit.x-2)*largo+44,(pathEnemigo.entry.y-1)*largo,1, FichaPortalAzul2 ,sprites));
+    if (pathEnemigo.entry.y==0)
+      agregarPortal(FichaPortal((pathEnemigo.entry.x-1)*largo,-44,1, FichaPortalAzul1 ,sprites));
+    if (pathEnemigo.entry.y==y+1) //testear
+      agregarPortal(FichaPortal((pathEnemigo.entry.x-1)*largo,(pathEnemigo.entry.y-2)*largo-44,1, FichaPortalAzul1 ,sprites));
+
+    if (pathEnemigo.exit.x==0)
+      agregarPortal(FichaPortal(-44,(pathEnemigo.exit.y-1)*largo,2, FichaPortalRojo2 ,sprites));
+    if (pathEnemigo.exit.x==x+1) //testear
+      agregarPortal(FichaPortal((pathEnemigo.exit.x-2)*largo-44,(pathEnemigo.exit.y-1)*largo,1, FichaPortalRojo2 ,sprites));
+    if (pathEnemigo.exit.y==0)
+      agregarPortal(FichaPortal((pathEnemigo.exit.x-1)*largo,-44,2, FichaPortalRojo1 ,sprites));
+    if (pathEnemigo.exit.y==y+1) //testear
+      agregarPortal(FichaPortal((pathEnemigo.exit.x-1)*largo,(pathEnemigo.exit.y-2)*largo-44,1, FichaPortalRojo1 ,sprites));
+
+
+//    agregarPortal(FichaPortal(pathEnemigo.exit.x,pathEnemigo.exit.y,1, FichaPortalAzul1,sprites));
     for (auto it2 = pathEnemigo.pathSequence.begin();
          it2 != pathEnemigo.pathSequence.end(); ++it2){
       if (it2 == pathEnemigo.pathSequence.end() - 1) { return; }
@@ -289,4 +325,5 @@ void OrdenadorDeFichas::cargarMapa(std::string &mapa){
       }
     }
   }
+
 }

@@ -8,17 +8,19 @@
 #include "menuTorres.h"
 #include "emisor.h"
 #include <string>
+#include <map>
 
 class PantallaDeInicio{
  private:
 	Emisor& emisorComandos;
-  MenuTorres& menu;  
+  MenuTorres& menu;
   Gtk::Button* unirse;
   Gtk::Button* crear;
   Gtk::Entry* nick;
   Gtk::Entry* nickEquipo;
   Gtk::ComboBoxText* equipos;
   Gtk::ComboBoxText* mapas;
+  std::map<std::string, int> ids;
  protected:
  public:
   void unirsePartida();

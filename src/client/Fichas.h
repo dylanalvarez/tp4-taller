@@ -110,13 +110,16 @@ class FichaEnemigo: public Ficha{
   void actualizar(Communication::Enemy actualzacion);
 };
 
-#define FichaPortalAzul 0
-#define FichaPortalRojo 1
+#define FichaPortalAzul1 0
+#define FichaPortalRojo1 1
+#define FichaPortalAzul2 3
+#define FichaPortalRojo2 4
 
 class FichaPortal: public Ficha{
  private:
  protected:
   int spriteActualSubAnimacion;
+  int largoAnimiacionActual;
  public:
   FichaPortal(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
   FichaPortal(const FichaPortal &p);
