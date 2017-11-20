@@ -15,6 +15,8 @@
 #include "../common/Socket.h"
 #include "PantallaResultado.h"
 #include "../common/Exception.h"
+#include "../common/Sound.h"
+
 //esta clase es solo para dirigir el movimiento en este caso.
 
 #define largo 88

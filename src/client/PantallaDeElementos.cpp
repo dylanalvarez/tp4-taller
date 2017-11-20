@@ -48,6 +48,13 @@ void PantallaDeElementos::clikearElegir(){
     emisorComandos.elegirElemento("air");
 }
 
+
+void PantallaDeElementos::reiniciar(){
+  botonTierra->set_sensitive(true);
+  botonAgua->set_sensitive(true);
+  botonFuego->set_sensitive(true);
+  botonAire->set_sensitive(true);
+}
 void PantallaDeElementos::elementoSeleccionado(Elementos elemento){
   switch (elemento) {
     case tierra:
