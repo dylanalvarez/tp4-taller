@@ -26,7 +26,7 @@ void GameClientSocket::run() {
                 break;
             case 3:
                 message = YAML::Load(messageAsString);
-                _handleGameState(message);
+                keepRunning = !_handleGameState(message);
                 break;
             case 4:
                 message = YAML::Load(messageAsString);
@@ -147,10 +147,6 @@ GameClientSocket::buildTower(int x, int y, Communication::Tower::Type type) {
     _sendNode(node);
 }
 
-void GameClientSocket::disconnect() {
-    keepRunning = false;
-}
-
 void GameClientSocket::_handleInitialData(YAML::Node &node) {
     std::vector<Communication::NameAndID> matches;
     std::vector<Communication::NameAndID> maps;
@@ -167,7 +163,7 @@ void GameClientSocket::_handleInitialData(YAML::Node &node) {
     receiver.getInitialData(matches, maps);
 }
 
-void GameClientSocket::_handleGameState(YAML::Node &node) {
+bool GameClientSocket::_handleGameState(YAML::Node &node) {
     Communication::GameState state;
     state.setState(node["state"].as<std::string>());
     for (const auto& enemy : node["enemies"]) {
@@ -217,6 +213,7 @@ void GameClientSocket::_handleGameState(YAML::Node &node) {
         );
     }
     receiver.getGameState(state);
+    return state.state != Communication::GameState::ongoing;
 }
 
 void GameClientSocket::_handleRecievedMessage(YAML::Node &node) {

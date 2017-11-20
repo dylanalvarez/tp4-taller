@@ -34,10 +34,6 @@ public:
 
     void buildTower(int x, int y, Communication::Tower::Type type);
 
-    // After calling disconnect, this socket will be unusable
-    void disconnect();
-
-    // Will disconnect when going out of scope
     ~GameClientSocket() override;
 
     GameClientSocket(const GameClientSocket &) = delete;
@@ -52,7 +48,8 @@ private:
 
     void _handleInitialData(YAML::Node &node);
 
-    void _handleGameState(YAML::Node &node);
+    // Returns whether it's the last message given to the client
+    bool _handleGameState(YAML::Node &node);
 
     void _handleRecievedMessage(YAML::Node &node);
 
