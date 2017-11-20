@@ -1,5 +1,17 @@
 #include "GestionadorDeVentanas.h"
 
+
+void GestionadorDeVentanas::arrancar(){
+  while (volverAempezar) {
+    volverAempezar = false;
+    arrancarPantallaDeInicio();
+    arrancarPantallaDeElementos();
+    arrancarJuego();
+    arrancarPantallaResultado();
+  }
+}
+
+
 GestionadorDeVentanas::GestionadorDeVentanas(
   Glib::RefPtr<Gtk::Builder> &ventana2){
     ventana2->get_widget("Juego", juego);
@@ -16,7 +28,7 @@ void GestionadorDeVentanas::arrancarJuego(){
     juego->show_all();
     app = Gtk::Application::create();
     app->run(*juego);
-  }  
+  }
 }
 
 void GestionadorDeVentanas::TerminarJuego(){
@@ -79,4 +91,14 @@ void GestionadorDeVentanas::arrancarPantallaResultado(){
       app->run(*pantalla_derrota);
     }
   }
+}
+
+void GestionadorDeVentanas::TerminarPantallaResultado() {
+  pantalla_derrota->hide();
+  pantalla_victoria->hide();
+  iniciado = false;
+  elementosElegidos = false;
+  juegoTerminado = false;
+  gano = false;
+  volverAempezar = true;
 }

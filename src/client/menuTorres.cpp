@@ -74,6 +74,11 @@ MenuTorres::MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2, Emisor& emisor):
   }
 
 void MenuTorres::setNick(std::string nickNuevo){
+  elementos.clear();
+  decelecionar();
+  casteando = false;
+  deselecionarHechizos();
+  OcultarBotones();
   nick = nickNuevo;
 }
 
@@ -238,6 +243,20 @@ void MenuTorres::MostrarBotones(Elementos elemento){
         botonTierra->show();
       break;
     }
+  }
+void MenuTorres::OcultarBotones(){
+    Meteorito->hide();
+    MuroDeFuego->hide();
+    botonFuego->hide();
+    Congelacion->hide();
+    Ventisca->hide();
+    botonAgua->hide();
+    Tornado->hide();
+    Rayos->hide();
+    botonAire->hide();
+    Terraforming->hide();
+    Grieta->hide();
+    botonTierra->hide();
   }
 
 //los preparar no son Eficientes. Pero estan pensados para ser visuales.

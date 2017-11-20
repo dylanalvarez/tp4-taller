@@ -235,6 +235,13 @@ void OrdenadorDeFichas::imprimirPortal(const Cairo::RefPtr<Cairo::Context>& cr,
 
 #define largo 88
 void OrdenadorDeFichas::cargarMapa(std::string &mapa){
+
+  terreno.clear();
+  torres.clear();
+  enemigos.clear();
+  poderes.clear();
+  portales.clear();
+
   Map mapaCargado;
   auto aux = YAML::Load(mapa);
   mapaCargado.loadFromNode(aux);

@@ -54,8 +54,9 @@ private:
 	Gtk::TextView* chat;
 
 	void MostrarBotones(Elementos elemento);
+	void OcultarBotones();
 	void deselecionarHechizos();
-  void deselecionarHechizosTotal();	
+  void deselecionarHechizosTotal();
 	void desectivarHechizo(Gtk::ToggleButton* hechizo);
 	void reActivarHechizo(Gtk::ToggleButton* hechizo);
 	void prepararHechizo(Gtk::ToggleButton* botonHechizo, std::string nombreHechizo,
