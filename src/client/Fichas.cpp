@@ -403,27 +403,46 @@ FichaEfectos::FichaEfectos(FichaTorre &inicio, int id2,
   destrulleme = false;
   Posicion posicionInicial;
   posicionInicial = inicio.getPosicion();
+  int inicioSprites;
+  int largo;
   tipo = inicio.getTipo();
-  //int i;
   switch (tipo) {
     case FichaTorreDeTierra:
       x = posicionInicial.X - 100;
       y = posicionInicial.Y - 100;
-      this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
-      tiempoImpacto = 20;
-      break;
+      inicioSprites = SpriteAtaqueTierra;
+      largo = SpriteAtaqueTierraTotal;
+    break;
+    case FichaTorreDeFuego:
+      x = posicionInicial.X - 100;
+      y = posicionInicial.Y - 100;
+      inicioSprites = SpriteAtaqueFuego;
+      largo = SpriteAtaqueFuegoTotal;
+    break;
+    case FichaTorreDeAire:
+      x = posicionInicial.X - 100;
+      y = posicionInicial.Y - 100;
+      inicioSprites = SpriteAtaqueAire;
+      largo = SpriteAtaqueAireTotal;
+    break;
+    case FichaTorreDeAgua:
+      x = posicionInicial.X - 100;
+      y = posicionInicial.Y - 100;
+      inicioSprites = SpriteAtaqueAgua;
+      largo = SpriteAtaqueAguaTotal;
+    break;
     default:
       x = posicionInicial.X - 100;
       y = posicionInicial.Y - 100;
-      this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
-      tiempoImpacto = 20;
-      /*for (i = 0; i < SpriteAtaqueAguaTotal; i++) {
-          this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteAtaqueAgua + i)));
-      }
-      largoAnimiacionActual = SpriteAtaqueAguaTotal;
-      tiempoImpacto = SpriteAtaqueAguaTotal;*/
-      break;
+      inicioSprites = SpriteAtaqueTierra;
+      largo = SpriteAtaqueTierraTotal;
+    break;
   }
+  for (int i = 0; i < largo; i++) {
+      this->sprites.push_back(Sprite(x, y, sprites.obtener(inicioSprites + i)));
+  }
+  largoAnimiacionActual = largo;
+  tiempoImpacto = largo;
 }
 FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites):
                             Ficha(x2, y2, id2, tipo){

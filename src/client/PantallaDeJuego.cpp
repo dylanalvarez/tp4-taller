@@ -1,6 +1,6 @@
 #include "PantallaDeJuego.h"
 //estos dos van en Pixeles.
-#define VelocidadDesplasamiento 5
+#define VelocidadDesplasamiento 10
 #define SpriteWidth 79
 #define SpriteHeigth 159
 //esto es para terminar de ajustar la escala.
