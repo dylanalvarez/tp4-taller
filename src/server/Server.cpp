@@ -8,7 +8,8 @@
 #include "Server.h"
 #include "../common/AcceptFailedException.h"
 
-Server::Server(const std::string& port) : accept_socket(port) {
+Server::Server(const std::string& port) :
+        accept_socket(port) {
     map_id = 0;
     match_id = 0;
 }
@@ -176,7 +177,7 @@ void Server::reSeanInitialData() {
 
 void Server::addClientsToWaitingList(std::vector<Client*>& clients) {
     std::lock_guard<std::mutex> lock(mutex);
-    
+
     for (Client* client : clients) {
         client->reset();
         client->sendInitialData(matchs_id, maps);

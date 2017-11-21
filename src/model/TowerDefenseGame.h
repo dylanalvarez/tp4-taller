@@ -80,7 +80,11 @@ public:
     TowerDefenseGame(TowerDefenseGame&&) = delete ;
     TowerDefenseGame& operator=(TowerDefenseGame&&) = delete;
 
+    // retorna true si se perdio la partida
     bool isGameOver() const;
+    
+    // retorna true si se termino la partida
+    bool isGameEnded() const;
 
 private:
     // nombre de la partida

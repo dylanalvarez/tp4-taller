@@ -439,3 +439,7 @@ Communication::GameState TowerDefenseGame::getGameState() const {
 
     return gameState;
 }
+
+bool TowerDefenseGame::isGameEnded() const {
+    return (is_game_over || (enemy_count <= 0));
+}

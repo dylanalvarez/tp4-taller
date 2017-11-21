@@ -21,7 +21,7 @@ void Match::run() {
     has_started = true;
     horde_creator.start();
 
-    while(!game.isGameOver() && keep_running && !clients.empty()) {
+    while(!game.isGameEnded() && keep_running && !clients.empty()) {
         time_t start_time;
         time(&start_time);
 
