@@ -16,7 +16,7 @@
 #define MSG_NOSIGNAL 0 // for macOS compatibility
 #endif
 
-Socket::Socket(const std::string &ip, const std::string &port) 
+Socket::Socket(const std::string &ip, const std::string &port)
         : wasShutDown(false) {
     struct addrinfo hints{};
     hints.ai_family = AF_INET;
@@ -70,7 +70,7 @@ std::vector<char> Socket::receive(size_t sizeInBytes) const {
         ssize_t received = recv(this->fileDescriptor,
                                 &buffer[receivedBytes],
                                 sizeInBytes - receivedBytes,
-                                MSG_NOSIGNAL);
+                                0);
         if (received < 0) {
             throw Exception(strerror(errno));
         } else if (received == 0) {
