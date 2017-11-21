@@ -3,9 +3,19 @@
 #include <fstream>
 #include <iostream>
 #include <fstream>
+#include "../common/Sound.h"
+#include <thread>
+
 #define error 0
 
+void ejecutarSonido(const char* direccion){
+  printf("sonido\n");
+  Sound::playWAV("smw_1-up.wav");
+  printf("Finsonido\n");
+}
+
 void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
+  //std::thread(ejecutarSonido,SonidoMatarMonstruo);
   std::unique_lock<std::mutex> lck(m);
   for (auto it = terreno.begin(); it != terreno.end(); ++it){
     it->second.ejecutarSicloDeAnimacion();
@@ -14,7 +24,7 @@ void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
     it->second.ejecutarSicloDeAnimacion();
   }
   for (auto it = enemigos.cbegin(); it != enemigos.cend();) {
-    if (it->second.siguesVivo()) { enemigos.erase(it++); } else { ++it; }
+    if (it->second.siguesVivo()) { enemigos.erase(it++);} else { ++it; }
   }
   for (auto it = enemigos.begin(); it != enemigos.end(); ++it){
     it->second.ejecutarSicloDeAnimacion();
@@ -241,6 +251,9 @@ void OrdenadorDeFichas::cargarMapa(std::string &mapa){
   enemigos.clear();
   poderes.clear();
   portales.clear();
+  idEnemigo = 0;
+  idTorre = 0;
+  idEfectos = 0;
 
   Map mapaCargado;
   auto aux = YAML::Load(mapa);

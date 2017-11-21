@@ -15,7 +15,7 @@ void GameClientReceiver::getInitialData(
 }
 
 void GameClientReceiver::getMap(std::string &&map) {
-  printf("recivido\n");
+  elemento.reiniciar();
   ventanas.TerminarPantallaDeInicio();
   fichas.cargarMapa(map);
 }

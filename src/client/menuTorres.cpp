@@ -271,7 +271,6 @@ void MenuTorres::prepararHechizo(Gtk::ToggleButton* botonHechizo, std::string no
   deselecionarHechizos();
   decelecionar();
   casteando = true;
-  printf("listo\n");
   titulo->set_text(nombreHechizo.c_str());
   titulo->show();
 }

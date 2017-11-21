@@ -22,6 +22,7 @@ class PantallaDeElementos{
  public:
   PantallaDeElementos(Glib::RefPtr<Gtk::Builder> &ventana, Emisor& emisor);
   void elementoSeleccionado(Elementos elemento);
+  void reiniciar();
   void clikearFuego();
   void clikearTierra();
   void clikearAgua();

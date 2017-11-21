@@ -53,6 +53,7 @@ void Match::run() {
     }
     keep_running = false;
     server.addClientsToWaitingList(clients);
+    clients.clear();
 }
 
 int Match::getID() const {

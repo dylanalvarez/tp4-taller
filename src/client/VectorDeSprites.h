@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 
+#define SonidoMatarMonstruo "Sprites/Sonido/smw_1-up.wav"
+
 #define SpritePisoFirme 0
 #define SpriteTorreDeTierra 1
 #define SpriteSueloLava1 2
