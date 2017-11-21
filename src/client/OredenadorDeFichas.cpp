@@ -8,14 +8,7 @@
 
 #define error 0
 
-void ejecutarSonido(const char* direccion){
-  printf("sonido\n");
-  Sound::playWAV("smw_1-up.wav");
-  printf("Finsonido\n");
-}
-
 void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
-  //std::thread(ejecutarSonido,SonidoMatarMonstruo);
   std::unique_lock<std::mutex> lck(m);
   for (auto it = terreno.begin(); it != terreno.end(); ++it){
     it->second.ejecutarSicloDeAnimacion();
@@ -24,7 +17,9 @@ void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
     it->second.ejecutarSicloDeAnimacion();
   }
   for (auto it = enemigos.cbegin(); it != enemigos.cend();) {
-    if (it->second.siguesVivo()) { enemigos.erase(it++);} else { ++it; }
+    if (it->second.siguesVivo()) { enemigos.erase(it++);
+      sonidos.siguienteSonido(SonidoMatarMonstruo);
+    } else { ++it; }
   }
   for (auto it = enemigos.begin(); it != enemigos.end(); ++it){
     it->second.ejecutarSicloDeAnimacion();
@@ -125,6 +120,7 @@ void OrdenadorDeFichas::actualizarTorre(Communication::Tower actualzacion){
   if(actualzacion.is_attacking){
     auto it = enemigos.find(actualzacion.current_target_id);
     if (it != enemigos.end()){
+      sonidos.siguienteSonido(SonidoNuevoAtaque);
       agregarEfectos(actualzacion.id, actualzacion.current_target_id, idEfectos, sprites);
       idEfectos++;
     }
@@ -158,6 +154,7 @@ FichaEnemigo& OrdenadorDeFichas::getEnemigo(int id){
 }
 void OrdenadorDeFichas::actualizarEnemigo(Communication::Enemy actualzacion){
   if (idEnemigo < actualzacion.id) {
+    sonidos.siguienteSonido(SonidoNuevoMonstruo);
     agregarEnemigo(FichaEnemigo(actualzacion, sprites));
   }else{
     enemigos.at(actualzacion.id).actualizar(actualzacion);
@@ -344,4 +341,13 @@ void OrdenadorDeFichas::cargarMapa(std::string &mapa){
     }
   }
 
+}
+
+OrdenadorDeFichas::OrdenadorDeFichas(){
+  thread.push_back(std::thread(&GestionadorDeSonidos::iniciar,std::ref(sonidos)));
+  sonidos.siguienteSonido(SonidoMatarMonstruo);
+}
+OrdenadorDeFichas::~OrdenadorDeFichas(){
+  sonidos.terminar();
+  for (auto& th : thread) th.join();
 }

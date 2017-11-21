@@ -3,7 +3,12 @@
 
 void GestionadorDeVentanas::arrancar(){
   while (volverAempezar) {
+    pantalla_victoria->hide();
+    pantalla_derrota->hide();
     volverAempezar = false;
+    iniciado = false;
+    elementosElegidos = false;
+    juegoTerminado = false;
     arrancarPantallaDeInicio();
     arrancarPantallaDeElementos();
     arrancarJuego();
@@ -96,9 +101,5 @@ void GestionadorDeVentanas::arrancarPantallaResultado(){
 void GestionadorDeVentanas::TerminarPantallaResultado() {
   pantalla_derrota->hide();
   pantalla_victoria->hide();
-  iniciado = false;
-  elementosElegidos = false;
-  juegoTerminado = false;
-  gano = false;
   volverAempezar = true;
 }

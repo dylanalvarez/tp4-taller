@@ -9,9 +9,13 @@
 #include "Fichas.h"
 #include "TiposDeDatosExpeciales.h"
 #include "VectorDeSprites.h"
+#include "GestionadorDeSonidos.h"
+
 
 class OrdenadorDeFichas{
 private:
+ GestionadorDeSonidos sonidos;
+ std::vector<std::thread> thread;
  std::mutex m;
  VectorDeSprites sprites; //para creara  las fichas.
  std::map<int,FichaTerreno> terreno;
@@ -65,5 +69,7 @@ public:
  void agregarPortal(FichaPortal nuevaFicha);
 
  void cargarMapa(std::string &mapa);
+  OrdenadorDeFichas();
+ ~OrdenadorDeFichas();
 };
 #endif

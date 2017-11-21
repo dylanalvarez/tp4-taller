@@ -6,6 +6,13 @@
 #include <string>
 
 #define SonidoMatarMonstruo "Sprites/Sonido/smw_1-up.wav"
+#define SonidoPoder "Sprites/Sonido/smw_power-up.wav"
+#define SonidoNuevoMonstruo "Sprites/Sonido/smw_feather_get.wav"
+#define SonidoNuevoAtaque "Sprites/Sonido/smw_coin.wav"
+
+/*Sound sound4("smw_jump.wav");
+Sound sound5("smw_keyhole_exit.wav");
+Sound sound7("smw_save_menu.wav");*/
 
 #define SpritePisoFirme 0
 #define SpriteTorreDeTierra 1
