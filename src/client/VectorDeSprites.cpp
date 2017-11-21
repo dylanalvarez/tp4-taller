@@ -438,6 +438,22 @@ VectorDeSprites::VectorDeSprites(){
   cargarSprite("Sprites/PortaRojo1_08.png");
   cargarSprite("Sprites/PortaRojo1_09.png");
   cargarSprite("Sprites/PortaRojo1_10.png");
+  cargarSprite("Sprites/Metorito (1).png");
+  cargarSprite("Sprites/Metorito (3).png");
+  cargarSprite("Sprites/Metorito (4).png");
+  cargarSprite("Sprites/Metorito (5).png");
+  cargarSprite("Sprites/Metorito (6).png");
+  cargarSprite("Sprites/Metorito (7).png");
+  cargarSprite("Sprites/Metorito (8).png");
+  cargarSprite("Sprites/Metorito (9).png");
+  cargarSprite("Sprites/Metorito (10).png");
+  cargarSprite("Sprites/Metorito (11).png");
+  cargarSprite("Sprites/Metorito (12).png");
+  cargarSprite("Sprites/Metorito (13).png");
+  cargarSprite("Sprites/Metorito (14).png");
+  cargarSprite("Sprites/Metorito (15).png");
+  cargarSprite("Sprites/Metorito (16).png");
+  cargarSprite("Sprites/Metorito (2).png"); //ping
 }
 Glib::RefPtr<Gdk::Pixbuf>& VectorDeSprites::obtener (int n){
   return (sprites[n]);

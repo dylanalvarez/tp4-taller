@@ -97,6 +97,12 @@ Sound sound7("smw_save_menu.wav");*/
 #define SpritePortaRojo01 413
 #define SpritePortaRojo01Total 9
 
+#define SpriteMetorio2 422
+#define SpriteMetorio2Total 14
+#define SpritePing 435
+
+
+
 class VectorDeSprites{
 protected:
   std::vector<Glib::RefPtr<Gdk::Pixbuf>> sprites;
