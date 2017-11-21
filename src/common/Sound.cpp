@@ -1,7 +1,8 @@
+#include <iostream>
 #include "Sound.h"
 #include "Exception.h"
 
-void ::Sound::playWAV(const std::string &filename) {
+void Sound::run() {
     if (SDL_Init(SDL_INIT_AUDIO) < 0)
         throw Exception("Couldn't initialize SDL");
     if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
@@ -16,3 +17,5 @@ void ::Sound::playWAV(const std::string &filename) {
     Mix_FreeChunk(wave);
     Mix_CloseAudio();
 }
+
+Sound::Sound(const std::string &filename) : filename(filename) {}
