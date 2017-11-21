@@ -9,45 +9,48 @@ GameClientSocket::GameClientSocket(GameClientReceiver &receiver,
 
 void GameClientSocket::run() {
     while (keepRunning) {
-        std::string str_opcode = socket.receiveString(OPCODE_CHARACTER_COUNT);
-        if (str_opcode.empty()) { break; }
-        int opcode = std::stoi(str_opcode);
-        unsigned long messageLength = std::stoul(
-                socket.receiveString(MESSAGE_LENGTH_CHARACTER_COUNT));
-        std::string messageAsString = socket.receiveString(messageLength);
-        YAML::Node message;
-        switch (opcode) {
-            case 0:
-                message = YAML::Load(messageAsString);
-                _handleInitialData(message);
-                break;
-            case 2:
-                receiver.getMap(std::move(messageAsString));
-                break;
-            case 3:
-                message = YAML::Load(messageAsString);
-                _handleGameState(message);
-                break;
-            case 4:
-                message = YAML::Load(messageAsString);
-                _handleRecievedMessage(message);
-                break;
-            case 5:
-                message = YAML::Load(messageAsString);
-                _handlePing(message);
-                break;
-            case 6:
-                message = YAML::Load(messageAsString);
-                _handleUnavailableElement(message);
-                break;
-            default:
-                break;
-        }
+        try {
+            std::string str_opcode = socket.receiveString(OPCODE_CHARACTER_COUNT);
+            if (str_opcode.empty()) { break; }
+            int opcode = std::stoi(str_opcode);
+            unsigned long messageLength = std::stoul(
+                    socket.receiveString(MESSAGE_LENGTH_CHARACTER_COUNT));
+            std::string messageAsString = socket.receiveString(messageLength);
+            YAML::Node message;
+            switch (opcode) {
+                case 0:
+                    message = YAML::Load(messageAsString);
+                    _handleInitialData(message);
+                    break;
+                case 2:
+                    receiver.getMap(std::move(messageAsString));
+                    break;
+                case 3:
+                    message = YAML::Load(messageAsString);
+                    _handleGameState(message);
+                    break;
+                case 4:
+                    message = YAML::Load(messageAsString);
+                    _handleRecievedMessage(message);
+                    break;
+                case 5:
+                    message = YAML::Load(messageAsString);
+                    _handlePing(message);
+                    break;
+                case 6:
+                    message = YAML::Load(messageAsString);
+                    _handleUnavailableElement(message);
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception& e) { return; }
     }
 }
 
 void GameClientSocket::disconnect() {
     keepRunning = false;
+    socket.shutdown();
 }
 
 void GameClientSocket::_sendNode(YAML::Node& node) {

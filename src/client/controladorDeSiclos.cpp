@@ -9,14 +9,15 @@ void hiloEmisor(Emisor* emisor){
 }
 
 void ControladorDeSiclos::iniciar(){
-  threads.push_back(std::thread(hiloRecepto, &receptor));
-  threads.push_back(std::thread(hiloEmisor, &emisor));
+  receptorThread = std::thread(hiloRecepto, &receptor);
+  emisorThread = std::thread(hiloEmisor, &emisor);
 }
 
 void ControladorDeSiclos::terminar(){
-  receptor.terminar();
   emisor.terminar();
-  for (auto& th : threads) th.join();
+  emisorThread.join();
+  receptor.terminar();
+  receptorThread.join();
 }
 
 ControladorDeSiclos::ControladorDeSiclos(Receptor &receptor2, Emisor &emisor2):

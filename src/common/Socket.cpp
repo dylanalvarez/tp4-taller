@@ -16,7 +16,8 @@
 #define MSG_NOSIGNAL 0 // for macOS compatibility
 #endif
 
-Socket::Socket(const std::string &ip, const std::string &port) {
+Socket::Socket(const std::string &ip, const std::string &port) 
+        : wasShutDown(false) {
     struct addrinfo hints{};
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
@@ -87,10 +88,7 @@ std::string Socket::receiveString(size_t length) const {
 }
 
 Socket::~Socket() {
-    if (fileDescriptor != -1) {
-        shutdown(this->fileDescriptor, SHUT_RDWR);
-        close(this->fileDescriptor);
-    }
+    shutdown();
 }
 
 Socket::Socket(int fileDescriptor) :
@@ -105,4 +103,12 @@ Socket &Socket::operator=(Socket && other) noexcept {
     this->fileDescriptor = other.fileDescriptor;
     other.fileDescriptor = -1;
     return *this;
+}
+
+void Socket::shutdown() {
+    if (!wasShutDown) {
+        ::shutdown(this->fileDescriptor, SHUT_RDWR);
+        close(this->fileDescriptor);
+        wasShutDown = true;
+    }
 }

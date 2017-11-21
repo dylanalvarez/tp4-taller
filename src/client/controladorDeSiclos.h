@@ -23,7 +23,8 @@ public:
 protected:
   Receptor &receptor;
   Emisor &emisor;
-  std::vector<std::thread> threads;
+  std::thread emisorThread;
+  std::thread receptorThread;
   bool seguir = true;
 };
 #endif

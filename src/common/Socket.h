@@ -18,6 +18,8 @@ public:
 
     // If the other party disconnected, it will return an empty string
     std::string receiveString(size_t length) const;
+    
+    void shutdown();
 
     Socket &operator=(const Socket &) = delete;
 
@@ -30,6 +32,7 @@ public:
 
 private:
     int fileDescriptor;
+    bool wasShutDown;
 };
 
 #endif //TP4_TALLER_SOCKET_H

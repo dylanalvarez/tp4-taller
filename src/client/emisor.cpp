@@ -1,6 +1,8 @@
 #include "emisor.h"
 #include "../common/GameClientSocket.h"
 #include "../common/CommunicationUtils.h"
+#include "../common/Exception.h"
+
 /*Emisor::Emisor(GameClientReceiver &receiver, Socket &&socket): socket(receiver, socket){
 }*/
 void Emisor::cargarSocket(GameClientSocket* socket2){
@@ -52,7 +54,9 @@ void Emisor::iniciar(){
       break;
       case Mensaje::Type::startGame:
         printf("startGame\n");
-        socket->startGame();
+            try{
+              socket->startGame();
+            } catch (Exception& e) {}
       break;
       }
   }
