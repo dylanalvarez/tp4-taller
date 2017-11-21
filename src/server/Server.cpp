@@ -97,11 +97,12 @@ void Server::startMatch(int match_id) {
         if (matchs.at(match_id)->hasStarted()) { return; }
         matchs.at(match_id)->startGame();
 
-        Communication::NameAndID started_match("", match_id);
-        matchs_id.erase(std::remove_if(matchs_id.begin(), matchs_id.end(),
-                       [&started_match](const Communication::NameAndID match) {
-                          return match.id == started_match.id;
-                       }));
+        for (auto it = matchs_id.begin(); it != matchs_id.end(); ++it) {
+            if (it->id == match_id) {
+                matchs_id.erase(it);
+                break;
+            }
+        }
     } catch (std::exception& e) {
         // el match no existe
         // enviar error al cliente
