@@ -458,11 +458,11 @@ FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &s
         tiempoImpacto = SpriteGrietaTotal;
       break;
       case FichaMetorito:
-        for (i = 0; i < SpriteMeteoroTotal; i++) {
-            this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteMeteoro + i)));
+        for (i = 0; i < SpriteMetorio2Total; i++) {
+            this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteMetorio2 + i)));
         }
-        largoAnimiacionActual = SpriteMeteoroTotal;
-        tiempoImpacto = SpriteMeteoroTotal;
+        largoAnimiacionActual = SpriteMetorio2Total;
+        tiempoImpacto = SpriteMetorio2Total;
       break;
       case FichafireWall:
         for (i = 0; i < SpriteMdeFuegoTotal; i++) {
@@ -479,11 +479,11 @@ FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &s
         tiempoImpacto = SpriteTornadoTotal;
       break;
       case FichaPing:
-        for (i = 0; i < SpriteGrietaTotal; i++) {
-            this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteGrieta + i)));
+        for (i = 0; i < 10; i++) {
+            this->sprites.push_back(Sprite(x, y, sprites.obtener(SpritePing)));
         }
-        largoAnimiacionActual = SpriteGrietaTotal;
-        tiempoImpacto = SpriteGrietaTotal;
+        largoAnimiacionActual = 10;
+        tiempoImpacto = 10;
       break;
       default:
         for (i = 0; i < SpriteGrietaTotal; i++) {
