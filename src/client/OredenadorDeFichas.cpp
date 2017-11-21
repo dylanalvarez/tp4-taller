@@ -212,8 +212,8 @@ void OrdenadorDeFichas::actualizarEfectos(Communication::TargetPower actualzacio
   idEfectos++;
   switch (actualzacion.type){
     case Communication::TargetPower::Type::freezing:
-    agregarEfectos(FichaEfectos(idEfectos, FichaCongelacion, sprites,
-       getEnemigo(actualzacion.enemyID)));
+    /*agregarEfectos(FichaEfectos(idEfectos, FichaCongelacion, sprites,
+       getEnemigo(actualzacion.enemyID)));*/
     break;
     case Communication::TargetPower::Type::ray:
     printf("rayo\n");
