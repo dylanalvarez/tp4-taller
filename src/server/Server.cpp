@@ -58,10 +58,11 @@ void Server::joinMatch(Client& client, int id) {
     std::lock_guard<std::mutex> lock(mutex);
 
     try {
-        Match* match = matchs.at(id);
-        match->addPlayer(&client);
-        clients_waiting_for_match.erase(std::remove(
-                clients_waiting_for_match.begin(), clients_waiting_for_match.end(), &client));
+        Match *match = matchs.at(id);
+        if (match->addPlayer(&client)) {
+            clients_waiting_for_match.erase(std::remove(
+                    clients_waiting_for_match.begin(), clients_waiting_for_match.end(), &client));
+        }
     } catch (std::exception& e) {
         // la partida no existe
         // enviar error al cliente

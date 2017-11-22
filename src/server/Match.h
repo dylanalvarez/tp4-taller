@@ -25,7 +25,7 @@ public:
 
     void stop();
 
-    void addPlayer(Client* client);
+    bool addPlayer(Client* client);
     void addElementToClient(const Client& client_to_add,
                             const std::string& element);
     int getID() const;

@@ -60,14 +60,15 @@ int Match::getID() const {
     return id;
 }
 
-void Match::addPlayer(Client* client) {
-    if (has_started) { return; }
+bool Match::addPlayer(Client* client) {
+    if (has_started) { return false; }
 
     const Player& player = game.addPlayer(client->getName());
     client->setModelPlayer(player);
     client->setActionsQueue(actions_queue);
     client->sendMap(map);
     clients.push_back(client);
+    return true;
 }
 
 void Match::stop() {
