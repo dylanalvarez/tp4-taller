@@ -99,11 +99,9 @@ void Match::addElementToClient(const Client& client_to_add,
         if (&client_to_add == client) {
             try {
                 game.addElementToPlayer(client->getModelPlayer(), element);
-            } catch (std::exception& e) {
-                client->sendElementUnavailable(element, client_to_add.getName());
-            }
+            } catch (std::exception& e) {}
         }
-        client->sendElementUnavailable(element, client->getName());
+        client->sendElementUnavailable(element, client_to_add.getName());
     }
 }
 
