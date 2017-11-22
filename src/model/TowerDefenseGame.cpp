@@ -282,6 +282,9 @@ void TowerDefenseGame::addElementToPlayer(const Player &player,
                          ", el elemento" + element + "no esta disponible");
     }
 
+    available_elements.erase(std::remove(available_elements.begin(),
+                                         available_elements.end(), element));
+
     for (Player& p : players) {
         if (&p == &player) {
             p.addElement(element);
