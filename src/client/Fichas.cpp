@@ -480,7 +480,7 @@ FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &s
       break;
       case FichaPing:
         for (i = 0; i < 10; i++) {
-            this->sprites.push_back(Sprite(x, y, sprites.obtener(SpritePing)));
+            this->sprites.push_back(Sprite(x - 100, y - 100, sprites.obtener(SpritePing)));
         }
         largoAnimiacionActual = 10;
         tiempoImpacto = 10;

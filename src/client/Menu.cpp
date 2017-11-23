@@ -195,18 +195,15 @@ void Menu::avisarConstruirTorreAire(){
 //Upgreads
 void Menu::avisarUpgradeDanio(){
   emisorComandos.upgraTorre(torre->getId(), "range");
-  //printf("Upgrade Daño de %i\n", torre->getId());
   }
 void Menu::avisarUpgradeRango(){
   emisorComandos.upgraTorre(torre->getId(), "damage");
-  //printf("Upgrade Rango de %i\n", torre->getId());
   }
 void Menu::avisarUpgradeEspecial(){
   if (torre->getTipo()==FichaTorreDeFuego)
     emisorComandos.upgraTorre(torre->getId(), "reach");
   else
     emisorComandos.upgraTorre(torre->getId(), "slowdown");
-  //printf("Upgrade Especial de %i\n", torre->getId());
   }
 
 //elegirElemento
@@ -332,51 +329,27 @@ bool Menu::estamosCasteando(){
 void Menu::lanzarHechizo(int x, int y, int objetivo){
   switch (hechizoActual) {
     case Hechizo::Terraforming:
-      if(terreno == NoColicion)
-        return; //agregar algo mas de logica.. preguntar esto.
-      printf("Terraforming en %i, %i\n", x,y);
       emisorComandos.lanzarEchizo(x,y,"terraforming");
      break;
     case Hechizo::Grieta:
-      if(terreno == NoColicion)
-        return; //agregar algo mas de logica.. preguntar esto.
-      printf("Grieta en %i, %i\n", x,y);
       emisorComandos.lanzarEchizo(x,y,"fissure");
      break;
     case Hechizo::Congelacion:
-      if(objetivo == NoColicion)
-        return; //agregar algo mas de logica.. preguntar esto.
-      printf("Congelacion en enemigo %i\n", objetivo);
       emisorComandos.lanzarEchizo(objetivo,"freezing");
      break;
     case Hechizo::Ventisca:
-      if(terreno == NoColicion)
-        return; //agregar algo mas de logica.. preguntar esto.
-      printf("Ventisca en %i, %i\n", x,y);
       emisorComandos.lanzarEchizo(x,y,"blizzard");
      break;
     case Hechizo::Meteorito:
-      if(terreno == NoColicion)
-        return; //agregar algo mas de logica.. preguntar esto.
-      printf("Meteorito en %i, %i\n", x,y);
       emisorComandos.lanzarEchizo(x,y,"meteorite");
      break;
     case Hechizo::Tornado:
-      if(terreno == NoColicion)
-        return; //agregar algo mas de logica.. preguntar esto.
-      printf("Tornado en %i, %i\n", x,y);
       emisorComandos.lanzarEchizo(x,y,"tornado");
      break;
     case Hechizo::MuroDeFuego:
-      if(terreno == NoColicion)
-        return; //agregar algo mas de logica.. preguntar esto.
-      printf("MuroDeFuego en %i, %i\n", x,y);
       emisorComandos.lanzarEchizo(x,y,"fireWall");
      break;
     case Hechizo::Rayos:
-      if(terreno == NoColicion)
-        return; //agregar algo mas de logica.. preguntar esto.
-      printf("Rayos en enemigo %i\n", objetivo);
       emisorComandos.lanzarEchizo(objetivo,"ray");
     break;
   }
