@@ -31,6 +31,7 @@ GestionadorDeVentanas::GestionadorDeVentanas(
 void GestionadorDeVentanas::arrancarJuego(){
   if (elementosElegidos){
     juego->show_all();
+    juego->maximize();
     app = Gtk::Application::create();
     app->run(*juego);
   }
