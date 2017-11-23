@@ -140,6 +140,7 @@ bool MapGrid::shouldBeDisabled(int x, int y) const {
              lastPathStepWasOnItsSide) ||
             (squareType == path &&
              !isOnTheEdge &&
+             unfinishedPath &&
              (isNeighbourOfStart(x, y) || !justStartedPath) &&
              isOnStraightLineFromLastOne(x, y)) ||
             (squareType == deletePath &&
