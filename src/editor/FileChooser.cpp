@@ -16,7 +16,7 @@ void FileChooser::on_file_set() {
     map->loadFromFile(source);
     MapGrid *mapGrid = Gtk::manage(
             new MapGrid(*map, builder, map->getWidth(), map->getHeight(),
-                        saveButton));
+                        saveButton, addHordeGrid));
     mapScrolledWindow->add(*mapGrid);
     nameEntry->addMapGridReference(mapGrid);
     nameEntry->setFromMap();

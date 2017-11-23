@@ -25,7 +25,7 @@ void ChooseSizeGrid::chooseSize() {
     map->reset(width, height);
 
     MapGrid *mapGrid = Gtk::manage(
-            new MapGrid(*map, builder, width, height, saveButton));
+            new MapGrid(*map, builder, width, height, saveButton, addHordeGrid));
     mapScrolledWindow->add(*mapGrid);
     nameEntry->addMapGridReference(mapGrid);
 

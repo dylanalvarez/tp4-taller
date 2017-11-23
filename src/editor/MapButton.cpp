@@ -25,6 +25,8 @@ void MapButton::setSquareType(MapGrid &parent) {
             break;
         case MapGrid::path:
             break;
+        case MapGrid::deletePath:
+            map.deletePathWithEntryIn(x, y);
     }
     parent.notifyGridClicked(x, y, squareType);
 }

@@ -295,6 +295,15 @@ void Map::reset(int width, int height) {
     paths.clear();
 }
 
+void Map::deletePathWithEntryIn(int x, int y) {
+    paths.erase(std::remove_if(
+            paths.begin(),
+            paths.end(),
+            [x, y](const Path & path) {
+                return path.entry.x == x && path.entry.y == y;
+            }), paths.end());
+}
+
 std::string Map::Horde::toString(const std::string &pathName) {
     return "Camino " + pathName + ": " + std::to_string(this->quantity)
            + " " + Map::toString(this->type)

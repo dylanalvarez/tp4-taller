@@ -86,6 +86,8 @@ public:
 
     void reset(int width, int height);
 
+    void deletePathWithEntryIn(int x, int y);
+
 private:
     static Setting settingFromString(const std::string &setting);
 

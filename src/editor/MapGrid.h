@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Builder.h"
 #include "SaveButton.h"
+#include "AddHordeGrid.h"
 
 class MapGrid : public Gtk::Grid {
 public:
@@ -16,10 +17,11 @@ public:
             Builder &builder,
             int width,
             int height,
-            SaveButton *saveButton);
+            SaveButton *saveButton,
+            AddHordeGrid *addHordeGrid);
 
     enum SquareType {
-        start, end, firmGround, path
+        start, end, firmGround, path, deletePath
     };
 
     MapGrid::SquareType getSquareType() const;
@@ -38,6 +40,8 @@ private:
     bool shouldBeDisabled(int x, int y) const;
 
     bool isNeighbourOfStart(int x, int y) const;
+
+    bool isStart(int x, int y) const;
 
     bool isOnStraightLineFromLastOne(int x, int y) const;
 
@@ -59,7 +63,9 @@ private:
     Gtk::RadioButton *endButton;
     Gtk::RadioButton *firmGroundButton;
     Gtk::RadioButton *pathButton;
+    Gtk::RadioButton *deletePathButton;
     SaveButton *saveButton;
+    AddHordeGrid *addHordeGrid;
 };
 
 

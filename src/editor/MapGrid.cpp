@@ -7,11 +7,12 @@ MapGrid::MapGrid(Map &map,
                  Builder &builder,
                  int width,
                  int height,
-                 SaveButton *saveButton) :
+                 SaveButton *saveButton,
+                 AddHordeGrid *addHordeGrid) :
         builder(builder), squareType(start), width(width), height(height),
         lastPathX(-1), lastPathY(-1), startX(-1), startY(-1),
         unfinishedPath(false), justStartedPath(false), map(map),
-        saveButton(saveButton) {
+        saveButton(saveButton), addHordeGrid(addHordeGrid) {
     for (int x = 0; x <= width + 1; x++) {
         grid.emplace_back();
         for (int y = 0; y <= height + 1; y++) {
@@ -31,6 +32,8 @@ MapGrid::MapGrid(Map &map,
     firmGroundButton->join_group(*startButton);
     this->builder.get_widget("path", pathButton);
     pathButton->join_group(*startButton);
+    this->builder.get_widget("delete-path", deletePathButton);
+    deletePathButton->join_group(*startButton);
 
     startButton->signal_clicked().connect(
             sigc::bind<MapGrid::SquareType>(
@@ -48,6 +51,10 @@ MapGrid::MapGrid(Map &map,
             sigc::bind<MapGrid::SquareType>(
                     sigc::mem_fun(this, &MapGrid::setSquareType),
                     MapGrid::path));
+    deletePathButton->signal_clicked().connect(
+            sigc::bind<MapGrid::SquareType>(
+                    sigc::mem_fun(this, &MapGrid::setSquareType),
+                    MapGrid::deletePath));
 
     // Set default value
     startButton->set_active(true);
@@ -55,6 +62,12 @@ MapGrid::MapGrid(Map &map,
 }
 
 void MapGrid::setFromMap() {
+    for (auto& column : grid) {
+        for (auto& button : column) {
+            button->set_sensitive(true);
+            button->set_label("");
+        }
+    }
     for (const Map::Coordinate &firmGround : map.getFirmGround()) {
         grid[firmGround.x][firmGround.y]->set_label(FIRM_GROUND_STR);
     }
@@ -62,7 +75,8 @@ void MapGrid::setFromMap() {
     for (const Map::Path &path : map.getPaths()) {
         std::string pathLabel = std::to_string(pathNumber);
         grid[path.entry.x][path.entry.y]->set_label(ENTRY_DOOR_STR + " " + pathLabel);
-        grid[path.exit.x][path.exit.y]->set_label(EXIT_DOOR_STR + " " + pathLabel);
+        if (!(path.exit.x == 0 && path.exit.y == 0))
+            grid[path.exit.x][path.exit.y]->set_label(EXIT_DOOR_STR + " " + pathLabel);
         int stepNumber = 1;
         for (const Map::Coordinate &pathStep : path.pathSequence) {
             grid[pathStep.x][pathStep.y]->set_label(pathLabel
@@ -97,11 +111,13 @@ void MapGrid::updateDisabledButtons() const {
 
 void MapGrid::updateDisabledButton(int x, int y) const {
     Gtk::Button *button = grid[x][y];
-    bool isMarked = !button->get_label().empty();
-    button->set_sensitive(!(isMarked || shouldBeDisabled(x, y)));
+    button->set_sensitive(!(shouldBeDisabled(x, y)));
 }
 
 bool MapGrid::shouldBeDisabled(int x, int y) const {
+    bool isMarked = !grid[x][y]->get_label().empty();
+    if (isMarked && squareType != deletePath) { return true; }
+
     bool isCorner = (x == 0 && y == 0) ||
                     (x == 0 && y == height + 1) ||
                     (x == width + 1 && y == 0) ||
@@ -123,6 +139,8 @@ bool MapGrid::shouldBeDisabled(int x, int y) const {
              !isOnTheEdge &&
              (isNeighbourOfStart(x, y) || !justStartedPath) &&
              isOnStraightLineFromLastOne(x, y)) ||
+            (squareType == deletePath &&
+             isStart(x, y)) ||
             (squareType == firmGround &&
              !isOnTheEdge &&
              !isNeighbourOfStart(x, y) &&
@@ -154,14 +172,30 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
         this->lastPathY = y;
         justStartedPath = false;
     }
+    if (squareType == deletePath) {
+        addHordeGrid->setFromMap();
+        this->setFromMap();
+        if (unfinishedPath && startX == x && startY == y) {
+            unfinishedPath = false;
+            justStartedPath = false;
+            lastPathX = -1;
+            lastPathY = -1;
+            startX = -1;
+            startY = -1;
+        }
+    }
     this->updateDisabledButtons();
 }
 
 bool MapGrid::isNeighbourOfStart(int x, int y) const {
-    return grid[x - 1][y]->get_label().substr(0, 1) == ENTRY_DOOR_STR ||
-           grid[x][y - 1]->get_label().substr(0, 1) == ENTRY_DOOR_STR ||
-           grid[x + 1][y]->get_label().substr(0, 1) == ENTRY_DOOR_STR ||
-           grid[x][y + 1]->get_label().substr(0, 1) == ENTRY_DOOR_STR;
+    return isStart(x - 1, y) ||
+           isStart(x, y - 1) ||
+           isStart(x + 1, y) ||
+           isStart(x, y + 1);
+}
+
+bool MapGrid::isStart(int x, int y) const {
+    return grid[x][y]->get_label().substr(0, 1) == ENTRY_DOOR_STR;
 }
 
 bool MapGrid::isOnStraightLineFromLastOne(int x, int y) const {
