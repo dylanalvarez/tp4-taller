@@ -67,6 +67,9 @@ bool Match::addPlayer(Client* client) {
     client->setModelPlayer(player);
     client->setActionsQueue(actions_queue);
     client->sendMap(map);
+    for (const std::string element : game.getNotAvailableElements()) {
+        client->sendElementUnavailable(element, "server");
+    }
     clients.push_back(client);
     return true;
 }

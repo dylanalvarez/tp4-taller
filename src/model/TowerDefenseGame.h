@@ -74,6 +74,7 @@ public:
     const std::string& getGameSetting() const;
     const std::vector<Enemy>& getAllEnemies() const;
     Communication::GameState getGameState() const;
+    std::vector<std::string> getNotAvailableElements() const;
 
     TowerDefenseGame(const TowerDefenseGame&) = delete;
     TowerDefenseGame& operator=(const TowerDefenseGame&) = delete;
