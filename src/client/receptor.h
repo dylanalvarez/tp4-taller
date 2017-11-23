@@ -5,22 +5,20 @@
 #include <iostream>
 #include "TiposDeDatosExpeciales.h"
 #include "OrdenadorDeFichas.h"
-#include "menuTorres.h"
+#include "Menu.h"
 #include <vector>
 #include "../common/GameClientReceiver.h"
 #include "../common/GameClientSocket.h"
 
 class Receptor{
-private:
 public:
   Receptor(GameClientReceiver& reciver, GameClientSocket& socket);
   void iniciar();
   void terminar();
-  GameClientReceiver& getReciver();
-protected:
+  GameClientReceiver& getReceiver();
+private:
   GameClientReceiver& reciver;
   GameClientSocket& socket;
-  std::list<Communication::GameState> estados;
   bool seguir = true;
 };
 

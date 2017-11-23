@@ -446,3 +446,14 @@ Communication::GameState TowerDefenseGame::getGameState() const {
 bool TowerDefenseGame::isGameEnded() const {
     return (is_game_over || (enemy_count <= 0));
 }
+
+std::vector<std::string> TowerDefenseGame::getNotAvailableElements() const {
+    std::vector<std::string> available = {"air", "earth", "fire", "water"};
+
+    for (const std::string& element : available_elements) {
+        available.erase(std::remove(available.begin(), available.end(),
+                                    element));
+    }
+
+    return available;
+}

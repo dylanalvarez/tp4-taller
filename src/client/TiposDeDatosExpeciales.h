@@ -8,12 +8,12 @@
 #include <vector>
 #include "../common/CommunicationUtils.h"
 
-enum Elementos{
+enum class Elementos{
   fuego,agua,aire,tierra  };
 
 Elementos toElemento(Communication::Element element);
 
-enum Hechizo{
+enum class Hechizo{
   Terraforming, Congelacion, Grieta, Ventisca, Meteorito, Tornado,
   MuroDeFuego, Rayos};
 
@@ -32,7 +32,7 @@ struct Posicion{
 };
 
 struct Mensaje {
-  enum Type {
+  enum class Type {
     chooseTeam, chooseMap, chooseElement, sendChatMessage, pingTile, applySpell1,
      applySpell2, applyUpgrade, buildTower, startGame
   };

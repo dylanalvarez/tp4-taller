@@ -12,6 +12,6 @@ void Receptor::terminar(){
   socket.join();
   seguir = false;
 }
-GameClientReceiver& Receptor::getReciver(){
+GameClientReceiver& Receptor::getReceiver(){
   return reciver;
 }

@@ -6,8 +6,8 @@
 #include "VectorDeSprites.h"
 #include "Fichas.h"
 #include "OrdenadorDeFichas.h"
-#include "controladorDeSiclos.h"
-#include "menuTorres.h"
+#include "controladorDeCiclos.h"
+#include "Menu.h"
 #include "TiposDeDatosExpeciales.h"
 #include "GestionadorDeVentanas.h"
 #include "PantallaDeInicio.h"
@@ -41,28 +41,28 @@ int main(int argc, char *argv[]){
   GestionadorDeVentanas ventanas(refBuilder);
   PantallaResultado victoria(refBuilder, "victory", ventanas);
   PantallaResultado derrota(refBuilder, "defeat", ventanas);
-  PantallaDeInicio pantallaInicial(refBuilder, emisor, area.getMenuTorres());
+  PantallaDeInicio pantallaInicial(refBuilder, emisor, area.getMenu());
   PantallaDeElementos pantallaDeElementos(refBuilder, emisor);
-  GameClientReceiver reciver(fichas, area.getMenuTorres(),
+  GameClientReceiver reciver(fichas, area.getMenu(),
    ventanas, pantallaInicial,pantallaDeElementos);
   GameClientSocket clientSocket(reciver, std::move(socket));
   Receptor receptor(reciver, clientSocket);
-  ControladorDeSiclos controladorDeSiclos(receptor, emisor);
+  controladorDeCiclos controladorDeCiclos(receptor, emisor);
   emisor.cargarSocket(&clientSocket);
 
 //pongo Timers
   unsigned int TiempoEnMilesegundos = 100;
-  sigc::slot<bool> my_slot = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDeAnimacion);
+  sigc::slot<bool> my_slot = sigc::mem_fun(area, &PantallaDeJuego::ejecutarCicloDeAnimacion);
   sigc::connection conn = Glib::signal_timeout().connect(my_slot,TiempoEnMilesegundos);
   TiempoEnMilesegundos = 50;
-  sigc::slot<bool> my_slot2 = sigc::mem_fun(area, &PantallaDeJuego::ejecutarSicloDesplasamientos);
+  sigc::slot<bool> my_slot2 = sigc::mem_fun(area, &PantallaDeJuego::ejecutarcicloDesplasamientos);
   sigc::connection conn2 = Glib::signal_timeout().connect(my_slot2,TiempoEnMilesegundos);
 
   //arranco
 
-  controladorDeSiclos.iniciar();
+  controladorDeCiclos.iniciar();
   ventanas.arrancar();
-  controladorDeSiclos.terminar();
+  controladorDeCiclos.terminar();
 
   return 0;
 }

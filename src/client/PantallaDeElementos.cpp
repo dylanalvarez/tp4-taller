@@ -57,19 +57,19 @@ void PantallaDeElementos::reiniciar(){
 }
 void PantallaDeElementos::elementoSeleccionado(Elementos elemento){
   switch (elemento) {
-    case tierra:
+    case Elementos::tierra:
       botonTierra->set_active(false);
       botonTierra->set_sensitive(false);
       break;
-    case agua:
+    case Elementos::agua:
       botonAgua->set_active(false);
       botonAgua->set_sensitive(false);
       break;
-    case fuego:
+    case Elementos::fuego:
       botonFuego->set_active(false);
       botonFuego->set_sensitive(false);
       break;
-    case aire:
+    case Elementos::aire:
       botonAire->set_active(false);
       botonAire->set_sensitive(false);
   }

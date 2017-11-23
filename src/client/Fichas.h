@@ -7,7 +7,6 @@
 #include "VectorDeSprites.h"
 #include "TiposDeDatosExpeciales.h"
 
-//corregir Srpites y sprites
 
 class Ficha{
  private:
@@ -27,7 +26,7 @@ class Ficha{
   Ficha(int x2, int y2, int id2, int tipo2);
   Ficha(const Ficha &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
-  virtual void ejecutarSicloDeAnimacion(); //Para los gif
+  virtual void ejecutarCicloDeAnimacion(); //Para los gif
   void cambiarPosicion(int x2, int y2);
   virtual ~Ficha();
   int getId() const;
@@ -73,7 +72,7 @@ class FichaTorre: public Ficha{
   FichaTorre(Communication::Tower actualzacion, VectorDeSprites &sprites);
   FichaTorre(const FichaTorre &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
-  virtual void ejecutarSicloDeAnimacion(); //Para los gif
+  virtual void ejecutarCicloDeAnimacion();
   int getDanio() const;
   int getRango() const;
   int getEspecial() const;
@@ -95,7 +94,6 @@ class FichaTorre: public Ficha{
 class FichaEnemigo: public Ficha{
  private:
  protected:
- //para las voladoras.
   int correccionX;
   int correccionY;
   int inicioAnimiacionActual;
@@ -106,7 +104,7 @@ class FichaEnemigo: public Ficha{
   FichaEnemigo(Communication::Enemy actualzacion, VectorDeSprites &sprites);
   FichaEnemigo(const FichaEnemigo &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
-  virtual void ejecutarSicloDeAnimacion(); //Para los gif
+  virtual void ejecutarCicloDeAnimacion(); //Para los gif
   void actualizar(Communication::Enemy actualzacion);
 };
 
@@ -124,7 +122,7 @@ class FichaPortal: public Ficha{
   FichaPortal(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
   FichaPortal(const FichaPortal &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
-  virtual void ejecutarSicloDeAnimacion(); //Para los gif
+  virtual void ejecutarCicloDeAnimacion(); //Para los gif
 };
 
 
@@ -156,11 +154,10 @@ class FichaEfectos: public Ficha{
   FichaEfectos(int id2, int tipo, VectorDeSprites &sprites,
      FichaEnemigo &objetivo2);
   FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &sprites);
-  //FichaEfectos(int id2, int tipo, VectorDeSprites &sprites, FichaEnemigo *objetivo2);
   FichaEfectos(const FichaEfectos &p);
   virtual void dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales);
-  virtual void ejecutarSicloDeAnimacion(); //Para los gif
-  void ejecutarSicloDeActualizacion();
+  virtual void ejecutarCicloDeAnimacion(); //Para los gif
+  void ejecutarcicloDeActualizacion();
 };
 
 #endif

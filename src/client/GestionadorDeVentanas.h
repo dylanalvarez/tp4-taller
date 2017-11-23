@@ -18,21 +18,19 @@ class GestionadorDeVentanas{
   bool juegoTerminado = false;
   bool gano = false;
   bool volverAempezar = true;
-  //Gtk::Window* pantallaFinal;
- protected:
+  void arrancarPantallaDeInicio();
+  void arrancarPantallaDeElementos();
+  void arrancarJuego();
+  void arrancarPantallaResultado();
  public:
    //los arrancar se ejecutan en el Hilo principal. y el terminar en otro hilo
    GestionadorDeVentanas(Glib::RefPtr<Gtk::Builder> &ventana2);
    void arrancar();
-   void arrancarJuego();
    void TerminarJuego();
    void GanarJuego();
    void actualizar(const Communication::GameState &gameState);
-   void arrancarPantallaDeElementos();
    void TerminarPantallaDeElementos();
-   void arrancarPantallaDeInicio();
    void TerminarPantallaDeInicio();
-   void arrancarPantallaResultado();
    void TerminarPantallaResultado();
 };
 

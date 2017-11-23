@@ -10,10 +10,6 @@
 #define SonidoNuevoMonstruo "Sprites/Sonido/smw_feather_get.wav"
 #define SonidoNuevoAtaque "Sprites/Sonido/smw_coin.wav"
 
-/*Sound sound4("smw_jump.wav");
-Sound sound5("smw_keyhole_exit.wav");
-Sound sound7("smw_save_menu.wav");*/
-
 #define SpritePisoFirme 0
 #define SpriteTorreDeTierra 1
 #define SpriteSueloLava1 2
@@ -98,8 +94,8 @@ Sound sound7("smw_save_menu.wav");*/
 #define SpritePortaRojo01Total 9
 
 #define SpriteMetorio2 422
-#define SpriteMetorio2Total 14
-#define SpritePing 435
+#define SpriteMetorio2Total 15
+#define SpritePing 438
 
 
 
@@ -110,6 +106,5 @@ protected:
 public:
   VectorDeSprites();
   Glib::RefPtr<Gdk::Pixbuf>& obtener (int n);
-
 };
 #endif

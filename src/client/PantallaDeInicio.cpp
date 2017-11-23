@@ -2,7 +2,7 @@
 
 
 PantallaDeInicio::PantallaDeInicio(Glib::RefPtr<Gtk::Builder> &ventana,
-   Emisor& emisor, MenuTorres& menu2): emisorComandos(emisor), menu(menu2){
+   Emisor& emisor, Menu& menu2): emisorComandos(emisor), menu(menu2){
   	ventana->get_widget("Unirse", unirse);
   	ventana->get_widget("Crear", crear);
   	ventana->get_widget("Nick", nick);

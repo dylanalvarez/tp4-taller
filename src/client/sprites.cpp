@@ -2,17 +2,12 @@
 //estos dos van en Pixeles.
 #define SpriteWidth 79
 #define SpriteHeigth 159
-//esto es para terminar de ajustar la escala.
-#define ConstantenMagicaEscala 15 //cantidad de sprites de largo
+#define ConstantenEscala 15
+#define ConstantenIsometricaX 0.897727272
+#define ConstantenIsometricaY 0.443181818
+#define LimiteDeDibujoX 100
+#define LimiteDeDibujoY 200
 
-
-/*FichaSprite::FichaSprite(int x2, int y2, const char* direccion): x(x2), y (y2){
-  image = Gdk::Pixbuf::create_from_file(direccion);
-}
-FichaSprite::FichaSprite(int x2, int y2): x(x2), y(y2){
-  //esto va a ser el "final"
-    image = Gdk::Pixbuf::create_from_file("Sprites/PisoFirme.png");
-}*/
 Sprite::Sprite(int x2, int y2, Glib::RefPtr<Gdk::Pixbuf>& image2)
             : image (image2), x(x2), y(y2){
 }
@@ -29,14 +24,14 @@ void Sprite::dibujarIsometrico(const Cairo::RefPtr<Cairo::Context>& cr,
                                       DatosPantalla datosActuales){
   int x2, y2;
   //lo pongo isometrico
-  x2 = (0.897727272)*(x-y); //79/88
-  y2 = (0.443181818)*(x+y); //39/88
+  x2 = (ConstantenIsometricaX)*(x-y); //79/88
+  y2 = (ConstantenIsometricaY)*(x+y); //39/88
   //lo desplaso por la pantalla.
   x2 = x2 + datosActuales.desplasamientoX;
   y2 = y2 + datosActuales.desplasamientoY;
 
-  if (x2 < (0-100) || x2 > (datosActuales.width+100) ||
-        y2 < (0-200) || y2 > (datosActuales.height+200))
+  if (x2 < (0-LimiteDeDibujoX) || x2 > (datosActuales.width+LimiteDeDibujoX) ||
+        y2 < (0-LimiteDeDibujoY) || y2 > (datosActuales.height+LimiteDeDibujoY))
     return;
 
   int correctorX = image->get_width()/2, correctorY = image->get_height()/2;
@@ -51,9 +46,6 @@ void Sprite::dibujarIsometrico(const Cairo::RefPtr<Cairo::Context>& cr,
   cr->save();
 }
 
-void Sprite::pulsaion(){
-  //por ahora nada.. pero aca puede estar el cambio de sprite para el gif
-}
 
 void Sprite::cambiarPosicion(int x2, int y2){
   x = x2;

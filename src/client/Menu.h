@@ -8,8 +8,7 @@
 #include "emisor.h"
 #include <string>
 
-//nombre a cambiar A Menu
-class MenuTorres{
+class Menu{
 private:
 	std::string nick;
 	Emisor& emisorComandos;
@@ -97,7 +96,7 @@ public:
 	void enviarMensajeChat();
 	void recivirMensajeChat(std::string entrada);	//eterminar de definir entrada
 
-  MenuTorres (Glib::RefPtr<Gtk::Builder> &ventana2, Emisor& emisor);
+  Menu (Glib::RefPtr<Gtk::Builder> &ventana2, Emisor& emisor);
   void selecionarTorre(const FichaTorre &torre2);
   void selecionarTerreno(const FichaTerreno &terreno2);
 	void agregarElemento(Elementos elemento);
