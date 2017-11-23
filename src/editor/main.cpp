@@ -3,6 +3,7 @@
 #include "AddHordeGrid.h"
 #include "ChooseSizeGrid.h"
 #include "FileChooser.h"
+#include "MainWindow.h"
 
 int main(int argc, char **argv) {
     Glib::RefPtr<Gtk::Application> app =
@@ -12,8 +13,8 @@ int main(int argc, char **argv) {
     Builder builder(gtkBuilder);
     Map map;
 
-    Gtk::Window *mainWindow;
-    builder.get_widget("main-window", mainWindow);
+    MainWindow *mainWindow;
+    builder.get_widget_derived("main-window", mainWindow);
 
     SaveButton *saveButton;
     builder.get_widget_derived("save", saveButton, map, mainWindow);
