@@ -41,8 +41,10 @@ void MapButton::setColor(const Gdk::RGBA &color) {
     css->load_from_data(
             "* {"
                     "border-radius: 50%;"
+#ifdef __APPLE__
                     "min-width: 20px;"
                     "min-height: 20px;"
+#endif
                     "margin: 12px 0;"
                     "color: white;"
                     "font-weight: bold;"
