@@ -4,13 +4,13 @@
 Elementos toElemento(Communication::Element element){
   switch (element) {
     case Communication::Element::earth:
-     return tierra;
+     return Elementos::tierra;
     case Communication::Element::water:
-     return agua;
+     return Elementos::agua;
     case Communication::Element::fire:
-     return fuego;
+     return Elementos::fuego;
     case Communication::Element::air:
-     return aire;
+     return Elementos::aire;
   }
-  return aire;
+  return Elementos::aire;
 }

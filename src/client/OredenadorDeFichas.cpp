@@ -8,13 +8,13 @@
 
 #define error 0
 
-void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
+void OrdenadorDeFichas::ejecutarCicloDeAnimacion(){
   std::unique_lock<std::mutex> lck(m);
   for (auto it = terreno.begin(); it != terreno.end(); ++it){
-    it->second.ejecutarSicloDeAnimacion();
+    it->second.ejecutarCicloDeAnimacion();
   }
   for (auto it = torres.begin(); it != torres.end(); ++it){
-    it->second.ejecutarSicloDeAnimacion();
+    it->second.ejecutarCicloDeAnimacion();
   }
   for (auto it = enemigos.cbegin(); it != enemigos.cend();) {
     if (it->second.siguesVivo()) { enemigos.erase(it++);
@@ -22,16 +22,16 @@ void OrdenadorDeFichas::ejecutarSicloDeAnimacion(){
     } else { ++it; }
   }
   for (auto it = enemigos.begin(); it != enemigos.end(); ++it){
-    it->second.ejecutarSicloDeAnimacion();
+    it->second.ejecutarCicloDeAnimacion();
   }
   for (auto it = poderes.cbegin(); it != poderes.cend();) {
     if (it->second.siguesVivo()) { poderes.erase(it++); } else { ++it; }
   }
   for (auto it = poderes.begin(); it != poderes.end(); ++it){
-    it->second.ejecutarSicloDeAnimacion();
+    it->second.ejecutarCicloDeAnimacion();
   }
   for (auto it = portales.begin(); it != portales.end(); ++it){
-    it->ejecutarSicloDeAnimacion();
+    it->ejecutarCicloDeAnimacion();
   }
 }
 void OrdenadorDeFichas::imprir(const Cairo::RefPtr<Cairo::Context>& cr,
@@ -55,7 +55,7 @@ void OrdenadorDeFichas::actualizar(const Communication::GameState &gameState){
   for (auto it = gameState.targetPowers.begin() ; it != gameState.targetPowers.end(); ++it)
     actualizarEfectos(*it);
   for (auto it = poderes.begin(); it != poderes.end(); ++it)
-      it->second.ejecutarSicloDeActualizacion();
+      it->second.ejecutarcicloDeActualizacion();
 }
 
 void OrdenadorDeFichas::preprarParaActualizacion(){
@@ -147,7 +147,7 @@ int OrdenadorDeFichas::ObetenerEnemigoEnEstaPosicion(int x, int y){
       return it->first;
     }
   }
-  return 0;
+  return error;
 }
 FichaEnemigo& OrdenadorDeFichas::getEnemigo(int id){
   return enemigos.at(id);
@@ -185,7 +185,6 @@ void OrdenadorDeFichas::actualizarEfectos(Communication::PositionalPower actualz
        FichaGrieta, sprites));
     break;
     case Communication::PositionalPower::Type::terraforming:
-    //printf("terraforameando, %i, %i\n", actualzacion.x, actualzacion.y);
       getTerreno(ObetenerTerrenoEnEstaPosicion(actualzacion.x, actualzacion.y)
     ).cambiarTipo(FichaPisoFirme, sprites);
     break;
@@ -212,11 +211,8 @@ void OrdenadorDeFichas::actualizarEfectos(Communication::TargetPower actualzacio
   idEfectos++;
   switch (actualzacion.type){
     case Communication::TargetPower::Type::freezing:
-    /*agregarEfectos(FichaEfectos(idEfectos, FichaCongelacion, sprites,
-       getEnemigo(actualzacion.enemyID)));*/
     break;
     case Communication::TargetPower::Type::ray:
-    printf("rayo\n");
     agregarEfectos(FichaEfectos(idEfectos, FichaRayos, sprites,
        getEnemigo(actualzacion.enemyID)));
     break;

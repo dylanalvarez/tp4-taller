@@ -1,4 +1,4 @@
-#include "controladorDeSiclos.h"
+#include "controladorDeCiclos.h"
 #include <thread>
 
 void hiloRecepto(Receptor* receiver){
@@ -8,18 +8,18 @@ void hiloEmisor(Emisor* emisor){
   emisor->iniciar();
 }
 
-void ControladorDeSiclos::iniciar(){
+void controladorDeCiclos::iniciar(){
   receptorThread = std::thread(hiloRecepto, &receptor);
   emisorThread = std::thread(hiloEmisor, &emisor);
 }
 
-void ControladorDeSiclos::terminar(){
+void controladorDeCiclos::terminar(){
   emisor.terminar();
   emisorThread.join();
   receptor.terminar();
   receptorThread.join();
 }
 
-ControladorDeSiclos::ControladorDeSiclos(Receptor &receptor2, Emisor &emisor2):
+controladorDeCiclos::controladorDeCiclos(Receptor &receptor2, Emisor &emisor2):
             receptor(receptor2), emisor(emisor2){
 }

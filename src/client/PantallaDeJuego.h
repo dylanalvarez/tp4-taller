@@ -6,7 +6,7 @@
 #include "sprites.h"
 #include "Fichas.h"
 #include "OrdenadorDeFichas.h"
-#include "menuTorres.h"
+#include "Menu.h"
 #include "TiposDeDatosExpeciales.h"
 #include "emisor.h"
 
@@ -16,16 +16,15 @@ public:
   PantallaDeJuego(OrdenadorDeFichas &fichas2,
                   Glib::RefPtr<Gtk::Builder> &ventana,
                   Emisor& emisor);
-  bool ejecutarSicloDeAnimacion();
-  bool ejecutarSicloDesplasamientos();
+  bool ejecutarCicloDeAnimacion();
+  bool ejecutarcicloDesplasamientos();
 	void agregarElemento(Elementos elemento);
   virtual ~PantallaDeJuego();
-  MenuTorres& getMenuTorres();
-private:
-  //tal vez un mapa no sea lo mejor.
+  Menu& getMenu();
+protected:
  std::vector<Elementos> elementos;
  OrdenadorDeFichas &fichas;
- MenuTorres menuTorres; //necesitamos un get de esto.
+ Menu menu;
  DatosPantalla datosActuales;
  bool incirementeEnX;
  bool decrementoEnX;
@@ -35,11 +34,10 @@ private:
   bool on_button_press_event(GdkEventButton* event) override;
   bool on_motion_notify_event(GdkEventMotion* event) override;
   bool on_leave_notify_event (GdkEventCrossing* event) override;
-  void desplasamientoIncirementeEnX();
-  void desplasamientoDecrementoEnX();
-  void desplasamientoIncirementeEnY();
-  void desplasamientoDecrementoEnY();
-protected:
+  void desplazamientoIncrementalEnX();
+  void desplazamientoDecrementalEnX();
+  void desplazamientoIncrementalEnY();
+  void desplazamientoDecrementalEnY();
   bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override; //la verdad de la milaneza
 };
 #endif

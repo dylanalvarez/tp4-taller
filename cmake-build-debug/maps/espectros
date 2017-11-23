@@ -1,0 +1,53 @@
+name: Espectros
+setting: desert
+size:
+  x: 7
+  y: 5
+firm_ground:
+  - x: 3
+    y: 4
+  - x: 4
+    y: 4
+  - x: 5
+    y: 4
+  - x: 5
+    y: 2
+  - x: 4
+    y: 2
+  - x: 3
+    y: 2
+  - x: 1
+    y: 2
+  - x: 1
+    y: 4
+  - x: 7
+    y: 4
+  - x: 7
+    y: 2
+paths:
+  - path_sequence:
+      - x: 1
+        y: 1
+      - x: 6
+        y: 1
+      - x: 6
+        y: 3
+      - x: 2
+        y: 3
+      - x: 2
+        y: 5
+      - x: 7
+        y: 5
+    entry:
+      x: 0
+      y: 1
+    exit:
+      x: 8
+      y: 5
+    enemies:
+      - type: spectre
+        quantity: 1
+        seconds_before_arrival: 10
+      - type: spectre
+        quantity: 1
+        seconds_before_arrival: 10

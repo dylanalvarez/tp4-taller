@@ -2,7 +2,7 @@
 #include "Exception.h"
 
 GameClientReceiver::GameClientReceiver(OrdenadorDeFichas& fichas2,
-        MenuTorres& menues2, GestionadorDeVentanas& ventanas2,
+        Menu& menues2, GestionadorDeVentanas& ventanas2,
         PantallaDeInicio& inicio2, PantallaDeElementos& elemento2):
         fichas(fichas2), menues(menues2), ventanas(ventanas2), inicio(inicio2),
         elemento(elemento2){

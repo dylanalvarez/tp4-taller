@@ -4,7 +4,7 @@
 #include <yaml-cpp/yaml.h>
 #include "Socket.h"
 #include "CommunicationUtils.h"
-#include "../client/menuTorres.h"
+#include "../client/Menu.h"
 #include "../client/OrdenadorDeFichas.h"
 #include "../client/GestionadorDeVentanas.h"
 #include "../client/PantallaDeInicio.h"
@@ -12,13 +12,13 @@
 
 class GameClientReceiver {
     OrdenadorDeFichas& fichas;
-    MenuTorres& menues;
+    Menu& menues;
     GestionadorDeVentanas& ventanas;
     PantallaDeInicio& inicio;
     PantallaDeElementos& elemento;
 public:
     //GameClientReceiver(Socket& socket);
-    GameClientReceiver(OrdenadorDeFichas& fichas2, MenuTorres& menues2,
+    GameClientReceiver(OrdenadorDeFichas& fichas2, Menu& menues2,
         GestionadorDeVentanas& ventanas2, PantallaDeInicio& inicio2,
         PantallaDeElementos& elemento2);
 

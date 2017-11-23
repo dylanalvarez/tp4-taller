@@ -5,7 +5,7 @@
 #include <iostream>
 #include "Fichas.h"
 #include "TiposDeDatosExpeciales.h"
-#include "menuTorres.h"
+#include "Menu.h"
 #include "emisor.h"
 #include <string>
 #include <map>
@@ -13,7 +13,7 @@
 class PantallaDeInicio{
  private:
 	Emisor& emisorComandos;
-  MenuTorres& menu;
+  Menu& menu;
   Gtk::Button* unirse;
   Gtk::Button* crear;
   Gtk::Entry* nick;
@@ -26,7 +26,7 @@ class PantallaDeInicio{
   void unirsePartida();
   void crearPartida();
   PantallaDeInicio(Glib::RefPtr<Gtk::Builder> &ventana, Emisor& emisor,
-     MenuTorres& menu2);
+     Menu& menu2);
   void cargarDatos(
           const std::vector<Communication::NameAndID> &matches,
           const std::vector<Communication::NameAndID> &maps);

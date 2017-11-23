@@ -16,7 +16,7 @@ Ficha::Ficha(const Ficha &p): Ficha(p.x, p.y, p.id, p.tipo){
 void Ficha::dibujar(const Cairo::RefPtr<Cairo::Context>& cr, DatosPantalla datosActuales){
  sprites[spriteActual].dibujarIsometrico(cr, datosActuales); //en el futuro pasar x y y
 }
-void Ficha::ejecutarSicloDeAnimacion(){
+void Ficha::ejecutarCicloDeAnimacion(){
  // sprites[spriteActual].pulsaion();
 } //Para los gif
 void Ficha::cambiarPosicion(int x2, int y2){
@@ -208,7 +208,7 @@ void FichaTorre::dibujar(const Cairo::RefPtr<Cairo::Context>& cr,
    sprites[spriteActualSubAnimacion].dibujarIsometrico(cr,datosActuales);
  }
 }
-void FichaTorre::ejecutarSicloDeAnimacion(){
+void FichaTorre::ejecutarCicloDeAnimacion(){
   spriteActualSubAnimacion++;
   if (spriteActualSubAnimacion == 4) {
      spriteActualSubAnimacion = 1;
@@ -315,7 +315,7 @@ void FichaEnemigo::dibujar(const Cairo::RefPtr<Cairo::Context>& cr,
     sprites[inicioAnimiacionActual + spriteActual].cambiarPosicion(x,y);
     sprites[inicioAnimiacionActual + spriteActual].dibujarIsometrico(cr,datosActuales);
   }
-void FichaEnemigo::ejecutarSicloDeAnimacion(){
+void FichaEnemigo::ejecutarCicloDeAnimacion(){
   spriteActual++;
   if (spriteActual == largoAnimiacionActual-1) {
      spriteActual = 0;
@@ -385,7 +385,7 @@ void FichaPortal::dibujar(const Cairo::RefPtr<Cairo::Context>& cr,
     sprites[spriteActualSubAnimacion].dibujarIsometrico(cr,datosActuales);
     sprites[0].dibujarIsometrico(cr,datosActuales);
    }
-void FichaPortal::ejecutarSicloDeAnimacion(){
+void FichaPortal::ejecutarCicloDeAnimacion(){
   spriteActualSubAnimacion++;
   if (spriteActualSubAnimacion == 10) {
      spriteActualSubAnimacion = 1;
@@ -535,13 +535,13 @@ FichaEfectos::FichaEfectos(const FichaEfectos &p): Ficha(p){
 
 }
 
-void FichaEfectos::ejecutarSicloDeAnimacion(){
+void FichaEfectos::ejecutarCicloDeAnimacion(){
   spriteActual++;
   if (spriteActual == largoAnimiacionActual-1) {
      spriteActual = 0;
   }
 }
-void FichaEfectos::ejecutarSicloDeActualizacion(){
+void FichaEfectos::ejecutarcicloDeActualizacion(){
  if (tiempoImpacto == 0) {
    destrulleme = true;
    return;
@@ -557,7 +557,7 @@ void FichaEfectos::ejecutarSicloDeActualizacion(){
    y = y - (y-y2)/tiempoImpacto;
    if (objetivo->siguesVivo())
      destrulleme = true;
-     //si el objetivo se va a destruir en el siguiente siclo. tambien esto
+     //si el objetivo se va a destruir en el siguiente ciclo. tambien esto
  }
  tiempoImpacto--;
 }

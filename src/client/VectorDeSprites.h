@@ -110,6 +110,5 @@ protected:
 public:
   VectorDeSprites();
   Glib::RefPtr<Gdk::Pixbuf>& obtener (int n);
-
 };
 #endif

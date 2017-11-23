@@ -26,7 +26,6 @@ private:
  int idEfectos = 0;
  std::map<int,FichaEfectos> poderes;
  std::vector<FichaPortal> portales;
-protected:
  void imprimirPortal(const Cairo::RefPtr<Cairo::Context>& cr,
                         DatosPantalla datosActuales);
  void imprimirEfectos(const Cairo::RefPtr<Cairo::Context>& cr,
@@ -40,7 +39,7 @@ protected:
  void actualizarEfectos(Communication::PositionalPower actualzacion);
  void actualizarEfectos(Communication::TargetPower actualzacion);
 public:
- void ejecutarSicloDeAnimacion();
+ void ejecutarCicloDeAnimacion();
  void preprarParaActualizacion();
  void imprir(const Cairo::RefPtr<Cairo::Context>& cr,
                       DatosPantalla datosActuales);
