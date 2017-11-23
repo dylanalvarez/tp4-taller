@@ -7,12 +7,15 @@
 
 #include <gtkmm/button.h>
 #include "Map.h"
-#include "MapGrid.h"
+
+class MapGrid;
 
 class MapButton : public Gtk::Button {
 public:
     MapButton(const Glib::ustring &label,
               int x, int y, MapGrid &parent, Map &map);
+
+    void setColor(const Gdk::RGBA& color);
 
 private:
     void setSquareType(MapGrid &parent);

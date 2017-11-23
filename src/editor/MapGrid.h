@@ -10,6 +10,7 @@
 #include "Builder.h"
 #include "SaveButton.h"
 #include "AddHordeGrid.h"
+#include "MapButton.h"
 
 class MapGrid : public Gtk::Grid {
 public:
@@ -26,7 +27,7 @@ public:
 
     MapGrid::SquareType getSquareType() const;
 
-    void updateDisabledButtons() const;
+    void updateButtons() const;
 
     void notifyGridClicked(int x, int y, SquareType squareType);
 
@@ -47,7 +48,14 @@ private:
 
     bool isOnTheWayOfAPath(int x, int y) const;
 
-    std::vector<std::vector<Gtk::Button *>> grid;
+    void updateButtonColors() const;
+
+    void paintBetween(
+            const Map::Coordinate& start,
+            const Map::Coordinate& end,
+            const Gdk::RGBA& color) const;
+
+    std::vector<std::vector<MapButton *>> grid;
     Builder &builder;
     SquareType squareType;
     int width;
@@ -66,6 +74,7 @@ private:
     Gtk::RadioButton *deletePathButton;
     SaveButton *saveButton;
     AddHordeGrid *addHordeGrid;
+    std::vector<Gdk::RGBA> colors;
 };
 
 

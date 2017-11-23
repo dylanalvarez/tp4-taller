@@ -14,7 +14,7 @@ void NameEntry::init(Map &map) {
 bool NameEntry::onKeyRelease(GdkEventKey *event) {
     bool stopPropagation = true;
     map->setName(this->get_text());
-    if (mapGrid) { mapGrid->updateDisabledButtons(); }
+    if (mapGrid) { mapGrid->updateButtons(); }
     return stopPropagation;
 }
 

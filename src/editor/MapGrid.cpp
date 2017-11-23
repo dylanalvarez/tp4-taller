@@ -1,7 +1,6 @@
 #include <gtkmm/button.h>
 #include <gtkmm/radiobutton.h>
 #include "MapGrid.h"
-#include "MapButton.h"
 
 MapGrid::MapGrid(Map &map,
                  Builder &builder,
@@ -18,9 +17,8 @@ MapGrid::MapGrid(Map &map,
         for (int y = 0; y <= height + 1; y++) {
             auto square = Gtk::manage(new MapButton("", x, y, *this, map));
             attach(*square, x, y, 1, 1);
-            square->get_child()->set_size_request(25, 25);
             square->show();
-            grid[x].push_back((Gtk::Button *) square);
+            grid[x].push_back(square);
         }
     }
 
@@ -56,9 +54,16 @@ MapGrid::MapGrid(Map &map,
                     sigc::mem_fun(this, &MapGrid::setSquareType),
                     MapGrid::deletePath));
 
+    colors.emplace_back("rgb(255,0,0)");
+    colors.emplace_back("rgb(128,255,0)");
+    colors.emplace_back("rgb(0,255,255)");
+    colors.emplace_back("rgb(127,0,255)");
+    colors.emplace_back("rgb(255,0,127)");
+    colors.emplace_back("rgb(255,255,0)");
+
     // Set default value
     startButton->set_active(true);
-    this->updateDisabledButtons();
+    this->updateButtons();
 }
 
 void MapGrid::setFromMap() {
@@ -74,32 +79,29 @@ void MapGrid::setFromMap() {
     int pathNumber = 1;
     for (const Map::Path &path : map.getPaths()) {
         std::string pathLabel = std::to_string(pathNumber);
-        grid[path.entry.x][path.entry.y]->set_label(ENTRY_DOOR_STR + " " + pathLabel);
+        grid[path.entry.x][path.entry.y]->set_label(ENTRY_DOOR_STR + pathLabel);
         if (!(path.exit.x == 0 && path.exit.y == 0))
-            grid[path.exit.x][path.exit.y]->set_label(EXIT_DOOR_STR + " " + pathLabel);
+            grid[path.exit.x][path.exit.y]->set_label(EXIT_DOOR_STR + pathLabel);
         int stepNumber = 1;
         for (const Map::Coordinate &pathStep : path.pathSequence) {
-            grid[pathStep.x][pathStep.y]->set_label(pathLabel
-                                                    + ", "
-                                                    + std::to_string(
-                    stepNumber));
+            grid[pathStep.x][pathStep.y]->set_label(std::to_string(stepNumber));
             stepNumber++;
         }
         pathNumber++;
     }
-    updateDisabledButtons();
+    updateButtons();
 }
 
 void MapGrid::setSquareType(MapGrid::SquareType squareType) {
     this->squareType = squareType;
-    this->updateDisabledButtons();
+    this->updateButtons();
 }
 
 MapGrid::SquareType MapGrid::getSquareType() const {
     return squareType;
 }
 
-void MapGrid::updateDisabledButtons() const {
+void MapGrid::updateButtons() const {
     saveButton->set_sensitive(!unfinishedPath &&
                               !map.getName().empty());
     for (int x = 0; x <= width + 1; x++) {
@@ -107,6 +109,7 @@ void MapGrid::updateDisabledButtons() const {
             updateDisabledButton(x, y);
         }
     }
+    updateButtonColors();
 }
 
 void MapGrid::updateDisabledButton(int x, int y) const {
@@ -163,9 +166,8 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
         justStartedPath = true;
     }
     if (squareType == path) {
-        grid[x][y]->set_label(map.addPathStep(x, y)
-                              + ", "
-                              + std::to_string(
+        map.addPathStep(x, y);
+        grid[x][y]->set_label(std::to_string(
                 map.getPaths().back().pathSequence.size()));
 
         this->lastPathX = x;
@@ -184,7 +186,7 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
             startY = -1;
         }
     }
-    this->updateDisabledButtons();
+    this->updateButtons();
 }
 
 bool MapGrid::isNeighbourOfStart(int x, int y) const {
@@ -225,4 +227,51 @@ bool MapGrid::isOnTheWayOfAPath(int x, int y) const {
         }
     }
     return false;
+}
+
+void MapGrid::updateButtonColors() const {
+    int pathIndex = 0;
+    for (auto& path : map.getPaths()) {
+        auto& color = colors[pathIndex % colors.size()];
+        grid[path.entry.x][path.entry.y]->setColor(color);
+        if (!(path.exit.x == 0 && path.exit.y == 0)) {
+            grid[path.exit.x][path.exit.y]->setColor(color);
+        }
+        const Map::Coordinate* previousStep = nullptr;
+        for (auto& pathStep : path.pathSequence) {
+            if (previousStep) {
+                paintBetween(*previousStep, pathStep, color);
+            } else {
+                paintBetween(pathStep, pathStep, color);
+            }
+            previousStep = &pathStep;
+        }
+        pathIndex++;
+    }
+    for (auto& firmGround : map.getFirmGround()) {
+        grid[firmGround.x][firmGround.y]->setColor(
+                Gdk::RGBA("black"));
+    }
+}
+
+void MapGrid::paintBetween(const Map::Coordinate &start,
+                           const Map::Coordinate &end,
+                           const Gdk::RGBA &color) const {
+    bool sharesPathOnX = end.x == start.x;
+    bool sharesPathOnY = end.y == start.y;
+    if (sharesPathOnX) {
+        bool yIsGreater = end.y > start.y;
+        int startY = yIsGreater ? start.y : end.y;
+        int endY = yIsGreater ? end.y : start.y;
+        for (int currentY = startY; currentY <= endY; ++currentY) {
+            grid[start.x][currentY]->setColor(color);
+        }
+    } else if (sharesPathOnY) {
+        bool xIsGreater = end.x > start.x;
+        int startX = xIsGreater ? start.x : end.x;
+        int endX = xIsGreater ? end.x : start.x;
+        for (int currentX = startX; currentX <= endX; ++currentX) {
+            grid[currentX][start.y]->setColor(color);
+        }
+    }
 }
