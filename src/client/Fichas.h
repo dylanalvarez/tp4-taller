@@ -34,7 +34,7 @@ class Ficha{
   bool colisionaConmigo(int x2, int y2);
   void imprimierCordenadas() const;   //echa para revisar nada mas. Quitar despues.
   Posicion getPosicion() const;
-  bool siguesVivo() const; //Para los gif
+  bool deboSerDestruido() const; //Para los gif
   void setDestrulleme(bool valor);
 };
 //FichaTerreno

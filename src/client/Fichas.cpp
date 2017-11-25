@@ -45,7 +45,7 @@ bool Ficha::colisionaConmigo(int x2, int y2){
 void Ficha::imprimierCordenadas() const{
   printf("x: %i, y: %i\n", x, y);
 }
-bool Ficha::siguesVivo() const{
+bool Ficha::deboSerDestruido() const{
   return destrulleme;
 }
 void Ficha::setDestrulleme(bool valor){
@@ -555,7 +555,7 @@ void FichaEfectos::ejecutarcicloDeActualizacion(){
    y2 = posicionFinal.Y;
    x = x - (x-x2)/tiempoImpacto;
    y = y - (y-y2)/tiempoImpacto;
-   if (objetivo->siguesVivo())
+   if (objetivo->deboSerDestruido())
      destrulleme = true;
      //si el objetivo se va a destruir en el siguiente ciclo. tambien esto
  }

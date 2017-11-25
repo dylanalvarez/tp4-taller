@@ -20,7 +20,7 @@ PantallaDeInicio::PantallaDeInicio(Glib::RefPtr<Gtk::Builder> &ventana,
 void PantallaDeInicio::unirsePartida(){
     if(nick->get_text().empty())
         return;
-    
+
   emisorComandos.elegirEquipo(nick->get_text().c_str(),
                             ids[equipos->get_active_text().c_str()]);
   menu.setNick(nick->get_text().c_str());

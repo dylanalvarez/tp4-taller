@@ -17,7 +17,7 @@ void OrdenadorDeFichas::ejecutarCicloDeAnimacion(){
     it->second.ejecutarCicloDeAnimacion();
   }
   for (auto it = enemigos.cbegin(); it != enemigos.cend();) {
-    if (it->second.siguesVivo()) { enemigos.erase(it++);
+    if (it->second.deboSerDestruido()) { enemigos.erase(it++);
       sonidos.siguienteSonido(SonidoMatarMonstruo);
     } else { ++it; }
   }
@@ -25,7 +25,7 @@ void OrdenadorDeFichas::ejecutarCicloDeAnimacion(){
     it->second.ejecutarCicloDeAnimacion();
   }
   for (auto it = poderes.cbegin(); it != poderes.cend();) {
-    if (it->second.siguesVivo()) { poderes.erase(it++); } else { ++it; }
+    if (it->second.deboSerDestruido()) { poderes.erase(it++); } else { ++it; }
   }
   for (auto it = poderes.begin(); it != poderes.end(); ++it){
     it->second.ejecutarCicloDeAnimacion();
@@ -294,44 +294,45 @@ void OrdenadorDeFichas::cargarMapa(std::string &mapa){
 
     if (pathEnemigo.entry.x==0)
       agregarPortal(FichaPortal(-44,(pathEnemigo.entry.y-1)*largo,1, FichaPortalAzul2 ,sprites));
-    if (pathEnemigo.entry.x==x+1) //testear
-      agregarPortal(FichaPortal((pathEnemigo.exit.x-1)*largo+44,(pathEnemigo.entry.y-1)*largo,1, FichaPortalAzul2 ,sprites));
+    if (pathEnemigo.entry.x==x+1)
+      agregarPortal(FichaPortal((pathEnemigo.entry.x-1)*largo-44,(pathEnemigo.entry.y-1)*largo,1, FichaPortalAzul2 ,sprites));
     if (pathEnemigo.entry.y==0)
       agregarPortal(FichaPortal((pathEnemigo.entry.x-1)*largo,-44,1, FichaPortalAzul1 ,sprites));
-    if (pathEnemigo.entry.y==y+1) //testear
+    if (pathEnemigo.entry.y==y+1)
       agregarPortal(FichaPortal((pathEnemigo.entry.x-1)*largo,(pathEnemigo.entry.y-1)*largo-44,1, FichaPortalAzul1 ,sprites));
 
     if (pathEnemigo.exit.x==0)
       agregarPortal(FichaPortal(-44,(pathEnemigo.exit.y-1)*largo,2, FichaPortalRojo2 ,sprites));
-    if (pathEnemigo.exit.x==x+1) //testear
+    if (pathEnemigo.exit.x==x+1)
       agregarPortal(FichaPortal((pathEnemigo.exit.x-1)*largo-44,(pathEnemigo.exit.y-1)*largo,1, FichaPortalRojo2 ,sprites));
     if (pathEnemigo.exit.y==0)
-      agregarPortal(FichaPortal((pathEnemigo.exit.x-1)*largo,-44,2, FichaPortalRojo1 ,sprites));
-    if (pathEnemigo.exit.y==y+1) //testear
+      agregarPortal(FichaPortal((pathEnemigo.exit.x-1)*largo,-44,1, FichaPortalRojo1 ,sprites));
+    if (pathEnemigo.exit.y==y+1)
       agregarPortal(FichaPortal((pathEnemigo.exit.x-1)*largo,(pathEnemigo.exit.y-1)*largo-44,1, FichaPortalRojo1 ,sprites));
 
 
 
     for (auto it2 = pathEnemigo.pathSequence.begin();
          it2 != pathEnemigo.pathSequence.end(); ++it2){
-      if (it2 == pathEnemigo.pathSequence.end() - 1) { return; }
-      if (it2->x == (it2 + 1)->x) {
-        int start = it2->y < (it2 + 1)->y ? it2->y : (it2 + 1)->y;
-        int end = it2->y < (it2 + 1)->y ? (it2 + 1)->y : it2->y;
-        for (int yy = start; yy <= end; ++yy) {
-          id = ObetenerTerrenoEnEstaPosicion((it2->x) * 88 - 44,
-                                             yy * 88 - 44);
-          if (id != 0)
-            getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
-        }
-      } else {
-        int start = it2->x < (it2 + 1)->x ? it2->x : (it2 + 1)->x;
-        int end = it2->x < (it2 + 1)->x ? (it2 + 1)->x : it2->x;
-        for (int xx = start; xx <= end; ++xx) {
-          id = ObetenerTerrenoEnEstaPosicion(xx * 88 - 44,
-                                             (it2->y) * 88 - 44);
-          if (id != 0)
-            getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
+      if (!(it2 == pathEnemigo.pathSequence.end() - 1)){
+        if (it2->x == (it2 + 1)->x) {
+          int start = it2->y < (it2 + 1)->y ? it2->y : (it2 + 1)->y;
+          int end = it2->y < (it2 + 1)->y ? (it2 + 1)->y : it2->y;
+          for (int yy = start; yy <= end; ++yy) {
+            id = ObetenerTerrenoEnEstaPosicion((it2->x) * 88 - 44,
+                                               yy * 88 - 44);
+            if (id != 0)
+              getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
+          }
+        } else {
+          int start = it2->x < (it2 + 1)->x ? it2->x : (it2 + 1)->x;
+          int end = it2->x < (it2 + 1)->x ? (it2 + 1)->x : it2->x;
+          for (int xx = start; xx <= end; ++xx) {
+            id = ObetenerTerrenoEnEstaPosicion(xx * 88 - 44,
+                                               (it2->y) * 88 - 44);
+            if (id != 0)
+              getTerreno(id).cambiarTipo(FichaPisoEnemigos, sprites);
+          }
         }
       }
     }

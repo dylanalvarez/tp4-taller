@@ -17,9 +17,7 @@ enum class Hechizo{
   Terraforming, Congelacion, Grieta, Ventisca, Meteorito, Tornado,
   MuroDeFuego, Rayos};
 
-//este es la unica razon por la que esta esta libreraria
 struct DatosPantalla{
-//corregir idioma
   int width;
   int height;
   int desplasamientoX;

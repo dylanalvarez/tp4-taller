@@ -1,0 +1,127 @@
+name: Cruz de santiago
+setting: volcano
+size:
+  x: 10
+  y: 10
+firm_ground:
+  - x: 5
+    y: 5
+  - x: 6
+    y: 5
+  - x: 6
+    y: 6
+  - x: 5
+    y: 6
+  - x: 8
+    y: 5
+  - x: 8
+    y: 6
+  - x: 6
+    y: 8
+  - x: 5
+    y: 8
+  - x: 3
+    y: 6
+  - x: 3
+    y: 5
+  - x: 5
+    y: 3
+  - x: 6
+    y: 3
+paths:
+  - path_sequence:
+      - x: 10
+        y: 4
+      - x: 1
+        y: 4
+    entry:
+      x: 11
+      y: 4
+    exit:
+      x: 0
+      y: 4
+    enemies:
+      - type: green_demon
+        quantity: 1
+        seconds_before_arrival: 10
+      - type: green_demon
+        quantity: 2
+        seconds_before_arrival: 20
+      - type: undead
+        quantity: 6
+        seconds_before_arrival: 30
+      - type: goat_man
+        quantity: 10
+        seconds_before_arrival: 40
+  - path_sequence:
+      - x: 4
+        y: 1
+      - x: 4
+        y: 10
+    entry:
+      x: 4
+      y: 0
+    exit:
+      x: 4
+      y: 11
+    enemies:
+      - type: green_demon
+        quantity: 1
+        seconds_before_arrival: 10
+      - type: green_demon
+        quantity: 2
+        seconds_before_arrival: 20
+      - type: undead
+        quantity: 6
+        seconds_before_arrival: 30
+      - type: goat_man
+        quantity: 10
+        seconds_before_arrival: 40
+  - path_sequence:
+      - x: 7
+        y: 10
+      - x: 7
+        y: 1
+    entry:
+      x: 7
+      y: 11
+    exit:
+      x: 7
+      y: 0
+    enemies:
+      - type: green_demon
+        quantity: 1
+        seconds_before_arrival: 10
+      - type: green_demon
+        quantity: 2
+        seconds_before_arrival: 20
+      - type: undead
+        quantity: 6
+        seconds_before_arrival: 30
+      - type: goat_man
+        quantity: 10
+        seconds_before_arrival: 40
+  - path_sequence:
+      - x: 1
+        y: 7
+      - x: 10
+        y: 7
+    entry:
+      x: 0
+      y: 7
+    exit:
+      x: 11
+      y: 7
+    enemies:
+      - type: green_demon
+        quantity: 1
+        seconds_before_arrival: 10
+      - type: green_demon
+        quantity: 2
+        seconds_before_arrival: 20
+      - type: undead
+        quantity: 6
+        seconds_before_arrival: 30
+      - type: goat_man
+        quantity: 10
+        seconds_before_arrival: 40
