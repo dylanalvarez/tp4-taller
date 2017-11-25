@@ -17,22 +17,22 @@ MapButton::MapButton(
 void MapButton::setSquareType(MapGrid &parent) {
     MapGrid::SquareType squareType = parent.getSquareType();
     switch (squareType) {
-        case MapGrid::start:
+        case MapGrid::SquareType::start:
             set_label(ENTRY_DOOR_STR + map.addEntryDoor(x, y));
             break;
-        case MapGrid::end:
+        case MapGrid::SquareType::end:
             set_label(EXIT_DOOR_STR + map.addExitDoor(x, y));
             break;
-        case MapGrid::firmGround:
+        case MapGrid::SquareType::firmGround:
             set_label(FIRM_GROUND_STR);
             map.addFirmGround(x, y);
             break;
-        case MapGrid::path:
+        case MapGrid::SquareType::path:
             break;
-        case MapGrid::deletePath:
+        case MapGrid::SquareType::deletePath:
             map.deletePathWithEntryIn(x, y);
             break;
-        case MapGrid::deleteFirmGround:
+        case MapGrid::SquareType::deleteFirmGround:
             map.deleteFirmGroundIn(x, y);
             break;
     }

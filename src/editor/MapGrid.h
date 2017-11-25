@@ -21,7 +21,7 @@ public:
             SaveButton *saveButton,
             AddHordeGrid *addHordeGrid);
 
-    enum SquareType {
+    enum class SquareType {
         start, end, firmGround, path, deletePath, deleteFirmGround
     };
 

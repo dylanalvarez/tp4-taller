@@ -23,7 +23,7 @@ namespace Communication {
         Upgrade() = default;
         Upgrade(const std::string& type, int tower_id);
 
-        enum Type {
+        enum class Type {
             range, damage, reach, slowdown
         };
 
@@ -33,7 +33,7 @@ namespace Communication {
         int towerID;
     };
 
-    enum Element {
+    enum class Element {
         earth, water, fire, air
     };
 
@@ -41,7 +41,7 @@ namespace Communication {
     Element to_element(const std::string& element);
 
     struct Enemy {
-        enum Type {
+        enum class Type {
             greenDemon, goatMan, undead, spectre, bloodyHawk, abmonible
         };
 
@@ -68,7 +68,7 @@ namespace Communication {
             int normal, flying, close_by;
         };
 
-        enum Type {
+        enum class Type {
             earth, water, fire, air
         };
 
@@ -102,7 +102,7 @@ namespace Communication {
     };
 
     struct PositionalPower {
-        enum Type {
+        enum class Type {
             meteorite, terraforming, fissure, fireWall, blizzard, tornado
         };
 
@@ -117,7 +117,7 @@ namespace Communication {
     };
 
     struct TargetPower {
-        enum Type {
+        enum class Type {
             freezing, ray
         };
 
@@ -132,7 +132,7 @@ namespace Communication {
     };
 
     struct GameState {
-        enum State {
+        enum class State {
             won, lost, ongoing
         };
 

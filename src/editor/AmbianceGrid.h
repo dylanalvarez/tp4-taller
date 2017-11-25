@@ -18,7 +18,7 @@ public:
     void setFromMap();
 
 private:
-    void onChange(std::string id);
+    void onChange(const std::string &id);
 
     Map *map = nullptr;
     Builder builder;

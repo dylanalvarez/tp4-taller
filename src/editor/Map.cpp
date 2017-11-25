@@ -146,34 +146,32 @@ Map::Map() : setting(DEFAULT_SETTING),
 
 std::string Map::_toString(Map::Setting setting) const {
     switch (setting) {
-        case desert:
+        case Map::Setting::desert:
             return DESERT_STR;
-        case volcano:
+        case Map::Setting::volcano:
             return VOLCANO_STR;
-        case ice:
+        case Map::Setting::ice:
             return ICE_STR;
-        case meadow:
+        case Map::Setting::meadow:
             return MEADOW_STR;
     }
-    throw;
 }
 
 std::string Map::_toString(Map::HordeType hordeType) const {
     switch (hordeType) {
-        case greenDemon:
+        case Map::HordeType::greenDemon:
             return GREEN_DEMON_EXPORT_STR;
-        case goatMan:
+        case Map::HordeType::goatMan:
             return GOAT_MAN_EXPORT_STR;
-        case undead:
+        case Map::HordeType::undead:
             return UNDEAD_EXPORT_STR;
-        case spectre:
+        case Map::HordeType::spectre:
             return SPECTRE_EXPORT_STR;
-        case bloodyHawk:
+        case Map::HordeType::bloodyHawk:
             return BLOODY_HAWK_EXPORT_STR;
-        case abmonible:
+        case Map::HordeType::abmonible:
             return ABMONIBLE_EXPORT_STR;
     }
-    throw;
 }
 
 void Map::setName(const std::string &name) {
@@ -198,17 +196,17 @@ std::string Map::addHorde(Horde &horde, int pathNumber) {
 
 std::string Map::toString(Map::HordeType hordeType) {
     switch (hordeType) {
-        case greenDemon:
+        case Map::HordeType::greenDemon:
             return GREEN_DEMON_STR;
-        case goatMan:
+        case Map::HordeType::goatMan:
             return GOAT_MAN_STR;
-        case undead:
+        case Map::HordeType::undead:
             return UNDEAD_STR;
-        case spectre:
+        case Map::HordeType::spectre:
             return SPECTRE_STR;
-        case bloodyHawk:
+        case Map::HordeType::bloodyHawk:
             return BLOODY_HAWK_STR;
-        case abmonible:
+        case Map::HordeType::abmonible:
             return ABMONIBLE_STR;
     }
     throw;
@@ -216,34 +214,34 @@ std::string Map::toString(Map::HordeType hordeType) {
 
 Map::HordeType Map::hordeTypeFromString(const std::string &hordeType) {
     std::map<std::string, Map::HordeType> associations{
-            {GREEN_DEMON_STR, greenDemon},
-            {GOAT_MAN_STR,    goatMan},
-            {UNDEAD_STR,      undead},
-            {SPECTRE_STR,     spectre},
-            {BLOODY_HAWK_STR, bloodyHawk},
-            {ABMONIBLE_STR,   abmonible},
+            {GREEN_DEMON_STR, Map::HordeType::greenDemon},
+            {GOAT_MAN_STR,    Map::HordeType::goatMan},
+            {UNDEAD_STR,      Map::HordeType::undead},
+            {SPECTRE_STR,     Map::HordeType::spectre},
+            {BLOODY_HAWK_STR, Map::HordeType::bloodyHawk},
+            {ABMONIBLE_STR,   Map::HordeType::abmonible},
     };
     return associations[hordeType];
 }
 
 Map::HordeType Map::_hordeTypeFromString(const std::string &hordeType) {
     std::map<std::string, Map::HordeType> associations{
-            {GREEN_DEMON_EXPORT_STR, greenDemon},
-            {GOAT_MAN_EXPORT_STR,    goatMan},
-            {UNDEAD_EXPORT_STR,      undead},
-            {SPECTRE_EXPORT_STR,     spectre},
-            {BLOODY_HAWK_EXPORT_STR, bloodyHawk},
-            {ABMONIBLE_EXPORT_STR,   abmonible},
+            {GREEN_DEMON_EXPORT_STR, Map::HordeType::greenDemon},
+            {GOAT_MAN_EXPORT_STR,    Map::HordeType::goatMan},
+            {UNDEAD_EXPORT_STR,      Map::HordeType::undead},
+            {SPECTRE_EXPORT_STR,     Map::HordeType::spectre},
+            {BLOODY_HAWK_EXPORT_STR, Map::HordeType::bloodyHawk},
+            {ABMONIBLE_EXPORT_STR,   Map::HordeType::abmonible},
     };
     return associations[hordeType];
 }
 
 Map::Setting Map::settingFromString(const std::string &hordeType) {
     std::map<std::string, Map::Setting> associations{
-            {DESERT_STR,  desert},
-            {VOLCANO_STR, volcano},
-            {ICE_STR,     ice},
-            {MEADOW_STR,  meadow},
+            {DESERT_STR,  Map::Setting::desert},
+            {VOLCANO_STR, Map::Setting::volcano},
+            {ICE_STR,     Map::Setting::ice},
+            {MEADOW_STR,  Map::Setting::meadow},
     };
     return associations[hordeType];
 }
