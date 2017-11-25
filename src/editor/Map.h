@@ -86,9 +86,17 @@ public:
 
     void reset(int width, int height);
 
+    void resize(int width, int height);
+
     void deletePathWithEntryIn(int x, int y);
 
 private:
+    void checkResizability(int width, int height);
+
+    void resizeHorizontally(int newWidth);
+
+    void resizeVertically(int newHeight);
+
     static Setting settingFromString(const std::string &setting);
 
     static HordeType _hordeTypeFromString(const std::string &hordeType);

@@ -1,8 +1,8 @@
 #include <gtkmm/viewport.h>
 #include <gtkmm/scrolledwindow.h>
+#include <gtkmm/messagedialog.h>
 #include "ChooseSizeGrid.h"
-#include "MapGrid.h"
-#include "NameEntry.h"
+#include "InvalidSizeException.h"
 
 ChooseSizeGrid::ChooseSizeGrid(BaseObjectType *obj,
                                Glib::RefPtr<Gtk::Builder> &builder) :
@@ -18,12 +18,18 @@ ChooseSizeGrid::ChooseSizeGrid(BaseObjectType *obj,
 void ChooseSizeGrid::chooseSize() {
     int width = setWidth->get_value_as_int();
     int height = setHeight->get_value_as_int();
-
+    try {
+        map->resize(width, height);
+    } catch (InvalidSizeException& e) {
+        Gtk::MessageDialog dialog(e.what());
+        dialog.set_transient_for(*(Gtk::Window *)
+                this->get_parent()->get_parent()->get_parent());
+        dialog.run();
+        return;
+    };
     Gtk::ScrolledWindow *mapScrolledWindow;
     builder.get_widget("map", mapScrolledWindow);
     delete mapScrolledWindow->get_child();
-    map->reset(width, height);
-
     MapGrid *mapGrid = Gtk::manage(
             new MapGrid(*map, builder, width, height, saveButton, addHordeGrid));
     mapScrolledWindow->add(*mapGrid);
@@ -32,7 +38,6 @@ void ChooseSizeGrid::chooseSize() {
     mapGrid->setFromMap();
     ambianceGrid->setFromMap();
     addHordeGrid->setFromMap();
-
     mapGrid->show();
 }
 

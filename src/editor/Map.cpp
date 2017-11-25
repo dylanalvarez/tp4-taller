@@ -1,6 +1,6 @@
 #include <fstream>
-#include <sys/stat.h>
 #include "Map.h"
+#include "InvalidSizeException.h"
 
 #define GREEN_DEMON_STR "Demonio(s) verde(s)"
 #define GOAT_MAN_STR "Hombre(s) cabra"
@@ -105,10 +105,11 @@ void Map::loadFromFile(std::ifstream &source) {
     loadFromNode(file);
 }
 
-void Map::loadFromNode(YAML::Node& source) {
+void Map::loadFromNode(YAML::Node &source) {
     name = source["name"].as<std::string>();
     setting = settingFromString(source["setting"].as<std::string>());
-    size = Coordinate(source["size"]["x"].as<int>(), source["size"]["y"].as<int>());
+    size = Coordinate(source["size"]["x"].as<int>(),
+                      source["size"]["y"].as<int>());
     this->firmGround.clear();
     for (const YAML::Node &firmGround: source["firm_ground"]) {
         this->firmGround.emplace_back(firmGround["x"].as<int>(),
@@ -188,7 +189,7 @@ void Map::setSetting(Setting setting) {
 }
 
 std::string Map::addHorde(Horde &horde, int pathNumber) {
-    if (pathNumber <= 0 || (unsigned)pathNumber > paths.size()) {
+    if (pathNumber <= 0 || (unsigned) pathNumber > paths.size()) {
         throw std::exception();
     }
     paths[pathNumber - 1].hordes.emplace_back(horde);
@@ -295,13 +296,132 @@ void Map::reset(int width, int height) {
     paths.clear();
 }
 
+void Map::resize(int width, int height) {
+    checkResizability(width, height);
+    resizeHorizontally(width);
+    resizeVertically(height);
+    size = Coordinate(width, height);
+}
+
 void Map::deletePathWithEntryIn(int x, int y) {
     paths.erase(std::remove_if(
             paths.begin(),
             paths.end(),
-            [x, y](const Path & path) {
+            [x, y](const Path &path) {
                 return path.entry.x == x && path.entry.y == y;
             }), paths.end());
+}
+
+void Map::checkResizability(int width, int height) {
+    for (auto &ground : firmGround) {
+        if (ground.x < 1 || ground.x > width
+            || ground.y < 1 || ground.y > height) {
+            throw InvalidSizeException("El terreno firme en ("
+                                       + std::to_string(ground.x)
+                                       + ", "
+                                       + std::to_string(ground.y)
+                                       + ") quedaría fuera del mapa");
+        }
+    }
+    int pathNumber = 0;
+    for (auto &path : paths) {
+        pathNumber++;
+        if (path.pathSequence.size() < 2
+            && (width < size.x || height < size.y)) {
+            throw InvalidSizeException("El camino "
+                                       + std::to_string(pathNumber)
+                                       + " está en la esquina");
+        }
+        if (path.exit.x == 0 && path.exit.y == 0) {
+            throw InvalidSizeException("El camino "
+                                       + std::to_string(pathNumber)
+                                       + " está incompleto");
+        }
+        if ((path.entry.x == size.x + 1 && path.entry.y > height)
+            || (path.entry.y == size.y + 1 && path.entry.x > width)) {
+            throw InvalidSizeException("La entrada del camino "
+                                       + std::to_string(pathNumber)
+                                       + " quedaría fuera del mapa");
+        }
+        if ((path.exit.x == size.x + 1 && path.exit.y > height)
+            || (path.exit.y == size.y + 1 && path.exit.x > width)) {
+            throw InvalidSizeException("La salida del camino "
+                                       + std::to_string(pathNumber)
+                                       + " quedaría fuera del mapa");
+        }
+        int stepNumber = 0;
+        auto pathSequenceSize = path.pathSequence.size();
+        for (auto &step : path.pathSequence) {
+            stepNumber++;
+            bool isFrontOrBack = stepNumber == 1
+                                 || stepNumber == pathSequenceSize;
+            if ((!isFrontOrBack || pathSequenceSize == 2)
+                && (step.x < 1 || step.x > width
+                    || step.y < 1 || step.y > height)) {
+                throw InvalidSizeException("El paso "
+                                           + std::to_string(stepNumber)
+                                           + " del camino "
+                                           + std::to_string(pathNumber)
+                                           + " quedaría fuera del mapa");
+            }
+        }
+    }
+}
+
+void Map::resizeHorizontally(int newWidth) {
+    if (newWidth == size.x) { return; }
+    for (auto &path : paths) {
+        if (path.entry.x == size.x + 1) {
+            path.entry.x += newWidth - size.x;
+            if (path.pathSequence.size() > 2
+                && (path.pathSequence[0].x != path.pathSequence[1].x)) {
+                path.pathSequence.erase(path.pathSequence.begin());
+            }
+            if (path.pathSequence.front().x != path.entry.x - 1) {
+                path.pathSequence.emplace(path.pathSequence.begin(),
+                                          path.entry.x - 1, path.entry.y);
+            }
+        }
+        if (path.exit.x == size.x + 1) {
+            path.exit.x += newWidth - size.x;
+            if (path.pathSequence.size() > 2
+                && (path.pathSequence[path.pathSequence.size() - 1].x
+                    != path.pathSequence[path.pathSequence.size() - 2].x)) {
+                path.pathSequence.pop_back();
+            }
+            if (path.pathSequence.back().x != path.exit.x - 1) {
+                path.pathSequence.emplace_back(path.exit.x - 1, path.exit.y);
+            }
+        }
+    }
+}
+
+void Map::resizeVertically(int newHeight) {
+    if (newHeight == size.y) { return; }
+    for (auto &path : paths) {
+        if (path.entry.y == size.y + 1) {
+            path.entry.y += newHeight - size.y;
+            if (path.pathSequence.size() > 2
+                && (path.pathSequence[0].y != path.pathSequence[1].y)) {
+                path.pathSequence.erase(path.pathSequence.begin());
+            }
+            if (path.pathSequence.front().y != path.entry.y - 1) {
+                path.pathSequence.emplace(path.pathSequence.begin(),
+                                          path.entry.x, path.entry.y - 1);
+            }
+        }
+        if (path.exit.y == size.y + 1) {
+            path.exit.y += newHeight - size.y;
+            if (path.pathSequence.size() > 2
+                && (path.pathSequence[path.pathSequence.size() - 1].y
+                    != path.pathSequence[path.pathSequence.size() - 2].y)) {
+                path.pathSequence.pop_back();
+            }
+            if (path.pathSequence.back().y != path.exit.y - 1) {
+                path.pathSequence.emplace_back(path.exit.x, path.exit.y - 1);
+            }
+        }
+    }
 }
 
 std::string Map::Horde::toString(const std::string &pathName) {
