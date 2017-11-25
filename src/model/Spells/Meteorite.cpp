@@ -20,6 +20,8 @@ void Meteorite::applyEffect(Enemy &enemy) {
 
     std::vector<Enemy*> enemies = scenario.getEnemiesInRange(
             Range(enemy.getCurrentPosition()), reach * tile_size);
+    
+    target_id = enemy.getID();
 
     for (Enemy* target : enemies) {
         if (target->getID() == enemy.getID()) { continue; }
@@ -43,14 +45,14 @@ bool Meteorite::isActive() const {
 }
 
 Communication::PositionalPower::Type Meteorite::getPositionalType() const {
-    return Communication::PositionalPower::Type::meteorite;
+    throw MatchError("Error al solicitar tipo de hechizo:"
+                             " meteorite no es posicional");
 }
 
 Communication::TargetPower::Type Meteorite::getTargetType() const {
-    throw MatchError("Error al solicitar tipo de hechizo:"
-                             " meteorite es posicional");
+    return Communication::TargetPower::Type::meteorite;
 }
 
 bool Meteorite::isPositional() const {
-    return true;
+    return false;
 }

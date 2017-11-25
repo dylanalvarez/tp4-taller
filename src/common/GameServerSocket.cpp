@@ -77,7 +77,7 @@ void GameServerSocket::sendGameState(
         position["x"] = power.x;
         position["y"] = power.y;
         power_node["position"] = position;
-
+       
         game_node["positional_powers"].push_back(power_node);
     }
 
@@ -254,8 +254,7 @@ void GameServerSocket::handlePingTile(std::string &yaml) {
 void GameServerSocket::handleSpell(std::string &yaml) {
     YAML::Node spell_node = YAML::Load(yaml);
     std::string type = spell_node["type"].as<std::string>();
-    std::vector<std::string> positional_spells {"meteorite",
-                                                "terraforming",
+    std::vector<std::string> positional_spells {"terraforming",
                                                 "fissure",
                                                 "fireWall",
                                                 "blizzard",

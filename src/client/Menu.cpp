@@ -341,9 +341,9 @@ void Menu::lanzarHechizo(int x, int y, int objetivo){
       emisorComandos.lanzarEchizo(x,y,"blizzard");
      break;
     case Hechizo::Meteorito:
-      emisorComandos.lanzarEchizo(x,y,"meteorite");
+      emisorComandos.lanzarEchizo(objetivo,"meteorite");
      break;
-    case Hechizo::Tornado:
+      case Hechizo::Tornado:
       emisorComandos.lanzarEchizo(x,y,"tornado");
      break;
     case Hechizo::MuroDeFuego:
@@ -373,9 +373,6 @@ void Menu::reActivarHechizo(Communication::PositionalPower::Type hechizo){
     case Communication::PositionalPower::Type::terraforming:
       reActivarHechizo(Terraforming);
     break;
-    case Communication::PositionalPower::Type::meteorite:
-      reActivarHechizo(Meteorito);
-    break;
     case Communication::PositionalPower::Type::fireWall:
       reActivarHechizo(MuroDeFuego);
     break;
@@ -394,9 +391,6 @@ void Menu::desectivarHechizo(Communication::PositionalPower::Type hechizo){
     break;
     case Communication::PositionalPower::Type::terraforming:
       desectivarHechizo(Terraforming);
-    break;
-    case Communication::PositionalPower::Type::meteorite:
-      desectivarHechizo(Meteorito);
     break;
     case Communication::PositionalPower::Type::fireWall:
       desectivarHechizo(MuroDeFuego);
@@ -417,6 +411,9 @@ void Menu::desectivarHechizo(Communication::TargetPower::Type hechizo){
     case Communication::TargetPower::Type::ray:
       desectivarHechizo(Rayos);
     break;
+      case Communication::TargetPower::Type::meteorite:
+          desectivarHechizo(Meteorito);
+          break;
   }
 }
 void Menu::actualizarPoderes(const Communication::GameState &gameState){
