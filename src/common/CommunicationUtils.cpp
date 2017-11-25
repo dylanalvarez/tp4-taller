@@ -140,7 +140,7 @@ Communication::TargetPower::TargetPower(const std::string &type, int enemyID)
         : enemyID(enemyID) {
     if (type == "freezing") { this->type = Communication::TargetPower::Type::freezing; }
     else if (type == "ray") { this->type = Communication::TargetPower::Type::ray; }
-    else if (type == "meteorite") { this->type = meteorite; }
+    else if (type == "meteorite") { this->type = Communication::TargetPower::Type::meteorite; }
 }
 
 Communication::TargetPower::TargetPower(
