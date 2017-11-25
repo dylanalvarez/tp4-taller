@@ -457,13 +457,6 @@ FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo, VectorDeSprites &s
         largoAnimiacionActual = SpriteGrietaTotal;
         tiempoImpacto = SpriteGrietaTotal;
       break;
-      case FichaMetorito:
-        for (i = 0; i < SpriteMetorio2Total; i++) {
-            this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteMetorio2 + i)));
-        }
-        largoAnimiacionActual = SpriteMetorio2Total;
-        tiempoImpacto = SpriteMetorio2Total;
-      break;
       case FichafireWall:
         for (i = 0; i < SpriteMdeFuegoTotal; i++) {
             this->sprites.push_back(Sprite(x-60, y-60, sprites.obtener(SpriteMdeFuego + i)));
@@ -512,6 +505,14 @@ FichaEfectos::FichaEfectos(int id2, int tipo, VectorDeSprites &sprites,
       this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteFuego1)));
       tiempoImpacto = 20;
       break;
+    case FichaMetorito:
+      printf("hola, falla el sprite del metorito");
+      for (i = 0; i < SpriteMetorio2Total; i++) {
+        this->sprites.push_back(Sprite(x, y, sprites.obtener(SpriteMetorio2 + i)));
+      }
+          largoAnimiacionActual = SpriteMetorio2Total;
+          tiempoImpacto = SpriteMetorio2Total;
+          break;
     case FichaRayos:
       x = posicionInicial.X;
       y = posicionInicial.Y;

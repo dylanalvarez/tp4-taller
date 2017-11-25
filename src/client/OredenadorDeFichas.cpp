@@ -188,10 +188,6 @@ void OrdenadorDeFichas::actualizarEfectos(Communication::PositionalPower actualz
       getTerreno(ObetenerTerrenoEnEstaPosicion(actualzacion.x, actualzacion.y)
     ).cambiarTipo(FichaPisoFirme, sprites);
     break;
-    case Communication::PositionalPower::Type::meteorite:
-    agregarEfectos(FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
-       FichaMetorito, sprites));
-    break;
     case Communication::PositionalPower::Type::fireWall:
     agregarEfectos(FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
        FichafireWall, sprites));
@@ -212,6 +208,10 @@ void OrdenadorDeFichas::actualizarEfectos(Communication::TargetPower actualzacio
   switch (actualzacion.type){
     case Communication::TargetPower::Type::freezing:
     break;
+    case Communication::TargetPower::Type::meteorite:
+      agregarEfectos(FichaEfectos(idEfectos, FichaMetorito, sprites,
+                                  getEnemigo(actualzacion.enemyID)));
+          break;
     case Communication::TargetPower::Type::ray:
     agregarEfectos(FichaEfectos(idEfectos, FichaRayos, sprites,
        getEnemigo(actualzacion.enemyID)));

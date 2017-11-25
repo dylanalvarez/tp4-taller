@@ -110,7 +110,7 @@ Communication::Tower::Type Communication::Tower::string_to_type(
 
 std::string Communication::PositionalPower::to_string(
         const Communication::PositionalPower::Type &type) {
-    std::vector<std::string> states{"meteorite", "terraforming",
+    std::vector<std::string> states{"terraforming",
                                     "fissure", "fireWall", "blizzard",
                                     "tornado"};
     return states[type];
@@ -119,8 +119,7 @@ std::string Communication::PositionalPower::to_string(
 Communication::PositionalPower::PositionalPower(
         const std::string &type, int x, int y)
         : x(x), y(y) {
-    if (type == "meteorite") { this->type = meteorite; }
-    else if (type == "terraforming") { this->type = terraforming; }
+    if (type == "terraforming") { this->type = terraforming; }
     else if (type == "fissure") { this->type = fissure; }
     else if (type == "fireWall") { this->type = fireWall; }
     else if (type == "blizzard") { this->type = blizzard; }
@@ -133,7 +132,7 @@ Communication::PositionalPower::PositionalPower(
 
 std::string Communication::TargetPower::to_string(
         const Communication::TargetPower::Type &type) {
-    std::vector<std::string> states{"freezing", "ray"};
+    std::vector<std::string> states{"freezing", "ray", "meteorite"};
     return states[type];
 }
 
@@ -141,6 +140,7 @@ Communication::TargetPower::TargetPower(const std::string &type, int enemyID)
         : enemyID(enemyID) {
     if (type == "freezing") { this->type = freezing; }
     else if (type == "ray") { this->type = ray; }
+    else if (type == "meteorite") { this->type = meteorite; }
 }
 
 Communication::TargetPower::TargetPower(

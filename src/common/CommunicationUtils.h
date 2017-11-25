@@ -103,7 +103,7 @@ namespace Communication {
 
     struct PositionalPower {
         enum Type {
-            meteorite, terraforming, fissure, fireWall, blizzard, tornado
+            terraforming, fissure, fireWall, blizzard, tornado
         };
 
         static std::string to_string(const PositionalPower::Type &type);
@@ -118,7 +118,7 @@ namespace Communication {
 
     struct TargetPower {
         enum Type {
-            freezing, ray
+            freezing, ray, meteorite
         };
 
         static std::string to_string(const TargetPower::Type &type);

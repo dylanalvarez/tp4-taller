@@ -133,9 +133,9 @@ class FichaPortal: public Ficha{
 //las primeras 4 tienen que ser igual a las torres.
 #define FichaCongelacion 4
 #define FichaRayos 5
-//de 0 a 5 es tarjetado
-#define FichaGrieta 6
-#define FichaMetorito 7
+#define FichaMetorito 6
+//de 0 a 6 es tarjetado
+#define FichaGrieta 7
 #define FichaTornado 8
 #define FichaVentisca 9
 #define FichafireWall 10
