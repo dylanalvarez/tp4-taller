@@ -326,16 +326,16 @@ void Map::checkResizability(int width, int height) {
     int pathNumber = 0;
     for (auto &path : paths) {
         pathNumber++;
+        if (path.exit.x == 0 && path.exit.y == 0) {
+            throw InvalidSizeException("El camino "
+                                       + std::to_string(pathNumber)
+                                       + " está incompleto");
+        }
         if (path.pathSequence.size() < 2
             && (width < size.x || height < size.y)) {
             throw InvalidSizeException("El camino "
                                        + std::to_string(pathNumber)
                                        + " está en la esquina");
-        }
-        if (path.exit.x == 0 && path.exit.y == 0) {
-            throw InvalidSizeException("El camino "
-                                       + std::to_string(pathNumber)
-                                       + " está incompleto");
         }
         if ((path.entry.x == size.x + 1 && path.entry.y > height)
             || (path.entry.y == size.y + 1 && path.entry.x > width)) {
