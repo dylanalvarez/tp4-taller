@@ -29,7 +29,10 @@ void Server::run() {
         try {
             Socket new_client = accept_socket.accept();
             // se pudo cerrar el socket en el accept
+
             cleanMatchs();
+            cleanClients();
+
             auto* client = new Client(std::move(new_client), *this);
 
             std::lock_guard<std::mutex> lock(mutex);
@@ -185,4 +188,14 @@ void Server::addClientsToWaitingList(std::vector<Client*>& clients) {
         client->sendInitialData(matchs_id, maps);
         clients_waiting_for_match.push_back(client);
     }
+}
+
+void Server::cleanClients() {
+    std::vector<Client*> connected_clients;
+    for (Client* client : clients_waiting_for_match) {
+        if (client->isOperatinal()) {
+            connected_clients.push_back(client);
+        }
+    }
+    std::swap(clients_waiting_for_match, connected_clients);
 }

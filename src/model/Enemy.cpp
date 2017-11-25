@@ -103,7 +103,7 @@ Communication::Enemy::Type Enemy::getType() const {
     if (type == "abmonible") { return enemyType::abmonible; }
     if (type == "undead") { return enemyType::undead; }
     if (type == "bloody_hawk") { return enemyType::bloodyHawk; }
-    if (type == "spectrum") { return enemyType::spectre; }
+    if (type == "spectre") { return enemyType::spectre; }
     return enemyType::goatMan;
 }
 

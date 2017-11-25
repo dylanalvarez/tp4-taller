@@ -162,12 +162,7 @@ GameServerSocket::~GameServerSocket() = default;
 void GameServerSocket::run() {
     while (keep_running) {
         try {
-            std::string str_opcode;
-            try {
-                str_opcode = socket.receiveString(OPCODE_CHARACTER_COUNT);
-            } catch (Exception& e) {
-                keep_running = false; break;
-            }
+            std::string str_opcode = socket.receiveString(OPCODE_CHARACTER_COUNT);
             if (str_opcode.empty()) { keep_running = false; break; }
             int opcode = std::stoi(str_opcode);
             unsigned long messageLength = std::stoul(

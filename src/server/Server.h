@@ -62,6 +62,8 @@ private:
     const std::string config_file_path = "config.yaml";
     
     void cleanMatchs();
+    void cleanClients();
+
     // vuelve a enviar los mapas y partidas
     // disponibles a los clientes sin partida
     void reSeanInitialData();
