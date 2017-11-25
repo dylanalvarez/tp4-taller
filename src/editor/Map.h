@@ -90,6 +90,8 @@ public:
 
     void deletePathWithEntryIn(int x, int y);
 
+    void deleteFirmGroundIn(int x, int y);
+
 private:
     void checkResizability(int width, int height);
 

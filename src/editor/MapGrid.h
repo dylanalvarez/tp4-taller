@@ -22,7 +22,7 @@ public:
             AddHordeGrid *addHordeGrid);
 
     enum SquareType {
-        start, end, firmGround, path, deletePath
+        start, end, firmGround, path, deletePath, deleteFirmGround
     };
 
     MapGrid::SquareType getSquareType() const;
@@ -43,6 +43,8 @@ private:
     bool isNeighbourOfStart(int x, int y) const;
 
     bool isStart(int x, int y) const;
+
+    bool isFirmGround(int x, int y) const;
 
     bool isOnStraightLineFromLastOne(int x, int y) const;
 
@@ -72,6 +74,7 @@ private:
     Gtk::RadioButton *firmGroundButton;
     Gtk::RadioButton *pathButton;
     Gtk::RadioButton *deletePathButton;
+    Gtk::RadioButton *deleteFirmGroundButton;
     SaveButton *saveButton;
     AddHordeGrid *addHordeGrid;
     std::vector<Gdk::RGBA> colors;

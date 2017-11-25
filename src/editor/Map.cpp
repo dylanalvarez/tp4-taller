@@ -350,7 +350,7 @@ void Map::checkResizability(int width, int height) {
                                        + " quedaría fuera del mapa");
         }
         int stepNumber = 0;
-        auto pathSequenceSize = path.pathSequence.size();
+        int pathSequenceSize = static_cast<int>(path.pathSequence.size());
         for (auto &step : path.pathSequence) {
             stepNumber++;
             bool isFrontOrBack = stepNumber == 1
@@ -422,6 +422,15 @@ void Map::resizeVertically(int newHeight) {
             }
         }
     }
+}
+
+void Map::deleteFirmGroundIn(int x, int y) {
+    firmGround.erase(std::remove_if(
+            firmGround.begin(),
+            firmGround.end(),
+            [x, y](const Coordinate &ground) {
+                return ground.x == x && ground.y == y;
+            }), firmGround.end());
 }
 
 std::string Map::Horde::toString(const std::string &pathName) {

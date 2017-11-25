@@ -32,6 +32,8 @@ MapGrid::MapGrid(Map &map,
     pathButton->join_group(*startButton);
     this->builder.get_widget("delete-path", deletePathButton);
     deletePathButton->join_group(*startButton);
+    this->builder.get_widget("delete-firm-ground", deleteFirmGroundButton);
+    deleteFirmGroundButton->join_group(*startButton);
 
     startButton->signal_clicked().connect(
             sigc::bind<MapGrid::SquareType>(
@@ -53,6 +55,10 @@ MapGrid::MapGrid(Map &map,
             sigc::bind<MapGrid::SquareType>(
                     sigc::mem_fun(this, &MapGrid::setSquareType),
                     MapGrid::deletePath));
+    deleteFirmGroundButton->signal_clicked().connect(
+            sigc::bind<MapGrid::SquareType>(
+                    sigc::mem_fun(this, &MapGrid::setSquareType),
+                    MapGrid::deleteFirmGround));
 
     colors.emplace_back("rgb(255,0,0)");
     colors.emplace_back("rgb(128,255,0)");
@@ -119,7 +125,10 @@ void MapGrid::updateDisabledButton(int x, int y) const {
 
 bool MapGrid::shouldBeDisabled(int x, int y) const {
     bool isMarked = !grid[x][y]->get_label().empty();
-    if (isMarked && squareType != deletePath) { return true; }
+    if (isMarked
+        && !(squareType == deletePath || squareType == deleteFirmGround)) {
+        return true;
+    }
 
     bool isCorner = (x == 0 && y == 0) ||
                     (x == 0 && y == height + 1) ||
@@ -145,6 +154,8 @@ bool MapGrid::shouldBeDisabled(int x, int y) const {
              isOnStraightLineFromLastOne(x, y)) ||
             (squareType == deletePath &&
              isStart(x, y)) ||
+            (squareType == deleteFirmGround &&
+             isFirmGround(x, y)) ||
             (squareType == firmGround &&
              !isOnTheEdge &&
              !isNeighbourOfStart(x, y) &&
@@ -186,6 +197,10 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
             startX = -1;
             startY = -1;
         }
+    }
+    if (squareType == deleteFirmGround) {
+        addHordeGrid->setFromMap();
+        this->setFromMap();
     }
     this->updateButtons();
 }
@@ -275,4 +290,8 @@ void MapGrid::paintBetween(const Map::Coordinate &start,
             grid[currentX][start.y]->setColor(color);
         }
     }
+}
+
+bool MapGrid::isFirmGround(int x, int y) const {
+    return grid[x][y]->get_label().substr(0, 1) == FIRM_GROUND_STR;
 }

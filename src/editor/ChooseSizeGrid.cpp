@@ -49,4 +49,5 @@ void ChooseSizeGrid::init(Map &map, SaveButton *saveButton,
     this->ambianceGrid = ambianceGrid;
     this->addHordeGrid = addHordeGrid;
     this->nameEntry = nameEntry;
+    chooseSize();
 }
