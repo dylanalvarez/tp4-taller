@@ -219,7 +219,26 @@ bool MapGrid::isStart(int x, int y) const {
 bool MapGrid::isOnStraightLineFromLastOne(int x, int y) const {
     int lastX = lastPathX == -1 ? startX : lastPathX;
     int lastY = lastPathY == -1 ? startY : lastPathY;
-    return x == lastX || y == lastY;
+    bool sharesPathOnX = x == lastX;
+    bool sharesPathOnY = y == lastY;
+    if (sharesPathOnX) {
+        bool yIsGreater = y > lastY;
+        int start = yIsGreater ? lastY + 1 : y + 1;
+        int end = yIsGreater ? y - 1 : lastY - 1;
+        for (int currentY = start; currentY <= end; ++currentY) {
+            if (isFirmGround(x, currentY)) { return false; }
+        }
+        return true;
+    } else if (sharesPathOnY) {
+        bool xIsGreater = x > lastX;
+        int start = xIsGreater ? lastX + 1 : x + 1;
+        int end = xIsGreater ? x - 1 : lastX - 1;
+        for (int currentX = start; currentX <= end; ++currentX) {
+            if (isFirmGround(currentX, y)) { return false; }
+        }
+        return true;
+    }
+    return false;
 }
 
 bool MapGrid::isOnTheWayOfAPath(int x, int y) const {
