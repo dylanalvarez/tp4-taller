@@ -90,9 +90,7 @@ void GameServerSocket::sendGameState(
         socket.send(
                 Communication::toFixedLengthString(3, OPCODE_CHARACTER_COUNT));
         sendNode(game_node);
-    } catch (Exception &e) {
-        throw e;
-    }
+    } catch (Exception &e) {}
 
 }
 
@@ -107,8 +105,10 @@ void GameServerSocket::sendChatMessage(
     YAML::Node msg;
     msg["message"] = message;
     msg["nickname"] = nickname;
-    socket.send(Communication::toFixedLengthString(4, OPCODE_CHARACTER_COUNT));
-    sendNode(msg);
+    try {
+        socket.send(Communication::toFixedLengthString(4, OPCODE_CHARACTER_COUNT));
+        sendNode(msg);
+    } catch (Exception& e) {}
 }
 
 void GameServerSocket::sendInitialData(
@@ -130,8 +130,10 @@ void GameServerSocket::sendInitialData(
         initialData["maps"].push_back(mapNode);
     }
 
-    socket.send(Communication::toFixedLengthString(0, OPCODE_CHARACTER_COUNT));
-    sendNode(initialData);
+    try {
+        socket.send(Communication::toFixedLengthString(0, OPCODE_CHARACTER_COUNT));
+        sendNode(initialData);
+    } catch (Exception& e) {}
 }
 
 void GameServerSocket::makeElementUnavailable(Communication::Element element,
@@ -148,10 +150,12 @@ void GameServerSocket::sendMap(const std::string &filename) {
     std::ifstream file(filename);
     std::string content(static_cast<std::stringstream const &>(
                                 std::stringstream() << file.rdbuf()).str());
-    socket.send(Communication::toFixedLengthString(2, OPCODE_CHARACTER_COUNT));
-    socket.send(Communication::toFixedLengthString(
-            content.length(), MESSAGE_LENGTH_CHARACTER_COUNT));
-    socket.send(content);
+    try {
+        socket.send(Communication::toFixedLengthString(2, OPCODE_CHARACTER_COUNT));
+        socket.send(Communication::toFixedLengthString(
+                content.length(), MESSAGE_LENGTH_CHARACTER_COUNT));
+        socket.send(content);
+    } catch (Exception& e) {}
 }
 
 GameServerSocket::~GameServerSocket() = default;
@@ -294,9 +298,12 @@ void GameServerSocket::sendNode(YAML::Node &node) {
     YAML::Emitter emitter;
     emitter << node;
     std::string message(emitter.c_str());
-    socket.send(Communication::toFixedLengthString(
-            message.length(), MESSAGE_LENGTH_CHARACTER_COUNT));
-    socket.send(message);
+    
+    try {
+        socket.send(Communication::toFixedLengthString(
+                message.length(), MESSAGE_LENGTH_CHARACTER_COUNT));
+        socket.send(message);
+    } catch (Exception& e) {}
 }
 
 bool GameServerSocket::isOperational() const {

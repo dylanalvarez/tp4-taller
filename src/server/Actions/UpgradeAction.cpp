@@ -8,6 +8,6 @@ void UpgradeAction::apply(Context &context) {
     try {
         context.getGame().levelupTower(tower, type, player);
     } catch (std::exception &e) {
-        // la torre no existe
+        // la torre o el tipo no existe
     }
 }
