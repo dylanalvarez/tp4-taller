@@ -7,10 +7,10 @@
 #define ConstantenMagicaEscala 5 //cantidad de sprites de largo
 #define AreaDeDesplasamiento 100
 // o son cosntante o se calculan al crear la pantalla de juego
-#define desplasamientoSuperiorX 1000
-#define desplasamientoInferiorX 500
-#define desplasamientoSuperiorY 400
-#define desplasamientoInferiorY 500
+#define desplasamientoSuperiorX 2000
+#define desplasamientoInferiorX 1000
+#define desplasamientoSuperiorY 1000
+#define desplasamientoInferiorY 1000
 
 void PantallaDeJuego::desplazamientoIncrementalEnX(){
   if((datosActuales.desplasamientoX + VelocidadDesplasamiento) < desplasamientoSuperiorX)
