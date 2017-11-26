@@ -107,7 +107,6 @@ void Server::startMatch(int match_id) {
         }
     } catch (std::exception &e) {
         // el match no existe
-        // enviar error al cliente
     }
 }
 
@@ -132,14 +131,12 @@ int Server::createMatch(Client &client, int map_id,
     } catch (std::out_of_range &e) {
         syslog(LOG_CRIT, "Error: el mapa con id %d no existe\n", map_id);
         // el mapa no existe
-        // enviar error al cliente
     } catch (YAML::BadFile &b) {
         syslog(LOG_CRIT, "Error en el archivo: %s\n%s",
                maps_paths.at(map_id).c_str(), b.what());
         std::cerr << "Error al crear la partida con el mapa " +
                      maps_paths.at(map_id) +
                      ", ver syslog para mas informacion";
-        // enviar error al cliente
     }
     return match_id++;
 }
@@ -155,6 +152,8 @@ void Server::addElementToPlayer(const Client &client, int match_id,
 }
 
 void Server::cleanMatchs() {
+    std::lock_guard<std::mutex> lock(mutex);
+
     std::map<int, Match *> running_matchs;
     for (auto &match : matchs) {
         if (!match.second->isRunning()) {
@@ -175,6 +174,8 @@ void Server::cleanMatchs() {
 }
 
 void Server::reSeanInitialData() {
+    std::lock_guard<std::mutex> lock(mutex);
+
     for (Client *client: clients_waiting_for_match) {
         client->sendInitialData(matchs_id, maps);
     }
@@ -191,6 +192,8 @@ void Server::addClientsToWaitingList(std::vector<Client *> &clients) {
 }
 
 void Server::cleanClients() {
+    std::lock_guard<std::mutex> lock(mutex);
+
     std::vector<Client *> connected_clients;
     for (Client *client : clients_waiting_for_match) {
         if (client->isOperatinal()) {
