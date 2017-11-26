@@ -15,7 +15,7 @@ EarthTower::EarthTower(int id, Vector p, YAML::Node &tower_properties,
 
     // upgrades properties
     dmg_upgrade = properties["damage_upgrade"].as<unsigned int>();
-    range_upgrade = properties["range_upgrade"].as<unsigned int>();
+    range_upgrade = properties["range_upgrade"].as<unsigned int>() * TILE_SIZE;
 
     // experience properties (base y exponente)
     range_levelingup_function_values.first =

@@ -23,7 +23,7 @@ WaterTower::WaterTower(int id, Vector position,
             properties["speed_reduction_upgrade"].as<unsigned int>();
     speed_reduction_duration_upgrade =
             properties["speed_reduction_duration_upgrade"].as<unsigned int>();
-    range_upgrade = properties["range_upgrade"].as<unsigned int>();
+    range_upgrade = properties["range_upgrade"].as<unsigned int>() * TILE_SIZE;
 
     // experience properties (base y exponente)
     range_levelingup_function_values.first =

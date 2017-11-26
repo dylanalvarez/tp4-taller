@@ -19,7 +19,7 @@ AirTower::AirTower(int id, Vector p, YAML::Node &tower_properties,
     dmg_upgrade = properties["damage_upgrade"].as<unsigned int>();
     dmg_to_flying_units_upgrade =
             properties["damage_to_flying_upgrade"].as<unsigned int>();
-    range_upgrade = properties["range_upgrade"].as<unsigned int>();
+    range_upgrade = properties["range_upgrade"].as<unsigned int>() * TILE_SIZE;
 
     // experience properties (base y exponente)
     range_levelingup_function_values.first =
