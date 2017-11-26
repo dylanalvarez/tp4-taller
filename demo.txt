@@ -1,0 +1,7 @@
+1 - abrir un cliente con mapa rapido - perder - ok
+2 - abrir 2 clientes mas
+3 - poner dos mapas lentos y uno rapido
+4 - cerrar los que terminan
+5 - abrir dos clientes en maquinas distintas y que juegen ellos
+6 - mostrar editor, crear mapa, cargarlo en maps y jugar ese mapa
+7 - abrir editor, editar un mapa, y volverlo a jugar
