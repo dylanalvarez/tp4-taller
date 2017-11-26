@@ -79,7 +79,7 @@
 #define SpriteRallo 350
 #define SpriteRalloTotal 16
 #define SpriteTornado 367
-#define SpriteTornadoTotal 15
+#define SpriteTornadoTotal 14
 
 #define SpritePortalAzul02 382
 #define SpritePortalAzul02Total 9

@@ -23,6 +23,7 @@ void OrdenadorDeFichas::ejecutarCicloDeAnimacion() {
     }
     for (auto it = poderes.cbegin(); it != poderes.cend();) {
         if (it->second.deboSerDestruido()) {
+            actualizarEstadoDeMagias(it->second.getTipo());
             poderes.erase(it++);
         }
         else { ++it; }
@@ -38,11 +39,15 @@ void OrdenadorDeFichas::ejecutarCicloDeAnimacion() {
 void OrdenadorDeFichas::imprir(const Cairo::RefPtr<Cairo::Context> &cr,
                                DatosPantalla datosActuales) {
     std::unique_lock<std::mutex> lck(m);
+        printf("inicioImprimir\n");
     imprimirTerreno(cr, datosActuales);
     imprimirPortal(cr, datosActuales);
     imprimirEnemigo(cr, datosActuales);
     imprimirTorres(cr, datosActuales);
+        printf("efectos\n");
     imprimirEfectos(cr, datosActuales);
+    printf("terminarImprimir\n");
+
 }
 
 void OrdenadorDeFichas::actualizar(const Communication::GameState &gameState) {
@@ -66,6 +71,25 @@ void OrdenadorDeFichas::actualizar(const Communication::GameState &gameState) {
 void OrdenadorDeFichas::preprarParaActualizacion() {
     for (auto it = enemigos.begin(); it != enemigos.end(); ++it) {
         it->second.setDestrulleme(true);
+    }
+}
+
+void OrdenadorDeFichas::actualizarEstadoDeMagias(int tipo){
+  switch (tipo) {
+      case FichaGrieta:
+          hayFichaGrieta = false;
+          break;
+      case FichafireWall:
+          hayFichafireWall = false;
+          break;
+      case FichaTornado:
+          hayFichaTornado = false;
+          break;
+      case FichaVentisca:
+           hayFichaVentisca = false;
+           break;
+      default:
+      break;
     }
 }
 
@@ -178,6 +202,13 @@ void OrdenadorDeFichas::actualizarEnemigo(Communication::Enemy actualzacion) {
     }
 }
 
+void OrdenadorDeFichas::auementarTiempoDeMagias(int tipo){
+  for (auto it = poderes.begin(); it != poderes.end(); ++it) {
+    if (it->second.getTipo() == tipo) {
+      it->second.AumentarVida();
+    }
+  }
+}
 
 //efecto
 void OrdenadorDeFichas::agregarEfectos(int inicio, int objetivo,
@@ -194,18 +225,25 @@ void OrdenadorDeFichas::agregarEfectos(FichaEfectos nuevaFicha) {
 void OrdenadorDeFichas::imprimirEfectos(const Cairo::RefPtr<Cairo::Context> &cr,
                                         DatosPantalla datosActuales) {
     for (auto it = poderes.begin(); it != poderes.end(); ++it) {
+      printf("hola\n");
         it->second.dibujar(cr, datosActuales);
+        printf("hola\n");
+
     }
 }
 
 void OrdenadorDeFichas::actualizarEfectos(
         Communication::PositionalPower actualzacion) {
-    idEfectos++;
     switch (actualzacion.type) {
         case Communication::PositionalPower::Type::fissure:
-            agregarEfectos(
-                    FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
-                                 FichaGrieta, sprites));
+            if (hayFichaGrieta) {
+              auementarTiempoDeMagias(FichaGrieta);
+            } else {
+              idEfectos++;
+              agregarEfectos(FichaEfectos(actualzacion.x, actualzacion.y,
+                 idEfectos, FichaGrieta, sprites));
+              hayFichaGrieta = true;
+            }
             break;
         case Communication::PositionalPower::Type::terraforming:
             getTerreno(ObetenerTerrenoEnEstaPosicion(actualzacion.x,
@@ -213,19 +251,37 @@ void OrdenadorDeFichas::actualizarEfectos(
             ).cambiarTipo(FichaPisoFirme, sprites);
             break;
         case Communication::PositionalPower::Type::fireWall:
-            agregarEfectos(
-                    FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
-                                 FichafireWall, sprites));
+            if (hayFichafireWall) {
+              auementarTiempoDeMagias(FichafireWall);
+            } else {
+              idEfectos++;
+              agregarEfectos(
+                      FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
+                                   FichafireWall, sprites));
+              hayFichafireWall = true;
+            }
             break;
         case Communication::PositionalPower::Type::blizzard:
-            agregarEfectos(
-                    FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
-                                 FichaVentisca, sprites));
+            if (hayFichaVentisca) {
+              auementarTiempoDeMagias(FichaVentisca);
+            } else {
+              idEfectos++;
+              agregarEfectos(
+                      FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
+                                   FichaVentisca, sprites));
+              hayFichaVentisca = true;
+            }
             break;
         case Communication::PositionalPower::Type::tornado:
-            agregarEfectos(
-                    FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
-                                 FichaTornado, sprites));
+            if (hayFichaTornado) {
+              auementarTiempoDeMagias(FichaTornado);
+            } else {
+              idEfectos++;
+              agregarEfectos(
+                        FichaEfectos(actualzacion.x, actualzacion.y, idEfectos,
+                                     FichaTornado, sprites));
+              hayFichaTornado = true;
+            }
             break;
     }
 }
@@ -388,6 +444,10 @@ void OrdenadorDeFichas::cargarMapa(std::string &mapa) {
 }
 
 OrdenadorDeFichas::OrdenadorDeFichas() {
+   hayFichaGrieta = false;
+   hayFichaTornado = false;
+   hayFichaVentisca = false;
+   hayFichafireWall = false;
     thread.push_back(
             std::thread(&GestionadorDeSonidos::iniciar, std::ref(sonidos)));
     sonidos.siguienteSonido(SonidoMatarMonstruo);

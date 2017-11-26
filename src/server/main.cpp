@@ -1,6 +1,7 @@
 #include <iostream>
 #include <syslog.h>
 #include <dirent.h>
+#include <cstring>
 #include "Server.h"
 
 int main(int argc, char *argv[]) {

@@ -26,6 +26,10 @@ private:
     int idEfectos = 0;
     std::map<int, FichaEfectos> poderes;
     std::vector<FichaPortal> portales;
+    bool hayFichaGrieta;
+    bool hayFichaTornado;
+    bool hayFichaVentisca;
+    bool hayFichafireWall;
 
     void imprimirPortal(const Cairo::RefPtr<Cairo::Context> &cr,
                         DatosPantalla datosActuales);
@@ -47,6 +51,9 @@ private:
 
     void actualizarEfectos(Communication::TargetPower actualzacion);
 
+    void actualizarEstadoDeMagias(int tipo);
+
+    void auementarTiempoDeMagias(int tipo);
 public:
     void ejecutarCicloDeAnimacion();
 

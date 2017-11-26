@@ -532,6 +532,7 @@ FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo,
     objetivo = NULL;
     destrulleme = false;
     int i;
+    tiempoImpacto = 20;
     switch (tipo) {
         case FichaGrieta:
             for (i = 0; i < SpriteGrietaTotal; i++) {
@@ -539,7 +540,6 @@ FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo,
                         Sprite(x, y, sprites.obtener(SpriteGrieta + i)));
             }
             largoAnimiacionActual = SpriteGrietaTotal;
-            tiempoImpacto = SpriteGrietaTotal;
             break;
         case FichafireWall:
             for (i = 0; i < SpriteMdeFuegoTotal; i++) {
@@ -547,7 +547,6 @@ FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo,
                         SpriteMdeFuego + i)));
             }
             largoAnimiacionActual = SpriteMdeFuegoTotal;
-            tiempoImpacto = SpriteMdeFuegoTotal;
             break;
         case FichaTornado:
             for (i = 0; i < SpriteTornadoTotal; i++) {
@@ -556,7 +555,6 @@ FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo,
                                                        SpriteTornado + i)));
             }
             largoAnimiacionActual = SpriteTornadoTotal;
-            tiempoImpacto = SpriteTornadoTotal;
             break;
         case FichaPing:
             for (i = 0; i < 10; i++) {
@@ -572,7 +570,6 @@ FichaEfectos::FichaEfectos(int x2, int y2, int id2, int tipo,
                         Sprite(x, y, sprites.obtener(SpriteGrieta + i)));
             }
             largoAnimiacionActual = SpriteGrietaTotal;
-            tiempoImpacto = SpriteGrietaTotal;
             break;
     }
 }
@@ -594,13 +591,14 @@ FichaEfectos::FichaEfectos(int id2, int tipo, VectorDeSprites &sprites,
             y = posicionInicial.Y;
             this->sprites.push_back(
                     Sprite(x, y, sprites.obtener(SpriteFuego1)));
-            tiempoImpacto = 20;
+            tiempoImpacto = 0;
             break;
         case FichaMetorito:
-            printf("hola, falla el sprite del metorito");
+            x = posicionInicial.X;
+            y = posicionInicial.Y;
             for (i = 0; i < SpriteMetorio2Total; i++) {
                 this->sprites.push_back(
-                        Sprite(x, y, sprites.obtener(SpriteMetorio2 + i)));
+                        Sprite(x, y, sprites.obtener(SpriteMetorio2+i)));
             }
             largoAnimiacionActual = SpriteMetorio2Total;
             tiempoImpacto = SpriteMetorio2Total;
@@ -608,14 +606,12 @@ FichaEfectos::FichaEfectos(int id2, int tipo, VectorDeSprites &sprites,
         case FichaRayos:
             x = posicionInicial.X;
             y = posicionInicial.Y;
-        case FichaTornado:
             for (i = 0; i < SpriteRalloTotal; i++) {
                 this->sprites.push_back(
                         Sprite(x, y, sprites.obtener(SpriteRallo + i)));
             }
             largoAnimiacionActual = SpriteRalloTotal;
             tiempoImpacto = SpriteRalloTotal;
-            break;
             break;
         default:
             break;
@@ -626,25 +622,32 @@ FichaEfectos::FichaEfectos(const FichaEfectos &p) : Ficha(p) {
     tiempoImpacto = p.tiempoImpacto;
     objetivo = p.objetivo;
     destrulleme = p.destrulleme;
-    largoAnimiacionActual = p.destrulleme;
+    largoAnimiacionActual = p.largoAnimiacionActual;
 
 }
 
 void FichaEfectos::ejecutarCicloDeAnimacion() {
     spriteActual++;
-    if (spriteActual == largoAnimiacionActual - 1) {
+    if (spriteActual >= largoAnimiacionActual) {
         spriteActual = 0;
+        if (tipo == FichafireWall) {
+          spriteActual = 8;
+        }
+    }
+
+    if (tipo == FichaRayos || tipo == FichaMetorito) {
+      spriteActual = tiempoImpacto;
     }
 }
 
 void FichaEfectos::ejecutarcicloDeActualizacion() {
-    if (tiempoImpacto == 0) {
+    if (tiempoImpacto <= 0) {
         destrulleme = true;
         return;
     }
     int x2;
     int y2;
-    if (tipo < 6) {
+    if (tipo < 7) {
         Posicion posicionFinal;
         posicionFinal = objetivo->getPosicion();
         x2 = posicionFinal.X;
@@ -655,13 +658,18 @@ void FichaEfectos::ejecutarcicloDeActualizacion() {
             destrulleme = true;
         //si el objetivo se va a destruir en el siguiente ciclo. tambien esto
     }
-    tiempoImpacto--;
+        tiempoImpacto--;
 }
 
 void FichaEfectos::dibujar(const Cairo::RefPtr<Cairo::Context> &cr,
                            DatosPantalla datosActuales) {
-    if (tipo < 6) {
+    if (tipo < 7) {
         sprites[spriteActual].cambiarPosicion(x, y);
     }
+    printf("hola\n");
     sprites[spriteActual].dibujarIsometrico(cr, datosActuales);
+                                 printf("chau\n");
+}
+void FichaEfectos::AumentarVida() {
+    tiempoImpacto++;
 }

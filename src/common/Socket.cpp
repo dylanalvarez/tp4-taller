@@ -6,6 +6,7 @@
 #include <utility>
 #include <iostream>
 #include <vector>
+#include <cstring>
 
 #include "Exception.h"
 #include "Socket.h"

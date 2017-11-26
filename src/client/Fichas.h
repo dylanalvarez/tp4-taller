@@ -196,6 +196,7 @@ public:
 
     virtual void ejecutarCicloDeAnimacion(); //Para los gif
     void ejecutarcicloDeActualizacion();
+    void AumentarVida();
 };
 
 #endif
