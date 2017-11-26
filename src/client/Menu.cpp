@@ -35,7 +35,7 @@ Menu::Menu (Glib::RefPtr<Gtk::Builder> &ventana2, Emisor& emisor):
     upgradeRango->signal_clicked().connect(
       sigc::mem_fun(this, &Menu::avisarUpgradeRango));
     upgradeDanio->signal_clicked().connect(
-      sigc::mem_fun(this, &Menu::avisarUpgradeRango));
+      sigc::mem_fun(this, &Menu::avisarUpgradeDanio));
     upgradeEspecial->signal_clicked().connect(
       sigc::mem_fun(this, &Menu::avisarUpgradeEspecial));
 
@@ -194,10 +194,10 @@ void Menu::avisarConstruirTorreAire(){
 
 //Upgreads
 void Menu::avisarUpgradeDanio(){
-  emisorComandos.upgraTorre(torre->getId(), "range");
+  emisorComandos.upgraTorre(torre->getId(), "damage");
   }
 void Menu::avisarUpgradeRango(){
-  emisorComandos.upgraTorre(torre->getId(), "damage");
+  emisorComandos.upgraTorre(torre->getId(), "range");
   }
 void Menu::avisarUpgradeEspecial(){
   if (torre->getTipo()==FichaTorreDeFuego)

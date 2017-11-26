@@ -84,7 +84,7 @@ void GameServerReceiver::getUpgrade(Communication::Upgrade upgrade) {
 
     std::string upgrade_name = Communication::Upgrade::to_string(upgrade.type);
     actions_queue->push(new UpgradeAction(client.getModelPlayer(),
-                                          *tower, upgrade_name));
+                                          *tower, std::move(upgrade_name)));
 }
 
 void GameServerReceiver::buildTower(int x, int y,

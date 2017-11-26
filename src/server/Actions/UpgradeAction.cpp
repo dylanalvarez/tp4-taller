@@ -5,8 +5,8 @@
 #include "UpgradeAction.h"
 
 UpgradeAction::UpgradeAction(const Player& player, const Tower& tower,
-                             std::string &type) :
-        player(player), tower(tower), type(type) {}
+                             std::string &&type) :
+        player(player), tower(tower), type(std::move(type)) {}
 
 void UpgradeAction::apply(Context &context) {
     try {

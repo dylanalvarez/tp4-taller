@@ -19,5 +19,5 @@ Vector Range::getCenter() const {
 }
 
 int Range::getNormalRadius() const {
-    return (int)(radius + 44) / 88;
+    return (int)std::round(radius + 44) / 88;
 }

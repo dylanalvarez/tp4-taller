@@ -154,6 +154,8 @@ std::string Map::_toString(Map::Setting setting) const {
             return ICE_STR;
         case Map::Setting::meadow:
             return MEADOW_STR;
+        default:
+            throw Exception("");
     }
 }
 
@@ -171,6 +173,8 @@ std::string Map::_toString(Map::HordeType hordeType) const {
             return BLOODY_HAWK_EXPORT_STR;
         case Map::HordeType::abmonible:
             return ABMONIBLE_EXPORT_STR;
+        default:
+            throw Exception("");
     }
 }
 

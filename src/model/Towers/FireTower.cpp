@@ -18,14 +18,14 @@ FireTower::FireTower(int id, const Vector position, YAML::Node& tower_properties
     dmg_to_nearby_units = properties["damage_to_nearby"].as<unsigned int>();
     range = Range(position, getRangeInTileSizes(properties["range"].as<float>()));
     attack_cooldown = properties["attack_rate"].as<unsigned int>();
-    reach_of_impact = properties["reach"].as<unsigned int>();
+    reach_of_impact = properties["reach"].as<unsigned int>() * TILE_SIZE;
 
     // upgrades properties
     dmg_upgrade = properties["damage_upgrade"].as<unsigned int>();
     dmg_to_nearby_units_upgrade =
-            properties["damage_to_nearby_upgrade"].as<unsigned int>();
-    range_upgrade = properties["range_upgrade"].as<unsigned int>();
-    reach_upgrade = properties["reach_upgrade"].as<unsigned int>();
+            properties["damage_to_nearby_upgrade"].as<unsigned int>() * TILE_SIZE;
+    range_upgrade = properties["range_upgrade"].as<unsigned int>() * TILE_SIZE;
+    reach_upgrade = properties["reach_upgrade"].as<unsigned int>() * TILE_SIZE;
 
     // experience properties (base y exponente)
     range_levelingup_function_values.first =

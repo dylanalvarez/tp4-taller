@@ -11,6 +11,8 @@
 #include "../Upgrades/RangeLevelup.h"
 #include <string>
 
+#define TILE_SIZE 88
+
 class Scenario;
 
 class Tower {

@@ -10,14 +10,14 @@
 
 class UpgradeAction : public Action {
 public:
-    UpgradeAction(const Player& player, const Tower& tower, std::string& type);
+    UpgradeAction(const Player& player, const Tower& tower, std::string&& type);
     
     void apply(Context& context) override;
     
 private:
     const Player& player;
     const Tower& tower;
-    std::string& type;
+    std::string type;
 };
 
 
