@@ -32,6 +32,8 @@ Menu::Menu(Glib::RefPtr<Gtk::Builder> &ventana2, Emisor &emisor) :
     ventana->get_widget("charla del Chat", chat);
     ventana->get_widget("Ping", botonPing);
 
+    ventana->get_widget("textoConstruirTorre", textoConstruirTorre);
+
     upgradeRango->signal_clicked().connect(
             sigc::mem_fun(this, &Menu::avisarUpgradeRango));
     upgradeDanio->signal_clicked().connect(
@@ -99,11 +101,10 @@ void Menu::selecionarTorre(const FichaTorre &torre2) {
     seleccionadaTorre = true;
 
     rango->show();
-    upgradeRango->show();
     danio->show();
-    upgradeDanio->show();
     especial->hide();
-    upgradeEspecial->hide();
+
+    bool muestroBotones = false;
 
     std::string sAux("Daño ");
     sAux = sAux + std::to_string(torre->getDanio());
@@ -115,6 +116,10 @@ void Menu::selecionarTorre(const FichaTorre &torre2) {
     switch (torre->getTipo()) {
         case FichaTorreDeTierra:
             titulo->set_text("Torre De Tierra \n Frecuencia:​ ​1/5 s");
+            for (auto it = elementos.begin(); it != elementos.end(); ++it) {
+                if (*it == Elementos::tierra)
+                  muestroBotones = true;
+            }
             break;
         case FichaTorreDeFuego:
             titulo->set_text("Torre De Fuego \n Frecuencia:​ ​1/3 s");
@@ -128,24 +133,43 @@ void Menu::selecionarTorre(const FichaTorre &torre2) {
             sAux.assign("Alcance ");
             sAux = sAux + std::to_string(torre->getEspecial());
             especial->set_text(sAux.c_str());
+            for (auto it = elementos.begin(); it != elementos.end(); ++it) {
+                if (*it == Elementos::fuego)
+                  muestroBotones = true;
+            }
             break;
         case FichaTorreDeAire:
-            titulo->set_text("Torre De Aire");
+            titulo->set_text("Torre De Aire \n Frecuencia:​ ​1/5 s");
             especial->show();
             sAux.assign("Daño aéreo ");
             sAux = sAux + std::to_string(torre->getDanio() * 5);
             especial->set_text(sAux.c_str());
+            for (auto it = elementos.begin(); it != elementos.end(); ++it) {
+                if (*it == Elementos::aire)
+                  muestroBotones = true;
+            }
             break;
         case FichaTorreDeAgua:
-            titulo->set_text("Torre De Agua");
+            titulo->set_text("Torre De Agua \n Frecuencia:​ ​1/3 s");
             especial->show();
             upgradeEspecial->show();
             sAux.assign("Ralentizado ");
             sAux = sAux + std::to_string(torre->getEspecial());
             especial->set_text(sAux.c_str());
+            for (auto it = elementos.begin(); it != elementos.end(); ++it) {
+                if (*it == Elementos::agua)
+                  muestroBotones = true;
+            }
             break;
         default:
             break;
+    }
+
+    if (muestroBotones) {
+      upgradeRango->show();
+      upgradeDanio->show();
+    } else {
+      upgradeEspecial->hide();
     }
 }
 
@@ -158,6 +182,7 @@ void Menu::deseleccionar() {
     especial->hide();
     upgradeEspecial->hide();
     menuTerreno->hide();
+    textoConstruirTorre->hide();
     seleccionadaTorre = false;
     seleccionadaTerreno = false;
     danioValor = 0;
@@ -173,6 +198,7 @@ void Menu::selecionarTerreno(const FichaTerreno &terreno2) {
     titulo->set_text(" ");
     switch (terreno->getTipo()) {
         case FichaPisoFirme:
+            textoConstruirTorre->show();
             titulo->set_text("Piso Firme");
             menuTerreno->show();
             break;
@@ -454,10 +480,6 @@ void Menu::desectivarHechizo(Communication::TargetPower::Type hechizo) {
 }
 
 void Menu::actualizarPoderes(const Communication::GameState &gameState) {
-  /*  if (seleccionadaTerreno)
-      selecionarTerreno(*terreno);*/
-    if (seleccionadaTorre)
-      actualizarTorre();
     /*for (auto it = gameState.positionalPowers.begin() ; it != gameState.positionalPowers.end(); ++it)
       desectivarHechizo(it->type);
     for (auto it = gameState.targetPowers.begin() ; it != gameState.targetPowers.end(); ++it)

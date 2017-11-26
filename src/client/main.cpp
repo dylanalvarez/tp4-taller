@@ -6,6 +6,7 @@
 #include "controladorDeCiclos.h"
 #include "PantallaResultado.h"
 #include "../common/Exception.h"
+#include "Aplicacion.h"
 
 //esta clase es solo para dirigir el movimiento en este caso.
 
@@ -17,7 +18,25 @@ int main(int argc, char *argv[]) {
     Socket socket(argc == 2 ? "127.0.0.1" : argv[1],
                   argv[argc == 2 ? 1 : 2]);
 
+
     Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
+    Glib::RefPtr<Gtk::Builder> refBuilder = Gtk::Builder::create();
+    refBuilder->add_from_file("Sprites/Pantallas/Pantalla principal.glade");
+    Aplicacion aplicacion(std::move(socket), refBuilder);
+
+    unsigned int TiempoEnMilesegundos = 100;
+    sigc::slot<bool> my_slot = sigc::mem_fun(aplicacion,
+                                             &Aplicacion::ejecutarCicloDeAnimacion);
+    sigc::connection conn = Glib::signal_timeout().connect(my_slot,
+                                                           TiempoEnMilesegundos);
+    TiempoEnMilesegundos = 50;
+    sigc::slot<bool> my_slot2 = sigc::mem_fun(aplicacion,
+                                              &Aplicacion::ejecutarcicloDesplasamientos);
+    sigc::connection conn2 = Glib::signal_timeout().connect(my_slot2,
+                                                            TiempoEnMilesegundos);
+    aplicacion.arrancar();
+
+    /*Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
 
     OrdenadorDeFichas fichas;
     Gtk::Box *Box;
@@ -56,7 +75,7 @@ int main(int argc, char *argv[]) {
 
     controladorDeCiclos.iniciar();
     ventanas.arrancar();
-    controladorDeCiclos.terminar();
+    controladorDeCiclos.terminar();*/
 
     return 0;
 }

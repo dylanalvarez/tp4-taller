@@ -26,6 +26,8 @@ private:
     int especialValor;
 
     //torre
+    Gtk::Label *textoConstruirTorre;
+
     Gtk::Label *rango;
     Gtk::Button *upgradeRango;
     Gtk::Label *danio; //por no usar Ñ

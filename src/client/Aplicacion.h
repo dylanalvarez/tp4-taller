@@ -5,10 +5,8 @@
 
 class Aplicacion {
 private:
-    Glib::RefPtr<Gtk::Application> app;
     OrdenadorDeFichas fichas;
     Gtk::Box *Box;
-    Glib::RefPtr<Gtk::Builder> refBuilder;
     Emisor emisor;
     PantallaDeJuego area;
     GestionadorDeVentanas ventanas;
@@ -21,7 +19,11 @@ private:
     Receptor receptor;
     controladorDeCiclos cdCiclos;
 public:
-  Aplicacion(Socket &&socket);
+  Aplicacion(Socket &&socket, Glib::RefPtr<Gtk::Builder> &refBuilder);
 
-  
+  bool ejecutarCicloDeAnimacion();
+
+  bool ejecutarcicloDesplasamientos();
+
+  void arrancar();
 };
