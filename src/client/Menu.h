@@ -19,6 +19,8 @@ private:
     const FichaTorre *torre;
     const FichaTerreno *terreno;
     Gtk::Label *titulo;
+    bool seleccionadaTorre;
+    bool seleccionadaTerreno;
 
     //torre
     Gtk::Label *rango;

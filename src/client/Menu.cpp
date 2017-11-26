@@ -92,6 +92,7 @@ void Menu::avisarPing() {
 void Menu::selecionarTorre(const FichaTorre &torre2) {
     deselecionarHechizosTotal();
     deseleccionar();
+    seleccionadaTorre = true;
 
     rango->show();
     upgradeRango->show();
@@ -156,14 +157,15 @@ void Menu::deseleccionar() {
     especial->hide();
     upgradeEspecial->hide();
     menuTerreno->hide();
-    terreno = NULL;
-    torre = NULL;
+    seleccionadaTorre = false;
+    seleccionadaTerreno = false;
 }
 
 void Menu::selecionarTerreno(const FichaTerreno &terreno2) {
     deselecionarHechizosTotal();
-    terreno = &terreno2;
     deseleccionar();
+    seleccionadaTerreno = true;
+    terreno = &terreno2;
     titulo->set_text(" ");
     switch (terreno->getTipo()) {
         case FichaPisoFirme:
@@ -448,11 +450,10 @@ void Menu::desectivarHechizo(Communication::TargetPower::Type hechizo) {
 }
 
 void Menu::actualizarPoderes(const Communication::GameState &gameState) {
-    if (terreno != NULL)
-      selecionarTerreno(*terreno);
-    if (torre != NULL)
+  /*  if (seleccionadaTerreno)
+      selecionarTerreno(*terreno);*/
+    if (seleccionadaTorre)
       selecionarTorre(*torre);
-
     /*for (auto it = gameState.positionalPowers.begin() ; it != gameState.positionalPowers.end(); ++it)
       desectivarHechizo(it->type);
     for (auto it = gameState.targetPowers.begin() ; it != gameState.targetPowers.end(); ++it)
