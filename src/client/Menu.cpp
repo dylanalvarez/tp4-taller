@@ -92,6 +92,10 @@ void Menu::avisarPing() {
 void Menu::selecionarTorre(const FichaTorre &torre2) {
     deselecionarHechizosTotal();
     deseleccionar();
+    torre = &torre2;
+    danioValor = torre->getDanio();
+    rangoValor = torre->getRango();
+    especialValor = torre->getEspecial();
     seleccionadaTorre = true;
 
     rango->show();
@@ -101,13 +105,10 @@ void Menu::selecionarTorre(const FichaTorre &torre2) {
     especial->hide();
     upgradeEspecial->hide();
 
-
-    torre = &torre2;
     std::string sAux("Daño ");
     sAux = sAux + std::to_string(torre->getDanio());
     danio->set_text(sAux.c_str());
     sAux.assign("Rango ");
-    printf("%i\n", torre->getRango());
     sAux = sAux + std::to_string(torre->getRango());
     rango->set_text(sAux.c_str());
 
@@ -159,6 +160,9 @@ void Menu::deseleccionar() {
     menuTerreno->hide();
     seleccionadaTorre = false;
     seleccionadaTerreno = false;
+    danioValor = 0;
+    rangoValor = 0;
+    especialValor = 0;
 }
 
 void Menu::selecionarTerreno(const FichaTerreno &terreno2) {
@@ -453,14 +457,60 @@ void Menu::actualizarPoderes(const Communication::GameState &gameState) {
   /*  if (seleccionadaTerreno)
       selecionarTerreno(*terreno);*/
     if (seleccionadaTorre)
-      selecionarTorre(*torre);
+      actualizarTorre();
     /*for (auto it = gameState.positionalPowers.begin() ; it != gameState.positionalPowers.end(); ++it)
       desectivarHechizo(it->type);
     for (auto it = gameState.targetPowers.begin() ; it != gameState.targetPowers.end(); ++it)
       desectivarHechizo(it->type);*/
 }
 
+void Menu::actualizarTorre(){
+  if (!seleccionadaTorre)
+    return;
 
+  std::string sAux;
+  if (danioValor != torre->getDanio()) {
+    danioValor = torre->getDanio();
+    sAux.assign("Daño ");
+    sAux = sAux + std::to_string(torre->getDanio());
+    danio->set_text(sAux.c_str());
+    if (torre->getTipo() == FichaTorreDeFuego) {
+      sAux.assign("Daño ");
+      sAux = sAux + std::to_string(torre->getDanio());
+      sAux = sAux + "/";
+      sAux = sAux + std::to_string((torre->getDanio()) / 2);
+      danio->set_text(sAux.c_str());
+    }
+  }
+  if (rangoValor != torre->getRango()) {
+    rangoValor = torre->getRango();
+    sAux.assign("Rango ");
+    sAux = sAux + std::to_string(torre->getRango());
+    rango->set_text(sAux.c_str());
+  }
+  if (especialValor != torre->getEspecial()) {
+    especialValor = torre->getEspecial();
+    switch (torre->getTipo()) {
+      case FichaTorreDeFuego:
+          sAux.assign("Alcance ");
+          sAux = sAux + std::to_string(torre->getEspecial());
+          especial->set_text(sAux.c_str());
+          break;
+      case FichaTorreDeAire:
+          sAux.assign("Daño aéreo ");
+          sAux = sAux + std::to_string(torre->getDanio() * 5);
+          especial->set_text(sAux.c_str());
+          break;
+      case FichaTorreDeAgua:
+          sAux.assign("Ralentizado ");
+          sAux = sAux + std::to_string(torre->getEspecial());
+          especial->set_text(sAux.c_str());
+          break;
+      default:
+          break;
+      }
+  }
+}
 //Chat
 void Menu::enviarMensajeChat() {
     emisorComandos.enviarMensajeDeChat(mensajeEntrada->get_text().c_str());

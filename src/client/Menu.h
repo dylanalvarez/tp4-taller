@@ -21,6 +21,9 @@ private:
     Gtk::Label *titulo;
     bool seleccionadaTorre;
     bool seleccionadaTerreno;
+    int danioValor;
+    int rangoValor;
+    int especialValor;
 
     //torre
     Gtk::Label *rango;
@@ -137,6 +140,8 @@ public:
     void agregarElemento(Elementos elemento, std::string &nick);
 
     void deseleccionar();
+
+    void actualizarTorre();
 };
 
 #endif
