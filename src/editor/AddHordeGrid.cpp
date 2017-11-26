@@ -22,12 +22,12 @@ AddHordeGrid::AddHordeGrid(BaseObjectType *obj,
 
     this->builder.get_widget("path-number", pathNumberSpinButton);
     this->builder.get_widget("horde-kind", hordeKindComboBox);
-    hordeKindComboBox->append(Map::toString(Map::HordeType::greenDemon));
-    hordeKindComboBox->append(Map::toString(Map::HordeType::goatMan));
-    hordeKindComboBox->append(Map::toString(Map::HordeType::undead));
-    hordeKindComboBox->append(Map::toString(Map::HordeType::spectre));
-    hordeKindComboBox->append(Map::toString(Map::HordeType::bloodyHawk));
-    hordeKindComboBox->append(Map::toString(Map::HordeType::abmonible));
+    hordeKindComboBox->append(Map::toString(Map::greenDemon));
+    hordeKindComboBox->append(Map::toString(Map::goatMan));
+    hordeKindComboBox->append(Map::toString(Map::undead));
+    hordeKindComboBox->append(Map::toString(Map::spectre));
+    hordeKindComboBox->append(Map::toString(Map::bloodyHawk));
+    hordeKindComboBox->append(Map::toString(Map::abmonible));
     hordeKindComboBox->set_active(0);
     hordeKindComboBox->signal_changed().connect(
             sigc::mem_fun(this, &AddHordeGrid::onHordeKindChange));

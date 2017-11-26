@@ -4,17 +4,17 @@ AmbianceGrid::AmbianceGrid(BaseObjectType *obj,
                            Glib::RefPtr<Gtk::Builder> &builder) :
         Gtk::Grid(obj),
         builder(builder),
-        buttonIDs{{"desert",  Map::Setting::desert},
-                  {"volcano", Map::Setting::volcano},
-                  {"ice",     Map::Setting::ice},
-                  {"meadow",  Map::Setting::meadow}} {
+        buttonIDs{{"desert",  Map::desert},
+                  {"volcano", Map::volcano},
+                  {"ice",     Map::ice},
+                  {"meadow",  Map::meadow}} {
 
     for (auto pair : buttonIDs) {
-        const auto &id = pair.first;
+        std::string id = pair.first;
         Gtk::RadioButton *button;
         this->builder.get_widget(id, button);
         button->signal_clicked().connect(
-                sigc::bind<const std::string&>(
+                sigc::bind<std::string>(
                         sigc::mem_fun(this, &AmbianceGrid::onChange), id));
 
     }
@@ -33,7 +33,7 @@ AmbianceGrid::AmbianceGrid(BaseObjectType *obj,
     if (map) { map->setSetting(DEFAULT_SETTING); }
 }
 
-void AmbianceGrid::onChange(const std::string &id) {
+void AmbianceGrid::onChange(std::string id) {
     if (map) { map->setSetting(buttonIDs[id]); }
 }
 
@@ -43,16 +43,16 @@ void AmbianceGrid::init(Map &map) {
 
 void AmbianceGrid::setFromMap() {
     switch (map->getSetting()) {
-        case Map::Setting::desert:
+        case Map::desert:
             desert->set_active(true);
             break;
-        case Map::Setting::volcano:
+        case Map::volcano:
             volcano->set_active(true);
             break;
-        case Map::Setting::ice:
+        case Map::ice:
             ice->set_active(true);
             break;
-        case Map::Setting::meadow:
+        case Map::meadow:
             meadow->set_active(true);
             break;
     }

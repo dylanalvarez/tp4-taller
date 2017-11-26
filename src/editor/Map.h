@@ -3,8 +3,8 @@
 
 #define DEFAULT_HORDE_COUNT 1
 #define DEFAULT_SECONDS_BEFORE_HORDE 10
-#define DEFAULT_HORDE_TYPE Map::HordeType::greenDemon
-#define DEFAULT_SETTING Map::Setting::desert
+#define DEFAULT_HORDE_TYPE Map::greenDemon
+#define DEFAULT_SETTING Map::desert
 #define DEFAULT_SIZE_X 10
 #define DEFAULT_SIZE_Y 10
 
@@ -12,10 +12,10 @@
 
 class Map {
 public:
-    enum class Setting {
+    enum Setting {
         desert, volcano, ice, meadow
     };
-    enum class HordeType {
+    enum HordeType {
         greenDemon, goatMan, undead, spectre, bloodyHawk, abmonible
     };
 

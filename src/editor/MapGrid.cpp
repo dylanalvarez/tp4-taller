@@ -8,7 +8,7 @@ MapGrid::MapGrid(Map &map,
                  int height,
                  SaveButton *saveButton,
                  AddHordeGrid *addHordeGrid) :
-        builder(builder), squareType(SquareType::start), width(width), height(height),
+        builder(builder), squareType(start), width(width), height(height),
         lastPathX(-1), lastPathY(-1), startX(-1), startY(-1),
         unfinishedPath(false), justStartedPath(false), map(map),
         saveButton(saveButton), addHordeGrid(addHordeGrid) {
@@ -38,27 +38,27 @@ MapGrid::MapGrid(Map &map,
     startButton->signal_clicked().connect(
             sigc::bind<MapGrid::SquareType>(
                     sigc::mem_fun(this, &MapGrid::setSquareType),
-                    MapGrid::SquareType::start));
+                    MapGrid::start));
     endButton->signal_clicked().connect(
             sigc::bind<MapGrid::SquareType>(
                     sigc::mem_fun(this, &MapGrid::setSquareType),
-                    MapGrid::SquareType::end));
+                    MapGrid::end));
     firmGroundButton->signal_clicked().connect(
             sigc::bind<MapGrid::SquareType>(
                     sigc::mem_fun(this, &MapGrid::setSquareType),
-                    MapGrid::SquareType::firmGround));
+                    MapGrid::firmGround));
     pathButton->signal_clicked().connect(
             sigc::bind<MapGrid::SquareType>(
                     sigc::mem_fun(this, &MapGrid::setSquareType),
-                    MapGrid::SquareType::path));
+                    MapGrid::path));
     deletePathButton->signal_clicked().connect(
             sigc::bind<MapGrid::SquareType>(
                     sigc::mem_fun(this, &MapGrid::setSquareType),
-                    MapGrid::SquareType::deletePath));
+                    MapGrid::deletePath));
     deleteFirmGroundButton->signal_clicked().connect(
             sigc::bind<MapGrid::SquareType>(
                     sigc::mem_fun(this, &MapGrid::setSquareType),
-                    MapGrid::SquareType::deleteFirmGround));
+                    MapGrid::deleteFirmGround));
 
     colors.emplace_back("rgb(255,0,0)");
     colors.emplace_back("rgb(128,255,0)");
@@ -126,7 +126,7 @@ void MapGrid::updateDisabledButton(int x, int y) const {
 bool MapGrid::shouldBeDisabled(int x, int y) const {
     bool isMarked = !grid[x][y]->get_label().empty();
     if (isMarked
-        && !(squareType == SquareType::deletePath || squareType == SquareType::deleteFirmGround)) {
+        && !(squareType == deletePath || squareType == deleteFirmGround)) {
         return true;
     }
 
@@ -140,23 +140,23 @@ bool MapGrid::shouldBeDisabled(int x, int y) const {
             (std::abs(x - lastPathX) == 1 && std::abs(y - lastPathY) == 0) ||
             (std::abs(x - lastPathX) == 0 && std::abs(y - lastPathY) == 1);
     bool makesSenseForCurrentSquareType =
-            (squareType == SquareType::start &&
+            (squareType == start &&
              isOnTheEdge &&
              !unfinishedPath) ||
-            (squareType == SquareType::end &&
+            (squareType == end &&
              isOnTheEdge &&
              unfinishedPath &&
              lastPathStepWasOnItsSide) ||
-            (squareType == SquareType::path &&
+            (squareType == path &&
              !isOnTheEdge &&
              unfinishedPath &&
              (isNeighbourOfStart(x, y) || !justStartedPath) &&
              isOnStraightLineFromLastOne(x, y)) ||
-            (squareType == SquareType::deletePath &&
+            (squareType == deletePath &&
              isStart(x, y)) ||
-            (squareType == SquareType::deleteFirmGround &&
+            (squareType == deleteFirmGround &&
              isFirmGround(x, y)) ||
-            (squareType == SquareType::firmGround &&
+            (squareType == firmGround &&
              !isOnTheEdge &&
              !isNeighbourOfStart(x, y) &&
              !isOnTheWayOfAPath(x, y));
@@ -165,19 +165,19 @@ bool MapGrid::shouldBeDisabled(int x, int y) const {
 }
 
 void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
-    if (squareType == SquareType::end) {
+    if (squareType == end) {
         unfinishedPath = false;
         lastPathX = -1;
         lastPathY = -1;
     }
-    if (squareType == SquareType::start) {
+    if (squareType == start) {
         startX = x;
         startY = y;
         pathButton->clicked();
         unfinishedPath = true;
         justStartedPath = true;
     }
-    if (squareType == SquareType::path) {
+    if (squareType == path) {
         map.addPathStep(x, y);
         grid[x][y]->set_label(std::to_string(
                 map.getPaths().back().pathSequence.size()));
@@ -186,7 +186,7 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
         this->lastPathY = y;
         justStartedPath = false;
     }
-    if (squareType == SquareType::deletePath) {
+    if (squareType == deletePath) {
         addHordeGrid->setFromMap();
         this->setFromMap();
         if (unfinishedPath && startX == x && startY == y) {
@@ -198,7 +198,7 @@ void MapGrid::notifyGridClicked(int x, int y, SquareType squareType) {
             startY = -1;
         }
     }
-    if (squareType == SquareType::deleteFirmGround) {
+    if (squareType == deleteFirmGround) {
         addHordeGrid->setFromMap();
         this->setFromMap();
     }
