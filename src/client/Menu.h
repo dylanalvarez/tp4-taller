@@ -15,7 +15,7 @@ private:
     std::vector<Elementos> elementos;
     bool casteando = false;
     Hechizo hechizoActual;
-    Glib::RefPtr<Gtk::Builder> ventana; //ams facil pasar esto que pasar todos los subs.
+    Glib::RefPtr<Gtk::Builder> ventana;
     const FichaTorre *torre;
     const FichaTerreno *terreno;
     Gtk::Label *titulo;
@@ -35,7 +35,7 @@ private:
     Gtk::Button *botonAgua;
     Gtk::Button *botonAire;
 
-    Gtk::Button *botonPing; //falta el codigo de esto.
+    Gtk::Button *botonPing;
 
     //poderes
     Gtk::ToggleButton *Terraforming;
@@ -50,7 +50,7 @@ private:
     //chat
     Gtk::Button *botonEnviar;
     Gtk::Entry *mensajeEntrada;
-    Gtk::Label *chat;
+    Gtk::TextView *chat;
 
     void MostrarBotones(Elementos elemento);
 
@@ -134,7 +134,7 @@ public:
 
     void agregarElemento(Elementos elemento, std::string &nick);
 
-    void decelecionar();
+    void deseleccionar();
 };
 
 #endif

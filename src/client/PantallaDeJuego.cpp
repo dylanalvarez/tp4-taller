@@ -7,10 +7,16 @@
 #define ConstantenMagicaEscala 5 //cantidad de sprites de largo
 #define AreaDeDesplasamiento 100
 // o son cosntante o se calculan al crear la pantalla de juego
-#define desplasamientoSuperiorX 1000
-#define desplasamientoInferiorX 500
-#define desplasamientoSuperiorY 500
-#define desplasamientoInferiorY 500
+#define desplasamientoSuperiorX 2000
+#define desplasamientoInferiorX 2000
+#define desplasamientoSuperiorY 2000
+#define desplasamientoInferiorY 2000
+
+
+void PantallaDeJuego::reniciarDesplasamiento(){
+  datosActuales.desplasamientoX = 520;
+  datosActuales.desplasamientoY = 220;
+}
 
 void PantallaDeJuego::desplazamientoIncrementalEnX() {
     if ((datosActuales.desplasamientoX + VelocidadDesplasamiento) <
@@ -119,7 +125,7 @@ bool PantallaDeJuego::on_button_press_event(GdkEventButton *event) {
         menu.selecionarTerreno(fichas.getTerreno(id));
         return Gtk::DrawingArea::on_button_press_event(event);
     }
-    menu.decelecionar();
+    menu.deseleccionar();
     return Gtk::DrawingArea::on_button_press_event(event);
 }
 

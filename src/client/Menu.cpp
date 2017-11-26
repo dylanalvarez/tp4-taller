@@ -75,10 +75,11 @@ Menu::Menu(Glib::RefPtr<Gtk::Builder> &ventana2, Emisor &emisor) :
 
 void Menu::setNick(std::string nickNuevo) {
     elementos.clear();
-    decelecionar();
+    deseleccionar();
     casteando = false;
     deselecionarHechizos();
     OcultarBotones();
+    chat->get_buffer()->set_text("");
     nick = nickNuevo;
 }
 
@@ -87,10 +88,10 @@ void Menu::avisarPing() {
     emisorComandos.pingear(posicion.X, posicion.Y);
 }
 
-//seleccionar
+//selecionar
 void Menu::selecionarTorre(const FichaTorre &torre2) {
     deselecionarHechizosTotal();
-    decelecionar();
+    deseleccionar();
 
     rango->show();
     upgradeRango->show();
@@ -146,7 +147,7 @@ void Menu::selecionarTorre(const FichaTorre &torre2) {
     }
 }
 
-void Menu::decelecionar() {
+void Menu::deseleccionar() {
     titulo->set_text(" ");
     rango->hide();
     upgradeRango->hide();
@@ -155,12 +156,14 @@ void Menu::decelecionar() {
     especial->hide();
     upgradeEspecial->hide();
     menuTerreno->hide();
+    terreno = NULL;
+    torre = NULL;
 }
 
 void Menu::selecionarTerreno(const FichaTerreno &terreno2) {
     deselecionarHechizosTotal();
     terreno = &terreno2;
-    decelecionar();
+    deseleccionar();
     titulo->set_text(" ");
     switch (terreno->getTipo()) {
         case FichaPisoFirme:
@@ -277,7 +280,7 @@ void Menu::prepararHechizo(Gtk::ToggleButton *botonHechizo,
     }
     hechizoActual = hechizoActual2;
     deselecionarHechizos();
-    decelecionar();
+    deseleccionar();
     casteando = true;
     titulo->set_text(nombreHechizo.c_str());
     titulo->show();
@@ -445,6 +448,11 @@ void Menu::desectivarHechizo(Communication::TargetPower::Type hechizo) {
 }
 
 void Menu::actualizarPoderes(const Communication::GameState &gameState) {
+    if (terreno != NULL)
+      selecionarTerreno(*terreno);
+    if (torre != NULL)
+      selecionarTorre(*torre);
+
     /*for (auto it = gameState.positionalPowers.begin() ; it != gameState.positionalPowers.end(); ++it)
       desectivarHechizo(it->type);
     for (auto it = gameState.targetPowers.begin() ; it != gameState.targetPowers.end(); ++it)
@@ -459,6 +467,8 @@ void Menu::enviarMensajeChat() {
 }
 
 void Menu::recivirMensajeChat(std::string entrada) {
-  chat->set_text(chat->get_text()+ "\n" + entrada.c_str());
+  auto aux = chat->get_buffer();
+  auto iter = aux->end();
+  aux->insert(iter, (entrada + "\n").c_str());
 
 }

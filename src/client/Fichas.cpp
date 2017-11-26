@@ -19,12 +19,12 @@ Ficha::Ficha(const Ficha &p) : Ficha(p.x, p.y, p.id, p.tipo) {
 void Ficha::dibujar(const Cairo::RefPtr<Cairo::Context> &cr,
                     DatosPantalla datosActuales) {
     sprites[spriteActual].dibujarIsometrico(cr,
-                                            datosActuales); //en el futuro pasar x y y
+                                            datosActuales);
 }
 
 void Ficha::ejecutarCicloDeAnimacion() {
-    // sprites[spriteActual].pulsaion();
-} //Para los gif
+}
+
 void Ficha::cambiarPosicion(int x2, int y2) {
     x = x2;
     y = y2;

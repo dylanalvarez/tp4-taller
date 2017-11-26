@@ -18,7 +18,8 @@ void GestionadorDeVentanas::arrancar() {
 
 
 GestionadorDeVentanas::GestionadorDeVentanas(
-        Glib::RefPtr<Gtk::Builder> &ventana2) {
+        Glib::RefPtr<Gtk::Builder> &ventana2,
+        PantallaDeJuego &juego2): contoladorJuego(juego2) {
     ventana2->get_widget("Juego", juego);
     ventana2->get_widget("ElegirElementos", pantallaDeElementos);
     ventana2->get_widget("creaccion", pantallaDeInicio);
@@ -29,6 +30,7 @@ GestionadorDeVentanas::GestionadorDeVentanas(
 
 
 void GestionadorDeVentanas::arrancarJuego() {
+    contoladorJuego.reniciarDesplasamiento();
     if (elementosElegidos) {
         juego->show_all();
         juego->maximize();

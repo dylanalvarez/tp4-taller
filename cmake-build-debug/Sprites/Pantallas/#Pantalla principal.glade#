@@ -386,9 +386,6 @@
                         <property name="no_show_all">True</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <placeholder/>
-                        </child>
-                        <child>
                           <object class="GtkBox" id="Menu terreno2">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
@@ -1017,6 +1014,7 @@
       </object>
     </child>
   </object>
+  <object class="GtkListStore" id="liststore1"/>
   <object class="GtkWindow" id="victory">
     <property name="can_focus">False</property>
     <property name="window_position">center</property>

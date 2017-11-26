@@ -4,9 +4,11 @@
 #include <gtkmm.h>
 #include <iostream>
 #include "TiposDeDatosExpeciales.h"
+#include "PantallaDeJuego.h"
 
 class GestionadorDeVentanas {
 private:
+    PantallaDeJuego &contoladorJuego;
     Glib::RefPtr<Gtk::Application> app;
     Gtk::Window *juego;
     Gtk::Window *pantallaDeElementos;
@@ -29,7 +31,7 @@ private:
 
 public:
     //los arrancar se ejecutan en el Hilo principal. y el terminar en otro hilo
-    GestionadorDeVentanas(Glib::RefPtr<Gtk::Builder> &ventana2);
+    GestionadorDeVentanas(Glib::RefPtr<Gtk::Builder> &ventana2, PantallaDeJuego &juego2);
 
     void arrancar();
 

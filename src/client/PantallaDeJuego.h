@@ -27,6 +27,8 @@ public:
 
     Menu &getMenu();
 
+    void reniciarDesplasamiento();
+
 protected:
     std::vector<Elementos> elementos;
     OrdenadorDeFichas &fichas;

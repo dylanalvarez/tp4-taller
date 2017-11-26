@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     PantallaDeJuego area(fichas, refBuilder, emisor);
     refBuilder->get_widget("cajaJuego", Box);
     Box->pack_start(area);
-    GestionadorDeVentanas ventanas(refBuilder);
+    GestionadorDeVentanas ventanas(refBuilder,area);
     PantallaResultado victoria(refBuilder, "victory", ventanas);
     PantallaResultado derrota(refBuilder, "defeat", ventanas);
     PantallaDeInicio pantallaInicial(refBuilder, emisor, area.getMenu());
