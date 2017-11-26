@@ -15,7 +15,7 @@ public:
     MapButton(const Glib::ustring &label,
               int x, int y, MapGrid &parent, Map &map);
 
-    void setColor(const Gdk::RGBA& color);
+    void setColor(const Gdk::RGBA &color);
 
 private:
     void setSquareType(MapGrid &parent);

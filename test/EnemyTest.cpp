@@ -1,7 +1,3 @@
-//
-// Created by facundo on 13/10/17.
-//
-
 #include "EnemyTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(EnemyTest);

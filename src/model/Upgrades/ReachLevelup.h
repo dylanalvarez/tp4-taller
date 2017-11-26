@@ -10,7 +10,7 @@
 
 class ReachLevelup : public LevelupType {
 public:
-    explicit ReachLevelup(Tower& tower);
+    explicit ReachLevelup(Tower &tower);
 
     void levelup() override;
 };

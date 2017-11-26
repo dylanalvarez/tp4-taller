@@ -6,7 +6,6 @@
 #include <utility>
 #include <iostream>
 #include <vector>
-#include <cstring>
 
 #include "Exception.h"
 #include "Socket.h"
@@ -94,12 +93,12 @@ Socket::~Socket() {
 Socket::Socket(int fileDescriptor) :
         fileDescriptor(fileDescriptor) {}
 
-Socket::Socket(Socket && other) noexcept {
+Socket::Socket(Socket &&other) noexcept {
     this->fileDescriptor = other.fileDescriptor;
     other.fileDescriptor = -1;
 }
 
-Socket &Socket::operator=(Socket && other) noexcept {
+Socket &Socket::operator=(Socket &&other) noexcept {
     this->fileDescriptor = other.fileDescriptor;
     other.fileDescriptor = -1;
     return *this;

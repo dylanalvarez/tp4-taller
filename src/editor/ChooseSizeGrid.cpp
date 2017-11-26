@@ -20,7 +20,7 @@ void ChooseSizeGrid::chooseSize() {
     int height = setHeight->get_value_as_int();
     try {
         map->resize(width, height);
-    } catch (InvalidSizeException& e) {
+    } catch (InvalidSizeException &e) {
         Gtk::MessageDialog dialog(e.what());
         dialog.set_transient_for(*(Gtk::Window *)
                 this->get_parent()->get_parent()->get_parent());
@@ -31,7 +31,8 @@ void ChooseSizeGrid::chooseSize() {
     builder.get_widget("map", mapScrolledWindow);
     delete mapScrolledWindow->get_child();
     MapGrid *mapGrid = Gtk::manage(
-            new MapGrid(*map, builder, width, height, saveButton, addHordeGrid));
+            new MapGrid(*map, builder, width, height, saveButton,
+                        addHordeGrid));
     mapScrolledWindow->add(*mapGrid);
     nameEntry->addMapGridReference(mapGrid);
 

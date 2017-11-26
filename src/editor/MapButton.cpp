@@ -1,6 +1,7 @@
 #include <gtkmm/cssprovider.h>
 #include "MapButton.h"
 #include "MapGrid.h"
+
 #define PRIORITY 10
 
 MapButton::MapButton(
@@ -52,7 +53,7 @@ void MapButton::setColor(const Gdk::RGBA &color) {
                     "margin: 12px 0;"
                     "color: white;"
                     "font-weight: bold;"
-            "  }");
+                    "  }");
     label->get_style_context()->add_provider(css, PRIORITY);
     label->override_background_color(color);
     label->override_color(Gdk::RGBA("white"));

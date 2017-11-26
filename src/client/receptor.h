@@ -10,16 +10,20 @@
 #include "../common/GameClientReceiver.h"
 #include "../common/GameClientSocket.h"
 
-class Receptor{
+class Receptor {
 public:
-  Receptor(GameClientReceiver& reciver, GameClientSocket& socket);
-  void iniciar();
-  void terminar();
-  GameClientReceiver& getReceiver();
+    Receptor(GameClientReceiver &reciver, GameClientSocket &socket);
+
+    void iniciar();
+
+    void terminar();
+
+    GameClientReceiver &getReceiver();
+
 private:
-  GameClientReceiver& reciver;
-  GameClientSocket& socket;
-  bool seguir = true;
+    GameClientReceiver &reciver;
+    GameClientSocket &socket;
+    bool seguir = true;
 };
 
 #endif

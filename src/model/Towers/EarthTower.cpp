@@ -1,7 +1,3 @@
-//
-// Created by facundo on 21/10/17.
-//
-
 #include "EarthTower.h"
 #include "../Scenario.h"
 #include "../Exceptions/TowerError.h"
@@ -13,7 +9,8 @@ EarthTower::EarthTower(int id, Vector p, YAML::Node &tower_properties,
     YAML::Node properties = tower_properties["earth_tower"];
     // basic properties
     dmg = properties["damage"].as<unsigned int>();
-    range = Range(position, getRangeInTileSizes(properties["range"].as<float>()));
+    range = Range(position,
+                  getRangeInTileSizes(properties["range"].as<float>()));
     attack_cooldown = properties["attack_rate"].as<unsigned int>();
 
     // upgrades properties
@@ -45,15 +42,17 @@ EarthTower::~EarthTower() = default;
 
 void EarthTower::attack() {
     // si todavia no paso el cooldown desde el ultimo ataque, salir
-    if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
-    { is_attacking = false; return; }
+    if (difftime(time(nullptr), last_attack_time) < attack_cooldown) {
+        is_attacking = false;
+        return;
+    }
 
-    std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
+    std::vector<Enemy *> enemies = scenario.getEnemiesInRange(range);
     if (enemies.empty()) { return; }
 
     if (current_target) {
         if (current_target->getHealthPoints() == 0
-            || isCurrentTargetOutOfRange(enemies)){
+            || isCurrentTargetOutOfRange(enemies)) {
             // si hay target pero esta muerto
             // o esta fuera de rango
             current_target = getNotFlyingEnemy(enemies);
@@ -71,11 +70,11 @@ void EarthTower::attack() {
     is_attacking = true;
 }
 
-EarthTower::EarthTower(EarthTower&& other) noexcept :
+EarthTower::EarthTower(EarthTower &&other) noexcept :
         Tower(std::move(other)) {}
 
-Enemy *EarthTower::getNotFlyingEnemy(const std::vector<Enemy *>& enemies) {
-    for (Enemy* enemy : enemies){
+Enemy *EarthTower::getNotFlyingEnemy(const std::vector<Enemy *> &enemies) {
+    for (Enemy *enemy : enemies) {
         if (!enemy->canIFlight() && !enemy->isDead()) {
             damage_dealed_to_current_target = 0;
             return enemy;
@@ -87,7 +86,7 @@ Enemy *EarthTower::getNotFlyingEnemy(const std::vector<Enemy *>& enemies) {
 void EarthTower::levelupDamage() {
     double neccessary_exp =
             dmg_levelingup_function_values.first *
-                    (pow(dmg_levelingup_function_values.second,dmg_level));
+            (pow(dmg_levelingup_function_values.second, dmg_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
@@ -103,7 +102,7 @@ void EarthTower::levelupDamage() {
 void EarthTower::levelupRange() {
     double neccessary_exp =
             range_levelingup_function_values.first *
-                    (pow(range_levelingup_function_values.second,range_level));
+            (pow(range_levelingup_function_values.second, range_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +

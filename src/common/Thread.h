@@ -1,7 +1,3 @@
-//
-// Created by facundo on 09/09/17.
-//
-
 #ifndef TP2_THREAD_H
 #define TP2_THREAD_H
 
@@ -16,17 +12,22 @@ private:
 
 public:
     void start();
+
     void join();
 
     virtual void run() = 0;
+
     virtual ~Thread();
 
-    Thread(const Thread&) = delete;
-    Thread& operator=(const Thread&) = delete;
+    Thread(const Thread &) = delete;
 
-    Thread(Thread&&) noexcept ;
+    Thread &operator=(const Thread &) = delete;
+
+    Thread(Thread &&) noexcept;
+
     Thread() = default;
-    Thread& operator=(Thread&&) noexcept ;
+
+    Thread &operator=(Thread &&) noexcept;
 };
 
 

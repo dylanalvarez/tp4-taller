@@ -13,7 +13,8 @@
 
 class Server : public Thread {
 public:
-    explicit Server(const std::string& port);
+    explicit Server(const std::string &port);
+
     ~Server() override;
 
     // cuando el server se inicia comienza a aceptar clientes
@@ -23,34 +24,37 @@ public:
     void joinMatch(Client &client, int match_id);
 
     // retorna el id de la partida
-    int createMatch(Client &client, int map_id, const std::string& match_name);
+    int createMatch(Client &client, int map_id, const std::string &match_name);
 
-    void addElementToPlayer(const Client&, int match_id,
-                            const std::string& element);
+    void addElementToPlayer(const Client &, int match_id,
+                            const std::string &element);
 
     void startMatch(int match_id);
 
     // añade un mapa al servidor
     // Pre: el server no esta corriendo
     // para añadir un mapa se debe detener el server
-    void addMap(const std::string& file_path);
-    
+    void addMap(const std::string &file_path);
+
     // añade todos los clientes del vector a la lista 
     // de espera "clients_waiting_for_match"
-    void addClientsToWaitingList(std::vector<Client*>& clients);
-    
+    void addClientsToWaitingList(std::vector<Client *> &clients);
+
     void stop();
 
-    Server(const Server&) = delete;
-    Server& operator=(const Server&) = delete;
-    Server(Server&&) = delete;
-    Server& operator=(Server&&) = delete;
+    Server(const Server &) = delete;
+
+    Server &operator=(const Server &) = delete;
+
+    Server(Server &&) = delete;
+
+    Server &operator=(Server &&) = delete;
 
 private:
     std::mutex mutex;
     ServerSocket accept_socket;
-    std::map<int, Match*> matchs;
-    std::vector<Client*> clients_waiting_for_match;
+    std::map<int, Match *> matchs;
+    std::vector<Client *> clients_waiting_for_match;
 
     std::vector<Communication::NameAndID> matchs_id;
     std::vector<Communication::NameAndID> maps;
@@ -60,8 +64,9 @@ private:
     std::map<int, const std::string> maps_paths;
 
     const std::string config_file_path = "config.yaml";
-    
+
     void cleanMatchs();
+
     void cleanClients();
 
     // vuelve a enviar los mapas y partidas

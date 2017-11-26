@@ -5,25 +5,25 @@
 #include "Meteorite.h"
 #include "../Exceptions/MatchError.h"
 
-Meteorite::Meteorite(Scenario& scenario, unsigned int cooldown,
+Meteorite::Meteorite(Scenario &scenario, unsigned int cooldown,
                      unsigned int reach, unsigned int dmg,
                      unsigned int dmg_to_nearby_enemies) :
-                        Spell(scenario, cooldown),
-                        reach(reach),
-                        dmg(dmg),
-                        dmg_to_nearby_enemies(dmg_to_nearby_enemies) {}
+        Spell(scenario, cooldown),
+        reach(reach),
+        dmg(dmg),
+        dmg_to_nearby_enemies(dmg_to_nearby_enemies) {}
 
 void Meteorite::applyEffect(Enemy &enemy) {
     if (isOnCooldown()) { return; }
 
     enemy.reduceLife(dmg);
 
-    std::vector<Enemy*> enemies = scenario.getEnemiesInRange(
+    std::vector<Enemy *> enemies = scenario.getEnemiesInRange(
             Range(enemy.getCurrentPosition()), reach * tile_size);
-    
+
     target_id = enemy.getID();
 
-    for (Enemy* target : enemies) {
+    for (Enemy *target : enemies) {
         if (target->getID() == enemy.getID()) { continue; }
         target->reduceLife(dmg_to_nearby_enemies);
     }

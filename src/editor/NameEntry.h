@@ -22,7 +22,7 @@ private:
     bool onKeyRelease(GdkEventKey *event);
 
     Map *map = nullptr;
-    MapGrid* mapGrid = nullptr;
+    MapGrid *mapGrid = nullptr;
 };
 
 

@@ -8,27 +8,35 @@
 #include "emisor.h"
 #include <string>
 
-class PantallaDeElementos{
- private:
-	Emisor& emisorComandos;
-  Gtk::ToggleButton* botonFuego;
-  Gtk::ToggleButton* botonTierra;
-  Gtk::ToggleButton* botonAgua;
-  Gtk::ToggleButton* botonAire;
-  Gtk::Button* listo;
-  Gtk::Button* elegir;
-  Gtk::Label* error;
- protected:
- public:
-  PantallaDeElementos(Glib::RefPtr<Gtk::Builder> &ventana, Emisor& emisor);
-  void elementoSeleccionado(Elementos elemento);
-  void reiniciar();
-  void clikearFuego();
-  void clikearTierra();
-  void clikearAgua();
-  void clikearAire();
-  void clikearListo();
-  void clikearElegir();
+class PantallaDeElementos {
+private:
+    Emisor &emisorComandos;
+    Gtk::ToggleButton *botonFuego;
+    Gtk::ToggleButton *botonTierra;
+    Gtk::ToggleButton *botonAgua;
+    Gtk::ToggleButton *botonAire;
+    Gtk::Button *listo;
+    Gtk::Button *elegir;
+    Gtk::Label *error;
+protected:
+public:
+    PantallaDeElementos(Glib::RefPtr<Gtk::Builder> &ventana, Emisor &emisor);
+
+    void elementoSeleccionado(Elementos elemento);
+
+    void reiniciar();
+
+    void clikearFuego();
+
+    void clikearTierra();
+
+    void clikearAgua();
+
+    void clikearAire();
+
+    void clikearListo();
+
+    void clikearElegir();
 };
 
 #endif

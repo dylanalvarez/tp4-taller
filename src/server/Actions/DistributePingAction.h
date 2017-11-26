@@ -1,7 +1,3 @@
-//
-// Created by facundo on 05/11/17.
-//
-
 #ifndef TOWERDEFENSE_DISTRIBUTEPINGACTION_H
 #define TOWERDEFENSE_DISTRIBUTEPINGACTION_H
 
@@ -12,7 +8,7 @@ class DistributePingAction : public Action {
 public:
     explicit DistributePingAction(Vector location);
 
-    void apply(Context& context) override;
+    void apply(Context &context) override;
 
 private:
     Vector location;

@@ -7,12 +7,15 @@
 #include "../server/QueueProtected.h"
 
 class Server;
+
 class Client;
+
 class QueueProtected;
 
 class GameServerReceiver {
 public:
-    GameServerReceiver(Server &server, Client& client);
+    GameServerReceiver(Server &server, Client &client);
+
     ~GameServerReceiver();
 
     void joinMatch(int match_id, const std::string &player_name);
@@ -37,18 +40,20 @@ public:
 
     void buildTower(int x, int y, Communication::Tower::Type type);
 
-    void setActionsQueue(QueueProtected& queue);
+    void setActionsQueue(QueueProtected &queue);
 
-    GameServerReceiver(GameServerReceiver&&) noexcept ;
-    GameServerReceiver(const GameServerReceiver&) = delete;
-    GameServerReceiver& operator=(const GameServerReceiver&) = delete;
+    GameServerReceiver(GameServerReceiver &&) noexcept;
+
+    GameServerReceiver(const GameServerReceiver &) = delete;
+
+    GameServerReceiver &operator=(const GameServerReceiver &) = delete;
 
 private:
-    Server& server;
-    Client& client;
+    Server &server;
+    Client &client;
     int my_match_id;
 
-    QueueProtected* actions_queue;
+    QueueProtected *actions_queue;
 };
 
 #endif //TP4_TALLER_GAME_SERVER_RECEIVER_H

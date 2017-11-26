@@ -1,7 +1,3 @@
-//
-// Created by facundo on 03/11/17.
-//
-
 #ifndef TOWERDEFENSE_SENDGAMESTATEACTION_H
 #define TOWERDEFENSE_SENDGAMESTATEACTION_H
 
@@ -11,12 +7,12 @@
 
 class SendGameStateAction : public Action {
 public:
-    explicit SendGameStateAction(const Communication::GameState&);
+    explicit SendGameStateAction(const Communication::GameState &);
 
-    void apply(Context&) override;
+    void apply(Context &) override;
 
 private:
-    const Communication::GameState& gameState;
+    const Communication::GameState &gameState;
 };
 
 

@@ -53,7 +53,7 @@ void AddHordeGrid::onAddHorde() {
         _addHordeToList(horde, map->addHorde(
                 horde,
                 pathNumberSpinButton->get_value_as_int()));
-    } catch (std::exception& e) {}
+    } catch (std::exception &e) {}
 }
 
 void AddHordeGrid::_addHordeToList(Map::Horde horde,
@@ -69,9 +69,9 @@ void AddHordeGrid::onHordeKindChange() {
 void AddHordeGrid::setFromMap() {
     int pathNumber = 0;
     hordeList->set_text("");
-    for (const Map::Path& path : map->getPaths()) {
+    for (const Map::Path &path : map->getPaths()) {
         pathNumber++;
-        for (const Map::Horde& horde: path.hordes) {
+        for (const Map::Horde &horde: path.hordes) {
             _addHordeToList(horde, std::to_string(pathNumber));
         }
     }

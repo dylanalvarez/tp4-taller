@@ -1,7 +1,3 @@
-//
-// Created by facundo on 27/10/17.
-//
-
 #ifndef TOWERDEFENSE_MATCH_H
 #define TOWERDEFENSE_MATCH_H
 
@@ -14,8 +10,8 @@
 
 class Match : public Thread {
 public:
-    Match(const std::string& config_file_path,
-          const std::string& map_file_path, int id, Server& server);
+    Match(const std::string &config_file_path,
+          const std::string &map_file_path, int id, Server &server);
 
     ~Match() override;
 
@@ -25,24 +21,31 @@ public:
 
     void stop();
 
-    bool addPlayer(Client* client);
-    void addElementToClient(const Client& client_to_add,
-                            const std::string& element);
+    bool addPlayer(Client *client);
+
+    void addElementToClient(const Client &client_to_add,
+                            const std::string &element);
+
     int getID() const;
+
     bool hasStarted() const;
+
     bool isRunning();
 
-    Match(const Match&) = delete;
-    Match(Match&&) = delete ;
-    Match& operator=(const Match&) = delete;
-    Match& operator=(Match&&) = delete;
+    Match(const Match &) = delete;
+
+    Match(Match &&) = delete;
+
+    Match &operator=(const Match &) = delete;
+
+    Match &operator=(Match &&) = delete;
 
 private:
     QueueProtected actions_queue;
 
     HordeCreator horde_creator;
 
-    std::vector<Client*> clients;
+    std::vector<Client *> clients;
     TowerDefenseGame game;
     Context context;
 
@@ -50,13 +53,13 @@ private:
     bool has_started;
     bool keep_running;
 
-    const std::string& map;
+    const std::string &map;
 
     void cleanClients();
-    
+
     const unsigned int time_step = 15000; // 15 milisegundos;
-    
-    Server& server;
+
+    Server &server;
 };
 
 

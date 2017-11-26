@@ -1,7 +1,3 @@
-//
-// Created by facundo on 31/10/17.
-//
-
 #ifndef TOWERDEFENSE_BUILDTOWERACTION_H
 #define TOWERDEFENSE_BUILDTOWERACTION_H
 
@@ -11,16 +7,17 @@
 
 class BuildTowerAction : public Action {
 public:
-    BuildTowerAction(const Player& player, std::string& element,
+    BuildTowerAction(const Player &player, std::string &element,
                      Vector position);
 
-    void apply(Context& context) override;
+    void apply(Context &context) override;
 
-    BuildTowerAction(const BuildTowerAction&) = delete;
-    BuildTowerAction& operator=(const BuildTowerAction&) = delete;
+    BuildTowerAction(const BuildTowerAction &) = delete;
+
+    BuildTowerAction &operator=(const BuildTowerAction &) = delete;
 
 private:
-    const Player& player;
+    const Player &player;
     std::string element;
     Vector position;
 };

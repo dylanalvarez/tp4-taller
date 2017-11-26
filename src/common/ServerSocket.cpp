@@ -6,7 +6,6 @@
 #include <utility>
 #include <iostream>
 #include <vector>
-#include <cstring>
 
 #include "ServerSocket.h"
 #include "AcceptFailedException.h"

@@ -1,7 +1,3 @@
-//
-// Created by facundo on 10/10/17.
-//
-
 #include <cppunit/ui/text/TextTestRunner.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/extensions/HelperMacros.h>

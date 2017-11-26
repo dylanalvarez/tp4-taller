@@ -1,16 +1,11 @@
-//
-// Created by facundo on 27/10/17.
-//
-
 #include "Client.h"
 #include "Server.h"
 #include "Actions/SendGameStateAction.h"
 #include "Actions/SendMessageAction.h"
 #include "Actions/DisconnectAction.h"
 #include "Actions/PingAction.h"
-#include "../common/Exception.h"
 
-Client::Client(Socket&& socket, Server& server) :
+Client::Client(Socket &&socket, Server &server) :
         serverReceiver(server, *this),
         serverSocket(serverReceiver, std::move(socket)),
         sender(serverSocket, queue), is_ready(false) {
@@ -29,7 +24,7 @@ void Client::sendGameState(const Communication::GameState &gameState) {
     }
 }
 
-void Client::sendMessage(const std::string& msg, const std::string& nickname) {
+void Client::sendMessage(const std::string &msg, const std::string &nickname) {
     if (sender.isOperational()) {
         queue.push(new SendMessageAction(msg, nickname));
     }
@@ -43,7 +38,7 @@ void Client::setModelPlayer(const Player &player) {
     this->player = &player;
 }
 
-void Client::setName(const std::string& name) {
+void Client::setName(const std::string &name) {
     this->name = name;
 }
 
@@ -82,8 +77,8 @@ bool Client::isReady() const {
     return is_ready;
 }
 
-void Client::sendElementUnavailable(const std::string& element,
-                                    const std::string& nickname) {
+void Client::sendElementUnavailable(const std::string &element,
+                                    const std::string &nickname) {
     serverSocket.makeElementUnavailable(
             Communication::to_element(element), nickname);
 }
@@ -100,8 +95,9 @@ bool Client::isOperatinal() const {
     return serverSocket.isOperational();
 }
 
-void Client::sendInitialData(const std::vector<Communication::NameAndID> &matches,
-                             const std::vector<Communication::NameAndID> &maps) {
+void
+Client::sendInitialData(const std::vector<Communication::NameAndID> &matches,
+                        const std::vector<Communication::NameAndID> &maps) {
     serverSocket.sendInitialData(matches, maps);
 }
 

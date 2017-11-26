@@ -1,7 +1,3 @@
-//
-// Created by facundo on 20/10/17.
-//
-
 #ifndef TOWERDEFENSE_WATERTOWER_H
 #define TOWERDEFENSE_WATERTOWER_H
 
@@ -10,29 +6,38 @@
 
 class WaterTower : public Tower {
 public:
-    WaterTower(int id, Vector position, YAML::Node& properties,
-          Scenario& scenario);
+    WaterTower(int id, Vector position, YAML::Node &properties,
+               Scenario &scenario);
 
     ~WaterTower() override;
 
     void attack() override;
 
     void levelupRange() override;
+
     void levelupDamage() override;
+
     void levelupReachOfImpact() override;
+
     void levelupSlowdown() override;
 
     int getSlowDownLevel() const override;
+
     int getReachLevel() const override;
 
     Communication::Tower::Damage getDamage_() const override;
+
     Communication::Tower::Type getType() const override;
+
     Communication::Tower::EnemySlowdown getslowdown() const override;
 
-    WaterTower(const WaterTower&) = delete;
-    WaterTower& operator=(const WaterTower&) = delete;
-    WaterTower& operator=(WaterTower&&) = delete;
-    WaterTower(WaterTower&&) noexcept ;
+    WaterTower(const WaterTower &) = delete;
+
+    WaterTower &operator=(const WaterTower &) = delete;
+
+    WaterTower &operator=(WaterTower &&) = delete;
+
+    WaterTower(WaterTower &&) noexcept;
 
 private:
     int slowdown_level;

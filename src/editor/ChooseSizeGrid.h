@@ -18,7 +18,7 @@ public:
     ChooseSizeGrid(BaseObjectType *obj,
                    Glib::RefPtr<Gtk::Builder> &builder);
 
-    void init(Map &map, SaveButton* saveButton, AmbianceGrid *ambianceGrid,
+    void init(Map &map, SaveButton *saveButton, AmbianceGrid *ambianceGrid,
               AddHordeGrid *addHordeGrid, NameEntry *nameEntry);
 
 private:

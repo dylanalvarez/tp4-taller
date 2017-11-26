@@ -98,13 +98,16 @@
 #define SpritePing 438
 
 
-
-class VectorDeSprites{
+class VectorDeSprites {
 protected:
-  std::vector<Glib::RefPtr<Gdk::Pixbuf>> sprites;
-  void cargarSprite(const char* direccion);
+    std::vector<Glib::RefPtr<Gdk::Pixbuf>> sprites;
+
+    void cargarSprite(const char *direccion);
+
 public:
-  VectorDeSprites();
-  Glib::RefPtr<Gdk::Pixbuf>& obtener (int n);
+    VectorDeSprites();
+
+    Glib::RefPtr<Gdk::Pixbuf> &obtener(int n);
 };
+
 #endif

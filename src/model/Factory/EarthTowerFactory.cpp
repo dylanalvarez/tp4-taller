@@ -1,7 +1,3 @@
-//
-// Created by facundo on 21/10/17.
-//
-
 #include "EarthTowerFactory.h"
 #include "../Towers/EarthTower.h"
 

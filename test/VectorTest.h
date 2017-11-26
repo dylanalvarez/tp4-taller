@@ -1,7 +1,3 @@
-//
-// Created by facundo on 10/10/17.
-//
-
 #ifndef TOWERDEFENSE_POSITIONTEST_H
 #define TOWERDEFENSE_POSITIONTEST_H
 

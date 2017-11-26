@@ -8,7 +8,7 @@ QueueProtected::QueueProtected() = default;
 
 QueueProtected::~QueueProtected() = default;
 
-void QueueProtected::push(Action* action) {
+void QueueProtected::push(Action *action) {
     std::lock_guard<std::mutex> lock(mutex);
     actions.push(action);
 }
@@ -28,12 +28,12 @@ bool QueueProtected::empty() {
     return actions.empty();
 }
 
-QueueProtected::QueueProtected(QueueProtected&& other) noexcept {
+QueueProtected::QueueProtected(QueueProtected &&other) noexcept {
     std::lock_guard<std::mutex> lock(mutex);
     this->actions = std::move(other.actions);
 }
 
-QueueProtected& QueueProtected::operator=(QueueProtected&& other) noexcept {
+QueueProtected &QueueProtected::operator=(QueueProtected &&other) noexcept {
     std::lock_guard<std::mutex> lock(mutex);
     this->actions = std::move(other.actions);
     return *this;

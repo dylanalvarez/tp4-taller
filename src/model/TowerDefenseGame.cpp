@@ -1,7 +1,3 @@
-//
-// Created by facundo on 16/10/17.
-//
-
 #include "TowerDefenseGame.h"
 #include "Exceptions/EnemyError.h"
 #include "Exceptions/TowerError.h"
@@ -47,32 +43,32 @@ TowerDefenseGame::TowerDefenseGame(const std::string &config_file,
     available_elements.emplace_back("earth");
 }
 
-TowerDefenseGame::~TowerDefenseGame(){
+TowerDefenseGame::~TowerDefenseGame() {
     delete scenario;
 
-    for (auto& tower_factory : towers_factory) {
+    for (auto &tower_factory : towers_factory) {
         delete tower_factory.second;
     }
 
-    for (auto& spell : spells) {
+    for (auto &spell : spells) {
         delete spell.second;
     }
 }
 
 //region Loading_Configuration
-void TowerDefenseGame::loadScenarioProperties(YAML::Node& map) {
+void TowerDefenseGame::loadScenarioProperties(YAML::Node &map) {
     name = map["name"].as<std::string>();
     setting = map["setting"].as<std::string>();
 
     std::vector<Vector> firm_ground_locations;
     YAML::Node firm_g = map["firm_ground"];
-    for (auto it = firm_g.begin(); it != firm_g.end(); ++it ) {
+    for (auto it = firm_g.begin(); it != firm_g.end(); ++it) {
         firm_ground_locations.push_back(it->as<Vector>());
     }
 
     std::vector<Path> paths;
     YAML::Node paths_node = map["paths"];
-    for (auto path = paths_node.begin(); path != paths_node.end(); ++path ) {
+    for (auto path = paths_node.begin(); path != paths_node.end(); ++path) {
         // se busca el nodo "path_sequence"
         YAML::Node path_secuence = (*path)["path_sequence"];
 
@@ -86,25 +82,25 @@ void TowerDefenseGame::loadScenarioProperties(YAML::Node& map) {
     scenario = new Scenario(std::move(paths), std::move(firm_ground_locations));
 }
 
-void TowerDefenseGame::loadSpellsProperties(YAML::Node& spells_node) {
+void TowerDefenseGame::loadSpellsProperties(YAML::Node &spells_node) {
     YAML::Node terraforming = spells_node["terraforming"];
     spells.emplace("terraforming", new Terraforming(*scenario,
                                                     terraforming["cooldown"].as<unsigned int>()));
     YAML::Node fissure = spells_node["fissure"];
     spells.emplace("fissure", new Fissure(*scenario,
-                                      fissure["cooldown"].as<unsigned int>(),
-                                      fissure["duration"].as<unsigned int>()));
+                                          fissure["cooldown"].as<unsigned int>(),
+                                          fissure["duration"].as<unsigned int>()));
     YAML::Node meteorite = spells_node["meteorite"];
     spells.emplace("meteorite", new Meteorite(*scenario,
-                                          meteorite["cooldown"].as<unsigned int>(),
-                                          meteorite["reach_of_impact"].as<unsigned int>(),
-                                          meteorite["damage"].as<unsigned int>(),
-                                          meteorite["damage_to_nearby_units"].as<unsigned int>()));
+                                              meteorite["cooldown"].as<unsigned int>(),
+                                              meteorite["reach_of_impact"].as<unsigned int>(),
+                                              meteorite["damage"].as<unsigned int>(),
+                                              meteorite["damage_to_nearby_units"].as<unsigned int>()));
     YAML::Node fire_wall = spells_node["fire_wall"];
     spells.emplace("fireWall", new FireWall(*scenario,
-                                         fire_wall["cooldown"].as<unsigned int>(),
-                                         fire_wall["damage"].as<unsigned int>(),
-                                         fire_wall["duration"].as<unsigned int>()));
+                                            fire_wall["cooldown"].as<unsigned int>(),
+                                            fire_wall["damage"].as<unsigned int>(),
+                                            fire_wall["duration"].as<unsigned int>()));
     YAML::Node freezing = spells_node["freezing"];
     spells.emplace("freezing", new Freezing(*scenario,
                                             freezing["cooldown"].as<unsigned int>(),
@@ -129,17 +125,17 @@ void TowerDefenseGame::loadSpellsProperties(YAML::Node& spells_node) {
                                   ray["max_damage"].as<unsigned int>()));
 }
 
-void TowerDefenseGame::loadEnemyProperties(YAML::Node& enemies_node) {
+void TowerDefenseGame::loadEnemyProperties(YAML::Node &enemies_node) {
     YAML::Node green_demon_node = enemies_node["green_demon"];
     EnemyProperties gd_properties(green_demon_node["health"].as<unsigned int>(),
-                               green_demon_node["speed"].as<float>(),
-                               green_demon_node["fly"].as<bool>());
+                                  green_demon_node["speed"].as<float>(),
+                                  green_demon_node["fly"].as<bool>());
     enemies_properties.emplace("green_demon", gd_properties);
 
     YAML::Node abmonible_node = enemies_node["abmonible"];
     EnemyProperties ab_properties(abmonible_node["health"].as<unsigned int>(),
-                               abmonible_node["speed"].as<float>(),
-                               abmonible_node["fly"].as<bool>());
+                                  abmonible_node["speed"].as<float>(),
+                                  abmonible_node["fly"].as<bool>());
     enemies_properties.emplace("abmonible", ab_properties);
 
     YAML::Node goat_man_node = enemies_node["goat_man"];
@@ -167,7 +163,7 @@ void TowerDefenseGame::loadEnemyProperties(YAML::Node& enemies_node) {
     enemies_properties.emplace("spectre", s_properties);
 }
 
-void TowerDefenseGame::loadTowerProperties(YAML::Node& properties) {
+void TowerDefenseGame::loadTowerProperties(YAML::Node &properties) {
     tower_properties = properties;
     towers_factory.emplace("fire", new FireTowerFactory());
     towers_factory.emplace("water", new WaterTowerFactory());
@@ -178,12 +174,12 @@ void TowerDefenseGame::loadTowerProperties(YAML::Node& properties) {
 
 void TowerDefenseGame::addEnemy(const std::string &enemy_type,
                                 unsigned int path_number) {
-    try{
+    try {
         EnemyProperties properties = enemies_properties.at(enemy_type);
         Enemy enemy(enemy_id++, scenario->getPath(path_number), properties.hp,
                     properties.speed, properties.does_it_fly, enemy_type);
         scenario->addEnemy(enemy);
-    } catch (std::exception& e) {
+    } catch (std::exception &e) {
         throw EnemyError("Error al agregar enemigo -> El tipo: " + enemy_type
                          + " no es un tipo valido");
     }
@@ -194,14 +190,14 @@ const std::vector<Enemy> &TowerDefenseGame::getAllEnemies() const {
 }
 
 void TowerDefenseGame::moveEnemies(int units_to_move) {
-    for (Enemy& enemy : scenario->getAllEnemies()){
+    for (Enemy &enemy : scenario->getAllEnemies()) {
         enemy.move(units_to_move);
         if (enemy.reachTheEnd()) { is_game_over = true; }
     }
 }
 
 bool TowerDefenseGame::doesPlayerExist(const Player &player) {
-    for (Player& p : players) {
+    for (Player &p : players) {
         if (&p == &player) {
             return true;
         }
@@ -209,30 +205,31 @@ bool TowerDefenseGame::doesPlayerExist(const Player &player) {
     return false;
 }
 
-const Tower& TowerDefenseGame::addTower(const Player &player,
-                                        const std::string &type, const Vector &position) {
+const Tower &TowerDefenseGame::addTower(const Player &player,
+                                        const std::string &type,
+                                        const Vector &position) {
     if (!doesPlayerExist(player)) {
         throw TowerError("Error al añadir la torre de tipo " + type +
                          ", el jugador " + player.getName() +
                          "no pertence a la partida");
     }
-    Tower* tower = nullptr;
+    Tower *tower = nullptr;
     try {
         tower = towers_factory.at(type)->create(tower_id++, position,
                                                 tower_properties, *scenario);
-    } catch (std::out_of_range& e) {
-            throw TowerError("Error: el tipo de torre " +
-                             type + " no es un tipo valido");
+    } catch (std::out_of_range &e) {
+        throw TowerError("Error: el tipo de torre " +
+                         type + " no es un tipo valido");
     }
 
     if (player.canBuildTower(type)) {
         try {
             scenario->addTower(tower);
-        } catch (TowerError& e) {
+        } catch (TowerError &e) {
             delete tower;
             throw e;
         }
-        for (Player& p : players) {
+        for (Player &p : players) {
             if (&p == &player) {
                 p.addTower(*tower);
             }
@@ -245,7 +242,7 @@ const Tower& TowerDefenseGame::addTower(const Player &player,
     }
 }
 
-const Player& TowerDefenseGame::addPlayer(std::string name,
+const Player &TowerDefenseGame::addPlayer(std::string name,
                                           std::string element) {
     if (players.size() == MAX_PLAYERS) {
         throw MatchError("Error al añadir jugador: " +
@@ -255,7 +252,8 @@ const Player& TowerDefenseGame::addPlayer(std::string name,
     if (std::find(available_elements.begin(), available_elements.end(),
                   element) == available_elements.end()) {
         throw MatchError("Error al añadir jugador: " +
-                         name + ": el elemento" + element + "no esta disponible");
+                         name + ": el elemento" + element +
+                         "no esta disponible");
     }
     available_elements.erase(std::remove(available_elements.begin(),
                                          available_elements.end(), element));
@@ -285,7 +283,7 @@ void TowerDefenseGame::addElementToPlayer(const Player &player,
     available_elements.erase(std::remove(available_elements.begin(),
                                          available_elements.end(), element));
 
-    for (Player& p : players) {
+    for (Player &p : players) {
         if (&p == &player) {
             p.addElement(element);
         }
@@ -293,24 +291,24 @@ void TowerDefenseGame::addElementToPlayer(const Player &player,
 }
 
 void TowerDefenseGame::performAttacks() {
-    for (auto& spell : spells) {
+    for (auto &spell : spells) {
         if (spell.second->isActive()) {
             spell.second->update();
         }
     }
 
-    for (auto& tower: scenario->getTowers()){
+    for (auto &tower: scenario->getTowers()) {
         tower->attack();
     }
 }
 
-void TowerDefenseGame::levelupTower(const Tower& tower,
-                                    const std::string& type,
-                                    const Player& player) {
+void TowerDefenseGame::levelupTower(const Tower &tower,
+                                    const std::string &type,
+                                    const Player &player) {
     if (!player.containsTower(tower)) {
         throw MatchError("Error: el jugador" +
-                                 player.getName() +
-                                 "no puede levelear las torres de tipo");
+                         player.getName() +
+                         "no puede levelear las torres de tipo");
     }
     scenario->levelupTower(tower, type);
 }
@@ -321,13 +319,16 @@ void TowerDefenseGame::updateGame(int units_to_move) {
     enemy_count -= scenario->cleanEnemies();
 }
 
-void TowerDefenseGame::throwSpell(const Player& player,
+void TowerDefenseGame::throwSpell(const Player &player,
                                   const std::string &type,
-                                  const Vector& position) {
-    Spell* spell = spells.at(type);
+                                  const Vector &position) {
+    Spell *spell = spells.at(type);
     bool can_be_thrown = false;
-    for (auto& element : player.getElements()) {
-        if (spell->canBeThrownBy(element)) { can_be_thrown = true; break; }
+    for (auto &element : player.getElements()) {
+        if (spell->canBeThrownBy(element)) {
+            can_be_thrown = true;
+            break;
+        }
     }
 
     if (!can_be_thrown) {
@@ -343,10 +344,13 @@ void TowerDefenseGame::throwSpell(const Player& player,
 
 void TowerDefenseGame::throwSpell(const Player &player, const std::string &type,
                                   int enemy_id) {
-    Spell* spell = spells.at(type);
+    Spell *spell = spells.at(type);
     bool can_be_thrown = false;
-    for (auto& element : player.getElements()) {
-        if (spell->canBeThrownBy(element)) { can_be_thrown = true; break; }
+    for (auto &element : player.getElements()) {
+        if (spell->canBeThrownBy(element)) {
+            can_be_thrown = true;
+            break;
+        }
     }
 
     if (!can_be_thrown) {
@@ -357,7 +361,7 @@ void TowerDefenseGame::throwSpell(const Player &player, const std::string &type,
                          " no posee el elemento adecuado");
     }
 
-    for (Enemy& enemy : scenario->getAllEnemies()) {
+    for (Enemy &enemy : scenario->getAllEnemies()) {
         if (enemy.getID() == enemy_id) {
             spell->applyEffect(enemy);
             return;
@@ -385,17 +389,17 @@ bool TowerDefenseGame::isGameOver() const {
 Communication::GameState TowerDefenseGame::getGameState() const {
     Communication::GameState gameState{};
     // enemies
-    for (const Enemy& enemy : getAllEnemies()) {
+    for (const Enemy &enemy : getAllEnemies()) {
         gameState.enemies.emplace_back(
                 enemy.getType(),
                 enemy.getID(),
-                (int)enemy.getCurrentPosition().getX() - 44,
-                (int)enemy.getCurrentPosition().getY() - 44
+                (int) enemy.getCurrentPosition().getX() - 44,
+                (int) enemy.getCurrentPosition().getY() - 44
         );
     }
 
     // towers
-    for (const Tower* tower: scenario->getTowers()) {
+    for (const Tower *tower: scenario->getTowers()) {
         Communication::Tower::Level level(tower->getRangeLevel(),
                                           tower->getDamageLevel(),
                                           tower->getReachLevel(),
@@ -403,7 +407,7 @@ Communication::GameState TowerDefenseGame::getGameState() const {
         gameState.towers.emplace_back(
                 tower->getID(),
                 level,
-                (int)tower->getExperience(),
+                (int) tower->getExperience(),
                 tower->getRange().getNormalRadius(),
                 tower->getExplosionRange(),
                 tower->getPosition().getX(),
@@ -417,13 +421,13 @@ Communication::GameState TowerDefenseGame::getGameState() const {
     }
 
     // positional powers
-    for (auto& spell: spells) {
+    for (auto &spell: spells) {
         if (spell.second->isActive()) {
-            if (spell.second->isPositional()){
+            if (spell.second->isPositional()) {
                 gameState.positionalPowers.emplace_back(
                         spell.second->getPositionalType(),
-                        (int)spell.second->getPosition().getX(),
-                        (int)spell.second->getPosition().getY()
+                        (int) spell.second->getPosition().getX(),
+                        (int) spell.second->getPosition().getY()
                 );
             } else {
                 gameState.targetPowers.emplace_back(
@@ -450,7 +454,7 @@ bool TowerDefenseGame::isGameEnded() const {
 std::vector<std::string> TowerDefenseGame::getNotAvailableElements() const {
     std::vector<std::string> available = {"air", "earth", "fire", "water"};
 
-    for (const std::string& element : available_elements) {
+    for (const std::string &element : available_elements) {
         available.erase(std::remove(available.begin(), available.end(),
                                     element));
     }

@@ -1,7 +1,3 @@
-//
-// Created by facundo on 30/10/17.
-//
-
 #include "GameServerReceiver.h"
 #include "../server/Server.h"
 #include "../server/Actions/DistributeMessageAction.h"
@@ -10,12 +6,11 @@
 #include "../server/Actions/BuildTowerAction.h"
 #include "../server/Actions/UpgradeAction.h"
 #include "../server/Actions/DistributePingAction.h"
-#include "Exception.h"
 
-GameServerReceiver::GameServerReceiver(Server &server, Client& client) :
+GameServerReceiver::GameServerReceiver(Server &server, Client &client) :
         server(server), client(client) {}
 
-GameServerReceiver::GameServerReceiver(GameServerReceiver&& other) noexcept :
+GameServerReceiver::GameServerReceiver(GameServerReceiver &&other) noexcept :
         server(other.server),
         client(other.client) {}
 
@@ -74,11 +69,14 @@ void GameServerReceiver::getSpell(Communication::TargetPower power) {
 }
 
 void GameServerReceiver::getUpgrade(Communication::Upgrade upgrade) {
-    const std::vector<const Tower*> towers =
+    const std::vector<const Tower *> towers =
             client.getModelPlayer().getTowers();
-    const Tower* tower = nullptr;
-    for (const Tower* t : towers) {
-        if (t->getID() == upgrade.towerID) { tower = t; break;}
+    const Tower *tower = nullptr;
+    for (const Tower *t : towers) {
+        if (t->getID() == upgrade.towerID) {
+            tower = t;
+            break;
+        }
     }
     if (!tower) { return; }
 

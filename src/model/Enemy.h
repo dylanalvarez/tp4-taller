@@ -1,7 +1,3 @@
-//
-// Created by facundo on 13/10/17.
-//
-
 #ifndef TOWERDEFENSE_ENEMY_H
 #define TOWERDEFENSE_ENEMY_H
 
@@ -17,10 +13,10 @@
 class Enemy {
 public:
     Enemy(Path &path, int health_points, float speed,
-          bool does_it_fly, const std::string& type = "green_demon");
+          bool does_it_fly, const std::string &type = "green_demon");
 
     Enemy(int id, Path &path, int health_points, float speed,
-          bool does_it_flight, const std::string& type = "green_demon");
+          bool does_it_flight, const std::string &type = "green_demon");
 
     // mueve el enemigo la cantidad de coordenadas indicadas por speed
     // en la direccion correspondiente (segun el path)
@@ -44,19 +40,27 @@ public:
 
     // getters
     Communication::Enemy::Type getType() const;
-    const Vector& getCurrentPosition() const;
+
+    const Vector &getCurrentPosition() const;
+
     int getID() const;
+
     int getHealthPoints() const;
+
     float getSpeed() const;
+
     bool canIFlight() const;
+
     bool reachTheEnd() const;
 
-    Enemy(const Enemy&) = delete;
-    Enemy& operator=(const Enemy&) = delete;
-    Enemy(Enemy&&) noexcept;
+    Enemy(const Enemy &) = delete;
+
+    Enemy &operator=(const Enemy &) = delete;
+
+    Enemy(Enemy &&) noexcept;
 
 private:
-    Path& path;
+    Path &path;
     Vector current_pos;
     unsigned long current_pos_number;
     Vector current_destiny;

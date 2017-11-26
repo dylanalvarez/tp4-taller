@@ -21,7 +21,8 @@ namespace Communication {
 
     struct Upgrade {
         Upgrade() = default;
-        Upgrade(const std::string& type, int tower_id);
+
+        Upgrade(const std::string &type, int tower_id);
 
         enum Type {
             range, damage, reach, slowdown
@@ -38,7 +39,8 @@ namespace Communication {
     };
 
     std::string to_string(const Element &element);
-    Element to_element(const std::string& element);
+
+    Element to_element(const std::string &element);
 
     struct Enemy {
         enum Type {
@@ -79,7 +81,8 @@ namespace Communication {
         };
 
         static std::string to_string(const Tower::Type &type);
-        static Tower::Type string_to_type(const std::string& type);
+
+        static Tower::Type string_to_type(const std::string &type);
 
         Tower(int id, Level level, int experience, int rangeInSquares,
               int ExplosionRange, int x, int y, EnemySlowdown slowdown,

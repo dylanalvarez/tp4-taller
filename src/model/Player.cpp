@@ -1,9 +1,4 @@
-//
-// Created by facundo on 17/10/17.
-//
-
 #include <algorithm>
-#include <utility>
 #include "Player.h"
 
 Player::Player(std::string name, std::string element) :
@@ -17,13 +12,13 @@ const std::string &Player::getName() const {
     return name;
 }
 
-Player::Player(Player&& other) noexcept {
+Player::Player(Player &&other) noexcept {
     this->name = std::move(other.name);
     this->elements = std::move(other.elements);
     this->towers = std::move(other.towers);
 }
 
-Player &Player::operator=(Player&& other) noexcept {
+Player &Player::operator=(Player &&other) noexcept {
     this->name = std::move(other.name);
     this->elements = std::move(other.elements);
     this->towers = std::move(other.towers);
@@ -34,12 +29,12 @@ const std::vector<std::string> &Player::getElements() const {
     return elements;
 }
 
-void Player::addTower(const Tower& tower) {
+void Player::addTower(const Tower &tower) {
     towers.push_back(&tower);
 }
 
-bool Player::containsTower(const Tower& tower) const {
-    return (std::find(towers.begin(), towers.end(), &tower) != 
+bool Player::containsTower(const Tower &tower) const {
+    return (std::find(towers.begin(), towers.end(), &tower) !=
             towers.end());
 }
 
@@ -48,7 +43,7 @@ bool Player::canBuildTower(const std::string &type) const {
             elements.end());
 }
 
-const std::vector<const Tower*> Player::getTowers() const {
+const std::vector<const Tower *> Player::getTowers() const {
     return towers;
 }
 

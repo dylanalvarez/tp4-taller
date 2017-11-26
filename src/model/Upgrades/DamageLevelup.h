@@ -10,7 +10,7 @@
 
 class DamageLevelup : public LevelupType {
 public:
-    explicit DamageLevelup(Tower& tower);
+    explicit DamageLevelup(Tower &tower);
 
     void levelup() override;
 };

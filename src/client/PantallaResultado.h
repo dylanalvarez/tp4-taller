@@ -1,7 +1,3 @@
-//
-// Created by facundo on 13/11/17.
-//
-
 #ifndef TOWERDEFENSE_PANTALLARESULTADO_H
 #define TOWERDEFENSE_PANTALLARESULTADO_H
 
@@ -13,13 +9,14 @@
 class PantallaResultado {
 public:
     PantallaResultado(Glib::RefPtr<Gtk::Builder> &ventana,
-                      const std::string& window_name,
-                      GestionadorDeVentanas& Ventanas2);
+                      const std::string &window_name,
+                      GestionadorDeVentanas &Ventanas2);
 
 private:
-    Gtk::Button* btn_ok;
-    Gtk::Window* this_window;
-    GestionadorDeVentanas& ventanas;
+    Gtk::Button *btn_ok;
+    Gtk::Window *this_window;
+    GestionadorDeVentanas &ventanas;
+
     void on_ok_clicked();
 };
 

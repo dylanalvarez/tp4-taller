@@ -1,7 +1,3 @@
-//
-// Created by facundo on 16/10/17.
-//
-
 #ifndef TOWERDEFENSE_TOWERDEFENSEGAMETEST_H
 #define TOWERDEFENSE_TOWERDEFENSEGAMETEST_H
 

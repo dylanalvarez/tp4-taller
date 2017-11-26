@@ -17,7 +17,7 @@ class Scenario;
 
 class Tower {
 public:
-    Tower(int id, Vector position, Scenario& scenario);
+    Tower(int id, Vector position, Scenario &scenario);
 
     virtual ~Tower();
 
@@ -25,42 +25,57 @@ public:
 
     // upgrades
     virtual void levelupRange() = 0;
+
     virtual void levelupDamage() = 0;
+
     virtual void levelupReachOfImpact() = 0;
+
     virtual void levelupSlowdown() = 0;
-    
-    bool operator==(const Tower& other);
+
+    bool operator==(const Tower &other);
 
     // realiza un levelup en el tipo especificado
     // rango, daño, alcance, o relentizado
-    void levelup(const std::string& type);
+    void levelup(const std::string &type);
 
     // getters
     double getExperience() const;
-    const Vector& getPosition() const;
-    const Range& getRange() const;
+
+    const Vector &getPosition() const;
+
+    const Range &getRange() const;
+
     unsigned int getDamage() const;
 
     bool isAttacking() const;
 
     int getRangeLevel() const;
+
     int getDamageLevel() const;
+
     int getCurrentTargetID() const;
 
     virtual int getSlowDownLevel() const = 0;
+
     virtual int getReachLevel() const = 0;
 
     int getID() const;
 
     virtual Communication::Tower::Damage getDamage_() const = 0;
+
     virtual Communication::Tower::Type getType() const = 0;
+
     virtual Communication::Tower::EnemySlowdown getslowdown() const;
+
     virtual int getExplosionRange() const;
 
-    Tower(const Tower&) = delete;
-    Tower& operator=(const Tower&) = delete;
-    Tower& operator=(Tower&&) = delete;
-    Tower(Tower&&) noexcept ;
+    Tower(const Tower &) = delete;
+
+    Tower &operator=(const Tower &) = delete;
+
+    Tower &operator=(Tower &&) = delete;
+
+    Tower(Tower &&) noexcept;
 
 protected:
     // info de torre
@@ -70,7 +85,7 @@ protected:
     bool is_attacking;
 
     // archivo de configuracion
-    Scenario& scenario;
+    Scenario &scenario;
 
     // atributos
     unsigned int dmg;
@@ -79,7 +94,7 @@ protected:
     unsigned int range_upgrade;
     unsigned int attack_cooldown;
     time_t last_attack_time;
-    Enemy* current_target;
+    Enemy *current_target;
     unsigned int damage_dealed_to_current_target;
 
     // atributos para calcular experiencia necesaria para levelear
@@ -90,11 +105,14 @@ protected:
     int range_level;
     int dmg_level;
 
-    std::map<std::string, LevelupType*> levelup_types;
+    std::map<std::string, LevelupType *> levelup_types;
 
-    bool isCurrentTargetOutOfRange(const std::vector<Enemy*>&) const;
-    void changeTarget(const std::vector<Enemy*>&);
+    bool isCurrentTargetOutOfRange(const std::vector<Enemy *> &) const;
+
+    void changeTarget(const std::vector<Enemy *> &);
+
     void hitCurrentTarget(unsigned int dmg);
+
     int getRangeInTileSizes(float range);
 };
 

@@ -1,12 +1,9 @@
-//
-// Created by facundo on 23/10/17.
-//
-
 #include "Fissure.h"
 #include "../Exceptions/MatchError.h"
 
 Fissure::Fissure(Scenario &scenario, unsigned int cooldown,
-                 unsigned int duration) : Spell(scenario, cooldown), duration(duration) {}
+                 unsigned int duration) : Spell(scenario, cooldown),
+                                          duration(duration) {}
 
 void Fissure::applyEffect(const Vector &position) {
     activate(position);
@@ -21,10 +18,11 @@ void Fissure::update() {
 
     if (!is_active) { return; }
 
-    for (Enemy* enemy : scenario.getEnemiesInRange(Range(position, tile_size))) {
+    for (Enemy *enemy : scenario.getEnemiesInRange(
+            Range(position, tile_size))) {
         if (!enemy->canIFlight()) {
             // no afecta a los voladores
-            enemy->reduceLife((unsigned)enemy->getHealthPoints());
+            enemy->reduceLife((unsigned) enemy->getHealthPoints());
         }
     }
 }

@@ -1,13 +1,9 @@
-//
-// Created by facundo on 31/10/17.
-//
-
 #include <iostream>
 #include "HordeCreator.h"
 #include "Actions/AddEnemyAction.h"
 
 HordeCreator::HordeCreator(const std::string &map_file,
-                           QueueProtected& queue) : queue(queue) {
+                           QueueProtected &queue) : queue(queue) {
     unsigned int path_number = 1;
     total_amount_of_enemies = 0;
     YAML::Node map = YAML::LoadFile(map_file);
@@ -18,8 +14,8 @@ HordeCreator::HordeCreator(const std::string &map_file,
             total_amount_of_enemies += (*it)["quantity"].as<int>();
             std::string type = (*it)["type"].as<std::string>();
             Horde horde(type,
-                           (*it)["seconds_before_arrival"].as<int>(),
-                           (*it)["quantity"].as<int>(), path_number);
+                        (*it)["seconds_before_arrival"].as<int>(),
+                        (*it)["quantity"].as<int>(), path_number);
             hordes.push(horde);
         }
         path_number++;

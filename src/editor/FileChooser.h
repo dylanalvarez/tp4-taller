@@ -13,20 +13,20 @@ class FileChooser : public Gtk::FileChooserButton {
 public:
     FileChooser(BaseObjectType *obj, Glib::RefPtr<Gtk::Builder> &builder);
 
-    void init(Map &map, SaveButton* saveButton,
+    void init(Map &map, SaveButton *saveButton,
               AmbianceGrid *ambianceGrid,
-              AddHordeGrid *addHordeGrid, NameEntry* nameEntry);
+              AddHordeGrid *addHordeGrid, NameEntry *nameEntry);
 
 protected:
     void on_file_set() override;
 
     Map *map = nullptr;
     Builder builder;
-    Gtk::Button* loadButton;
-    SaveButton* saveButton;
+    Gtk::Button *loadButton;
+    SaveButton *saveButton;
     AmbianceGrid *ambianceGrid;
     AddHordeGrid *addHordeGrid;
-    NameEntry* nameEntry;
+    NameEntry *nameEntry;
 };
 
 

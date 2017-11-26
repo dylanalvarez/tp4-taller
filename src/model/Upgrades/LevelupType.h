@@ -9,13 +9,14 @@ class Tower;
 
 class LevelupType {
 public:
-    explicit LevelupType(Tower& tower);
+    explicit LevelupType(Tower &tower);
+
     virtual ~LevelupType();
 
     virtual void levelup() = 0;
 
 protected:
-    Tower& tower;
+    Tower &tower;
 };
 
 

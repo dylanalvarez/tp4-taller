@@ -10,7 +10,7 @@
 
 class RangeLevelup : public LevelupType {
 public:
-    explicit RangeLevelup(Tower& tower);
+    explicit RangeLevelup(Tower &tower);
 
     void levelup() override;
 };

@@ -1,7 +1,3 @@
-//
-// Created by facundo on 16/10/17.
-//
-
 #include "TowerDefenseGameTest.h"
 #include "../src/model/Exceptions/EnemyError.h"
 #include "../src/model/Exceptions/TowerError.h"

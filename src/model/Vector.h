@@ -1,7 +1,3 @@
-//
-// Created by facundo on 10/10/17.
-//
-
 #ifndef TOWERDEFENSE_POSITION_H
 #define TOWERDEFENSE_POSITION_H
 
@@ -13,22 +9,33 @@ public:
     explicit Vector(float x = 0, float y = 0);
 
     float getX() const;
+
     float getY() const;
 
     void set_coordinates(float x, float y);
+
     void setCoordinatesFromTiles(float x, float y);
 
     // sobrecarga de operadores
-    Vector& operator+=(float);
-    Vector& operator+=(const Vector&);
-    Vector& operator-=(const Vector&);
-    Vector operator-(const Vector&) const;
-    bool operator!=(const Vector&) const;
-    bool operator==(const Vector&) const;
-    bool operator>(const Vector&) const;
-    Vector operator+(const Vector&) const;
-    Vector& operator *=(float);
-    Vector operator *(float) const;
+    Vector &operator+=(float);
+
+    Vector &operator+=(const Vector &);
+
+    Vector &operator-=(const Vector &);
+
+    Vector operator-(const Vector &) const;
+
+    bool operator!=(const Vector &) const;
+
+    bool operator==(const Vector &) const;
+
+    bool operator>(const Vector &) const;
+
+    Vector operator+(const Vector &) const;
+
+    Vector &operator*=(float);
+
+    Vector operator*(float) const;
 
     // divide cada coordenada por la norma del vector
     void normalize();
@@ -49,8 +56,8 @@ private:
 namespace YAML {
     template<>
     struct convert<Vector> {
-        static bool decode(const Node& node, Vector& vector) {
-            if(!node.IsMap() || node.size() != 2) {
+        static bool decode(const Node &node, Vector &vector) {
+            if (!node.IsMap() || node.size() != 2) {
                 return false;
             }
             vector.setCoordinatesFromTiles(node["x"].as<float>(),

@@ -53,9 +53,9 @@ private:
     void updateButtonColors() const;
 
     void paintBetween(
-            const Map::Coordinate& start,
-            const Map::Coordinate& end,
-            const Gdk::RGBA& color) const;
+            const Map::Coordinate &start,
+            const Map::Coordinate &end,
+            const Gdk::RGBA &color) const;
 
     std::vector<std::vector<MapButton *>> grid;
     Builder &builder;

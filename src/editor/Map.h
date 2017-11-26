@@ -34,6 +34,7 @@ public:
 
     struct Coordinate {
         Coordinate(int x, int y) : x(x), y(y) {}
+
         Coordinate() : x(0), y(0) {}
 
         int x, y;
@@ -58,9 +59,9 @@ public:
 
     int getWidth();
 
-    const std::vector<Coordinate>& getFirmGround();
+    const std::vector<Coordinate> &getFirmGround();
 
-    const std::vector<Path>& getPaths();
+    const std::vector<Path> &getPaths();
 
     Setting getSetting();
 
@@ -76,9 +77,9 @@ public:
 
     void exportToFile(const std::string &filename) const;
 
-    void loadFromFile(std::ifstream& source);
+    void loadFromFile(std::ifstream &source);
 
-    void loadFromNode(YAML::Node& source);
+    void loadFromNode(YAML::Node &source);
 
     static std::string toString(HordeType hordeType);
 

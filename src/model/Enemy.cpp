@@ -1,20 +1,16 @@
-//
-// Created by facundo on 13/10/17.
-//
-
 #include "Enemy.h"
 
 Enemy::Enemy(Path &path, int health_points, float speed,
-             bool does_it_fly, const std::string& type) :
-                    path(path),
-                    current_pos(path.getInitialPosition()),
-                    current_pos_number(0),
-                    current_destiny(path.getNextPosition(current_pos_number++)),
-                    type(type),
-                    hp(health_points),
-                    speed(speed * base_speed),
-                    original_speed(speed * base_speed),
-                    can_i_fly(does_it_fly) {
+             bool does_it_fly, const std::string &type) :
+        path(path),
+        current_pos(path.getInitialPosition()),
+        current_pos_number(0),
+        current_destiny(path.getNextPosition(current_pos_number++)),
+        type(type),
+        hp(health_points),
+        speed(speed * base_speed),
+        original_speed(speed * base_speed),
+        can_i_fly(does_it_fly) {
     direction = (current_destiny - current_pos);
     direction.normalizeAndRound();
     last_speed_reduction_time = 0;
@@ -23,14 +19,14 @@ Enemy::Enemy(Path &path, int health_points, float speed,
 }
 
 Enemy::Enemy(int id, Path &path, int health_points, float speed,
-             bool does_it_fly, const std::string& type) :
+             bool does_it_fly, const std::string &type) :
         Enemy(path, health_points, speed, does_it_fly, type) {
     this->id = id;
 }
 
 void Enemy::move(int units_to_move) {
     updateSpeedReduction();
-    for (int i = 0; i < getSpeed() * units_to_move; i++){
+    for (int i = 0; i < getSpeed() * units_to_move; i++) {
         current_pos += direction * base_speed_reduction;
 
         if (current_pos == current_destiny) {
@@ -40,7 +36,8 @@ void Enemy::move(int units_to_move) {
             direction.normalizeAndRound();
         }
     }
-    i_reach_the_end = ((current_pos_number - 1) >= path.getFinalPositionIndex());
+    i_reach_the_end = ((current_pos_number - 1) >=
+                       path.getFinalPositionIndex());
 }
 
 const Vector &Enemy::getCurrentPosition() const {
@@ -66,7 +63,7 @@ int Enemy::getHealthPoints() const {
 
 unsigned int Enemy::reduceLife(unsigned int dmg_points) {
     this->hp -= dmg_points;
-    if (this->hp < 0){
+    if (this->hp < 0) {
         unsigned int dmg_dealed = dmg_points + hp;
         this->hp = 0;
         return dmg_dealed;
@@ -112,7 +109,7 @@ void Enemy::updateSpeedReduction() {
         speed_reduction_time) { speed = original_speed; }
 }
 
-Enemy::Enemy(Enemy&& other) noexcept : path(other.path),
+Enemy::Enemy(Enemy &&other) noexcept : path(other.path),
                                        type(other.type) {
     this->current_pos = other.current_pos;
     this->current_pos_number = other.current_pos_number;

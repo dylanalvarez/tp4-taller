@@ -1,7 +1,3 @@
-//
-// Created by facundo on 15/10/17.
-//
-
 #include "RangeTest.h"
 #include "../src/model/Range.h"
 

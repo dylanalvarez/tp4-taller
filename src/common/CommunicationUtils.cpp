@@ -12,7 +12,7 @@ std::string Communication::Upgrade::to_string(const Upgrade::Type &type) {
     return types[type];
 }
 
-Communication::Upgrade::Upgrade(const std::string& type, int tower_id) {
+Communication::Upgrade::Upgrade(const std::string &type, int tower_id) {
     if (type == "range") { this->type = range; }
     else if (type == "reach") { this->type = reach; }
     else if (type == "damage") { this->type = damage; }
@@ -97,7 +97,8 @@ Communication::Tower::Tower(int id, Level level, int experience,
                             int current_target_id)
         : id(id), experience(experience), rangeInSquares(rangeInSquares),
           ExplosionRange(ExplosionRange), x(x), y(y), level(level),
-          slowdown(slowdown), damage(damage), type(type), is_attacking(is_attacking), 
+          slowdown(slowdown), damage(damage), type(type),
+          is_attacking(is_attacking),
           current_target_id(current_target_id) {}
 
 Communication::Tower::Type Communication::Tower::string_to_type(
@@ -139,7 +140,10 @@ std::string Communication::TargetPower::to_string(
 Communication::TargetPower::TargetPower(const std::string &type, int enemyID)
         : enemyID(enemyID) {
     if (type == "freezing") { this->type = freezing; }
-    else if (type == "ray") { this->type = ray; }else if (type == "meteorite") { this->type = Communication::TargetPower::Type::meteorite; }
+    else if (type == "ray") { this->type = ray; }
+    else if (type == "meteorite") {
+        this->type = Communication::TargetPower::Type::meteorite;
+    }
 }
 
 Communication::TargetPower::TargetPower(

@@ -1,7 +1,3 @@
-//
-// Created by facundo on 15/10/17.
-//
-
 #include "ScenarioTest.h"
 #include "../src/model/Towers/FireTower.h"
 #include "../src/model/Exceptions/TowerError.h"

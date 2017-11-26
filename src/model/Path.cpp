@@ -1,10 +1,6 @@
-//
-// Created by facundo on 13/10/17.
-//
-
 #include "Path.h"
 
-Path::Path(std::vector<Vector>&& positions) : positions(std::move(positions)) {}
+Path::Path(std::vector<Vector> &&positions) : positions(std::move(positions)) {}
 
 const Vector &Path::getNextPosition(unsigned long actual_index) {
     if (actual_index >= positions.size() - 1) { return positions.back(); }
@@ -15,11 +11,11 @@ const Vector &Path::getInitialPosition() const {
     return positions[0];
 }
 
-Path::Path(Path&& other) noexcept {
+Path::Path(Path &&other) noexcept {
     this->positions = std::move(other.positions);
 }
 
-Path &Path::operator=(Path&& other) noexcept {
+Path &Path::operator=(Path &&other) noexcept {
     this->positions = std::move(other.positions);
     return *this;
 }

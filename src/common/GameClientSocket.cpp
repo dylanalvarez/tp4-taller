@@ -10,7 +10,8 @@ GameClientSocket::GameClientSocket(GameClientReceiver &receiver,
 void GameClientSocket::run() {
     while (keepRunning) {
         try {
-            std::string str_opcode = socket.receiveString(OPCODE_CHARACTER_COUNT);
+            std::string str_opcode = socket.receiveString(
+                    OPCODE_CHARACTER_COUNT);
             if (str_opcode.empty()) { break; }
             int opcode = std::stoi(str_opcode);
             unsigned long messageLength = std::stoul(
@@ -44,7 +45,7 @@ void GameClientSocket::run() {
                 default:
                     break;
             }
-        } catch (Exception& e) { return; }
+        } catch (Exception &e) { return; }
     }
 }
 
@@ -53,7 +54,7 @@ void GameClientSocket::disconnect() {
     socket.shutdown();
 }
 
-void GameClientSocket::_sendNode(YAML::Node& node) {
+void GameClientSocket::_sendNode(YAML::Node &node) {
     YAML::Emitter emitter;
     emitter << node;
     std::string message(emitter.c_str());
@@ -157,12 +158,12 @@ GameClientSocket::buildTower(int x, int y, Communication::Tower::Type type) {
 void GameClientSocket::_handleInitialData(YAML::Node &node) {
     std::vector<Communication::NameAndID> matches;
     std::vector<Communication::NameAndID> maps;
-    for (const auto& match: node["matchs"]) {
+    for (const auto &match: node["matchs"]) {
         matches.emplace_back(
                 match["name"].as<std::string>(),
                 match["id"].as<int>());
     }
-    for (const auto& map: node["maps"]) {
+    for (const auto &map: node["maps"]) {
         maps.emplace_back(
                 map["name"].as<std::string>(),
                 map["id"].as<int>());
@@ -173,21 +174,21 @@ void GameClientSocket::_handleInitialData(YAML::Node &node) {
 void GameClientSocket::_handleGameState(YAML::Node &node) {
     Communication::GameState state;
     state.setState(node["state"].as<std::string>());
-    for (const auto& enemy : node["enemies"]) {
+    for (const auto &enemy : node["enemies"]) {
         state.enemies.emplace_back(
                 enemy["kind"].as<std::string>(),
                 enemy["id"].as<int>(),
                 enemy["position"]["x"].as<int>(),
                 enemy["position"]["y"].as<int>());
     }
-    for (const auto& tower : node["towers"]) {
+    for (const auto &tower : node["towers"]) {
         state.towers.emplace_back(
                 tower["id"].as<int>(),
                 Communication::Tower::Level(
-                    tower["lv"]["range"].as<int>(),
-                    tower["lv"]["damage"].as<int>(),
-                    tower["lv"]["reach"].as<int>(),
-                    tower["lv"]["slowdown"].as<int>()
+                        tower["lv"]["range"].as<int>(),
+                        tower["lv"]["damage"].as<int>(),
+                        tower["lv"]["reach"].as<int>(),
+                        tower["lv"]["slowdown"].as<int>()
                 ),
                 tower["xp"].as<int>(),
                 tower["range_in_squares"].as<int>(),
@@ -206,14 +207,14 @@ void GameClientSocket::_handleGameState(YAML::Node &node) {
                 tower["current_target"].as<int>()
         );
     }
-    for (const auto& positionalPower : node["positional_powers"]) {
+    for (const auto &positionalPower : node["positional_powers"]) {
         state.positionalPowers.emplace_back(
                 positionalPower["type"].as<std::string>(),
                 positionalPower["position"]["x"].as<int>(),
                 positionalPower["position"]["y"].as<int>()
         );
     }
-    for (const auto& directedPower : node["directed_powers"]) {
+    for (const auto &directedPower : node["directed_powers"]) {
         state.targetPowers.emplace_back(
                 directedPower["type"].as<std::string>(),
                 directedPower["enemy_id"].as<int>()

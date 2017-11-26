@@ -8,17 +8,20 @@
 #include "emisor.h"
 #include <thread>
 
-class controladorDeCiclos{
+class controladorDeCiclos {
 private:
-  Receptor &receptor;
-  Emisor &emisor;
-  std::thread emisorThread;
-  std::thread receptorThread;
-  bool seguir = true;
+    Receptor &receptor;
+    Emisor &emisor;
+    std::thread emisorThread;
+    std::thread receptorThread;
+    bool seguir = true;
 public:
-  controladorDeCiclos(Receptor &receptor2, Emisor &emisor2); //falso
-  void iniciar();
-  void terminar();
-  Communication::GameState estadoActual();
+    controladorDeCiclos(Receptor &receptor2, Emisor &emisor2); //falso
+    void iniciar();
+
+    void terminar();
+
+    Communication::GameState estadoActual();
 };
+
 #endif

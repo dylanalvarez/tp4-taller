@@ -15,7 +15,7 @@
 
 class HordeCreator {
 public:
-    explicit HordeCreator(const std::string& map_file, QueueProtected& queue);
+    explicit HordeCreator(const std::string &map_file, QueueProtected &queue);
 
     // comienza a contar los segundos para la primera horda
     void start();
@@ -25,8 +25,9 @@ public:
 
     int getTotalAmountOfEnemies() const;
 
-    HordeCreator(const HordeCreator&) = delete;
-    HordeCreator& operator=(const HordeCreator&) = delete;
+    HordeCreator(const HordeCreator &) = delete;
+
+    HordeCreator &operator=(const HordeCreator &) = delete;
 
 private:
     std::queue<Horde> hordes;
@@ -35,7 +36,7 @@ private:
     time_t last_horde_sended_time;
     time_t last_enemy_sended_time;
     int enemies_to_send_count;
-    QueueProtected& queue;
+    QueueProtected &queue;
 };
 
 

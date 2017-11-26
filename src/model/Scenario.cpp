@@ -1,12 +1,8 @@
-//
-// Created by facundo on 15/10/17.
-//
-
 #include "Scenario.h"
 #include "Exceptions/TowerError.h"
 #include "Exceptions/MatchError.h"
 
-Scenario::Scenario(Path&& path, std::vector<Vector>&& firm_ground_locations) :
+Scenario::Scenario(Path &&path, std::vector<Vector> &&firm_ground_locations) :
         firm_ground_locations(std::move(firm_ground_locations)) {
     paths.push_back(std::move(path));
 }
@@ -22,13 +18,13 @@ Scenario::~Scenario() {
     }
 }
 
-std::vector<Enemy*> Scenario::getEnemiesInRange(const Range &range,
-                                                int count) {
-    std::vector<Enemy*> closest_enemies;
-    for (Enemy& enemy : enemies){
+std::vector<Enemy *> Scenario::getEnemiesInRange(const Range &range,
+                                                 int count) {
+    std::vector<Enemy *> closest_enemies;
+    for (Enemy &enemy : enemies) {
         if (range.isInRange(enemy.getCurrentPosition())) {
             closest_enemies.push_back(&enemy);
-            if (count != -1 && (int)closest_enemies.size() == count) {
+            if (count != -1 && (int) closest_enemies.size() == count) {
                 // si no se deben devolver todos y se llego a la
                 // cantidad a devolver salir
                 break;
@@ -39,18 +35,18 @@ std::vector<Enemy*> Scenario::getEnemiesInRange(const Range &range,
     return closest_enemies;
 }
 
-void Scenario::addEnemy(Enemy& enemy) {
+void Scenario::addEnemy(Enemy &enemy) {
     enemies.push_back(std::move(enemy));
 }
 
-Scenario::Scenario(Scenario&& other) noexcept {
+Scenario::Scenario(Scenario &&other) noexcept {
     this->paths = std::move(other.paths);
     this->enemies = std::move(other.enemies);
     this->towers = std::move(other.towers);
     this->firm_ground_locations = std::move(other.firm_ground_locations);
 }
 
-Scenario& Scenario::operator=(Scenario&& other) noexcept {
+Scenario &Scenario::operator=(Scenario &&other) noexcept {
     this->paths = std::move(other.paths);
     this->enemies = std::move(other.enemies);
     this->towers = std::move(other.towers);
@@ -63,7 +59,7 @@ std::vector<Enemy> &Scenario::getAllEnemies() {
     return enemies;
 }
 
-std::vector<Tower*>& Scenario::getTowers() {
+std::vector<Tower *> &Scenario::getTowers() {
     return towers;
 }
 
@@ -71,25 +67,27 @@ Path &Scenario::getPath(unsigned int number) {
     return paths.at(number - 1);
 }
 
-void Scenario::addTower(Tower* tower) {
-    for (Vector& firm_ground : firm_ground_locations) {
+void Scenario::addTower(Tower *tower) {
+    for (Vector &firm_ground : firm_ground_locations) {
         if (tower->getPosition() == firm_ground) {
             towers.push_back(tower);
             // como ya se ocupa, se saca de las tierras firmes disponibles
-            firm_ground_locations.erase(std::remove(firm_ground_locations.begin(),
-                                                    firm_ground_locations.end(),
-                                                    tower->getPosition()));
+            firm_ground_locations.erase(
+                    std::remove(firm_ground_locations.begin(),
+                                firm_ground_locations.end(),
+                                tower->getPosition()));
             return;
         }
     }
 
     throw TowerError("Error al agregar torre en la posicion: " +
-                                 tower->getPosition().to_string() +
-                                 ". La posicion ya fue ocupada o no es terreno firme");
+                     tower->getPosition().to_string() +
+                     ". La posicion ya fue ocupada o no es terreno firme");
 }
 
-void Scenario::levelupTower(const Tower& tower_to_lvl, const std::string& type) {
-    for (Tower* tower : towers) {
+void
+Scenario::levelupTower(const Tower &tower_to_lvl, const std::string &type) {
+    for (Tower *tower : towers) {
         if (tower == &tower_to_lvl) {
             tower->levelup(type);
         }
@@ -99,8 +97,8 @@ void Scenario::levelupTower(const Tower& tower_to_lvl, const std::string& type) 
 int Scenario::cleanEnemies() {
     std::vector<Enemy> not_dead_enemies;
     int deads_count = 0;
-    for (Enemy& enemy: enemies){
-        if (!enemy.isDead()){
+    for (Enemy &enemy: enemies) {
+        if (!enemy.isDead()) {
             not_dead_enemies.push_back(std::move(enemy));
         } else { deads_count++; }
     }
@@ -112,7 +110,7 @@ int Scenario::cleanEnemies() {
 
 void Scenario::addFirmGround(const Vector &position) {
     // no se puede agregar en un camino
-    for (Path& path : paths) {
+    for (Path &path : paths) {
         if (path.containsPosition(position)) {
             throw MatchError("Error al agregar terreno firme: la posicion" +
                              position.to_string() +
@@ -121,7 +119,7 @@ void Scenario::addFirmGround(const Vector &position) {
     }
 
     // no se puede agregar en tierra firme
-    for (auto& vector : firm_ground_locations){
+    for (auto &vector : firm_ground_locations) {
         if (vector == position) {
             throw MatchError("Error al agregar terreno firme: la posicion" +
                              position.to_string() +
@@ -130,7 +128,7 @@ void Scenario::addFirmGround(const Vector &position) {
     }
 
     // no se puede agregar en posicion ocupada por torre
-    for (auto& tower : towers){
+    for (auto &tower : towers) {
         if (tower->getPosition() == position) {
             throw MatchError("Error al agregar terreno firme: la posicion" +
                              position.to_string() +

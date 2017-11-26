@@ -1,7 +1,3 @@
-//
-// Created by facundo on 03/11/17.
-//
-
 #ifndef TOWERDEFENSE_DISTRIBUTEMESSAGEACTION_H
 #define TOWERDEFENSE_DISTRIBUTEMESSAGEACTION_H
 
@@ -10,14 +6,14 @@
 
 class DistributeMessageAction : public Action {
 public:
-    explicit DistributeMessageAction(std::string&& msg,
-                                     const std::string& nickname);
+    explicit DistributeMessageAction(std::string &&msg,
+                                     const std::string &nickname);
 
-    void apply(Context& contex) override;
+    void apply(Context &contex) override;
 
 private:
     std::string msg;
-    const std::string& nickname;
+    const std::string &nickname;
 };
 
 

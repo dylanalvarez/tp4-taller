@@ -1,7 +1,3 @@
-//
-// Created by facundo on 24/10/17.
-//
-
 #include <random>
 #include "Ray.h"
 #include "../Exceptions/MatchError.h"
@@ -23,7 +19,7 @@ void Ray::applyEffect(Enemy &enemy) {
     // distribucion uniforme
     std::uniform_int_distribution<> distribution(min_dmg, max_dmg);
 
-    enemy.reduceLife((unsigned)distribution(gen));
+    enemy.reduceLife((unsigned) distribution(gen));
 
     last_activation_time = time(nullptr);
     target_id = enemy.getID();

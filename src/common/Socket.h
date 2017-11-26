@@ -18,13 +18,14 @@ public:
 
     // If the other party disconnected, it will return an empty string
     std::string receiveString(size_t length) const;
-    
+
     void shutdown();
 
     Socket &operator=(const Socket &) = delete;
 
-    Socket(Socket&&) noexcept ;
-    Socket& operator=(Socket&&) noexcept ;
+    Socket(Socket &&) noexcept;
+
+    Socket &operator=(Socket &&) noexcept;
 
     ~Socket();
 

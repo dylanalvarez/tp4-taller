@@ -4,16 +4,20 @@
 #include <iostream>
 #include "../common/Sound.h"
 
-class GestionadorDeSonidos{
+class GestionadorDeSonidos {
 private:
- std::string proximoSonido;
- bool haySonido;
- bool seguir;
+    std::string proximoSonido;
+    bool haySonido;
+    bool seguir;
 protected:
- void reprorduicrSonid();
+    void reprorduicrSonid();
+
 public:
- void iniciar();
- void terminar();
- void siguienteSonido(std::string nuevoSonido);
+    void iniciar();
+
+    void terminar();
+
+    void siguienteSonido(std::string nuevoSonido);
 };
+
 #endif

@@ -1,7 +1,3 @@
-//
-// Created by facundo on 20/10/17.
-//
-
 #include "WaterTower.h"
 #include "../Scenario.h"
 #include "../Exceptions/TowerError.h"
@@ -15,7 +11,8 @@ WaterTower::WaterTower(int id, Vector position,
     // basic properties
     dmg = properties["damage"].as<unsigned int>();
     speed_reduction = properties["speed_reduction"].as<unsigned int>();
-    range = Range(position, getRangeInTileSizes(properties["range"].as<float>()));
+    range = Range(position,
+                  getRangeInTileSizes(properties["range"].as<float>()));
     attack_cooldown = properties["attack_rate"].as<unsigned int>();
     speed_reduction_duration =
             properties["speed_reduction_duration"].as<unsigned int>();
@@ -59,10 +56,12 @@ WaterTower::~WaterTower() = default;
 
 void WaterTower::attack() {
     // si todavia no paso el cooldown desde el ultimo ataque, salir
-    if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
-    { is_attacking = false; return; }
+    if (difftime(time(nullptr), last_attack_time) < attack_cooldown) {
+        is_attacking = false;
+        return;
+    }
 
-    std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
+    std::vector<Enemy *> enemies = scenario.getEnemiesInRange(range);
     if (enemies.empty()) { return; }
 
     changeTarget(enemies);
@@ -73,12 +72,12 @@ void WaterTower::attack() {
     is_attacking = true;
 }
 
-WaterTower::WaterTower(WaterTower&& other) noexcept : Tower(std::move(other)) {}
+WaterTower::WaterTower(WaterTower &&other) noexcept : Tower(std::move(other)) {}
 
 void WaterTower::levelupRange() {
     double neccessary_exp =
             range_levelingup_function_values.first *
-                    (pow(range_levelingup_function_values.second,range_level));
+            (pow(range_levelingup_function_values.second, range_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
@@ -94,7 +93,7 @@ void WaterTower::levelupRange() {
 void WaterTower::levelupDamage() {
     double neccessary_exp =
             dmg_levelingup_function_values.first *
-                    (pow(dmg_levelingup_function_values.second,dmg_level));
+            (pow(dmg_levelingup_function_values.second, dmg_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
@@ -109,7 +108,7 @@ void WaterTower::levelupDamage() {
 void WaterTower::levelupSlowdown() {
     double neccessary_exp =
             slowdown_levelingup_function_values.first *
-                    (pow(slowdown_levelingup_function_values.second,slowdown_level));
+            (pow(slowdown_levelingup_function_values.second, slowdown_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
@@ -138,7 +137,7 @@ Communication::Tower::Type WaterTower::getType() const {
 
 Communication::Tower::EnemySlowdown WaterTower::getslowdown() const {
     return Communication::Tower::EnemySlowdown
-            {(int)speed_reduction, (int)speed_reduction_duration};
+            {(int) speed_reduction, (int) speed_reduction_duration};
 }
 
 int WaterTower::getSlowDownLevel() const {

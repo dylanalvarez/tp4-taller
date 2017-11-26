@@ -10,7 +10,7 @@ AmbianceGrid::AmbianceGrid(BaseObjectType *obj,
                   {"meadow",  Map::meadow}} {
 
     for (auto pair : buttonIDs) {
-        std::string id = pair.first;
+        const std::string &id = pair.first;
         Gtk::RadioButton *button;
         this->builder.get_widget(id, button);
         button->signal_clicked().connect(
@@ -33,7 +33,7 @@ AmbianceGrid::AmbianceGrid(BaseObjectType *obj,
     if (map) { map->setSetting(DEFAULT_SETTING); }
 }
 
-void AmbianceGrid::onChange(std::string id) {
+void AmbianceGrid::onChange(const std::string &id) {
     if (map) { map->setSetting(buttonIDs[id]); }
 }
 

@@ -73,8 +73,8 @@ MapGrid::MapGrid(Map &map,
 }
 
 void MapGrid::setFromMap() {
-    for (auto& column : grid) {
-        for (auto& button : column) {
+    for (auto &column : grid) {
+        for (auto &button : column) {
             button->set_sensitive(true);
             button->set_label("");
         }
@@ -87,7 +87,8 @@ void MapGrid::setFromMap() {
         std::string pathLabel = std::to_string(pathNumber);
         grid[path.entry.x][path.entry.y]->set_label(ENTRY_DOOR_STR + pathLabel);
         if (!(path.exit.x == 0 && path.exit.y == 0))
-            grid[path.exit.x][path.exit.y]->set_label(EXIT_DOOR_STR + pathLabel);
+            grid[path.exit.x][path.exit.y]->set_label(
+                    EXIT_DOOR_STR + pathLabel);
         int stepNumber = 1;
         for (const Map::Coordinate &pathStep : path.pathSequence) {
             grid[pathStep.x][pathStep.y]->set_label(std::to_string(stepNumber));
@@ -244,18 +245,18 @@ bool MapGrid::isOnStraightLineFromLastOne(int x, int y) const {
 bool MapGrid::isOnTheWayOfAPath(int x, int y) const {
     for (auto &mapPath : map.getPaths()) {
         auto lastStep = mapPath.entry;
-        for (auto& step : mapPath.pathSequence) {
-            if (lastStep.x == step.x){
+        for (auto &step : mapPath.pathSequence) {
+            if (lastStep.x == step.x) {
                 int start = lastStep.y < step.y ? lastStep.y : step.y;
                 int end = lastStep.y < step.y ? step.y : lastStep.y;
-                for (int currentY = start; currentY<= end; currentY++) {
-                    if(y == currentY && x == step.x) { return true; }
+                for (int currentY = start; currentY <= end; currentY++) {
+                    if (y == currentY && x == step.x) { return true; }
                 }
             } else {
                 int start = lastStep.x < step.x ? lastStep.x : step.x;
                 int end = lastStep.x < step.x ? step.x : lastStep.x;
-                for (int currentX = start; currentX<= end; currentX++) {
-                    if(x == currentX && y == step.y) { return true; }
+                for (int currentX = start; currentX <= end; currentX++) {
+                    if (x == currentX && y == step.y) { return true; }
                 }
             }
             lastStep = step;
@@ -266,14 +267,14 @@ bool MapGrid::isOnTheWayOfAPath(int x, int y) const {
 
 void MapGrid::updateButtonColors() const {
     int pathIndex = 0;
-    for (auto& path : map.getPaths()) {
-        auto& color = colors[pathIndex % colors.size()];
+    for (auto &path : map.getPaths()) {
+        auto &color = colors[pathIndex % colors.size()];
         grid[path.entry.x][path.entry.y]->setColor(color);
         if (!(path.exit.x == 0 && path.exit.y == 0)) {
             grid[path.exit.x][path.exit.y]->setColor(color);
         }
-        const Map::Coordinate* previousStep = nullptr;
-        for (auto& pathStep : path.pathSequence) {
+        const Map::Coordinate *previousStep = nullptr;
+        for (auto &pathStep : path.pathSequence) {
             if (previousStep) {
                 paintBetween(*previousStep, pathStep, color);
             } else {
@@ -283,7 +284,7 @@ void MapGrid::updateButtonColors() const {
         }
         pathIndex++;
     }
-    for (auto& firmGround : map.getFirmGround()) {
+    for (auto &firmGround : map.getFirmGround()) {
         grid[firmGround.x][firmGround.y]->setColor(
                 Gdk::RGBA("black"));
     }

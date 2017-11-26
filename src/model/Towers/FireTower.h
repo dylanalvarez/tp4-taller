@@ -1,7 +1,3 @@
-//
-// Created by facundo on 10/10/17.
-//
-
 #ifndef TOWERDEFENSE_FIRETOWER_H
 #define TOWERDEFENSE_FIRETOWER_H
 
@@ -11,29 +7,38 @@
 
 class FireTower : public Tower {
 public:
-    FireTower(int id, Vector p, YAML::Node& properties,
-              Scenario& scneario);
+    FireTower(int id, Vector p, YAML::Node &properties,
+              Scenario &scneario);
 
     ~FireTower() override;
 
     void attack() override;
 
     void levelupRange() override;
+
     void levelupDamage() override;
+
     void levelupReachOfImpact() override;
+
     void levelupSlowdown() override;
 
     int getSlowDownLevel() const override;
+
     int getReachLevel() const override;
 
     Communication::Tower::Damage getDamage_() const override;
+
     Communication::Tower::Type getType() const override;
+
     int getExplosionRange() const override;
 
-    FireTower(const FireTower&) = delete;
-    FireTower& operator=(const FireTower&) = delete;
-    FireTower& operator=(FireTower&&) = delete;
-    FireTower(FireTower&&) noexcept ;
+    FireTower(const FireTower &) = delete;
+
+    FireTower &operator=(const FireTower &) = delete;
+
+    FireTower &operator=(FireTower &&) = delete;
+
+    FireTower(FireTower &&) noexcept;
 
 private:
     int reach_level;

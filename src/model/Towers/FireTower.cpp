@@ -1,7 +1,3 @@
-//
-// Created by facundo on 10/10/17.
-//
-
 #include <iostream>
 #include "FireTower.h"
 #include "../Scenario.h"
@@ -9,21 +5,24 @@
 #include "../Upgrades/DamageLevelup.h"
 #include "../Upgrades/ReachLevelup.h"
 
-FireTower::FireTower(int id, const Vector position, YAML::Node& tower_properties,
-                     Scenario& scenario) :
+FireTower::FireTower(int id, const Vector position,
+                     YAML::Node &tower_properties,
+                     Scenario &scenario) :
         Tower(id, position, scenario) {
     YAML::Node properties = tower_properties["fire_tower"];
     // basic properties
     dmg = properties["damage"].as<unsigned int>();
     dmg_to_nearby_units = properties["damage_to_nearby"].as<unsigned int>();
-    range = Range(position, getRangeInTileSizes(properties["range"].as<float>()));
+    range = Range(position,
+                  getRangeInTileSizes(properties["range"].as<float>()));
     attack_cooldown = properties["attack_rate"].as<unsigned int>();
     reach_of_impact = properties["reach"].as<unsigned int>() * TILE_SIZE;
 
     // upgrades properties
     dmg_upgrade = properties["damage_upgrade"].as<unsigned int>();
     dmg_to_nearby_units_upgrade =
-            properties["damage_to_nearby_upgrade"].as<unsigned int>() * TILE_SIZE;
+            properties["damage_to_nearby_upgrade"].as<unsigned int>() *
+            TILE_SIZE;
     range_upgrade = properties["range_upgrade"].as<unsigned int>() * TILE_SIZE;
     reach_upgrade = properties["reach_upgrade"].as<unsigned int>() * TILE_SIZE;
 
@@ -58,10 +57,12 @@ FireTower::~FireTower() = default;
 
 void FireTower::attack() {
     // si todavia no paso el cooldown desde el ultimo ataque, salir
-    if (difftime(time(nullptr), last_attack_time) < attack_cooldown)
-    { is_attacking = false; return; }
+    if (difftime(time(nullptr), last_attack_time) < attack_cooldown) {
+        is_attacking = false;
+        return;
+    }
 
-    std::vector<Enemy*> enemies = scenario.getEnemiesInRange(range);
+    std::vector<Enemy *> enemies = scenario.getEnemiesInRange(range);
     if (enemies.empty()) { return; }
 
     changeTarget(enemies);
@@ -71,7 +72,7 @@ void FireTower::attack() {
     for (unsigned int i = 1; i < enemies.size(); i++) {
         if ((enemies[i]->getCurrentPosition() -
              enemies[0]->getCurrentPosition()).getNorm() <=
-                reach_of_impact) {
+            reach_of_impact) {
             // si estan al alcance del impacto
             experience += enemies[i]->reduceLife(dmg_to_nearby_units);
         }
@@ -81,12 +82,12 @@ void FireTower::attack() {
     is_attacking = true;
 }
 
-FireTower::FireTower(FireTower&& other) noexcept : Tower(std::move(other)) {}
+FireTower::FireTower(FireTower &&other) noexcept : Tower(std::move(other)) {}
 
 void FireTower::levelupRange() {
     double neccessary_exp =
             range_levelingup_function_values.first *
-                    (pow(range_levelingup_function_values.second,range_level));
+            (pow(range_levelingup_function_values.second, range_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
@@ -102,7 +103,7 @@ void FireTower::levelupRange() {
 void FireTower::levelupDamage() {
     double neccessary_exp =
             dmg_levelingup_function_values.first *
-                    (pow(dmg_levelingup_function_values.second,dmg_level));
+            (pow(dmg_levelingup_function_values.second, dmg_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +
@@ -118,7 +119,7 @@ void FireTower::levelupDamage() {
 void FireTower::levelupReachOfImpact() {
     double neccessary_exp =
             reach_levelingup_function_values.first *
-                    (pow(reach_levelingup_function_values.second,reach_level));
+            (pow(reach_levelingup_function_values.second, reach_level));
     if (experience < neccessary_exp) {
         throw TowerError("Error: no se puede subir de nivel con los puntos" +
                          std::to_string(experience) +

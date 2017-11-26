@@ -1,7 +1,3 @@
-//
-// Created by facundo on 17/10/17.
-//
-
 #ifndef TOWERDEFENSE_TOWERERROR_H
 #define TOWERDEFENSE_TOWERERROR_H
 
@@ -11,12 +7,13 @@
 
 class TowerError : public std::exception {
 public:
-    explicit TowerError(const std::string& info);
+    explicit TowerError(const std::string &info);
 
-    const char* what() const noexcept override;
+    const char *what() const noexcept override;
 
-    TowerError(const TowerError&) noexcept ;
-    TowerError& operator=(const TowerError&) noexcept ;
+    TowerError(const TowerError &) noexcept;
+
+    TowerError &operator=(const TowerError &) noexcept;
 
 private:
     std::string info;

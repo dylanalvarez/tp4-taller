@@ -1,7 +1,3 @@
-//
-// Created by facundo on 30/10/17.
-//
-
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -64,7 +60,7 @@ void GameServerSocket::sendGameState(
         tower_node["position"] = position;
         tower_node["is_attacking"] = tower.is_attacking;
         tower_node["current_target"] = tower.current_target_id;
-        
+
         game_node["towers"].push_back(tower_node);
     }
 
@@ -77,7 +73,7 @@ void GameServerSocket::sendGameState(
         position["x"] = power.x;
         position["y"] = power.y;
         power_node["position"] = position;
-       
+
         game_node["positional_powers"].push_back(power_node);
     }
 
@@ -91,10 +87,11 @@ void GameServerSocket::sendGameState(
     }
 
     try {
-        socket.send(Communication::toFixedLengthString(3, OPCODE_CHARACTER_COUNT));
+        socket.send(
+                Communication::toFixedLengthString(3, OPCODE_CHARACTER_COUNT));
         sendNode(game_node);
-    } catch (Exception& e) {
-       throw e;
+    } catch (Exception &e) {
+        throw e;
     }
 
 }
@@ -149,7 +146,7 @@ void GameServerSocket::makeElementUnavailable(Communication::Element element,
 
 void GameServerSocket::sendMap(const std::string &filename) {
     std::ifstream file(filename);
-    std::string content(static_cast<std::stringstream const&>(
+    std::string content(static_cast<std::stringstream const &>(
                                 std::stringstream() << file.rdbuf()).str());
     socket.send(Communication::toFixedLengthString(2, OPCODE_CHARACTER_COUNT));
     socket.send(Communication::toFixedLengthString(
@@ -162,8 +159,12 @@ GameServerSocket::~GameServerSocket() = default;
 void GameServerSocket::run() {
     while (keep_running) {
         try {
-            std::string str_opcode = socket.receiveString(OPCODE_CHARACTER_COUNT);
-            if (str_opcode.empty()) { keep_running = false; break; }
+            std::string str_opcode = socket.receiveString(
+                    OPCODE_CHARACTER_COUNT);
+            if (str_opcode.empty()) {
+                keep_running = false;
+                break;
+            }
             int opcode = std::stoi(str_opcode);
             unsigned long messageLength = std::stoul(
                     socket.receiveString(MESSAGE_LENGTH_CHARACTER_COUNT));
@@ -199,7 +200,7 @@ void GameServerSocket::run() {
                 default:
                     break;
             }
-        } catch (Exception& e) {
+        } catch (Exception &e) {
             //socket cerrado
             keep_running = false;
         }
@@ -218,7 +219,7 @@ void GameServerSocket::sendPing(int x, int y) {
     sendNode(ping_node);
 }
 
-void GameServerSocket::handleChosenMap(std::string& yaml) {
+void GameServerSocket::handleChosenMap(std::string &yaml) {
     YAML::Node chosen_map = YAML::Load(yaml);
     auto map_id = chosen_map["id"].as<int>();
     std::string nickname = chosen_map["nickname"].as<std::string>();
@@ -254,11 +255,11 @@ void GameServerSocket::handlePingTile(std::string &yaml) {
 void GameServerSocket::handleSpell(std::string &yaml) {
     YAML::Node spell_node = YAML::Load(yaml);
     std::string type = spell_node["type"].as<std::string>();
-    std::vector<std::string> positional_spells {"terraforming",
-                                                "fissure",
-                                                "fireWall",
-                                                "blizzard",
-                                                "tornado"};
+    std::vector<std::string> positional_spells{"terraforming",
+                                               "fissure",
+                                               "fireWall",
+                                               "blizzard",
+                                               "tornado"};
     if (std::find(positional_spells.begin(), positional_spells.end(), type)
         != positional_spells.end()) {
         // is positional

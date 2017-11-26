@@ -1,7 +1,3 @@
-//
-// Created by facundo on 15/10/17.
-//
-
 #include "Range.h"
 
 Range::Range(Vector center, float radius) : center(center), radius(radius) {}
@@ -19,5 +15,5 @@ Vector Range::getCenter() const {
 }
 
 int Range::getNormalRadius() const {
-    return (int)std::round(radius + 44) / 88;
+    return (int) std::round(radius + 44) / 88;
 }

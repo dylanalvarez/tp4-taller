@@ -1,7 +1,3 @@
-//
-// Created by facundo on 21/10/17.
-//
-
 #include "AirTowerFactory.h"
 #include "../Towers/AirTower.h"
 

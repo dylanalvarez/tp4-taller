@@ -1,7 +1,3 @@
-//
-// Created by facundo on 09/09/17.
-//
-
 #include <iostream>
 #include "BlockingQueue.h"
 
@@ -9,13 +5,13 @@ BlockingQueue::BlockingQueue() = default;
 
 BlockingQueue::~BlockingQueue() = default;
 
-void BlockingQueue::push(Action* action){
+void BlockingQueue::push(Action *action) {
     std::unique_lock<std::mutex> lock(mutex);
     queue.push(action);
     is_there_something.notify_all();
 }
 
-Action& BlockingQueue::front() {
+Action &BlockingQueue::front() {
     std::unique_lock<std::mutex> lock(mutex);
     while (queue.empty()) {
         // dado que existe un "bug" en wait y puede
@@ -35,12 +31,12 @@ void BlockingQueue::pop() {
     queue.pop();
 }
 
-BlockingQueue::BlockingQueue(BlockingQueue&& other) noexcept {
+BlockingQueue::BlockingQueue(BlockingQueue &&other) noexcept {
     std::unique_lock<std::mutex> lock(mutex);
     this->queue = std::move(other.queue);
 }
 
-BlockingQueue &BlockingQueue::operator=(BlockingQueue&& other) noexcept {
+BlockingQueue &BlockingQueue::operator=(BlockingQueue &&other) noexcept {
     std::unique_lock<std::mutex> lock(mutex);
     this->queue = std::move(other.queue);
     return *this;

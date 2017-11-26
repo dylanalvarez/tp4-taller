@@ -11,7 +11,7 @@ class GameServerReceiver;
 class GameServerSocket : public Thread {
 public:
     // When it recieves a message, it will invoke a method in the receiver.
-    GameServerSocket(GameServerReceiver& receiver, Socket&& socket);
+    GameServerSocket(GameServerReceiver &receiver, Socket &&socket);
 
     void run() override;
 
@@ -32,29 +32,39 @@ public:
     void sendPing(int x, int y);
 
     void disconnect();
-    
+
     bool isOperational() const;
 
     ~GameServerSocket() override;
 
-    GameServerSocket(const GameServerSocket&) = delete;
-    GameServerSocket& operator=(const GameServerSocket&) = delete;
-    GameServerSocket(GameServerSocket&&) noexcept;
+    GameServerSocket(const GameServerSocket &) = delete;
+
+    GameServerSocket &operator=(const GameServerSocket &) = delete;
+
+    GameServerSocket(GameServerSocket &&) noexcept;
 
 private:
-    GameServerReceiver& receiver;
+    GameServerReceiver &receiver;
     Socket socket;
     bool keep_running;
 
-    void handleChosenMap(std::string& yaml);
-    void handleChosenMatch(std::string& yaml);
-    void handleChosenElement(std::string& yaml);
-    void handleSendMessage(std::string& yaml);
-    void handlePingTile(std::string& yaml);
-    void handleSpell(std::string& yaml);
-    void handleUpgrade(std::string& yaml);
-    void handleBuildTower(std::string& yaml);
-    void sendNode(YAML::Node& node);
+    void handleChosenMap(std::string &yaml);
+
+    void handleChosenMatch(std::string &yaml);
+
+    void handleChosenElement(std::string &yaml);
+
+    void handleSendMessage(std::string &yaml);
+
+    void handlePingTile(std::string &yaml);
+
+    void handleSpell(std::string &yaml);
+
+    void handleUpgrade(std::string &yaml);
+
+    void handleBuildTower(std::string &yaml);
+
+    void sendNode(YAML::Node &node);
 };
 
 #endif //TP4_TALLER_GAME_SERVER_SOCKET_H

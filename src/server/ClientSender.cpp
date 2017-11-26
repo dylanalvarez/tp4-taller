@@ -1,7 +1,3 @@
-//
-// Created by facundo on 03/11/17.
-//
-
 #include "ClientSender.h"
 #include "../common/Exception.h"
 
@@ -21,7 +17,7 @@ void ClientSender::run() {
         try {
             queue.front().apply(context);
             queue.pop();
-        } catch (Exception& e) {
+        } catch (Exception &e) {
             keep_running = false;
         }
     }

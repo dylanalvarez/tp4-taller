@@ -1,11 +1,7 @@
-//
-// Created by facundo on 23/10/17.
-//
-
 #include "FireWall.h"
 #include "../Exceptions/MatchError.h"
 
-FireWall::FireWall(Scenario& scenario, unsigned int cooldown,
+FireWall::FireWall(Scenario &scenario, unsigned int cooldown,
                    unsigned int dmg, unsigned int duration) :
         Spell(scenario, cooldown),
         duration(duration),
@@ -29,9 +25,11 @@ void FireWall::update() {
         return;
     }
 
-    for (Enemy* enemy : scenario.getEnemiesInRange(Range(position, tile_size))) {
+    for (Enemy *enemy : scenario.getEnemiesInRange(
+            Range(position, tile_size))) {
         if (std::find(enemies_already_affected.begin(),
-                      enemies_already_affected.end(), enemy) == enemies_already_affected.end()) {
+                      enemies_already_affected.end(), enemy) ==
+            enemies_already_affected.end()) {
             enemy->reduceLife(dmg);
             enemies_already_affected.push_back(enemy);
         }

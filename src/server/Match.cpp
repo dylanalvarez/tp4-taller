@@ -7,10 +7,11 @@
 #include "Server.h"
 
 Match::Match(const std::string &config_file_path,
-             const std::string &map_file_path, int id, Server& server) :
-            horde_creator(map_file_path, actions_queue),
-            game(config_file_path, map_file_path, horde_creator.getTotalAmountOfEnemies()),
-            context(game, clients), id(id), map(map_file_path), server(server)  {
+             const std::string &map_file_path, int id, Server &server) :
+        horde_creator(map_file_path, actions_queue),
+        game(config_file_path, map_file_path,
+             horde_creator.getTotalAmountOfEnemies()),
+        context(game, clients), id(id), map(map_file_path), server(server) {
     has_started = false;
     keep_running = false;
 }
@@ -21,7 +22,7 @@ void Match::run() {
     has_started = true;
     horde_creator.start();
 
-    while(!game.isGameEnded() && keep_running && !clients.empty()) {
+    while (!game.isGameEnded() && keep_running && !clients.empty()) {
         time_t start_time;
         time(&start_time);
 
@@ -36,7 +37,7 @@ void Match::run() {
 
         /** enviar el estado del juego */
         Communication::GameState gameState = game.getGameState();
-        for (Client* client : clients) {
+        for (Client *client : clients) {
             client->sendGameState(gameState);
         }
 
@@ -45,10 +46,11 @@ void Match::run() {
         time_t end_time;
         time(&end_time);
 
-        double time_to_sleep = time_step - (difftime(start_time, end_time) / 1000);
+        double time_to_sleep =
+                time_step - (difftime(start_time, end_time) / 1000);
 
         if (time_to_sleep >= 0) {
-           usleep((unsigned int)time_to_sleep);
+            usleep((unsigned int) time_to_sleep);
         }
     }
     keep_running = false;
@@ -60,10 +62,10 @@ int Match::getID() const {
     return id;
 }
 
-bool Match::addPlayer(Client* client) {
+bool Match::addPlayer(Client *client) {
     if (has_started) { return false; }
 
-    const Player& player = game.addPlayer(client->getName());
+    const Player &player = game.addPlayer(client->getName());
     client->setModelPlayer(player);
     client->setActionsQueue(actions_queue);
     client->sendMap(map);
@@ -76,7 +78,7 @@ bool Match::addPlayer(Client* client) {
 
 void Match::stop() {
     keep_running = false;
-    for (Client* client : clients) {
+    for (Client *client : clients) {
         client->stop();
         delete client;
     }
@@ -87,7 +89,7 @@ bool Match::hasStarted() const {
 }
 
 void Match::startGame() {
-    for (Client* client : clients) {
+    for (Client *client : clients) {
         // hasta que no esten todos listos, no se inicia la partida
         if (!client->isReady()) { return; }
     }
@@ -95,15 +97,15 @@ void Match::startGame() {
     Thread::start();
 }
 
-void Match::addElementToClient(const Client& client_to_add,
-                               const std::string& element) {
+void Match::addElementToClient(const Client &client_to_add,
+                               const std::string &element) {
     if (hasStarted()) { return; }
 
-    for (Client* client : clients) {
+    for (Client *client : clients) {
         if (&client_to_add == client) {
             try {
                 game.addElementToPlayer(client->getModelPlayer(), element);
-            } catch (std::exception& e) {}
+            } catch (std::exception &e) {}
         }
         client->sendElementUnavailable(element, client_to_add.getName());
     }
@@ -115,8 +117,8 @@ bool Match::isRunning() {
 }
 
 void Match::cleanClients() {
-    std::vector<Client*> online_clients;
-    for (Client* client : clients) {
+    std::vector<Client *> online_clients;
+    for (Client *client : clients) {
         if (!client->isOperatinal()) {
             client->stop();
             delete client;

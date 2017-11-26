@@ -1,7 +1,3 @@
-//
-// Created by facundo on 31/10/17.
-//
-
 #ifndef TOWERDEFENSE_THROWTARGETSPELLACTION_H
 #define TOWERDEFENSE_THROWTARGETSPELLACTION_H
 
@@ -10,16 +6,17 @@
 
 class ThrowTargetSpellAction : public Action {
 public:
-    ThrowTargetSpellAction(std::string& spell, const Player& player,
+    ThrowTargetSpellAction(std::string &spell, const Player &player,
                            int enemy_id);
 
-    void apply(Context& context) override;
+    void apply(Context &context) override;
 
-    ThrowTargetSpellAction(const ThrowTargetSpellAction&) = delete;
-    ThrowTargetSpellAction& operator=(const ThrowTargetSpellAction&) = delete;
+    ThrowTargetSpellAction(const ThrowTargetSpellAction &) = delete;
+
+    ThrowTargetSpellAction &operator=(const ThrowTargetSpellAction &) = delete;
 
 private:
-    const Player& player;
+    const Player &player;
     std::string spell;
     int enemy_id;
 };

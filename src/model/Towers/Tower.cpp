@@ -1,20 +1,16 @@
-//
-// Created by facundo on 10/10/17.
-//
-
 #include "Tower.h"
 #include "../Exceptions/TowerError.h"
 
-Tower::Tower(int id, Vector position, Scenario& scenario) :
-                                                    id(id),
-                                                    experience(0),
-                                                    position(position),
-                                                    scenario(scenario) {
+Tower::Tower(int id, Vector position, Scenario &scenario) :
+        id(id),
+        experience(0),
+        position(position),
+        scenario(scenario) {
     is_attacking = false;
 }
 
 Tower::~Tower() {
-    for (auto levelup_type : levelup_types){
+    for (auto levelup_type : levelup_types) {
         delete levelup_type.second;
     }
 }
@@ -27,16 +23,17 @@ const Vector &Tower::getPosition() const {
     return position;
 }
 
-bool Tower::isCurrentTargetOutOfRange(const std::vector<Enemy*>& enemies) const {
-    for (Enemy* enemy : enemies){
-        if (enemy == current_target){
+bool
+Tower::isCurrentTargetOutOfRange(const std::vector<Enemy *> &enemies) const {
+    for (Enemy *enemy : enemies) {
+        if (enemy == current_target) {
             return false;
         }
     }
     return true;
 }
 
-void Tower::changeTarget(const std::vector<Enemy*>& enemies) {
+void Tower::changeTarget(const std::vector<Enemy *> &enemies) {
     if (current_target) {
         if (current_target->isDead()
             || isCurrentTargetOutOfRange(enemies)) {
@@ -57,11 +54,11 @@ const Range &Tower::getRange() const {
 }
 
 void Tower::levelup(const std::string &type) {
-   try {
-       levelup_types.at(type)->levelup();
-   } catch (std::exception& e) {
+    try {
+        levelup_types.at(type)->levelup();
+    } catch (std::exception &e) {
         throw TowerError("Error: el tipo de upgrade " + type + " no existe");
-   }
+    }
 }
 
 unsigned int Tower::getDamage() const {
@@ -78,7 +75,7 @@ void Tower::hitCurrentTarget(unsigned int dmg) {
     }
 }
 
-Tower::Tower(Tower&& other) noexcept : scenario(other.scenario) {
+Tower::Tower(Tower &&other) noexcept : scenario(other.scenario) {
     this->id = other.id;
     this->experience = other.experience;
     this->position = other.position;
@@ -107,7 +104,7 @@ int Tower::getID() const {
 }
 
 Communication::Tower::EnemySlowdown Tower::getslowdown() const {
-    return Communication::Tower::EnemySlowdown {0,0};
+    return Communication::Tower::EnemySlowdown {0, 0};
 }
 
 int Tower::getExplosionRange() const {
@@ -119,7 +116,7 @@ bool Tower::operator==(const Tower &other) {
 }
 
 int Tower::getRangeInTileSizes(float range) {
-    return (int)std::roundf(44 + range * 88);
+    return (int) std::roundf(44 + range * 88);
 }
 
 bool Tower::isAttacking() const {
@@ -130,6 +127,6 @@ int Tower::getCurrentTargetID() const {
     if (current_target) {
         return current_target->getID();
     }
-    
+
     return -1;
 }

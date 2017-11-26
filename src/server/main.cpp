@@ -1,29 +1,28 @@
 #include <iostream>
 #include <syslog.h>
 #include <dirent.h>
-#include <cstring>
 #include "Server.h"
 
 int main(int argc, char *argv[]) {
-    try{
+    try {
         Server server(argv[1]);
 
         std::cout << "Cargando mapas...\n";
 
         DIR *dir;
         struct dirent *ent = nullptr;
-        if ((dir = opendir ("maps/"))) {
+        if ((dir = opendir("maps/"))) {
             // itera todos los archivos en la carpeta "maps"
-            while ((ent = readdir (dir))) {
+            while ((ent = readdir(dir))) {
                 if (std::strcmp(ent->d_name, ".") != 0
                     && std::strcmp(ent->d_name, "..") != 0) {
                     server.addMap("maps/" + std::string(ent->d_name));
                 }
             }
-            closedir (dir);
+            closedir(dir);
         } else {
             /* could not open directory */
-            perror ("");
+            perror("");
             return EXIT_FAILURE;
         }
 
@@ -34,7 +33,7 @@ int main(int argc, char *argv[]) {
         std::cout << "Server up!\n";
 
         char input;
-        do{
+        do {
             std::cin >> input;
         } while (input != 'q');
 
@@ -42,7 +41,7 @@ int main(int argc, char *argv[]) {
 
         server.stop();
         server.join();
-    } catch (std::exception& e) {
+    } catch (std::exception &e) {
         syslog(LOG_CRIT, "Error: %s\n", e.what());
         return -1;
     }

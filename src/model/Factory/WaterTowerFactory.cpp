@@ -1,7 +1,3 @@
-//
-// Created by facundo on 20/10/17.
-//
-
 #include "WaterTowerFactory.h"
 #include "../Towers/WaterTower.h"
 

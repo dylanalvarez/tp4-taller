@@ -1,7 +1,3 @@
-//
-// Created by facundo on 31/10/17.
-//
-
 #include "Horde.h"
 
 Horde::Horde(std::string &type, int time_before_arrival, int quantity,
