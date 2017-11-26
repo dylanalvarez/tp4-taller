@@ -39,14 +39,11 @@ void OrdenadorDeFichas::ejecutarCicloDeAnimacion() {
 void OrdenadorDeFichas::imprir(const Cairo::RefPtr<Cairo::Context> &cr,
                                DatosPantalla datosActuales) {
     std::unique_lock<std::mutex> lck(m);
-        printf("inicioImprimir\n");
     imprimirTerreno(cr, datosActuales);
     imprimirPortal(cr, datosActuales);
     imprimirEnemigo(cr, datosActuales);
     imprimirTorres(cr, datosActuales);
-        printf("efectos\n");
     imprimirEfectos(cr, datosActuales);
-    printf("terminarImprimir\n");
 
 }
 
@@ -225,10 +222,7 @@ void OrdenadorDeFichas::agregarEfectos(FichaEfectos nuevaFicha) {
 void OrdenadorDeFichas::imprimirEfectos(const Cairo::RefPtr<Cairo::Context> &cr,
                                         DatosPantalla datosActuales) {
     for (auto it = poderes.begin(); it != poderes.end(); ++it) {
-      printf("hola\n");
         it->second.dibujar(cr, datosActuales);
-        printf("hola\n");
-
     }
 }
 

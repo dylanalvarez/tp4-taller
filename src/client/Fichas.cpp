@@ -666,9 +666,7 @@ void FichaEfectos::dibujar(const Cairo::RefPtr<Cairo::Context> &cr,
     if (tipo < 7) {
         sprites[spriteActual].cambiarPosicion(x, y);
     }
-    printf("hola\n");
     sprites[spriteActual].dibujarIsometrico(cr, datosActuales);
-                                 printf("chau\n");
 }
 void FichaEfectos::AumentarVida() {
     tiempoImpacto++;

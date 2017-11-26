@@ -459,9 +459,6 @@ void Menu::enviarMensajeChat() {
 }
 
 void Menu::recivirMensajeChat(std::string entrada) {
-    auto aux = chat->get_buffer();
-    auto c = mensajeEntrada->get_text(); //esto es lo que hay que cambiar.
-    aux->insert_at_cursor("\n");
-    aux->insert_at_cursor(entrada.c_str());
-    chat->set_buffer(aux);
+  chat->set_text(chat->get_text()+ "\n" + entrada.c_str());
+
 }

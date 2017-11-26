@@ -50,7 +50,7 @@ private:
     //chat
     Gtk::Button *botonEnviar;
     Gtk::Entry *mensajeEntrada;
-    Gtk::TextView *chat;
+    Gtk::Label *chat;
 
     void MostrarBotones(Elementos elemento);
 
