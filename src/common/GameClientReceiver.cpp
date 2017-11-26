@@ -25,6 +25,7 @@ void
 GameClientReceiver::getGameState(const Communication::GameState &gameState) {
     fichas.actualizar(gameState);
     menues.actualizarPoderes(gameState);
+    menues.actualizarTorre();
     ventanas.actualizar(gameState);
 }
 
