@@ -155,7 +155,7 @@ std::string Map::_toString(Map::Setting setting) const {
         case Map::Setting::meadow:
             return MEADOW_STR;
         default:
-            throw Exception("");
+            throw std::exception();
     }
 }
 
@@ -174,7 +174,7 @@ std::string Map::_toString(Map::HordeType hordeType) const {
         case Map::HordeType::abmonible:
             return ABMONIBLE_EXPORT_STR;
         default:
-            throw Exception("");
+            throw std::exception();
     }
 }
 
