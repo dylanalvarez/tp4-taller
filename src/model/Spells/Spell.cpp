@@ -1,7 +1,3 @@
-//
-// Created by facundo on 24/10/17.
-//
-
 #include "Spell.h"
 
 Spell::Spell(Scenario &scenario, unsigned int cooldown) :

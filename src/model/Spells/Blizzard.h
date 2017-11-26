@@ -1,7 +1,3 @@
-//
-// Created by facundo on 23/10/17.
-//
-
 #ifndef TOWERDEFENSE_BLIZZARD_H
 #define TOWERDEFENSE_BLIZZARD_H
 

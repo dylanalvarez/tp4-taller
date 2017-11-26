@@ -1,7 +1,3 @@
-//
-// Created by facundo on 27/10/17.
-//
-
 #ifndef TOWERDEFENSE_SERVER_H
 #define TOWERDEFENSE_SERVER_H
 

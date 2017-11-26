@@ -1,7 +1,3 @@
-//
-// Created by facundo on 23/10/17.
-//
-
 #include "Freezing.h"
 #include "../Exceptions/MatchError.h"
 

@@ -1,7 +1,3 @@
-//
-// Created by facundo on 24/10/17.
-//
-
 #ifndef TOWERDEFENSE_RAY_H
 #define TOWERDEFENSE_RAY_H
 

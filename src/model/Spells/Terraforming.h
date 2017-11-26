@@ -1,7 +1,3 @@
-//
-// Created by facundo on 23/10/17.
-//
-
 #ifndef TOWERDEFENSE_TERRAFORMING_H
 #define TOWERDEFENSE_TERRAFORMING_H
 

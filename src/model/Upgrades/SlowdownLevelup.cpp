@@ -1,7 +1,3 @@
-//
-// Created by facundo on 22/10/17.
-//
-
 #include "SlowdownLevelup.h"
 #include "../Towers/Tower.h"
 

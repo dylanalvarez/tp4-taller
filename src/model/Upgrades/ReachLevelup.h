@@ -1,7 +1,3 @@
-//
-// Created by facundo on 22/10/17.
-//
-
 #ifndef TOWERDEFENSE_REACHLEVELUP_H
 #define TOWERDEFENSE_REACHLEVELUP_H
 

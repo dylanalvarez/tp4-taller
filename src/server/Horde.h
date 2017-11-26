@@ -1,7 +1,3 @@
-//
-// Created by facundo on 31/10/17.
-//
-
 #ifndef TOWERDEFENSE_HORDE_H
 #define TOWERDEFENSE_HORDE_H
 

@@ -1,7 +1,3 @@
-//
-// Created by facundo on 27/10/17.
-//
-
 #include <iostream>
 #include "Match.h"
 #include "Server.h"

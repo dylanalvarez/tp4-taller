@@ -1,7 +1,3 @@
-//
-// Created by facundo on 23/10/17.
-//
-
 #include "Meteorite.h"
 #include "../Exceptions/MatchError.h"
 

@@ -1,7 +1,3 @@
-//
-// Created by facundo on 31/10/17.
-//
-
 #include "QueueProtected.h"
 
 QueueProtected::QueueProtected() = default;
