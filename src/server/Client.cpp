@@ -4,6 +4,7 @@
 #include "Actions/SendMessageAction.h"
 #include "Actions/DisconnectAction.h"
 #include "Actions/PingAction.h"
+#include "../common/Exception.h"
 
 Client::Client(Socket &&socket, Server &server) :
         serverReceiver(server, *this),
@@ -60,6 +61,9 @@ void Client::stop() {
 }
 
 const Player &Client::getModelPlayer() const {
+    if (!player) { throw Exception("Error al solicitar el objeto Player: "
+                                           "no existe probablemente porque "
+                                           "el juego ya termino y fue destruido"); }
     return *player;
 }
 
