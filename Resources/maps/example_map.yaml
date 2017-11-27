@@ -1,0 +1,53 @@
+name: Example map
+setting: volcano
+size:
+  x: 10
+  y: 10
+firm_ground:
+  - x: 8
+    y: 3
+  - x: 5
+    y: 7
+  - x: 10
+    y: 6
+  - x: 7
+    y: 9
+paths:
+  - path_sequence:
+      - x: 3
+        y: 1
+      - x: 3
+        y: 5
+      - x: 9
+        y: 5
+      - x: 9
+        y: 9
+      - x: 10
+        y: 9
+    entry:
+      x: 3
+      y: 0
+    exit:
+      x: 11
+      y: 9
+    enemies:
+      - type: undead
+        quantity: 2
+        seconds_before_arrival: 1
+  - path_sequence:
+      - x: 7
+        y: 1
+      - x: 7
+        y: 7
+      - x: 10
+        y: 7
+    entry:
+      x: 7
+      y: 0
+    exit:
+      x: 11
+      y: 7
+    enemies:
+      - type: bloody_hawk
+        quantity: 1
+        seconds_before_arrival: 5

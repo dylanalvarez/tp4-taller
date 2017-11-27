@@ -1,0 +1,51 @@
+name: desert_mid
+setting: desert
+size:
+  x: 10
+  y: 10
+firm_ground:
+  - x: 3
+    y: 4
+  - x: 3
+    y: 7
+  - x: 8
+    y: 4
+  - x: 8
+    y: 7
+  - x: 10
+    y: 9
+paths:
+  - path_sequence:
+      - x: 2
+        y: 1
+      - x: 2
+        y: 10
+      - x: 6
+        y: 10
+      - x: 6
+        y: 1
+      - x: 9
+        y: 1
+      - x: 9
+        y: 10
+      - x: 10
+        y: 10
+    entry:
+      x: 2
+      y: 0
+    exit:
+      x: 11
+      y: 10
+    enemies:
+      - type: goat_man
+        quantity: 4
+        seconds_before_arrival: 30
+      - type: bloody_hawk
+        quantity: 4
+        seconds_before_arrival: 80
+      - type: undead
+        quantity: 2
+        seconds_before_arrival: 90
+      - type: abmonible
+        quantity: 4
+        seconds_before_arrival: 100

@@ -47,5 +47,6 @@ SET(CPACK_PACKAGE_INSTALL_DIRECTORY "Tower Defense")
 SET(CPACK_PACKAGE_NAME "Tower Defense-1.0")
 SET(CPACK_PACKAGE_VERSION "1.0")
 SET(CPACK_SOURCE_PACKAGE_FILE_NAME "Tower Defense-1.0")
+SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtkmm-3.0, libyaml-cpp, libsdl2, libsdl2-mixer libcppunit")
 
 include(CPack)

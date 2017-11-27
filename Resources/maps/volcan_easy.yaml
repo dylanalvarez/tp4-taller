@@ -1,0 +1,38 @@
+name: volcan_easy
+setting: volcano
+size:
+  x: 10
+  y: 10
+firm_ground:
+  - x: 2
+    y: 2
+  - x: 6
+    y: 7
+  - x: 10
+    y: 7
+paths:
+  - path_sequence:
+      - x: 1
+        y: 1
+      - x: 7
+        y: 1
+      - x: 7
+        y: 8
+      - x: 10
+        y: 8
+    entry:
+      x: 0
+      y: 1
+    exit:
+      x: 11
+      y: 8
+    enemies:
+      - type: green_demon
+        quantity: 4
+        seconds_before_arrival: 1
+      - type: goat_man
+        quantity: 4
+        seconds_before_arrival: 20
+      - type: bloody_hawk
+        quantity: 4
+        seconds_before_arrival: 30

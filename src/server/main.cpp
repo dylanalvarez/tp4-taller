@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
             while ((ent = readdir(dir))) {
                 if (std::strcmp(ent->d_name, ".") != 0
                     && std::strcmp(ent->d_name, "..") != 0) {
-                    server.addMap("maps/" + std::string(ent->d_name));
+                    server.addMap("../Resources/maps/" + std::string(ent->d_name));
                 }
             }
             closedir(dir);

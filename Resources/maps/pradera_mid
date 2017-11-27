@@ -1,0 +1,67 @@
+name: pradera_mid
+setting: meadow
+size:
+  x: 10
+  y: 10
+firm_ground:
+  - x: 5
+    y: 3
+  - x: 5
+    y: 6
+  - x: 3
+    y: 9
+  - x: 9
+    y: 9
+  - x: 7
+    y: 3
+  - x: 7
+    y: 6
+  - x: 5
+    y: 1
+  - x: 7
+    y: 1
+  - x: 5
+    y: 10
+  - x: 7
+    y: 10
+paths:
+  - path_sequence:
+      - x: 1
+        y: 1
+      - x: 1
+        y: 8
+      - x: 10
+        y: 8
+    entry:
+      x: 1
+      y: 0
+    exit:
+      x: 11
+      y: 8
+    enemies:
+      - type: green_demon
+        quantity: 2
+        seconds_before_arrival: 1
+      - type: spectre
+        quantity: 2
+        seconds_before_arrival: 5
+  - path_sequence:
+      - x: 6
+        y: 1
+      - x: 6
+        y: 9
+      - x: 6
+        y: 10
+    entry:
+      x: 6
+      y: 0
+    exit:
+      x: 6
+      y: 11
+    enemies:
+      - type: abmonible
+        quantity: 2
+        seconds_before_arrival: 1
+      - type: undead
+        quantity: 2
+        seconds_before_arrival: 10

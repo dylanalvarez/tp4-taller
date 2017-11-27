@@ -1,0 +1,28 @@
+name: frozen_izi
+setting: ice
+size:
+  x: 10
+  y: 10
+firm_ground:
+  []
+paths:
+  - path_sequence:
+      - x: 2
+        y: 1
+      - x: 2
+        y: 8
+      - x: 10
+        y: 8
+    entry:
+      x: 2
+      y: 0
+    exit:
+      x: 11
+      y: 8
+    enemies:
+      - type: bloody_hawk
+        quantity: 5
+        seconds_before_arrival: 10
+      - type: goat_man
+        quantity: 5
+        seconds_before_arrival: 20
