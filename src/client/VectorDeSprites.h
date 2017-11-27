@@ -5,10 +5,10 @@
 #include <iostream>
 #include <string>
 
-#define SonidoMatarMonstruo "Sprites/Sonido/smw_1-up.wav"
-#define SonidoPoder "Sprites/Sonido/smw_power-up.wav"
-#define SonidoNuevoMonstruo "Sprites/Sonido/smw_feather_get.wav"
-#define SonidoNuevoAtaque "Sprites/Sonido/smw_coin.wav"
+#define SonidoMatarMonstruo "../ResourcesSprites/Sonido/smw_1-up.wav"
+#define SonidoPoder "../ResourcesSprites/Sonido/smw_power-up.wav"
+#define SonidoNuevoMonstruo "../ResourcesSprites/Sonido/smw_feather_get.wav"
+#define SonidoNuevoAtaque "../ResourcesSprites/Sonido/smw_coin.wav"
 
 #define SpritePisoFirme 0
 #define SpriteTorreDeTierra 1

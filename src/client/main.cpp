@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 
     Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
     Glib::RefPtr<Gtk::Builder> refBuilder = Gtk::Builder::create();
-    refBuilder->add_from_file("Sprites/Pantallas/Pantalla principal.glade");
+    refBuilder->add_from_file("../Resources/Sprites/Pantallas/Pantalla principal.glade");
     Aplicacion aplicacion(std::move(socket), refBuilder);
 
     unsigned int TiempoEnMilesegundos = 100;

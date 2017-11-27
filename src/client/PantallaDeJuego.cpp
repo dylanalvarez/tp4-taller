@@ -110,7 +110,7 @@ bool PantallaDeJuego::on_button_press_event(GdkEventButton *event) {
         if ((aux0 = fichas.ObetenerTerrenoEnEstaPosicion(x2, y2)) == NoColicion)
             return Gtk::DrawingArea::on_button_press_event(event);
         auto posicion = fichas.getTerreno(aux0).getPosicion();
-        menu.lanzarHechizo(posicion.X, posicion.Y, //corregir esto.
+        menu.lanzarHechizo(posicion.X, posicion.Y,
                            fichas.ObetenerEnemigoEnEstaPosicion(x2, y2));
         return Gtk::DrawingArea::on_button_press_event(event);
     }

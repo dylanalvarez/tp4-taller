@@ -50,7 +50,6 @@ struct Mensaje {
     std::string elString2;
     int elInt1;
     int elInt2;
-    //Mensaje();
 };
 
 #endif

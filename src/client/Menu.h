@@ -107,7 +107,7 @@ public:
 
 
     void
-    lanzarHechizo(int x, int y, int objetivo); //mejorar cuando sea el momento.
+    lanzarHechizo(int x, int y, int objetivo);
     bool estamosCasteando();
 
     void actualizarPoderes(const Communication::GameState &gameState);
@@ -128,8 +128,7 @@ public:
 
     void enviarMensajeChat();
 
-    void
-    recivirMensajeChat(std::string entrada);    //eterminar de definir entrada
+    void recivirMensajeChat(std::string entrada);
 
     Menu(Glib::RefPtr<Gtk::Builder> &ventana2, Emisor &emisor);
 
