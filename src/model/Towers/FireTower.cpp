@@ -143,7 +143,7 @@ Communication::Tower::Type FireTower::getType() const {
 }
 
 int FireTower::getExplosionRange() const {
-    return reach_of_impact;
+    return reach_of_impact / 88;
 }
 
 int FireTower::getSlowDownLevel() const {
