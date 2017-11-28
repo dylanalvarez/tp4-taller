@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 
         DIR *dir;
         struct dirent *ent = nullptr;
-        if ((dir = opendir("maps/"))) {
+        if ((dir = opendir("../Resources/maps/"))) {
             // itera todos los archivos en la carpeta "maps"
             while ((ent = readdir(dir))) {
                 if (std::strcmp(ent->d_name, ".") != 0
