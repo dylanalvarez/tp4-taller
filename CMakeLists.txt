@@ -38,9 +38,9 @@ target_link_libraries(Editor ${GTKMM_LIBRARIES})
 target_link_libraries(Client ${GTKMM_LIBRARIES})
 
 install (TARGETS Server Editor Client DESTINATION bin)
-install (DIRECTORY cmake-build-debug/Sprites DESTINATION resources)
-install (DIRECTORY cmake-build-debug/assets DESTINATION resources)
-install(DIRECTORY cmake-build-debug/maps DESTINATION resources)
+install (DIRECTORY cmake-build-debug/Sprites DESTINATION Resources)
+install (DIRECTORY cmake-build-debug/assets DESTINATION Resources)
+install(DIRECTORY cmake-build-debug/maps DESTINATION Resources)
 
 SET(CPACK_PACKAGE_FILE_NAME "TowerDefense")
 SET(CPACK_PACKAGE_INSTALL_DIRECTORY "Tower Defense")
