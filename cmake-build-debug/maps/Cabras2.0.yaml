@@ -1,0 +1,79 @@
+name: Cabras 2.0
+setting: desert
+size:
+  x: 9
+  y: 9
+firm_ground:
+  - x: 6
+    y: 6
+  - x: 6
+    y: 4
+  - x: 4
+    y: 4
+  - x: 4
+    y: 6
+  - x: 3
+    y: 4
+  - x: 4
+    y: 3
+  - x: 6
+    y: 3
+  - x: 7
+    y: 4
+  - x: 7
+    y: 6
+  - x: 6
+    y: 7
+  - x: 4
+    y: 7
+  - x: 3
+    y: 6
+paths:
+  - path_sequence:
+      - x: 5
+        y: 1
+      - x: 5
+        y: 9
+    entry:
+      x: 5
+      y: 0
+    exit:
+      x: 5
+      y: 10
+    enemies:
+      - type: goat_man
+        quantity: 1
+        seconds_before_arrival: 6
+      - type: goat_man
+        quantity: 1
+        seconds_before_arrival: 1
+      - type: goat_man
+        quantity: 2
+        seconds_before_arrival: 6
+      - type: goat_man
+        quantity: 4
+        seconds_before_arrival: 1
+  - path_sequence:
+      - x: 9
+        y: 5
+      - x: 1
+        y: 5
+    entry:
+      x: 10
+      y: 5
+    exit:
+      x: 0
+      y: 5
+    enemies:
+      - type: goat_man
+        quantity: 1
+        seconds_before_arrival: 1
+      - type: goat_man
+        quantity: 1
+        seconds_before_arrival: 5
+      - type: goat_man
+        quantity: 2
+        seconds_before_arrival: 1
+      - type: goat_man
+        quantity: 4
+        seconds_before_arrival: 6
