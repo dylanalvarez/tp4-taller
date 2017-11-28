@@ -59,7 +59,7 @@ private:
     int match_id;
     std::map<int, const std::string> maps_paths;
 
-    const std::string config_file_path = "config.yaml";
+    const std::string config_file_path = "../Resources/config.yaml";
 
     void cleanMatchs();
 
