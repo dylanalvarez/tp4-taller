@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
     Glib::RefPtr<Gtk::Application> app =
             Gtk::Application::create(argc, argv);
     Glib::RefPtr<Gtk::Builder> gtkBuilder = Gtk::Builder::create_from_file(
-            "assets/glade/editor.glade");
+            "../Resources/assets/glade/editor.glade");
     Builder builder(gtkBuilder);
     Map map;
 
