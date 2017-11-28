@@ -41,6 +41,7 @@ install (TARGETS Server Editor Client DESTINATION bin)
 install (DIRECTORY cmake-build-debug/Sprites DESTINATION Resources)
 install (DIRECTORY cmake-build-debug/assets DESTINATION Resources)
 install(DIRECTORY cmake-build-debug/maps DESTINATION Resources)
+install(FILES cmake-build-debug/config.yaml DESTINATION Resources)
 
 SET(CPACK_PACKAGE_FILE_NAME "TowerDefense")
 SET(CPACK_PACKAGE_INSTALL_DIRECTORY "Tower Defense")
